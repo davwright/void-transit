@@ -1,0 +1,876 @@
+{
+  "items": [
+    {
+      "id": "multitool",
+      "name": "Engineering Multitool",
+      "description": "A Korolev-pattern multitool, standard issue for colony ship engineers. The carbon-fiber handle is worn smooth from years of use in zero-g maintenance rotations. Folded within its compact frame: a plasma cutter, torque driver, pry bar, wire stripper, and a dozen other implements that have kept humanity's ships from falling apart since the first generation vessels.",
+      "portable": true,
+      "weight": 0.4,
+      "location": "cryo_bay",
+      "hidden": false,
+      "usableWith": [
+        { "target": "ventilation_panel", "effect": "unscrew", "description": "You work the torque driver into the corroded bolts. They resist, then give with a shriek of metal-on-metal that echoes through the silent ship." },
+        { "target": "console_panel", "effect": "pry_open", "description": "The pry bar slides into the seam and the maintenance panel pops free, revealing the guts of the console beneath." },
+        { "target": "thruster_valve", "effect": "remove_bolts", "description": "The multitool's torque driver engages the mounting bolts. They're seized from thermal cycling, but with patient effort each one breaks free." },
+        { "target": "broken_conduit", "effect": "strip_wires", "description": "You strip back the charred insulation, exposing the copper beneath. The damage is worse than it looked from outside." }
+      ],
+      "combinable": [],
+      "properties": {
+        "condition": "good",
+        "bladeSharp": true
+      },
+      "examineDetail": "Stamped into the handle: ISV-7 KEPLER'S PROMISE - ENG KIT 14. The plasma cutter's emitter is still bright; someone maintained this kit even when they stopped maintaining everything else. Inside the emergency case where you found it, a laminated card reads: IN CASE OF EMERGENCY REVIVAL, USE CONTENTS TO ASSESS SHIP STATUS. The card is signed by Chief Engineer Vasquez. The ink has faded, but the handwriting is precise, careful -- the penmanship of someone who believed in doing things right."
+    },
+    {
+      "id": "welding_torch",
+      "name": "Plasma Welding Torch",
+      "description": "An Arasaka-Mitsubishi PW-9 plasma welder, the workhorse of shipboard repair. The focusing nozzle is blackened with use and the ergonomic grip has been wrapped in electrical tape by some previous owner who preferred a thicker hold. Without a fuel cell, it's just an awkward piece of industrial sculpture.",
+      "portable": true,
+      "weight": 2.1,
+      "location": "machine_shop",
+      "hidden": false,
+      "usableWith": [
+        { "target": "hull_breach", "effect": "weld_patch", "description": "The plasma arc ignites with a hiss that you feel in your teeth. Through your visor's auto-darkening filter, you watch metal flow like water, sealing the breach one careful pass at a time. Sparks drift in the micro-gravity like slow-motion fireflies.", "requiresProperty": "powered" },
+        { "target": "jammed_door", "effect": "cut_through", "description": "You press the arc to the door frame where the locking mechanism has seized. The metal glows cherry-red, then white, then parts like curtains. Atmosphere howls through the gap before equalizing.", "requiresProperty": "powered" },
+        { "target": "damaged_pipe", "effect": "seal_pipe", "description": "You run a bead along the crack in the coolant pipe, watching the plasma puddle fill the gap. The weld isn't pretty, but it holds. A thin wisp of vaporized metal rises and is swept away by the ventilation.", "requiresProperty": "powered" }
+      ],
+      "combinable": [
+        {
+          "with": "fuel_cell",
+          "creates": "welding_torch_powered",
+          "description": "You slot the fuel cell into the torch's receiver port. It clicks home with satisfying precision. The indicator on the handle cycles from red to amber to green, and you feel a faint vibration as the ionization chamber pressurizes. The PW-9 hums with quiet potential -- twenty thousand degrees waiting behind a trigger pull."
+        }
+      ],
+      "properties": {
+        "powered": false,
+        "fuelLevel": 0,
+        "maxTemp": 20000
+      },
+      "examineDetail": "The serial plate has been partially filed off -- not uncommon on equipment that's been through multiple ship assignments, but it makes you wonder about this torch's history. A small sticker on the fuel cell housing reads LAST CALIBRATED: Y7.142 and below it in different handwriting, barely legible: check plasma focus before use - drifts left. The safety interlock has been bypassed with a jumper wire. Whoever used this last was either very confident or very desperate."
+    },
+    {
+      "id": "welding_torch_powered",
+      "name": "Plasma Welding Torch (Fueled)",
+      "description": "The PW-9 plasma welder thrums with contained energy, its fuel cell seated and pressurized. The indicator strip glows a steady green. In the silence of the Kepler's Promise, its faint hum feels almost like companionship.",
+      "portable": true,
+      "weight": 2.8,
+      "location": "nowhere",
+      "hidden": false,
+      "usableWith": [
+        { "target": "hull_breach", "effect": "weld_patch", "description": "The plasma arc ignites with a hiss that you feel in your teeth. Through your visor's auto-darkening filter, you watch metal flow like water, sealing the breach one careful pass at a time. Sparks drift in the micro-gravity like slow-motion fireflies." },
+        { "target": "jammed_door", "effect": "cut_through", "description": "You press the arc to the door frame where the locking mechanism has seized. The metal glows cherry-red, then white, then parts like curtains. Atmosphere howls through the gap before equalizing." },
+        { "target": "damaged_pipe", "effect": "seal_pipe", "description": "You run a bead along the crack in the coolant pipe, watching the plasma puddle fill the gap. The weld isn't pretty, but it holds. A thin wisp of vaporized metal rises and is swept away by the ventilation." },
+        { "target": "sealed_compartment", "effect": "cut_open", "description": "The arc bites into the sealed hatch. Whoever welded this shut did quality work -- it takes long minutes to trace a line through the weld bead. When the last section parts, stale air sighs out from the darkness beyond, carrying a smell you can't identify." }
+      ],
+      "combinable": [],
+      "properties": {
+        "powered": true,
+        "fuelLevel": 100,
+        "maxTemp": 20000
+      },
+      "examineDetail": "The fuel cell indicator reads 100% -- enough for several hours of intermittent use, or about forty minutes of continuous welding. The plasma focus drifts slightly left, just as the note warned. You'll need to compensate, but it's manageable. The torch feels alive in your hand, a tool that transforms will into action. Out here, between the stars, that matters more than you'd think."
+    },
+    {
+      "id": "fuel_cell",
+      "name": "Universal Fuel Cell",
+      "description": "A standard-issue hydrogen fuel cell, about the size of a paperback book. The casing is brushed titanium with a universal port connector on one end. A charge indicator strip along one side glows a steady blue -- fully charged. Someone packed this away carefully, nestled in shock-foam inside a cargo crate, as though they knew it might be needed someday.",
+      "portable": true,
+      "weight": 0.7,
+      "location": "cargo_bay",
+      "hidden": true,
+      "usableWith": [
+        { "target": "welding_torch", "effect": "power", "description": "The fuel cell slides into the torch's receiver with a satisfying click." },
+        { "target": "emergency_beacon", "effect": "power", "description": "You connect the fuel cell to the beacon's auxiliary power input. The device shivers to life, indicator lights chasing each other in sequence as it runs through self-diagnostics." }
+      ],
+      "combinable": [
+        {
+          "with": "welding_torch",
+          "creates": "welding_torch_powered",
+          "description": "You slot the fuel cell into the torch's receiver port. It clicks home with satisfying precision. The indicator on the handle cycles from red to amber to green, and you feel a faint vibration as the ionization chamber pressurizes. The PW-9 hums with quiet potential -- twenty thousand degrees waiting behind a trigger pull."
+        }
+      ],
+      "properties": {
+        "chargeLevel": 100,
+        "type": "hydrogen",
+        "universal": true
+      },
+      "examineDetail": "Manufactured by Helios Power Systems, Ceres Station. The lot number dates it to six months before the Kepler's Promise launched -- part of the original outfitting, not a later addition. It was packed inside a crate labeled MACHINE SHOP CONSUMABLES, but the crate's manifest seal was broken and re-applied. Someone moved this fuel cell here from somewhere else. Why hide a fuel cell in a cargo crate when the machine shop has a charging rack?"
+    },
+    {
+      "id": "circuit_tester",
+      "name": "Circuit Diagnostic Probe",
+      "description": "A handheld diagnostic probe with a needle-thin contact tip and a small holographic display. When activated, it projects readings in pale blue light: voltage, amperage, resistance, signal integrity, fault codes. It is the electrician's stethoscope, and on a ship this old, every circuit has a story to tell.",
+      "portable": true,
+      "weight": 0.2,
+      "location": "electrical",
+      "hidden": false,
+      "usableWith": [
+        { "target": "console_panel", "effect": "diagnose", "description": "You touch the probe to the circuit board. The holographic display blooms with data -- voltage irregularities cascade through the power bus like a heartbeat with arrhythmia. The fault isn't random. Something is drawing power intermittently from a line that should be dormant." },
+        { "target": "broken_conduit", "effect": "test", "description": "The probe confirms what you suspected: the conduit isn't just damaged, it's been deliberately cut. The edges are too clean for mechanical failure, too precise for an arc fault. Someone used a cutter here." },
+        { "target": "bridge_console", "effect": "diagnose", "description": "You run the probe across the navigation console's input bus. Most channels read nominal, but the long-range communications array shows a strange pattern -- it's receiving power but the signal is being routed through an unfamiliar subsystem." },
+        { "target": "reactor_console", "effect": "diagnose", "description": "The reactor control circuits show cascading fault warnings. Temperature regulation is operating on backup algorithms, and three of the twelve control rod position sensors are reading impossible values. The reactor isn't failing -- it's being run in a configuration its designers never intended." }
+      ],
+      "combinable": [],
+      "properties": {
+        "powered": true,
+        "batteryLevel": 87,
+        "sensitivity": "high"
+      },
+      "examineDetail": "The probe's display shows its last user's diagnostic history -- someone was testing circuits throughout the ship roughly twenty hours before you woke up, based on the timestamps. The readings are still stored: electrical junction 7, cargo bay lighting circuit, cryo bay control panel, bridge communications array. Whoever was working was thorough and methodical, testing systems in a pattern that suggests they were tracing a specific fault. The last entry is truncated, as though the probe was pulled away mid-reading."
+    },
+    {
+      "id": "radiation_badge",
+      "name": "Radiation Dosimeter Badge",
+      "description": "A clip-on badge with a small crystalline window and a digital readout. Standard safety equipment for anyone working near the reactor or passing through sections with inadequate shielding. The crystal darkens proportionally to cumulative radiation exposure. This one's crystal is still mostly clear -- but the digital readout shows the ambient level here is higher than it should be.",
+      "portable": true,
+      "weight": 0.05,
+      "location": "reactor_corridor",
+      "hidden": false,
+      "usableWith": [
+        { "target": "reactor_room", "effect": "measure", "description": "The badge's readout spikes as you approach the reactor. The numbers climb steadily: 15 mSv/hr... 28... 47. The crystal is visibly darkening. This is well beyond safe exposure limits for unshielded work. Whatever's wrong with the reactor, it's leaking radiation through compromised shielding." },
+        { "target": "fuel_storage", "effect": "measure", "description": "The badge reads nominal here -- 0.3 mSv/hr, within normal parameters for a fuel storage area. Whatever is causing the elevated readings, it isn't coming from the fuel reserves." },
+        { "target": "cargo_bay", "effect": "measure", "description": "Interesting. The badge shows a faint but measurable elevation in the cargo bay's aft section -- 2.1 mSv/hr. Not dangerous, but anomalous. Something in one of these crates is mildly radioactive, or there's a shielding gap in the wall separating cargo from the reactor." }
+      ],
+      "combinable": [],
+      "properties": {
+        "cumulativeDose": 0,
+        "currentRate": 0,
+        "alarmThreshold": 50
+      },
+      "examineDetail": "The badge is from a rack mounted on the corridor wall. Eight badges hang in their slots, each labeled with a crew member's name. This one was labeled OKONKWO but the name has been crossed out and UNASSIGNED written below it in marker. Of the eight badges, three are missing from their hooks -- yours, and two others. The badge labeled VASQUEZ shows a crystal that has darkened to a deep amber. Whoever Vasquez was, they spent a lot of time near the reactor. The badge labeled CHEN is missing entirely, hook and all, as though it was torn from the rack."
+    },
+    {
+      "id": "sample_container",
+      "name": "Sterile Sample Container",
+      "description": "A vacuum-sealed collection vessel made of optically clear borosilicate glass with a one-way intake valve and a spectrometric analysis window. The kind of container designed for collecting atmospheric samples, fluid specimens, or particulate matter in conditions where contamination would compromise results. It gleams under the lab's flickering lights, pristine and waiting.",
+      "portable": true,
+      "weight": 0.3,
+      "location": "lab",
+      "hidden": false,
+      "usableWith": [
+        { "target": "atmosphere_vent", "effect": "collect_sample", "description": "You hold the container's intake valve to the vent and crack the seal. Air hisses into the vessel, and the integrated sensor strip changes color -- yellows and reds blooming where you expected blues and greens. Something is very wrong with the atmospheric composition in this section." },
+        { "target": "coolant_leak", "effect": "collect_sample", "description": "You catch a few milliliters of the dripping coolant in the container. The liquid is supposed to be clear and faintly blue. This sample is cloudy, with an iridescent film on the surface that catches the light like oil on water." },
+        { "target": "mysterious_residue", "effect": "collect_sample", "description": "You scrape the dark residue into the container. It has a faintly organic quality that makes your skin crawl -- not quite biological, not quite mineral. It clings to the glass with an almost reluctant surface tension." }
+      ],
+      "combinable": [
+        {
+          "with": "spectrometer",
+          "creates": "analyzed_sample",
+          "description": "You slot the sample container into the spectrometer's analysis cradle. The device hums as it bombards the sample with precisely calibrated light. Data scrolls across the readout, and you feel the blood drain from your face as you read the molecular breakdown. This changes everything."
+        }
+      ],
+      "properties": {
+        "sterile": true,
+        "containsSample": false,
+        "sampleType": null,
+        "capacity": 250
+      },
+      "examineDetail": "The container is one of dozens in a storage rack, but most of the others have been used -- their seals broken, their interiors stained with the ghosts of previous analyses. Three containers near the back of the rack still have samples in them, sealed and labeled in a cramped hand: ATM-7F (CORRIDOR B), ATM-7F (REACTOR ADJ), and UNKNOWN - REF CHEN LOG Y7.188. The last sample is darker than the others, and when you tilt it, something inside moves with a viscosity that water shouldn't have."
+    },
+    {
+      "id": "cable_spool",
+      "name": "Electrical Cable Spool",
+      "description": "A spool of 4-gauge shipboard electrical cable, sheathed in radiation-hardened polymer insulation. About thirty meters remain on the reel, enough for most repair jobs. The cable is rated for the full range of voltages you'd find on a colony ship, from the milliamps of sensor circuits to the brutal amperage of the main power bus. The insulation is cracked in places -- age and radiation taking their toll.",
+      "portable": true,
+      "weight": 3.2,
+      "location": "electrical",
+      "hidden": false,
+      "usableWith": [
+        { "target": "broken_conduit", "effect": "rewire", "description": "You unspool cable and begin the tedious work of rerouting the circuit. Strip, connect, crimp, test. Strip, connect, crimp, test. It's the kind of repetitive precision work that becomes meditative, your hands remembering procedures your conscious mind has half-forgotten after years in cryo." },
+        { "target": "power_junction", "effect": "bypass", "description": "You run a bypass line from the functioning junction to the dead circuit. It's not elegant -- cable zip-tied to bulkhead brackets, connectors that were meant to be temporary becoming permanent -- but it works. Power flows where it hasn't flowed in what might be a very long time." }
+      ],
+      "combinable": [
+        {
+          "with": "insulation_tape",
+          "creates": "insulated_cable",
+          "description": "You wrap the tape around the cable's cracked sections, restoring the insulation integrity. The repaired cable won't win any engineering awards, but it's safe to use in high-voltage applications now. You feel a small, irrational pride in the neatness of your wrap spirals -- some instincts survive even cryogenic sleep."
+        }
+      ],
+      "properties": {
+        "lengthMeters": 30,
+        "gauge": 4,
+        "insulationIntact": false
+      },
+      "examineDetail": "The spool is stamped ELECTRICAL STORES - ISV-7. Beside it on the shelf, a clipboard hangs from a hook with a usage log. Most entries are routine: 2m for lighting circuit repair, 5m for sensor relay replacement. But the last three entries are unusual -- large amounts of cable drawn in quick succession: 8m, 6m, 10m, all signed out by the same person on consecutive days. The destination column for all three just reads 'SPECIAL PROJECT.' The handwriting doesn't match any of the earlier entries."
+    },
+    {
+      "id": "sealant_gun",
+      "name": "Hull Sealant Applicator",
+      "description": "A pneumatic applicator designed for emergency hull repairs, built like a caulking gun but engineered for the vacuum of space. The barrel is thick-walled titanium, the trigger mechanism designed to be operable in EVA gloves. It's empty -- the sealant cartridge has been expended, leaving only a crust of hardened material around the nozzle. Someone used this recently, and used all of it.",
+      "portable": true,
+      "weight": 1.8,
+      "location": "airlock_inner",
+      "hidden": false,
+      "usableWith": [
+        { "target": "hull_breach", "effect": "seal_temporary", "description": "You squeeze the trigger and the loaded sealant flows out in a thick bead, expanding on contact with the vacuum side of the breach. The foam hardens in seconds, forming a temporary but surprisingly strong seal. The pressure differential indicator begins to stabilize. It won't hold forever, but it buys you time.", "requiresProperty": "loaded" },
+        { "target": "cracked_viewport", "effect": "seal", "description": "You trace the sealant along the hairline crack in the viewport. The material flows into the fracture and sets, its expansion properties pulling the crack closed from within. The faint whistle of escaping atmosphere goes silent.", "requiresProperty": "loaded" }
+      ],
+      "combinable": [
+        {
+          "with": "epoxy_resin",
+          "creates": "sealant_gun_loaded",
+          "description": "You crack open the epoxy resin's binary cartridge, feeling the heat as the two components begin their exothermic reaction. Working quickly before it sets, you load the mixed compound into the sealant gun's barrel. The applicator's pressure system engages, and the gun feels heavy and ready in your hand. You have maybe twenty minutes before the epoxy begins to cure inside the barrel, so whatever you're sealing, do it soon."
+        }
+      ],
+      "properties": {
+        "loaded": false,
+        "shotsRemaining": 0,
+        "sealantType": null
+      },
+      "examineDetail": "The hardened sealant residue around the nozzle is a type you recognize -- emergency hull patch compound, rated for vacuum exposure and thermal extremes. But there's something else dried onto the barrel, a smear of something dark and organic. Blood? Grease? It's hard to tell in this light, but it wasn't there when this tool was manufactured. The gun was pulled from its emergency rack recently -- the mounting clips are still warm with the memory of release, and the tool's checkout tag is dated only a few days ago by ship time."
+    },
+    {
+      "id": "sealant_gun_loaded",
+      "name": "Hull Sealant Applicator (Loaded)",
+      "description": "The sealant gun sits heavy in your hand, loaded with mixed epoxy resin and pressurized for application. A faint warmth radiates through the barrel from the curing compound within. You can feel the clock ticking -- this mixture won't stay workable forever.",
+      "portable": true,
+      "weight": 2.5,
+      "location": "nowhere",
+      "hidden": false,
+      "usableWith": [
+        { "target": "hull_breach", "effect": "seal", "description": "You squeeze the trigger and the loaded sealant flows out in a thick bead, expanding on contact with the vacuum side of the breach. The foam hardens in seconds, forming a strong temporary seal. The pressure differential indicator begins to stabilize." },
+        { "target": "cracked_viewport", "effect": "seal", "description": "You trace the sealant along the hairline crack in the viewport. The material flows into the fracture and sets, pulling the crack closed from within. The faint whistle of escaping atmosphere goes silent." },
+        { "target": "pipe_junction", "effect": "seal", "description": "You apply the sealant around the compromised pipe junction. The compound expands to fill every gap and imperfection, then hardens to a rigid seal that should hold against the system's operating pressure." }
+      ],
+      "combinable": [],
+      "properties": {
+        "loaded": true,
+        "shotsRemaining": 3,
+        "curingTimeMinutes": 20,
+        "sealantType": "epoxy"
+      },
+      "examineDetail": "The pressure gauge on the barrel reads nominal. You have enough compound for roughly three applications, assuming standard bead width. The epoxy is still workable but warming steadily as the curing reaction progresses. Through the clear inspection window on the barrel, you can see the compound -- a pearlescent gray that will harden to the color of old bone. Use it wisely. Once it's gone, you'll need to find more resin."
+    },
+    {
+      "id": "eva_suit",
+      "name": "EVA Suit",
+      "description": "A Zhukova-class extravehicular activity suit, designed for maintenance work in vacuum. The outer shell is layered micrometeorite armor over thermal regulation fabric, all of it a faded white that has yellowed slightly with age and radiation exposure. The helmet is a goldfish bowl of reinforced polycarbonate with a heads-up display projected onto the inner surface. It smells, faintly, of recycled sweat and ozone -- the perfume of every spacewalk ever taken.",
+      "portable": true,
+      "weight": 12.5,
+      "location": "airlock_inner",
+      "hidden": false,
+      "usableWith": [
+        { "target": "hull_exterior", "effect": "enable_access", "description": "You seal the suit and cycle the airlock. As atmosphere drains away, the suit stiffens around you, becoming a one-person spacecraft. The outer door opens onto the hull of the Kepler's Promise, and for a moment you forget everything -- the emergency, the mystery, the fear -- because the stars are so impossibly, achingly beautiful from out here." },
+        { "target": "depressurized_section", "effect": "enable_access", "description": "The suit's seals engage and the HUD flickers to life. ATMOSPHERE: VACUUM. SUIT INTEGRITY: 98%. You step through into the depressurized section, your magnetic boots clicking against the deck plates, your breathing loud in the helmet." },
+        { "target": "reactor_room", "effect": "radiation_protection", "description": "The suit provides basic radiation shielding -- enough to extend your safe working time in the reactor room, though not indefinitely. The dosimeter on your wrist begins its patient counting." }
+      ],
+      "combinable": [
+        {
+          "with": "oxygen_tank",
+          "creates": "eva_suit_extended",
+          "description": "You connect the supplemental oxygen tank to the suit's auxiliary port. The HUD updates: O2 RESERVE EXTENDED - 4.2 HOURS NOMINAL. The tank sits against the suit's backpack frame like it was always meant to be there. Four hours. That's four hours of breathing between you and the void."
+        },
+        {
+          "with": "helmet_lamp",
+          "creates": "eva_suit_illuminated",
+          "description": "The helmet lamp clicks into the mounting bracket on the suit's crown with a magnetic snap. You toggle it on, and a cone of brilliant white light stabs out into the darkness. Shadows flee. For the first time since you woke up on this ship, you feel like you can actually see what you're dealing with."
+        }
+      ],
+      "properties": {
+        "integrity": 98,
+        "oxygenHours": 2.0,
+        "radiationShielding": "basic",
+        "thermalRange": [-150, 120],
+        "hasLight": false
+      },
+      "examineDetail": "The suit's nameplate reads CHEN, M. - ENGINEERING. This was someone else's suit. Inside the left glove, someone has written coordinates in permanent marker -- a string of numbers that don't correspond to any navigational format you recognize. The suit's log shows it was last used 72 hours ago, ship time. The external surface bears fresh scuff marks on the knees and forearms, consistent with crawling along the hull. Wherever Chen went in this suit, they went on their hands and knees."
+    },
+    {
+      "id": "eva_suit_extended",
+      "name": "EVA Suit (Extended O2)",
+      "description": "The Zhukova-class EVA suit now carries a supplemental oxygen tank on its backpack frame. The HUD reads a reassuring 4.2 hours of breathing time. Enough to do real work outside. Enough, maybe, to find answers.",
+      "portable": true,
+      "weight": 16.0,
+      "location": "nowhere",
+      "hidden": false,
+      "usableWith": [
+        { "target": "hull_exterior", "effect": "enable_access", "description": "You seal the suit and cycle the airlock. With extended oxygen, you have time to be thorough. The outer door opens onto the hull, and the universe yawns around you -- silent, immense, indifferent to everything that has gone wrong aboard this ship." },
+        { "target": "depressurized_section", "effect": "enable_access", "description": "The extended O2 supply gives you confidence to explore the depressurized section thoroughly. Your boots click against the deck, and the lamp on your helmet -- if you have one -- throws light into corners that haven't been illuminated in years." },
+        { "target": "reactor_room", "effect": "radiation_protection", "description": "The suit provides basic radiation shielding. With extended air, you can spend more time near the reactor, but the radiation doesn't care how much oxygen you have." }
+      ],
+      "combinable": [
+        {
+          "with": "helmet_lamp",
+          "creates": "eva_suit_full",
+          "description": "The helmet lamp snaps onto the suit's crown mount. Light, air, and armor -- you're as prepared as you're going to get. The HUD updates with the lamp's status: EXTERNAL ILLUMINATION ACTIVE."
+        }
+      ],
+      "properties": {
+        "integrity": 98,
+        "oxygenHours": 4.2,
+        "radiationShielding": "basic",
+        "thermalRange": [-150, 120],
+        "hasLight": false
+      },
+      "examineDetail": "The combined rig is heavier than you'd like, but well-balanced. The supplemental tank's gauge is visible in the HUD's peripheral display. You notice the suit's previous occupant left a personal item in the thigh pocket -- a small folded piece of paper. You can't read it through the suit's glove, but it's there, pressed against your leg. A reminder that this suit had another life before you climbed into it."
+    },
+    {
+      "id": "eva_suit_illuminated",
+      "name": "EVA Suit (Illuminated)",
+      "description": "The EVA suit now sports a helmet-mounted lamp that cuts through darkness like a blade. The combination of suit and light transforms you from a vulnerable human into something more capable -- still fragile, but at least you can see what's coming.",
+      "portable": true,
+      "weight": 12.8,
+      "location": "nowhere",
+      "hidden": false,
+      "usableWith": [
+        { "target": "hull_exterior", "effect": "enable_access_lit", "description": "The lamp illuminates the hull surface as you emerge from the airlock, picking out every rivet, every seam, every scar on the ship's skin. In the light, you can see things you'd miss in darkness -- and some of them you wish you had." },
+        { "target": "depressurized_section", "effect": "enable_access_lit", "description": "Your lamp cuts through the absolute darkness of the depressurized section. The beam reveals a corridor frozen in the moment of catastrophe -- objects drifting in zero-gravity where they were abandoned, frost crystals glittering on every surface." },
+        { "target": "dark_area", "effect": "illuminate", "description": "The helmet lamp floods the dark space with clear white light, revealing details hidden by the ship's failed lighting systems." }
+      ],
+      "combinable": [
+        {
+          "with": "oxygen_tank",
+          "creates": "eva_suit_full",
+          "description": "You connect the supplemental oxygen tank to complete the suit's loadout. Light and air -- the two things you need most on a dead ship. The HUD updates: FULL EVA CONFIGURATION. O2 RESERVE: 4.2 HOURS."
+        }
+      ],
+      "properties": {
+        "integrity": 98,
+        "oxygenHours": 2.0,
+        "radiationShielding": "basic",
+        "thermalRange": [-150, 120],
+        "hasLight": true
+      },
+      "examineDetail": "The lamp throws a tight beam with good throw -- easily twenty meters of useful illumination. In its light, the suit's surface tells stories: the scuff marks on the knees, the scratches on the helmet visor, the faint discoloration on one shoulder where something corrosive splashed and was hastily wiped away."
+    },
+    {
+      "id": "eva_suit_full",
+      "name": "EVA Suit (Full Configuration)",
+      "description": "The complete EVA package: suit, extended oxygen, and helmet lamp. You are as prepared as one person can be for whatever the Kepler's Promise has in store. The HUD glows with system readouts, the lamp banishes darkness, and the tank on your back promises hours of breathable air. You're still alone on a dying ship between the stars, but at least you're equipped for it.",
+      "portable": true,
+      "weight": 16.3,
+      "location": "nowhere",
+      "hidden": false,
+      "usableWith": [
+        { "target": "hull_exterior", "effect": "enable_full_access", "description": "You cycle the airlock with the confidence of full preparation. The outer door opens, and you step onto the hull with your lamp blazing and hours of air in reserve. The ship stretches out beneath your feet like a landscape, and above you, the galaxy wheels in silent majesty." },
+        { "target": "depressurized_section", "effect": "enable_full_access", "description": "Fully equipped, you enter the depressurized section. Your lamp sweeps the frozen corridor, your air supply counts down patiently, and the suit holds the void at bay. You're ready." },
+        { "target": "reactor_room", "effect": "radiation_protection", "description": "The full suit configuration gives you maximum time in the reactor room. The shielding isn't perfect, but combined with extended air, you can work methodically instead of rushing." }
+      ],
+      "combinable": [],
+      "properties": {
+        "integrity": 98,
+        "oxygenHours": 4.2,
+        "radiationShielding": "basic",
+        "thermalRange": [-150, 120],
+        "hasLight": true
+      },
+      "examineDetail": "Every system reads green. The suit is a marvel of engineering -- a self-contained environment that can sustain human life in the most hostile conditions known. And yet, wearing it, you're acutely aware of how thin the line is between you and oblivion. A few millimeters of material, a couple of hours of oxygen, and beyond that: nothing. The void transit that gives this journey its name."
+    },
+    {
+      "id": "radiation_shield_panel",
+      "name": "Portable Radiation Shield Panel",
+      "description": "A section of layered lead-bismuth composite shielding, approximately one meter square, with folding handles on two edges. It was designed to be positioned around reactor components during maintenance, absorbing the gamma and neutron radiation that would otherwise cook unprotected flesh. It is extraordinarily heavy for its size -- dense with the weight of the elements that make it effective.",
+      "portable": true,
+      "weight": 28.0,
+      "location": "reactor_room",
+      "hidden": false,
+      "usableWith": [
+        { "target": "reactor_room", "effect": "shield_position", "description": "You wrestle the shield panel into position between yourself and the reactor's compromised shielding. Your dosimeter immediately shows a dramatic drop in exposure rate. Behind this barrier, you can work for considerably longer without accumulating a dangerous dose. Your arms ache from the weight, but the numbers on your badge have stopped climbing so fast." },
+        { "target": "irradiated_corridor", "effect": "create_safe_passage", "description": "You prop the shield panel across the corridor at an angle, creating a narrow safe path past the radiation hotspot. It's like hiding behind a wall -- the radiation goes around, not through. You'll still accumulate some dose from scatter, but it's survivable now." }
+      ],
+      "combinable": [],
+      "properties": {
+        "shieldingFactor": 50,
+        "material": "lead-bismuth composite",
+        "thickness": 4.5,
+        "deployable": true
+      },
+      "examineDetail": "The panel is one of six that originally formed a portable shielding array around the reactor's primary maintenance access. Five of the six are in their storage positions, folded against the wall. This one -- the sixth -- was already unfolded and leaning against the reactor housing when you found it, positioned as though someone had been using it as a shield while working on the reactor's control systems. Behind it, on the deck, you can see scorch marks and tool scratches that suggest prolonged, difficult work. Whoever was here was doing something to the reactor that required heavy shielding and a lot of time."
+    },
+    {
+      "id": "oxygen_tank",
+      "name": "Supplemental Oxygen Tank",
+      "description": "A high-pressure oxygen cylinder in safety orange, compact enough to mount on an EVA suit's backpack frame or carry by its rubberized handle. The gauge reads full -- 2400 PSI of pure, life-sustaining O2. In the thin, stale air of the Kepler's Promise, just holding it makes you feel richer.",
+      "portable": true,
+      "weight": 3.5,
+      "location": "life_support",
+      "hidden": false,
+      "usableWith": [
+        { "target": "eva_suit", "effect": "extend_oxygen", "description": "The tank connects to the suit's auxiliary O2 port. You hear the hiss of pressurization equalizing, and the suit's HUD updates with the new reserve calculation." },
+        { "target": "sealed_room", "effect": "pressurize", "description": "You crack the tank's valve and oxygen hisses into the sealed space. The pressure gauge on the wall begins to climb. It's not a permanent solution -- you're dumping a finite resource into a space that may have leaks -- but it makes the room breathable for now." }
+      ],
+      "combinable": [
+        {
+          "with": "eva_suit",
+          "creates": "eva_suit_extended",
+          "description": "You connect the supplemental oxygen tank to the suit's auxiliary port. The HUD updates: O2 RESERVE EXTENDED - 4.2 HOURS NOMINAL. The tank sits against the suit's backpack frame like it was always meant to be there. Four hours of breathing between you and the void."
+        }
+      ],
+      "properties": {
+        "pressurePSI": 2400,
+        "capacity": "2.2 hours supplemental",
+        "purity": 99.8,
+        "valveCondition": "good"
+      },
+      "examineDetail": "The tank was stored in a rack of four. The other three slots are empty -- their tanks deployed somewhere else on the ship, or used up entirely. A usage log on the rack shows the missing tanks were checked out over the past week, ship time, all by the same authorization code. Someone has been consuming a lot of oxygen. More than one person could breathe, even breathing hard. What were they doing that required so much O2?"
+    },
+    {
+      "id": "helmet_lamp",
+      "name": "Helmet-Mounted Lamp",
+      "description": "A compact but powerful LED lamp designed to mount on EVA suit helmets or hard hats via a magnetic bracket. The beam is adjustable from a tight spot to a wide flood, and the housing is rated for vacuum exposure and extreme temperatures. Its weight is negligible, but its value on a ship with failing lighting is immeasurable. Light is sanity. Light is safety. Light is the difference between walking blind into danger and seeing it coming.",
+      "portable": true,
+      "weight": 0.3,
+      "location": "crew_quarters",
+      "hidden": false,
+      "usableWith": [
+        { "target": "dark_area", "effect": "illuminate", "description": "You click the lamp on and the darkness retreats. The beam picks out details that were invisible before -- the texture of the walls, the condition of the floor, the things that have been left behind in the dark sections of the ship." },
+        { "target": "eva_suit", "effect": "mount", "description": "The lamp's magnetic bracket snaps to the suit's helmet mount with a satisfying click. You toggle it on, and light lances out into whatever darkness lies ahead." }
+      ],
+      "combinable": [
+        {
+          "with": "eva_suit",
+          "creates": "eva_suit_illuminated",
+          "description": "The helmet lamp clicks into the mounting bracket on the suit's crown with a magnetic snap. You toggle it on, and a cone of brilliant white light stabs into the darkness. Shadows flee. For the first time since you woke up on this ship, you feel like you can actually see what you're dealing with."
+        }
+      ],
+      "properties": {
+        "lumens": 1200,
+        "batteryHours": 48,
+        "beamType": "adjustable",
+        "mountType": "magnetic"
+      },
+      "examineDetail": "The lamp was sitting on a bunk in crew quarters -- not in a storage locker or emergency kit, but on a pillow, as though someone set it down before going to sleep and never picked it up again. The bunk is neatly made with military precision, but a personal touch peeks from under the pillow: the corner of a paper photograph. The lamp's battery indicator shows 88% -- it was used recently, but not for long. Whoever set it here meant to come back for it."
+    },
+    {
+      "id": "captains_key",
+      "name": "Captain's Keycard",
+      "description": "A matte-black keycard with a gold stripe and the ship's emblem embossed on one face: a telescope overlaid on a star chart, with ISV-7 KEPLER'S PROMISE in small capitals beneath. It is heavier than a standard crew keycard -- embedded with multiple authentication chips for the captain's elevated access level. Finding it here, hidden in a med bay drawer instead of on the captain's person, raises questions that don't have comfortable answers.",
+      "portable": true,
+      "weight": 0.05,
+      "location": "med_bay",
+      "hidden": true,
+      "usableWith": [
+        { "target": "captains_quarters", "effect": "unlock", "description": "The keycard touches the reader and it flashes green -- a color you haven't seen from many doors on this ship. The captain's quarters unseals with a pneumatic sigh, the door sliding open to reveal the largest private space on the ship. The air that flows out is stale and carries a complex scent: old cologne, recycled atmosphere, and something fainter beneath -- the sour note of stress sweat, of fear." },
+        { "target": "bridge_console", "effect": "authorize", "description": "You insert the captain's key into the authorization slot. The console's display shifts from RESTRICTED ACCESS to a full command interface. Navigation, communications, life support overrides, reactor controls -- everything the captain could command is now at your fingertips. The weight of that authority settles onto your shoulders like a physical thing." },
+        { "target": "secure_locker", "effect": "unlock", "description": "The captain's key overrides the locker's security. The door swings open, revealing contents that were meant to stay hidden." }
+      ],
+      "combinable": [],
+      "properties": {
+        "accessLevel": "captain",
+        "authChips": 3,
+        "encrypted": true
+      },
+      "examineDetail": "The keycard was hidden in a drawer in med bay, beneath a stack of sterile gauze pads. Not carelessly dropped or forgotten -- deliberately concealed. The drawer was closed but not locked, suggesting the person who hid it wanted it to be findable by someone who was looking, but not obvious to a casual glance. The card's edge shows a faint brown stain that might be dried blood. On the back, scratched into the surface with something sharp -- a fingernail? a scalpel? -- are three words: DON'T TRUST CHEN."
+    },
+    {
+      "id": "datapad",
+      "name": "Personal Datapad",
+      "description": "Your personal tablet, a standard-issue Takamatsu DP-4 with a scratch-resistant screen and a rubberized case bearing your name on a printed label. It was in the storage compartment of your cryo pod, along with your other personal effects. When you power it on, the screen flickers to life with the warmth of a familiar face -- your home screen, your settings, your life from before the long sleep. The mission briefing is pinned to the top of your notifications. Below it, personal notes, messages you wrote to yourself before cryo, photographs you brought from Earth.",
+      "portable": true,
+      "weight": 0.3,
+      "location": "cryo_bay",
+      "hidden": false,
+      "usableWith": [
+        { "target": "ship_network", "effect": "access_data", "description": "The datapad connects to the ship's network -- or what remains of it. Several nodes are offline, and the data transfer rate is glacially slow, but you can access crew logs, maintenance records, and system status reports. Much of it is encrypted or corrupted, but pieces of the story begin to emerge." },
+        { "target": "bridge_console", "effect": "download_data", "description": "You dock the datapad with the bridge console and initiate a data transfer. Navigation logs, communication records, and course data flow onto your device. Now you can review it all at your own pace, anywhere on the ship." },
+        { "target": "lab_computer", "effect": "sync_results", "description": "The datapad syncs with the lab's analytical computer, downloading research data and experimental results. The files are extensive, and some are encrypted with personal keys you don't have." }
+      ],
+      "combinable": [],
+      "properties": {
+        "batteryLevel": 73,
+        "storageUsed": "12%",
+        "networkConnected": false,
+        "encryptionKey": "personal"
+      },
+      "examineDetail": "Your pre-cryo notes are a time capsule from another life. The mission briefing is dry and technical: colony ship ISV-7, bound for Kepler-442b, transit time approximately 47 years, crew of 24 plus 1,200 colonists in deep cryo. Your personal notes are more human. A message to yourself: 'If you're reading this, you made it. New world, new start. Don't forget who you were.' Below that, a list of things you were afraid of forgetting: the smell of rain, the sound of traffic, the way sunlight looks through leaves. And at the very bottom, a name -- just a name, with no context -- written three times, as if the act of writing it could keep the memory alive through forty-seven years of frozen sleep."
+    },
+    {
+      "id": "navigation_chip",
+      "name": "Navigation Data Chip",
+      "description": "A fingernail-sized wafer of crystalline storage medium, pulled from the bridge's navigation computer. It contains the ship's course correction data -- every adjustment made to the Kepler's Promise's trajectory since departure. This tiny sliver of engineered crystal holds the answer to a critical question: where exactly is this ship going, and is it where it's supposed to be going?",
+      "portable": true,
+      "weight": 0.01,
+      "location": "bridge",
+      "hidden": true,
+      "usableWith": [
+        { "target": "datapad", "effect": "read_data", "description": "You slot the navigation chip into your datapad's reader. The data unfolds across the screen: course plots, trajectory adjustments, stellar reference points. And there it is -- an unauthorized course correction entered seven days ago, ship time. Someone changed the ship's heading. The deviation is small, just a fraction of a degree, but over interstellar distances, a fraction of a degree means arriving at a completely different star." },
+        { "target": "lab_computer", "effect": "analyze_trajectory", "description": "The lab computer's processing power makes short work of the navigation data. It plots the original course and the modified course on a star chart, and the divergence is clear: the Kepler's Promise is no longer heading for Kepler-442b. Its new trajectory leads to a point in deep space with no catalogued star system -- or at least, none that was catalogued when you left Earth." }
+      ],
+      "combinable": [],
+      "properties": {
+        "dataIntegrity": 97,
+        "encrypted": false,
+        "storage": "crystalline",
+        "lastModified": "Y7.195"
+      },
+      "examineDetail": "The chip should be locked into the navigation computer's primary slot, accessible only to the captain and first officer. Instead, you found it partially ejected, as though someone was in the process of removing it when they were interrupted. The chip's write-protect tab has been overridden -- it should be read-only during transit, but someone enabled write access and made changes. The modification timestamp is Y7.195. You don't know what day it is now, but the cryo bay's revival timer suggested approximately Y7.202. Someone changed this ship's course a week ago."
+    },
+    {
+      "id": "maintenance_log",
+      "name": "Maintenance Log (Printed)",
+      "description": "A sheaf of thermal-printed pages, the kind generated by the ship's automated maintenance logging system. The paper has the slightly waxy feel of archival stock, designed to last for decades without degrading. Someone printed this log and left it on the machine shop workbench -- deliberately, it seems, because the printer is in a different room entirely. These pages were carried here, read here, and annotated in the margins with increasingly agitated handwriting.",
+      "portable": true,
+      "weight": 0.2,
+      "location": "machine_shop",
+      "hidden": false,
+      "usableWith": [
+        { "target": "datapad", "effect": "cross_reference", "description": "You photograph the log pages with your datapad and cross-reference the entries against the ship's digital maintenance records. Several of the logged work orders don't appear in the digital system at all -- they were deleted from the computer but survived on this printout. Someone was covering their tracks, and someone else noticed." },
+        { "target": "captains_quarters", "effect": "present_evidence", "description": "The maintenance log paints a damning picture. Laid out in sequence, the entries tell a story of systematic, unauthorized modifications to the ship's critical systems." }
+      ],
+      "combinable": [],
+      "properties": {
+        "pages": 14,
+        "dateRange": "Y7.180 - Y7.196",
+        "annotated": true,
+        "critical": true
+      },
+      "examineDetail": "The log entries span sixteen days and tell a disturbing story. The first few pages are routine: filter replacements, bearing inspections, calibration checks. But starting on Y7.187, the entries change character. Work orders appear at unusual hours -- 0200, 0300, 0400 ship time -- logged by crew member CHEN, M., ENGINEERING. The descriptions are vague: 'Reactor subsystem adjustment,' 'Communications array recalibration,' 'Navigation system maintenance.' None of these were scheduled, and none were authorized by the chief engineer.\n\nIn the margins, a different hand -- neater, more controlled -- has written annotations: 'NOT ON SCHEDULE.' 'What is this?' 'Checked reactor -- settings changed, WHY?' 'Chen won't explain. Going to captain.'\n\nThe last annotation, on the final page, is written larger and underlined twice: 'Captain knows. Captain APPROVED this. What the hell is going on?'\n\nThe annotator's handwriting is identified on the last page with a scrawled signature: VASQUEZ."
+    },
+    {
+      "id": "crew_manifest",
+      "name": "Crew Manifest",
+      "description": "A bound document with the ship's emblem on the cover -- the official personnel file for ISV-7 Kepler's Promise. It contains photographs, biographical data, assignment records, and psychological evaluations for all twenty-four crew members. Some of the pages have been flagged with adhesive tabs. Others have been removed entirely, their torn edges still clinging to the binding.",
+      "portable": true,
+      "weight": 0.5,
+      "location": "captains_quarters",
+      "hidden": false,
+      "usableWith": [
+        { "target": "datapad", "effect": "scan_data", "description": "You photograph the manifest pages and let your datapad organize the data. Names, faces, specializations, cabin assignments -- the crew of the Kepler's Promise takes shape as a collection of real people with real histories. Cross-referencing with the maintenance log, you begin to map who knew what, and when." }
+      ],
+      "combinable": [],
+      "properties": {
+        "crewCount": 24,
+        "pagesRemoved": 3,
+        "flaggedEntries": 5,
+        "classification": "restricted"
+      },
+      "examineDetail": "The manifest tells you who was aboard this ship. Twenty-four crew members, a mix of engineers, scientists, medical staff, and command officers. The colonists -- 1,200 of them -- are listed in a separate appendix, but you're focused on the crew.\n\nThree pages have been torn out. You can tell from context that they were the entries for crew members CHEN, M., VASQUEZ, R., and OKONKWO, A. Someone didn't want their full records available.\n\nThe flagged entries are revealing:\n- Captain MORRISON, J. -- flag is a sticky note reading 'PREVIOUS MISSION: CLASSIFIED'\n- Chen, M. -- flag reads 'BACKGROUND CHECK INCOMPLETE - SEE ADDENDUM' (but the addendum page is missing)\n- Dr. SINGH, P. (medical officer) -- flag reads 'REPORTED CONCERNS Y7.190'\n- VASQUEZ, R. (chief engineer) -- flag reads 'FILED FORMAL COMPLAINT Y7.194'\n- OKONKWO, A. (communications) -- flag reads 'REQUESTED TRANSFER Y7.191'\n\nThe story is taking shape. Something happened starting around Y7.187 that fractured this crew."
+    },
+    {
+      "id": "personal_photo",
+      "name": "Personal Photograph",
+      "description": "A printed photograph, slightly bent at one corner, showing a sun-drenched afternoon on a world that is now forty-seven light-years away. The colors have a warmth that no ship's lighting can replicate -- the gold of natural sunlight, the green of living things, the blue of an open sky. It is the most precious thing you own, and it weighs almost nothing at all.",
+      "portable": true,
+      "weight": 0.01,
+      "location": "cryo_bay",
+      "hidden": false,
+      "usableWith": [
+        { "target": "crew_quarters", "effect": "place_on_bunk", "description": "You prop the photograph on the shelf above the bunk you've claimed as yours. It leans against the cold metal wall, a rectangle of warmth and memory in this sterile, humming place. Every time you return here, it will remind you that there was a before, and with luck, there will be an after." }
+      ],
+      "combinable": [],
+      "properties": {
+        "emotional": true,
+        "storySignificance": "high",
+        "condition": "slightly worn"
+      },
+      "examineDetail": "You let yourself look -- really look -- at the photograph for the first time since you woke up.\n\nIt shows a garden. Not a grand garden, just a small patch of earth behind a house with a red door. Someone is kneeling in the soil, turned half toward the camera with a surprised smile, as though they were caught in the act of planting something. The light catches their face, and for a moment the years and the light-years collapse to nothing and you are standing right there, holding the camera, saying the thing that made them laugh.\n\nYou remember taking this photograph. You remember the day. You remember the smell of turned earth and the sound of wind in the trees and the way the afternoon stretched out ahead of you as though time were infinite and gentle.\n\nThat world is still there, turning under its yellow star. But the garden will have grown and changed and been forgotten. The person in the photograph will have lived an entire life in the time it took you to cross the void between stars. They are old now, or gone.\n\nYou fold the photograph carefully and put it away. Some weights can't be measured in kilograms."
+    },
+    {
+      "id": "co2_scrubber_cartridge",
+      "name": "CO2 Scrubber Cartridge",
+      "description": "A cylindrical cartridge packed with lithium hydroxide granules, designed to absorb carbon dioxide from the ship's recycled atmosphere. The cartridge slots into the life support system's scrubber array like a round in a magazine. This one is sealed in its original packaging -- vacuum-wrapped, with a moisture indicator strip that still reads blue. Fresh. Effective. The difference between breathing and not.",
+      "portable": true,
+      "weight": 1.8,
+      "location": "cargo_bay",
+      "hidden": false,
+      "usableWith": [
+        { "target": "life_support_system", "effect": "replace_filter", "description": "You eject the spent cartridge -- it's discolored a sickly yellow-brown, completely saturated -- and slot the fresh one into the scrubber array. The system cycles, and within minutes the air quality indicator shifts from amber to green. You take a deep breath of cleaner air and feel the headache you didn't know you had begin to recede." },
+        { "target": "sealed_room", "effect": "improve_air", "description": "You crack the cartridge's seal and set it in the room. The lithium hydroxide begins absorbing CO2 immediately -- not as efficiently as it would in the proper housing, but enough to improve the breathable atmosphere in this enclosed space." }
+      ],
+      "combinable": [],
+      "properties": {
+        "capacity": "48 hours",
+        "condition": "new",
+        "sealed": true,
+        "chemicalType": "lithium hydroxide"
+      },
+      "examineDetail": "The cartridge's packaging is stenciled: LOT 7-2189, MFG OLYMPUS ENVIRONMENTAL SYSTEMS, MARS. A production date of five years before the Kepler's Promise launched. These cartridges were part of the original stores, and this appears to be one of the last unused ones in the cargo bay. The ship should have hundreds of them -- the mission plan called for a forty-seven-year supply -- but the storage rack is nearly empty. Someone has been burning through scrubber cartridges at an alarming rate. The life support system's automatic logs might explain why, if you can access them."
+    },
+    {
+      "id": "coolant_canister",
+      "name": "Reactor Coolant Canister",
+      "description": "A pressurized canister of heavy water coolant, marked with radiation trefoils and temperature warnings. The canister is cold to the touch -- not from the coolant itself, but from the storage environment in fuel storage, where everything is kept at near-freezing temperatures as a safety measure. The liquid inside is crucial to the reactor's operation: without adequate coolant, the reactor overheats. Without the reactor, the ship dies.",
+      "portable": true,
+      "weight": 5.2,
+      "location": "fuel_storage",
+      "hidden": false,
+      "usableWith": [
+        { "target": "reactor_coolant_system", "effect": "refill", "description": "You connect the canister to the coolant system's intake valve and open the flow. The heavy water drains into the circuit with a sound like a slow exhalation. The reactor's temperature gauges, which had been creeping upward with the patience of a glacier, finally begin to stabilize. The ship shudders slightly as thermal stresses equalize, like a fever breaking." },
+        { "target": "overheating_component", "effect": "cool", "description": "You crack the canister's valve and direct a stream of coolant over the overheating component. Steam explodes from the contact point, and the temperature drops rapidly. It's wasteful -- this coolant is irreplaceable -- but it's effective." }
+      ],
+      "combinable": [],
+      "properties": {
+        "volume": "5 liters",
+        "type": "heavy water",
+        "temperature": 4,
+        "pressurized": true,
+        "mildlyRadioactive": true
+      },
+      "examineDetail": "The canister is one of twelve in the fuel storage cooling rack. You count them: twelve slots, eight canisters. Four are missing, and the coolant system's reservoir -- which you can check on the monitoring panel -- is lower than it should be. The reactor has been consuming coolant faster than normal, which points to a thermal management problem. Either the reactor is running hotter than designed, or the coolant is being lost somewhere in the circuit. The floor beneath the cooling rack is dry, so if there's a leak, it's somewhere else in the system."
+    },
+    {
+      "id": "epoxy_resin",
+      "name": "Two-Part Epoxy Resin",
+      "description": "A binary cartridge of structural adhesive -- two components separated by a frangible barrier. Crack the cartridge and the components mix, initiating an exothermic curing reaction that produces a bond stronger than the materials it joins. This particular formulation is rated for vacuum exposure, thermal cycling, and radiation -- the holy trinity of space repair challenges. The cartridge is warm to the touch; even unmixed, the chemicals inside are eager to react.",
+      "portable": true,
+      "weight": 0.6,
+      "location": "machine_shop",
+      "hidden": false,
+      "usableWith": [
+        { "target": "cracked_component", "effect": "bond", "description": "You crack the cartridge and feel the heat of the mixing reaction. Working quickly, you apply the epoxy to the crack. It flows into the gap with capillary precision, and within minutes it's setting hard -- a structural bond that will outlast the component it's repairing." },
+        { "target": "sealant_gun", "effect": "load", "description": "You load the mixed epoxy into the sealant gun's barrel, giving you a precision application tool for hull repairs." }
+      ],
+      "combinable": [
+        {
+          "with": "sealant_gun",
+          "creates": "sealant_gun_loaded",
+          "description": "You crack open the epoxy resin's binary cartridge, feeling the heat as the two components begin their exothermic reaction. Working quickly before it sets, you load the mixed compound into the sealant gun's barrel. The applicator's pressure system engages, and the gun feels heavy and ready in your hand. You have maybe twenty minutes before the epoxy begins to cure inside the barrel, so whatever you're sealing, do it soon."
+        }
+      ],
+      "properties": {
+        "mixed": false,
+        "curingTimeMinutes": 20,
+        "bondStrength": "structural",
+        "thermalTolerance": [-200, 300],
+        "vacuumRated": true
+      },
+      "examineDetail": "The cartridge's label reads ARACHNE STRUCTURAL ADHESIVE - TYPE IV SPACE-RATED. Below the specifications, a handwritten note in marker: 'Last one. Order more from stores.' The note is old, the marker faded. No one ordered more. The machine shop's adhesive locker, which should hold a dozen of these cartridges, is empty except for this single survivor. Someone used the rest. Eleven cartridges of structural epoxy is a lot of bonding -- enough to reassemble something large, or seal something that really didn't want to stay sealed."
+    },
+    {
+      "id": "medical_kit",
+      "name": "Medical Kit",
+      "description": "A standard shipboard medical kit in a white case with a red cross that has faded to pink. Inside, neatly arranged in foam cutouts: antiseptic swabs, adhesive sutures, a diagnostic scanner, pain medication, broad-spectrum antibiotics, anti-radiation compounds, and a small bottle of something the label identifies as ANXIOLYTIC - USE AS DIRECTED. The kit is designed for a crew with no dedicated hospital -- medicine by checklist, triage by necessity.",
+      "portable": true,
+      "weight": 2.0,
+      "location": "med_bay",
+      "hidden": false,
+      "usableWith": [
+        { "target": "player", "effect": "heal", "description": "You treat your injuries with the methodical care of someone following instructions they half-remember from training. Clean the wound, apply the suture, take the medication, wait for the diagnostic scanner to tell you whether you've done it right. The scanner beeps reassuringly. You'll live." },
+        { "target": "injured_crew", "effect": "treat", "description": "You open the kit and begin treatment, letting the diagnostic scanner guide your hands. The scanner's screen shows you what to do in simple, color-coded steps designed for non-medical personnel in emergency situations." }
+      ],
+      "combinable": [],
+      "properties": {
+        "supplies": "80%",
+        "hasAntiRad": true,
+        "hasPainMeds": true,
+        "hasAntibiotics": true,
+        "diagnosticScanner": true
+      },
+      "examineDetail": "The kit has been opened and used recently. The foam cutouts for two items are empty: the anti-radiation medication is gone -- the entire supply, not just a dose -- and the anxiolytic bottle is missing its cap and is half-empty. Someone on this ship was dealing with radiation exposure and severe anxiety. The diagnostic scanner's memory holds its last three readings, if you know how to access them. The antiseptic swabs in one corner of the kit are stained with something that dried brown, and there's a smear of the same substance on the kit's inner lid."
+    },
+    {
+      "id": "stimulant_injector",
+      "name": "Cryo-Recovery Stimulant Injector",
+      "description": "A single-use autoinjector loaded with a cocktail of compounds designed to counteract the effects of extended cryogenic sleep: cognitive fog, muscle weakness, nausea, and the bone-deep cold that lingers for hours after revival. The injector is body-temperature from the warming sleeve built into its case. Pressing it to your neck would flood your system with precisely calibrated stimulants, vasodilators, and neural accelerants. The label warns: ONE DOSE PER REVIVAL CYCLE. DO NOT EXCEED.",
+      "portable": true,
+      "weight": 0.1,
+      "location": "med_bay",
+      "hidden": false,
+      "usableWith": [
+        { "target": "player", "effect": "use_stimulant", "description": "You press the injector to your neck and feel the click of activation. For a moment, nothing. Then warmth floods through you like a sunrise from inside -- your thoughts sharpen, the trembling in your hands steadies, the fog lifts. Colors seem brighter. The persistent nausea from cryo-revival fades to nothing. You feel, for the first time since waking, genuinely alert. Genuinely yourself. The effect will last for hours." }
+      ],
+      "combinable": [],
+      "properties": {
+        "used": false,
+        "singleUse": true,
+        "effects": ["clarity", "warmth", "anti-nausea", "neural acceleration"],
+        "duration": "6 hours"
+      },
+      "examineDetail": "The injector is one of twenty-four in a dispensing rack -- one per crew member. The rack tracks usage with small indicator lights: green for available, red for dispensed. Scanning the rack, you count: twenty-four slots, twenty-one showing red. Three green, including this one. Twenty-one crew members were revived from cryo before you. The ship's standard protocol calls for staggered revival only in emergencies, and even then, no more than four at a time. Twenty-one people woke up. The question is: where are they now?"
+    },
+    {
+      "id": "spectrometer",
+      "name": "Handheld Spectrometer",
+      "description": "A precision analytical instrument about the size of a thick paperback, with a sample intake port on one end and a high-resolution display on the other. The spectrometer bombards samples with calibrated light across the full electromagnetic spectrum and reads the absorption patterns to identify chemical composition. It can analyze gases, liquids, and solids. On a colony ship, it was meant for surveying the new world. Here, now, it surveys a different kind of unknown.",
+      "portable": true,
+      "weight": 0.8,
+      "location": "lab",
+      "hidden": false,
+      "usableWith": [
+        { "target": "atmosphere_vent", "effect": "analyze_air", "description": "You hold the spectrometer to the vent and let it sample the airflow. The display fills with spectral lines -- nitrogen, oxygen, carbon dioxide, the expected gases. But there are additional lines, compounds that shouldn't be present in a ship's atmosphere. The spectrometer identifies them with clinical precision, and the implications are deeply troubling." },
+        { "target": "mysterious_residue", "effect": "analyze", "description": "The spectrometer's beam plays across the residue, and the display builds a molecular profile. The compound is complex -- far too complex to be a simple chemical spill or mechanical byproduct. Some of the molecular structures the spectrometer identifies don't match anything in its database." },
+        { "target": "coolant_canister", "effect": "test_purity", "description": "You test the coolant with the spectrometer. The heavy water is contaminated -- trace elements that shouldn't be there, including isotopes that suggest prolonged exposure to abnormal neutron flux. The reactor isn't just running hot; it's running wrong." }
+      ],
+      "combinable": [
+        {
+          "with": "sample_container",
+          "creates": "analyzed_sample",
+          "description": "You slot the sample container into the spectrometer's analysis cradle. The device hums as it bombards the sample with precisely calibrated light. Data scrolls across the readout, and you feel the blood drain from your face as you read the molecular breakdown. This changes everything."
+        }
+      ],
+      "properties": {
+        "calibrated": true,
+        "batteryLevel": 92,
+        "databaseVersion": "3.7.1",
+        "spectralRange": "UV through far infrared"
+      },
+      "examineDetail": "The spectrometer's analysis history reveals its recent use. Someone has been running tests -- lots of them. Atmospheric samples from multiple ship locations, material analyses of hull components, and most disturbingly, three analyses labeled BIOLOGICAL SAMPLE in the log. The biological results are locked behind a password, but the atmospheric data is accessible. The readings show progressive changes in the ship's air composition over several days, a drift toward something the spectrometer's database flags as anomalous but cannot fully identify."
+    },
+    {
+      "id": "analyzed_sample",
+      "name": "Analyzed Sample (Spectrometric Data)",
+      "description": "The sample container sits in the spectrometer's cradle, its contents now fully characterized by the instrument's analytical eye. The spectrometer's display glows with molecular diagrams and compositional data that tell a story the naked eye could never read. Whatever is in this sample, you now know exactly what it is. Whether you understand what it means is another question entirely.",
+      "portable": true,
+      "weight": 1.1,
+      "location": "nowhere",
+      "hidden": false,
+      "usableWith": [
+        { "target": "datapad", "effect": "record_data", "description": "You transfer the spectral analysis data to your datapad. The molecular profiles, compositional breakdowns, and anomaly flags are all preserved. This is evidence now -- hard data that can't be disputed or erased." },
+        { "target": "lab_computer", "effect": "deep_analysis", "description": "The lab computer takes the spectrometric data and runs it through its full analytical suite. Pattern matching, database comparison, predictive modeling. The results are more detailed than the handheld spectrometer could provide, and considerably more alarming." }
+      ],
+      "combinable": [],
+      "properties": {
+        "dataComplete": true,
+        "anomaliesDetected": true,
+        "samplePreserved": true
+      },
+      "examineDetail": "The spectrometric data reveals a composition that defies easy categorization. The primary components are identifiable -- standard atmospheric gases, trace minerals, water vapor. But woven through the expected chemistry is something else: a complex organic compound with a molecular weight that suggests biological origin, but a structure that doesn't match any organism in the spectrometer's database. It's not toxic, exactly. It's not pathogenic, exactly. But it's present throughout the ship's atmosphere at concentrations that have been increasing steadily. Something is producing this compound, somewhere on the ship, and it's been doing so for days."
+    },
+    {
+      "id": "pressure_gauge",
+      "name": "Precision Pressure Gauge",
+      "description": "A handheld gauge with a needle-thin probe and an analog dial backed by a digital readout -- redundant measurement systems for when accuracy matters. The dial face is etched with markings for atmospheric pressure, vacuum, and everything in between. A tool for measuring the breath of the ship itself: the pressure in its corridors, its pipes, its sealed compartments. Wherever atmosphere exists or should exist, this gauge can tell you the truth of it.",
+      "portable": true,
+      "weight": 0.4,
+      "location": "life_support",
+      "hidden": false,
+      "usableWith": [
+        { "target": "hull_section", "effect": "check_integrity", "description": "You press the probe against the hull and read the differential. The gauge confirms what you suspected: pressure is dropping in this section, slowly but measurably. There's a leak somewhere, and the ship's atmosphere is bleeding into space one molecule at a time." },
+        { "target": "sealed_door", "effect": "check_pressure", "description": "You check the pressure differential across the sealed door. The gauge shows significantly lower pressure on the other side -- not vacuum, but close. Opening this door without equalization would be dangerous." },
+        { "target": "pipe_system", "effect": "check_flow", "description": "You tap into the pipe system with the gauge's probe. The pressure readings tell a story: intermittent drops that suggest a valve cycling open and closed somewhere downstream. The pattern is too regular to be a malfunction -- something is deliberately controlling the flow." }
+      ],
+      "combinable": [],
+      "properties": {
+        "accuracy": "0.01 kPa",
+        "range": "0 - 500 kPa",
+        "calibrated": true,
+        "dualReadout": true
+      },
+      "examineDetail": "The gauge's calibration sticker shows it was last certified on Y7.001 -- the beginning of the current mission year. Someone was meticulous about keeping instruments calibrated. The probe tip shows wear consistent with heavy use, and there are faint marks on the dial face where someone pressed a fingertip against the glass, leaving a smudge over the reading for 82 kPa. Normal atmospheric pressure on the ship should be 101.3 kPa. Eighty-two would mean a significant loss -- enough to cause headaches, shortness of breath, and impaired judgment. Enough that you might not notice something was wrong until it was almost too late."
+    },
+    {
+      "id": "torque_wrench",
+      "name": "Calibrated Torque Wrench",
+      "description": "A heavy-duty torque wrench with a digital readout and adjustable settings, calibrated for the specific fastener specifications used throughout the Kepler's Promise. The reactor's containment bolts, in particular, require precisely calibrated torque values -- too loose and containment fails, too tight and the bolts shear under thermal expansion. This wrench is the only tool aboard rated for that job. Its socket head is scarred from use, and the grip is worn smooth by hands that aren't yours.",
+      "portable": true,
+      "weight": 1.5,
+      "location": "machine_shop",
+      "hidden": false,
+      "usableWith": [
+        { "target": "reactor_bolts", "effect": "tighten", "description": "You set the torque wrench to the specification stamped on the reactor's maintenance plate and fit the socket over the first bolt. Click. Click. Click. Each bolt tightens to exactly the right value, the wrench clicking when the target torque is reached. It's deeply satisfying work -- mechanical, precise, and critically important." },
+        { "target": "thruster_valve", "effect": "remove", "description": "The wrench fits the valve's mounting bolts perfectly. You work each one free with controlled force, feeling the bolts release their grip on the mounting flange. The old valve comes loose with a groan of protest." },
+        { "target": "access_panel", "effect": "open", "description": "The recessed bolts on this panel require the torque wrench's deep socket. You work them out one by one, each turning reluctantly after years of thermal cycling has tried to weld them in place." }
+      ],
+      "combinable": [],
+      "properties": {
+        "torqueRange": "10 - 250 Nm",
+        "calibrated": true,
+        "socketSize": "universal",
+        "digital": true
+      },
+      "examineDetail": "The wrench's digital memory stores its recent usage: torque values applied, bolt positions, timestamps. The last session shows someone working on the reactor containment bolts at Y7.193, 0300 hours ship time. The torque values they applied are wrong -- not dangerously wrong, but deliberately reduced from specification. Someone loosened the reactor's containment bolts by about 15%. The result wouldn't be catastrophic failure, but it would allow increased radiation leakage through the containment seals. Why would anyone deliberately compromise reactor containment?"
+    },
+    {
+      "id": "antenna_component",
+      "name": "Communications Antenna Component",
+      "description": "A high-gain antenna feed assembly, packed in anti-static foam inside a cargo crate. The component is a critical part of the ship's long-range communications array -- without it, the array can receive but cannot transmit. It is precision-engineered, fragile, and irreplaceable this far from any manufacturing facility. Someone removed it from its designated storage location and hidden it here, buried under packing material in a crate labeled AGRICULTURAL SUPPLIES.",
+      "portable": true,
+      "weight": 1.2,
+      "location": "cargo_bay",
+      "hidden": true,
+      "usableWith": [
+        { "target": "comms_array", "effect": "repair", "description": "You seat the antenna feed assembly into the communications array's mounting cradle. The connections align with satisfying precision, and the array's status indicators begin cycling through their startup sequence. For the first time in what might be days, the Kepler's Promise has a voice. Whether anyone is close enough to hear it is another question." },
+        { "target": "emergency_beacon", "effect": "boost_signal", "description": "Wiring the antenna component into the emergency beacon's output stage dramatically increases its effective range. The signal that was barely a whisper becomes a shout -- not loud enough to reach Earth, but perhaps loud enough to reach someone closer." }
+      ],
+      "combinable": [],
+      "properties": {
+        "type": "high-gain feed assembly",
+        "frequency": "X-band",
+        "condition": "good",
+        "compatible": "ISV-7 comms array"
+      },
+      "examineDetail": "The antenna component was deliberately hidden. It wasn't misplaced or stored incorrectly -- it was removed from the communications equipment locker (you can see the empty mounting bracket when you check) and concealed in a cargo crate, beneath several kilograms of vacuum-sealed seed packets. Whoever hid it didn't want the ship communicating with anyone. The component itself is undamaged, which suggests the saboteur -- and this is sabotage, there's no other word for it -- wanted to disable communications without destroying the ability to restore them. A reversible act. A precaution, not a permanent measure. What were they afraid the ship might say, or to whom?"
+    },
+    {
+      "id": "thruster_valve",
+      "name": "Thruster Control Valve (Replacement)",
+      "description": "A precision-machined propulsion valve, designed to regulate the flow of reaction mass to the ship's maneuvering thrusters. This one is new -- still in its protective wrapping, the machined surfaces gleaming with a thin coat of preservative oil. The valve currently installed in the engine room is damaged, its actuator mechanism seized and its sealing surfaces scored. This replacement could restore the ship's ability to make course corrections -- if you can install it.",
+      "portable": true,
+      "weight": 3.8,
+      "location": "engine_room",
+      "hidden": false,
+      "usableWith": [
+        { "target": "thruster_mount", "effect": "install", "description": "You carefully seat the new valve into the thruster mount, aligning the bolt holes with practiced precision. The mounting surface is clean and undamaged -- the old valve's failure didn't compromise the housing. One by one, you thread the bolts home. The valve seats perfectly, and when you connect the actuator cable, it cycles smoothly: open, closed, open, closed. The ship can maneuver again." }
+      ],
+      "combinable": [],
+      "properties": {
+        "condition": "new",
+        "compatibility": "ISV-7 thruster array",
+        "installationRequired": true,
+        "requiresTool": "torque_wrench"
+      },
+      "examineDetail": "The replacement valve was stored in the engine room's spare parts locker, exactly where it should be. What's unusual is the damaged valve it's meant to replace. You examine the seized valve still mounted in the thruster assembly: the actuator mechanism didn't fail from wear or age. The scoring on the sealing surfaces is too uniform, too deliberate. Someone sabotaged this valve, introducing an abrasive compound into the actuator mechanism that ground the precision surfaces to uselessness over the course of several operating cycles. The ship's inability to maneuver is not an accident. It was engineered."
+    },
+    {
+      "id": "insulation_tape",
+      "name": "Electrical Insulation Tape",
+      "description": "A roll of high-dielectric insulation tape, designed for shipboard electrical repairs in environments where standard tape would fail. This material is rated for extreme temperatures, radiation exposure, and decades of service life. It tears cleanly, adheres tenaciously, and does the one simple thing it was designed to do with perfect reliability. In a ship full of complex systems that are failing in complex ways, there is something comforting about a tool this straightforward.",
+      "portable": true,
+      "weight": 0.2,
+      "location": "electrical",
+      "hidden": false,
+      "usableWith": [
+        { "target": "exposed_wire", "effect": "insulate", "description": "You wrap the tape around the exposed conductor in neat, overlapping spirals. The dielectric material bonds to itself and to the wire's existing insulation, creating a seal that should hold indefinitely. It's not a permanent repair by engineering standards, but out here, between the stars, nothing is permanent." },
+        { "target": "cable_spool", "effect": "repair_insulation", "description": "You systematically work your way along the cable, wrapping tape around every crack and gap in the aging insulation. The repaired cable won't pass a factory inspection, but it's safe to carry current again." }
+      ],
+      "combinable": [
+        {
+          "with": "cable_spool",
+          "creates": "insulated_cable",
+          "description": "You wrap the tape around the cable's cracked sections, restoring the insulation integrity. The repaired cable won't win any engineering awards, but it's safe to use in high-voltage applications now. You feel a small, irrational pride in the neatness of your wrap spirals -- some instincts survive even cryogenic sleep."
+        }
+      ],
+      "properties": {
+        "lengthMeters": 50,
+        "dielectricStrength": "30 kV/mm",
+        "temperatureRange": [-80, 260],
+        "selfBonding": true
+      },
+      "examineDetail": "The roll has been used recently -- the end of the tape is freshly torn, not dried and curled as it would be after long storage. In the electrical room's waste bin, you find several short pieces of discarded tape, cut to lengths that suggest someone was wrapping something small and cylindrical -- like a wire junction. The work was done carefully; the tape pieces are all the same length, suggesting measured, deliberate application. Whatever was repaired or modified in this room, it was done with care and intention."
+    },
+    {
+      "id": "insulated_cable",
+      "name": "Insulated Electrical Cable",
+      "description": "The cable spool's cracked insulation has been carefully restored with high-dielectric tape, each damaged section wrapped in neat spirals. The repaired cable is safe for high-voltage applications and ready for whatever rewiring the Kepler's Promise demands. It's a small victory -- thirty meters of functional cable -- but on a ship where systems are failing one by one, every repair matters.",
+      "portable": true,
+      "weight": 3.4,
+      "location": "nowhere",
+      "hidden": false,
+      "usableWith": [
+        { "target": "broken_conduit", "effect": "rewire_safely", "description": "With properly insulated cable, you can rewire the damaged conduit without risking an arc fault. You route the new cable along the existing conduit path, making clean connections at each junction. Power flows through the repaired circuit, and a section of the ship that was dark flickers back to life." },
+        { "target": "power_junction", "effect": "bypass_safely", "description": "You run the insulated cable as a bypass line, confident that the repaired insulation will prevent shorts in the cable tray. The bypass restores power to the affected systems, and the ship feels marginally more alive." },
+        { "target": "comms_array", "effect": "rewire_power", "description": "You use the insulated cable to restore the communications array's power feed. The old wiring was compromised -- deliberately or not -- but the new cable carries clean power to the array's systems." }
+      ],
+      "combinable": [],
+      "properties": {
+        "lengthMeters": 30,
+        "gauge": 4,
+        "insulationIntact": true,
+        "safeForHighVoltage": true
+      },
+      "examineDetail": "The cable is ready for use. Your tape work is clean and professional -- the wraps are evenly spaced, properly overlapping, with no gaps or bubbles. It's the kind of work that would earn a nod of approval from a chief engineer. Somewhere in the back of your mind, a training memory surfaces: the instructor's voice saying 'A good wrap saves lives.' You didn't remember that until just now. Cryo does strange things to memory -- skills survive while the names and faces that taught them fade."
+    },
+    {
+      "id": "emergency_beacon",
+      "name": "Emergency Distress Beacon",
+      "description": "A bright-orange device the size of a shoebox, bolted to a mounting bracket on the bridge's emergency panel. The universal distress beacon, designed to broadcast an SOS signal on all standard frequencies with the ship's identity, position, and a brief status message. Its small but persistent transmitter can run for years on its internal battery. The question that weighs on you as you look at it isn't whether it works -- it probably does. The question is whether anyone is close enough to hear it. The Kepler's Promise is decades from Earth and years from its destination. The nearest inhabited system is impossibly far away. Broadcasting a distress signal out here is like shouting into a cathedral so vast that the far wall is measured in light-years.",
+      "portable": true,
+      "weight": 4.5,
+      "location": "bridge",
+      "hidden": false,
+      "usableWith": [
+        { "target": "hull_exterior", "effect": "deploy_external", "description": "You mount the beacon on the hull's exterior antenna bracket, giving it the clearest possible transmission path. The beacon activates with a steady pulse that you can feel through the hull -- a heartbeat of electromagnetic energy, radiating outward at the speed of light. It will reach the nearest star system in years. It will reach Earth in decades. But it's transmitting, and that means hope, however thin." },
+        { "target": "comms_array", "effect": "boost_signal", "description": "You patch the beacon through the ship's communications array, using the full power of the Kepler's Promise's transmitter to amplify the distress signal. The range increases dramatically. It's still shouting into an ocean of emptiness, but now it's shouting louder." }
+      ],
+      "combinable": [],
+      "properties": {
+        "powered": true,
+        "batteryYears": 5,
+        "signalStrength": "low",
+        "frequency": "universal distress",
+        "broadcasting": false
+      },
+      "examineDetail": "The beacon's status panel shows it is functional but not activated. Someone made a deliberate choice not to send a distress signal. The activation log shows that the beacon was powered on briefly at Y7.190, ran for approximately four minutes, then was manually deactivated. Four minutes -- long enough to send a brief message, but far short of the continuous broadcast needed for a standard distress signal. Was someone sending a targeted communication disguised as a distress beacon test? The beacon's transmission log would tell you exactly what was sent, but it's been wiped. Not corrupted -- wiped. Cleanly, deliberately, by someone who knew exactly how to erase their tracks."
+    }
+  ]
+}

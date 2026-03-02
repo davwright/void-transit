@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOID TRANSIT</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="terminal">
+    <div id="scanline"></div>
+    <div id="output"></div>
+    <div id="input-area">
+      <span id="prompt-char">&gt;</span>
+      <input type="text" id="input" autocomplete="off" autofocus spellcheck="false" placeholder="What do you do?">
+    </div>
+    <div id="status-bar">
+      <span id="status-location">---</span>
+      <span id="status-health">HP: ---</span>
+      <span id="status-turn">Turn: 0</span>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+import { GameState, Intent, ActionResult, ItemDef } from '../types';
+import NavigationManager from './NavigationManager';
+import InventoryManager from './InventoryManager';
+import PuzzleEngine from './PuzzleEngine';
+import StoryManager from './StoryManager';
+
+class CommandProcessor {
+  nav: NavigationManager;
+  inv: InventoryManager;
+  puzzle: PuzzleEngine;
+  story: StoryManager;
+
+  constructor(navigationManager: NavigationManager, inventoryManager: InventoryManager, puzzleEngine: PuzzleEngine, storyManager: StoryManager) {
+    this.nav = navigationManager;
+    this.inv = inventoryManager;
+    this.puzzle = puzzleEngine;
+    this.story = storyManager;
+  }
+
+  process(intent: Intent, gameState: GameState): ActionResult {
+    const action = intent.action;
+    const target = intent.target;
+    const instrument = intent.instrument;
+
+    switch (action) {
+      case 'move': return this._handleMove(target, gameState);
+      case 'look': return this._handleLook(target, gameState);
+      case 'examine': return this._handleExamine(target, gameState);
+      case 'take': case 'get': case 'pick_up': return this._handleTake(target, gameState);
+      case 'drop': return this._handleDrop(target, gameState);
+      case 'inventory': return this._handleInventory(gameState);
+      case 'use': return this._handleUse(target, instrument, gameState);
+      case 'combine': return this._handleCombine(target, instrument, gameState);
+      case 'equip': case 'wear': case 'put_on': return this._handleEquip(target, gameState);
+      case 'unequip': case 'remove': return this._handleUnequip(target, gameState);
+      case 'open': return this._handleOpen(target, gameState);
+      case 'read': return this._handleRead(target, gameState);
+      case 'status': return this._handleStatus(gameState);
+      case 'help': return this._handleHelp();
+      case 'systems': return this._handleSystems(gameState);
+      case 'hint': return this._handleHint(gameState);
+      case 'wait': return this._handleWait(gameState);
+      case 'puzzle_action': return this._handlePuzzleAction(target, intent.value || null, gameState);
+      case 'talk': return this._handleTalk(target, gameState);
+      case 'search': return this._handleSearch(target, gameState);
+      case 'map': return this._handleMap(gameState);
+      default: return this._handleUnknown(intent, gameState);
+    }
+  }
+
+  _handleMove(direction: string | null, gameState: GameState): ActionResult {
+    const dirMap: Record<string, string> = {
+      north: 'north', n: 'north', south: 'south', s: 'south',
+      east: 'east', e: 'east', west: 'west', w: 'west',
+      up: 'up', u: 'up', down: 'down', d: 'down',
+      in: 'in', enter: 'in', out: 'out', exit: 'out'
+    };
+
+    const dir = dirMap[direction || ''] || direction || '';
+    const result = this.nav.move(gameState.currentRoom, dir, gameState);
+
+    if (!result.allowed) {
+      return { type: 'move_failed', message: result.reason };
+    }
+
+    gameState.previousRoom = gameState.currentRoom;
+    gameState.currentRoom = result.roomId!;
+
+    const roomDesc = this.nav.getRoomDescription(result.roomId!, gameState);
+    const items = this.inv.getVisibleItemsInRoom(result.roomId!, gameState);
+    const exits = this.nav.getVisibleExits(result.roomId!, gameState);
+    const puzzleTriggers = this.puzzle.checkPuzzleTriggers(result.roomId!, gameState);
+    const foreshadowing = this.story.checkForeshadowing(result.roomId!, gameState);
+
+    return {
+      type: 'move_success',
+      roomId: result.roomId,
+      roomName: result.room!.name,
+      description: roomDesc,
+      isFirstVisit: result.isFirstVisit,
+      items: items.map(i => ({ id: i.id, name: i.name })),
+      exits: exits.map(e => ({ direction: e.direction, accessible: e.accessible })),
+      puzzleTriggers: puzzleTriggers.map(p => ({ id: p.id, name: p.name, description: p.description })),
+      foreshadowing
+    };
+  }
+
+  _handleLook(target: string | null, gameState: GameState): ActionResult {
+    if (!target || target === 'around' || target === 'room') {
+      const room = this.nav.getRoom(gameState.currentRoom);
+      const roomDesc = this.nav.getRoomDescription(gameState.currentRoom, gameState);
+      const items = this.inv.getVisibleItemsInRoom(gameState.currentRoom, gameState);
+      const exits = this.nav.getVisibleExits(gameState.currentRoom, gameState);
+
+      return {
+        type: 'look',
+        roomId: gameState.currentRoom,
+        roomName: room ? room.name : 'Unknown',
+        description: roomDesc,
+        items: items.map(i => ({ id: i.id, name: i.name })),
+        exits: exits.map(e => ({ direction: e.direction, accessible: e.accessible }))
+      };
+    }
+
+    return this._handleExamine(target, gameState);
+  }
+
+  _handleExamine(target: string | null, gameState: GameState): ActionResult {
+    const itemId = this._resolveItemId(target, gameState);
+    if (!itemId) {
+      const room = this.nav.getRoom(gameState.currentRoom);
+      if (room && room.examineTargets && room.examineTargets[target!]) {
+        return {
+          type: 'examine',
+          target: target || undefined,
+          text: room.examineTargets[target!]
+        };
+      }
+      return { type: 'examine_failed', message: `You don't see "${target}" here.` };
+    }
+
+    const result = this.inv.examine(itemId, gameState);
+    if (!result.allowed) {
+      return { type: 'examine_failed', message: result.reason };
+    }
+
+    return { type: 'examine', target: result.item!.name, text: result.text, itemId };
+  }
+
+  _handleTake(target: string | null, gameState: GameState): ActionResult {
+    const itemId = this._resolveItemId(target, gameState);
+    if (!itemId) return { type: 'take_failed', message: `You don't see "${target}" here.` };
+
+    const result = this.inv.pickUp(itemId, gameState);
+    return result.allowed
+      ? { type: 'take_success', itemId, itemName: result.item!.name, message: result.message }
+      : { type: 'take_failed', message: result.reason };
+  }
+
+  _handleDrop(target: string | null, gameState: GameState): ActionResult {
+    const itemId = this._resolveInventoryItem(target, gameState);
+    if (!itemId) return { type: 'drop_failed', message: `You're not carrying "${target}".` };
+
+    const result = this.inv.drop(itemId, gameState);
+    return result.allowed
+      ? { type: 'drop_success', itemId, message: result.message }
+      : { type: 'drop_failed', message: result.reason };
+  }
+
+  _handleInventory(gameState: GameState): ActionResult {
+    const items = this.inv.getInventory(gameState);
+    const weight = this.inv.getCarryWeight(gameState);
+    const equipped = (gameState.equipped || []).map(id => this.inv.getItemDef(id)).filter(Boolean) as ItemDef[];
+
+    return {
+      type: 'inventory',
+      items: items.map(i => ({ id: i.id, name: i.name, weight: i.weight })),
+      equipped: equipped.map(i => ({ id: i.id, name: i.name })),
+      totalWeight: weight,
+      maxWeight: 25
+    };
+  }
+
+  _handleUse(target: string | null, instrument: string | null, gameState: GameState): ActionResult {
+    const itemId = this._resolveInventoryItem(target, gameState);
+    if (!itemId) return { type: 'use_failed', message: `You're not carrying "${target}".` };
+
+    if (instrument) {
+      const targetId = this._resolveItemId(instrument, gameState) || instrument;
+      const result = this.inv.useItem(itemId, targetId, gameState);
+      return result.allowed
+        ? { type: 'use_success', message: result.message, systemChange: result.systemChange }
+        : { type: 'use_failed', message: result.reason };
+    }
+
+    const roomId = gameState.currentRoom;
+    const result = this.inv.useItem(itemId, roomId, gameState);
+    return result.allowed
+      ? { type: 'use_success', message: result.message, systemChange: result.systemChange }
+      : { type: 'use_failed', message: result.reason };
+  }
+
+  _handleCombine(item1: string | null, item2: string | null, gameState: GameState): ActionResult {
+    const id1 = this._resolveInventoryItem(item1, gameState);
+    const id2 = this._resolveInventoryItem(item2, gameState);
+    if (!id1) return { type: 'combine_failed', message: `You're not carrying "${item1}".` };
+    if (!id2) return { type: 'combine_failed', message: `You're not carrying "${item2}".` };
+
+    const result = this.inv.combine(id1, id2, gameState);
+    return result.allowed
+      ? { type: 'combine_success', message: result.message, created: result.created ? result.created.name : null }
+      : { type: 'combine_failed', message: result.reason };
+  }
+
+  _handleEquip(target: string | null, gameState: GameState): ActionResult {
+    const itemId = this._resolveInventoryItem(target, gameState);
+    if (!itemId) return { type: 'equip_failed', message: `You're not carrying "${target}".` };
+
+    const result = this.inv.equip(itemId, gameState);
+    return result.allowed
+      ? { type: 'equip_success', message: result.message }
+      : { type: 'equip_failed', message: result.reason };
+  }
+
+  _handleUnequip(target: string | null, gameState: GameState): ActionResult {
+    const itemId = this._resolveInventoryItem(target, gameState);
+    if (!itemId) return { type: 'unequip_failed', message: `You're not wearing "${target}".` };
+
+    const result = this.inv.unequip(itemId, gameState);
+    return result.allowed
+      ? { type: 'unequip_success', message: result.message }
+      : { type: 'unequip_failed', message: result.reason };
+  }
+
+  _handleOpen(target: string | null, gameState: GameState): ActionResult {
+    const room = this.nav.getRoom(gameState.currentRoom);
+    if (room && room.openTargets && room.openTargets[target!]) {
+      const openResult = room.openTargets[target!];
+      if (openResult.revealsItem) {
+        gameState.itemHidden[openResult.revealsItem] = false;
+      }
+      if (openResult.flags) {
+        Object.assign(gameState.flags, openResult.flags);
+      }
+      return { type: 'open_success', message: openResult.message };
+    }
+
+    const itemId = this._resolveItemId(target, gameState);
+    if (itemId) {
+      const def = this.inv.getItemDef(itemId);
+      if (def && def.openable) {
+        if (def.openReveals) {
+          for (const revealId of def.openReveals) {
+            gameState.itemHidden[revealId] = false;
+          }
+        }
+        return { type: 'open_success', message: def.openMessage || `You open the ${def.name}.` };
+      }
+    }
+
+    return { type: 'open_failed', message: `You can't open "${target}".` };
+  }
+
+  _handleRead(target: string | null, gameState: GameState): ActionResult {
+    const itemId = this._resolveItemId(target, gameState);
+    if (!itemId) return { type: 'read_failed', message: `You don't see "${target}" to read.` };
+
+    const def = this.inv.getItemDef(itemId);
+    if (!def) return { type: 'read_failed', message: "That doesn't exist." };
+
+    if (def.readable) {
+      if (def.readReveals) {
+        Object.assign(gameState.flags, def.readReveals);
+      }
+      return { type: 'read_success', text: def.readText || def.examineDetail || def.description, itemName: def.name };
+    }
+
+    return { type: 'read_failed', message: `There's nothing to read on the ${def.name}.` };
+  }
+
+  _handleStatus(gameState: GameState): ActionResult {
+    return {
+      type: 'status',
+      health: gameState.playerHealth || 100,
+      radiation: gameState.radiationExposure || 0,
+      location: gameState.currentRoom,
+      act: gameState.currentAct,
+      turnCount: gameState.turnCount,
+      co2Level: this._getShipValue(gameState, 'life_support.subsystems.co2_scrubbers.co2_ppm') as number | null,
+      powerLevel: this._getShipValue(gameState, 'power.subsystems.battery_backup.charge') as number | null,
+      hullIntegrity: this._getShipValue(gameState, 'hull.primary_hull.status') as string | null
+    };
+  }
+
+  _handleSystems(gameState: GameState): ActionResult {
+    const systems = gameState.shipSystems;
+    const summary: Record<string, { name: string; status: string }> = {};
+    for (const [key, sys] of Object.entries((systems as unknown as Record<string, unknown>).systems || systems)) {
+      if (typeof sys === 'object' && sys !== null && 'name' in (sys as Record<string, unknown>)) {
+        const s = sys as { name: string; status: string };
+        summary[key] = { name: s.name, status: s.status };
+      }
+    }
+    return { type: 'systems', systems: summary };
+  }
+
+  _handleHint(gameState: GameState): ActionResult {
+    const activePuzzles = this.puzzle.getActivePuzzles(gameState);
+    if (activePuzzles.length === 0) {
+      return { type: 'hint', message: 'Look around. Examine everything. The ship will tell you what needs fixing.' };
+    }
+    const hints = activePuzzles.map(p => ({
+      puzzleName: p.name,
+      hint: this.puzzle.getHint(p.id, gameState)
+    }));
+    return { type: 'hint', hints };
+  }
+
+  _handleWait(gameState: GameState): ActionResult {
+    return { type: 'wait', message: 'Time passes...' };
+  }
+
+  _handlePuzzleAction(puzzleId: string | null, value: string | null, gameState: GameState): ActionResult {
+    const result = this.puzzle.attemptStep(puzzleId!, value || '', gameState);
+    return {
+      type: result.success ? 'puzzle_success' : 'puzzle_failed',
+      puzzleId: puzzleId || undefined,
+      ...result
+    };
+  }
+
+  _handleSearch(target: string | null, gameState: GameState): ActionResult {
+    if (!target || target === 'room' || target === 'around') {
+      const items = this.inv.getItemsInRoom(gameState.currentRoom, gameState);
+      const hiddenItems = items.filter(i => i.hidden);
+
+      if (hiddenItems.length > 0) {
+        const revealed = hiddenItems[0];
+        gameState.itemHidden[revealed.id] = false;
+        return {
+          type: 'search_success',
+          message: `You search carefully and find: ${revealed.name}.`,
+          foundItem: revealed.name
+        };
+      }
+      return { type: 'search_nothing', message: "You search thoroughly but find nothing new." };
+    }
+
+    return this._handleExamine(target, gameState);
+  }
+
+  _handleTalk(target: string | null, gameState: GameState): ActionResult {
+    return { type: 'talk', message: "There's no one here to talk to. The ship is silent.", target: target || undefined };
+  }
+
+  _handleMap(gameState: GameState): ActionResult {
+    const visited = [...gameState.visitedRooms];
+    const rooms = visited.map(id => {
+      const room = this.nav.getRoom(id);
+      return room ? { id, name: room.name, deck: room.deck } : null;
+    }).filter(Boolean) as Array<{ id: string; name: string; deck: string }>;
+
+    const deckMap: Record<string, Array<{ id: string; name: string; deck: string }>> = {};
+    for (const room of rooms) {
+      if (!deckMap[room.deck]) deckMap[room.deck] = [];
+      deckMap[room.deck].push(room);
+    }
+
+    return {
+      type: 'map',
+      currentRoom: gameState.currentRoom,
+      visited: deckMap
+    };
+  }
+
+  _handleHelp(): ActionResult {
+    return {
+      type: 'help',
+      message: `Available commands:
+MOVEMENT: north/n, south/s, east/e, west/w, up/u, down/d, in, out
+  SHIP:   fore/bow, aft/stern, port, starboard
+ACTIONS:  look, examine [target], take [item], drop [item]
+          use [item] on [target], open [target], search
+ITEMS:    inventory/i, combine [item] with [item]
+          equip [item], remove [item]
+INFO:     status, systems, map, hint, read [item]
+GAME:     save [name], load [name], saves, help, wait
+
+Commands can be abbreviated: "exa" for examine, "inv" for inventory, etc.`
+    };
+  }
+
+  _handleUnknown(intent: Intent, gameState: GameState): ActionResult {
+    return {
+      type: 'unknown',
+      message: "I don't understand that command.",
+      originalInput: intent.raw
+    };
+  }
+
+  _resolveItemId(name: string | null, gameState: GameState): string | null {
+    if (!name) return null;
+    const normalized = name.toLowerCase().replace(/[^a-z0-9 ]/g, '').trim();
+
+    for (const id of gameState.inventory) {
+      const def = this.inv.getItemDef(id);
+      if (def && this._nameMatches(normalized, def)) return id;
+    }
+
+    const roomItems = this.inv.getItemsInRoom(gameState.currentRoom, gameState);
+    for (const item of roomItems) {
+      if (!item.hidden && this._nameMatches(normalized, item)) return item.id;
+    }
+
+    if (this.inv.getItemDef(normalized)) return normalized;
+    const underscored = normalized.replace(/ /g, '_');
+    if (this.inv.getItemDef(underscored)) return underscored;
+
+    return null;
+  }
+
+  _resolveInventoryItem(name: string | null, gameState: GameState): string | null {
+    if (!name) return null;
+    const normalized = name.toLowerCase().replace(/[^a-z0-9 ]/g, '').trim();
+
+    for (const id of gameState.inventory) {
+      const def = this.inv.getItemDef(id);
+      if (def && this._nameMatches(normalized, def)) return id;
+    }
+
+    return null;
+  }
+
+  _nameMatches(input: string, itemDef: ItemDef): boolean {
+    const id = itemDef.id.toLowerCase();
+    const name = itemDef.name.toLowerCase();
+    const aliases = (itemDef.aliases || []).map(a => a.toLowerCase());
+
+    if (input === id || input === name) return true;
+    if (id.includes(input) || name.includes(input)) return true;
+    if (aliases.some(a => a === input || a.includes(input))) return true;
+    if (input.replace(/ /g, '_') === id) return true;
+
+    return false;
+  }
+
+  _getShipValue(gameState: GameState, path: string): unknown {
+    const parts = path.split('.');
+    let current: unknown = gameState.shipSystems;
+    if (current && typeof current === 'object' && 'systems' in (current as Record<string, unknown>)) {
+      current = (current as Record<string, unknown>).systems;
+    }
+    for (const part of parts) {
+      if (current && typeof current === 'object' && part in (current as Record<string, unknown>)) {
+        current = (current as Record<string, unknown>)[part];
+      } else {
+        return null;
+      }
+    }
+    return current;
+  }
+}
+
+export default CommandProcessor;

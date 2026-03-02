@@ -1,0 +1,241 @@
+{
+  "systems": {
+    "life_support": {
+      "name": "Life Support",
+      "status": "degraded",
+      "subsystems": {
+        "co2_scrubbers": {
+          "name": "CO2 Scrubbers",
+          "status": "failing",
+          "efficiency": 0.31,
+          "targetEfficiency": 0.95,
+          "co2_ppm": 21000,
+          "safeCo2_ppm": 5000,
+          "dangerCo2_ppm": 40000,
+          "rateOfChange": 150,
+          "notes": "Primary cartridge exhausted. Backup at 31% capacity."
+        },
+        "o2_generator": {
+          "name": "O2 Generator",
+          "status": "nominal",
+          "efficiency": 0.88,
+          "o2_kpa": 20.1,
+          "target_kpa": 21.2
+        },
+        "temperature_control": {
+          "name": "Temperature Control",
+          "status": "degraded",
+          "currentTemp": 14.2,
+          "targetTemp": 21.0,
+          "heatingCapacity": 0.6,
+          "notes": "Reduced power allocation limiting heating capacity."
+        },
+        "water_recycling": {
+          "name": "Water Recycling",
+          "status": "nominal",
+          "efficiency": 0.92,
+          "reserveLiters": 2840
+        }
+      }
+    },
+    "power": {
+      "name": "Power Distribution",
+      "status": "degraded",
+      "subsystems": {
+        "fusion_reactor": {
+          "name": "Fusion Reactor",
+          "status": "warning",
+          "output_kw": 4200,
+          "maxOutput_kw": 8500,
+          "fuelRemaining": 0.73,
+          "shieldingIntegrity": 0.64,
+          "radiationLeak_msv_hr": 2.8,
+          "safeRadiation_msv_hr": 0.5,
+          "notes": "Shielding displacement detected. Output throttled automatically."
+        },
+        "distribution_grid": {
+          "name": "Power Distribution Grid",
+          "status": "critical",
+          "busA_status": "nominal",
+          "busB_status": "failed",
+          "busC_status": "intermittent",
+          "totalLoad_kw": 3100,
+          "availableCapacity_kw": 4200,
+          "notes": "Bus B junction failure causing cascading brownouts to Deck C systems."
+        },
+        "battery_backup": {
+          "name": "Battery Backup",
+          "status": "draining",
+          "charge": 0.41,
+          "drainRate_hr": 0.02,
+          "notes": "Compensating for distribution irregularities."
+        }
+      }
+    },
+    "propulsion": {
+      "name": "Propulsion",
+      "status": "coast",
+      "subsystems": {
+        "main_drive": {
+          "name": "Fusion Drive",
+          "status": "standby",
+          "thrustCapacity_kn": 12000,
+          "specificImpulse_s": 45000,
+          "currentThrust_kn": 0,
+          "notes": "In coast phase. Drive nominal but requires reactor at full power to fire."
+        },
+        "rcs_thrusters": {
+          "name": "RCS Thrusters",
+          "status": "nominal",
+          "propellantRemaining": 0.89,
+          "notes": "Attitude control functional."
+        },
+        "thrust_vectoring": {
+          "name": "Thrust Vectoring",
+          "status": "warning",
+          "valveA": "nominal",
+          "valveB": "stuck",
+          "valveC": "nominal",
+          "notes": "Valve B requiring replacement. Limits vectoring range."
+        }
+      }
+    },
+    "navigation": {
+      "name": "Navigation",
+      "status": "warning",
+      "subsystems": {
+        "star_tracker": {
+          "name": "Star Tracker",
+          "status": "nominal",
+          "accuracy_arcsec": 0.01,
+          "notes": "Optical navigation functional."
+        },
+        "inertial_nav": {
+          "name": "Inertial Navigation",
+          "status": "drifted",
+          "driftAngle_deg": 0.847,
+          "driftRate_deg_yr": 0.044,
+          "notes": "Accumulated drift over 19.3 years without correction."
+        },
+        "flight_computer": {
+          "name": "Flight Computer",
+          "status": "degraded",
+          "lastCourseUpdate_yr": 17.1,
+          "currentVelocity_kms": 14200,
+          "plannedVelocity_kms": 14200,
+          "courseDeviation_au": 3.2,
+          "notes": "Course correction required. Last update logged 2.2 years ago."
+        }
+      }
+    },
+    "communications": {
+      "name": "Communications",
+      "status": "offline",
+      "subsystems": {
+        "deep_space_antenna": {
+          "name": "Deep Space Antenna",
+          "status": "damaged",
+          "antennaGain_dbi": 12,
+          "requiredGain_dbi": 74,
+          "notes": "Primary feed horn component missing. Performance severely degraded."
+        },
+        "internal_comms": {
+          "name": "Internal Communications",
+          "status": "nominal",
+          "notes": "Shipboard intercom functional."
+        },
+        "signal_log": {
+          "name": "Signal Log",
+          "status": "anomalous",
+          "lastReceived": null,
+          "lastTransmitted_yr": 18.6,
+          "transmittedTo": "unknown",
+          "notes": "Unauthorized transmission logged at mission year 18.6. Content encrypted."
+        }
+      }
+    },
+    "cryo": {
+      "name": "Cryogenic Systems",
+      "status": "degraded",
+      "subsystems": {
+        "cryo_array": {
+          "name": "Cryo Pod Array",
+          "status": "mostly_nominal",
+          "totalPods": 48,
+          "occupied": 45,
+          "empty": 2,
+          "malfunctioning": 1,
+          "notes": "Pod 17 (player) emergency thaw. Pod 23 shows previous unscheduled thaw cycle at year 17.1. Pod 24 malfunction - status unclear."
+        },
+        "coolant_system": {
+          "name": "Cryo Coolant",
+          "status": "warning",
+          "coolantLevel": 0.78,
+          "coolantTemp_c": -186.4,
+          "targetTemp_c": -196.0,
+          "notes": "Coolant level below optimal. Minor leak suspected in secondary loop."
+        }
+      }
+    },
+    "hull": {
+      "name": "Hull Integrity",
+      "status": "compromised",
+      "subsystems": {
+        "primary_hull": {
+          "name": "Primary Hull",
+          "status": "breached",
+          "breachLocation": "section_7_port",
+          "breachSize_mm": 4.2,
+          "atmosphereLossRate_pa_hr": 12,
+          "notes": "Micrometeorite impact. Compartment sealed automatically. Requires EVA repair."
+        },
+        "radiation_shielding": {
+          "name": "Hull Radiation Shielding",
+          "status": "nominal",
+          "shieldingFactor": 0.97,
+          "notes": "External shielding intact. Internal reactor shielding is separate system."
+        },
+        "structural_integrity": {
+          "name": "Structural Integrity",
+          "status": "nominal",
+          "stressPoints": [],
+          "notes": "No structural concerns. Ship rated for 2g thrust acceleration."
+        }
+      }
+    }
+  },
+  "cascadeRules": [
+    {
+      "if": "power.distribution_grid.busB_status === 'failed'",
+      "then": ["life_support.temperature_control.heatingCapacity = 0.6", "power.fusion_reactor.output_kw = 4200"],
+      "description": "Bus B failure reduces power to Deck C heating and limits reactor output monitoring"
+    },
+    {
+      "if": "power.fusion_reactor.shieldingIntegrity < 0.7",
+      "then": ["power.fusion_reactor.output_kw = Math.min(output, 5000)"],
+      "description": "Low shielding forces automatic reactor throttle"
+    },
+    {
+      "if": "life_support.co2_scrubbers.co2_ppm > 30000",
+      "then": ["player.status.dizzy = true", "player.status.impaired = true"],
+      "description": "High CO2 causes player impairment"
+    },
+    {
+      "if": "life_support.co2_scrubbers.co2_ppm > 50000",
+      "then": ["player.status.unconscious = true"],
+      "description": "Lethal CO2 levels"
+    },
+    {
+      "if": "hull.primary_hull.atmosphereLossRate_pa_hr > 50",
+      "then": ["life_support.o2_generator.efficiency -= 0.1"],
+      "description": "Significant atmosphere loss strains O2 generation"
+    }
+  ],
+  "tickRules": {
+    "co2_rise_per_turn": 150,
+    "atmosphere_loss_per_turn": 12,
+    "battery_drain_per_turn": 0.005,
+    "coolant_loss_per_turn": 0.001,
+    "radiation_accumulation_per_turn_in_reactor": 2.8
+  }
+}

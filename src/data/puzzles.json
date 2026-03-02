@@ -1,0 +1,1021 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "description": "Science-based puzzles for VOID TRANSIT aboard ISV Kepler's Promise",
+    "setting": "Interstellar colony ship, 42-year journey to 82 Eridani, player wakes from cryogenic suspension 19.3 years into transit",
+    "totalPuzzles": 7,
+    "dependencyOrder": [
+      "cryo_recovery",
+      "life_support_repair",
+      "electrical_reroute",
+      "reactor_shielding",
+      "hull_breach_repair",
+      "navigation_correction",
+      "comms_restoration"
+    ],
+    "notes": "Puzzles incorporate real scientific principles. Calculations should be validated against the provided formulas and constants. Failure consequences are cumulative -- multiple failures compound."
+  },
+  "puzzles": [
+    {
+      "id": "cryo_recovery",
+      "name": "The Cold Equation",
+      "description": "Your body is a ruin of ice and confusion. The cryogenic revival process was never meant to happen like this -- no medical team, no gentle warming protocol, just the brutal shock of consciousness slamming back into frozen meat. Your muscles spasm. Your vision swims with phosphenes. The diagnostic panel on the adjacent wall pulses amber, and somewhere beneath the chemical fog in your skull, you understand: if you don't treat the cryo-sickness soon, your body will begin shutting down in ways that sleep cannot reverse.",
+      "location": "cryo_bay",
+      "deck": "D",
+      "requiredItems": ["stimulant_injector", "medical_kit"],
+      "prerequisitePuzzles": [],
+      "difficulty": 1,
+      "scienceDomain": "Biology/Medicine",
+      "scienceNotes": "Cryogenic revival sickness is extrapolated from real hypothermia treatment protocols. Dosage calculation is based on body mass and duration of cryogenic suspension. The Clark-Yamamoto formula used here is fictional but mirrors real pharmacokinetic dosing: dose = baseDose * (bodyMass / referenceWeight) * durationFactor.",
+      "steps": [
+        {
+          "id": "cryo_step_1",
+          "action": "examine_diagnostic_panel",
+          "description": "Drag yourself to the diagnostic panel mounted beside your cryo pod. The screen is cracked along one corner but still functional, scrolling biometric data in pale green text. Your heart rate, blood oxygen, core temperature, neural activity -- all flagged in amber or red.",
+          "hint": "The panel displays your body mass (recorded at induction) and your total cryo duration. These numbers are critical. Write them down -- or remember them. You will need both.",
+          "validation": {
+            "type": "interaction",
+            "target": "diagnostic_panel",
+            "requiredState": "player_in_cryo_bay"
+          },
+          "result": "The panel reads: Body mass at induction: 78.4 kg. Cryogenic suspension duration: 19.3 years. Core temperature: 34.1C (hypothermic). Neural coherence: 67% (impaired). Recommended action: ADMINISTER REVIVAL PROTOCOL. WARNING: Automated medical systems OFFLINE.",
+          "stateChange": {
+            "set": {
+              "diagnostic_read": true,
+              "player_body_mass": 78.4,
+              "cryo_duration_years": 19.3
+            }
+          }
+        },
+        {
+          "id": "cryo_step_2",
+          "action": "calculate_dosage",
+          "description": "The medical kit contains a laminated dosage card, its edges yellowed with age. The Clark-Yamamoto Revival Protocol: base dose of 4.0 mL for a 70 kg reference patient at 10-year suspension. For each kilogram above or below reference, adjust by 0.05 mL. For each year beyond the 10-year baseline, add 0.08 mL. The math matters. Too little and the cryo-sickness persists, dulling your reflexes and clouding your thinking. Too much and you risk cardiac arrhythmia.",
+          "hint": "Correct calculation: Base 4.0 mL + mass adjustment ((78.4 - 70) * 0.05 = 0.42 mL) + duration adjustment ((19.3 - 10) * 0.08 = 0.744 mL) = 5.164 mL. Round to 5.2 mL. The stimulant injector has markings in 0.1 mL increments.",
+          "validation": {
+            "type": "calculation",
+            "correctAnswer": 5.2,
+            "tolerance": 0.1,
+            "unit": "mL",
+            "formula": "baseDose + (bodyMass - referenceWeight) * 0.05 + (cryoDuration - baselineDuration) * 0.08",
+            "variables": {
+              "baseDose": 4.0,
+              "referenceWeight": 70,
+              "bodyMass": 78.4,
+              "baselineDuration": 10,
+              "cryoDuration": 19.3
+            }
+          },
+          "result": "You set the stimulant injector to 5.2 mL, checking the number twice against the laminated card. Your hands are trembling -- from cold, from fear, from the simple animal need to survive.",
+          "stateChange": {
+            "set": {
+              "dosage_calculated": true,
+              "dosage_value": 5.2
+            }
+          }
+        },
+        {
+          "id": "cryo_step_3",
+          "action": "administer_stimulant",
+          "description": "Press the stimulant injector against the inside of your forearm, where the vein runs blue beneath translucent, cold-pale skin. The medical kit's antiseptic wipe stings like a paper cut in winter. One press of the trigger and it's done -- the compound enters your bloodstream with a hiss of compressed gas.",
+          "hint": "Use the stimulant_injector with the calculated dosage. The injection site on the forearm provides fastest absorption for the revival compound.",
+          "validation": {
+            "type": "item_use",
+            "requiredItems": ["stimulant_injector", "medical_kit"],
+            "requiredState": {
+              "dosage_calculated": true
+            }
+          },
+          "result": "The effect is not instant but it is unmistakable. Warmth blooms from the injection site, spreading through your chest like a swallowed sun. Your vision sharpens. The trembling in your hands steadies to a manageable tremor. Your core temperature begins climbing toward normal. You are not well -- but you are functional. And on this silent ship, functional may be all that stands between you and the void.",
+          "stateChange": {
+            "set": {
+              "cryo_sickness_treated": true,
+              "player_status": "functional",
+              "core_temperature": 36.4
+            },
+            "unlock": ["deck_d_access"]
+          }
+        }
+      ],
+      "reward": {
+        "type": "status_recovery",
+        "description": "Full motor function restored. Cognitive clarity returned. Access to Deck D unlocked as the player can now move without collapse risk.",
+        "unlocks": ["deck_d_exploration", "act2_trigger"],
+        "items": []
+      },
+      "failureConsequence": {
+        "underdose": {
+          "description": "The stimulant takes the edge off the worst symptoms but the fog remains. Your hands shake. Your thoughts arrive half a beat late, like words through water. Everything you do will be harder now, and time is not your friend.",
+          "effect": {
+            "stat_penalty": {
+              "dexterity": -2,
+              "cognition": -1,
+              "duration": "until_medical_bay_visit"
+            }
+          }
+        },
+        "overdose": {
+          "description": "Your heart lurches. For three terrible seconds it beats in a rhythm no heart should know -- staccato, arrhythmic, wrong. Then it steadies, but the damage is done. Your chest aches with a deep bruise-like pain and your hands are shakier than before. You'll need to be careful with physical exertion.",
+          "effect": {
+            "stat_penalty": {
+              "constitution": -2,
+              "dexterity": -1,
+              "duration": "permanent_until_medical_bay"
+            },
+            "health_reduction": 15
+          }
+        }
+      }
+    },
+    {
+      "id": "life_support_repair",
+      "name": "Dalton's Breath",
+      "description": "The air tastes wrong. Not stale -- you expected stale, after nineteen years of recycled atmosphere -- but actively hostile. There is a sweet, faintly metallic undertone that coats the back of your throat and makes your temples pound. The life support monitoring station on Deck C tells the story in numbers that make your stomach clench: CO2 levels are at 2.1 kPa and climbing. At this concentration, you are already experiencing headaches and impaired judgment. At 5 kPa, you will lose consciousness. At 8 kPa, you will die. The carbon dioxide scrubbers have failed, and the ship is slowly suffocating.",
+      "location": "life_support",
+      "deck": "C",
+      "requiredItems": ["spectrometer", "sample_container", "co2_scrubber_cartridge"],
+      "prerequisitePuzzles": ["cryo_recovery"],
+      "difficulty": 3,
+      "scienceDomain": "Gas dynamics / Dalton's Law of Partial Pressures",
+      "scienceNotes": "Dalton's Law: total pressure equals the sum of partial pressures of all component gases. Standard atmosphere: 101.3 kPa total. O2 should be 21.2 kPa (20.9%), CO2 below 0.5 kPa (0.04% normal, 0.5% is OSHA limit). N2 makes up the balance. Current dangerous state: CO2 at 2.1 kPa means O2 has been partially displaced. Scrubber capacity is rated in kPa removal per hour -- must calculate how many cartridges and how long to bring CO2 from 2.1 down to safe levels.",
+      "steps": [
+        {
+          "id": "ls_step_1",
+          "action": "collect_atmosphere_sample",
+          "description": "The spectrometer needs a contained sample to analyze. You unseal a sample container from the life support maintenance locker -- a small pressurized cylinder with a one-way valve. Hold it up, crack the valve, and let the ship's sick air fill it. The container's pressure gauge settles at ambient: 101.3 kPa. Whatever is killing you is now trapped in glass and steel, waiting to be understood.",
+          "hint": "Use the sample_container in the life_support room to capture an atmosphere sample. The container must be filled at the current location to get an accurate reading of this deck's air composition.",
+          "validation": {
+            "type": "item_use",
+            "requiredItems": ["sample_container"],
+            "requiredLocation": "life_support"
+          },
+          "result": "The sample container seals with a satisfying click. The pressure gauge reads 101.3 kPa -- total atmospheric pressure is normal. But total pressure is not the problem. The problem is what that pressure is made of.",
+          "stateChange": {
+            "set": {
+              "atmosphere_sample_collected": true
+            },
+            "modify_item": {
+              "sample_container": {
+                "state": "filled",
+                "contents": "atmosphere_sample"
+              }
+            }
+          }
+        },
+        {
+          "id": "ls_step_2",
+          "action": "analyze_atmosphere",
+          "description": "Slot the filled sample container into the spectrometer's intake port. The device hums, its laser flickering through the captured air, measuring absorption lines. After twelve seconds, the results scroll across the small screen -- a breakdown of every gas molecule in the ship's atmosphere, measured in kilopascals of partial pressure.",
+          "hint": "The spectrometer will show partial pressures for each gas. By Dalton's Law, they must sum to the total pressure of 101.3 kPa. Compare each value against safe operating ranges displayed on the life support monitoring panel.",
+          "validation": {
+            "type": "item_use",
+            "requiredItems": ["spectrometer"],
+            "requiredState": {
+              "atmosphere_sample_collected": true
+            }
+          },
+          "result": "ATMOSPHERIC ANALYSIS -- ISV Kepler's Promise, Deck C:\n\nTotal Pressure: 101.3 kPa\n---\nNitrogen (N2):    77.8 kPa  [NOMINAL - range: 78.1 +/- 1.0]\nOxygen (O2):      19.9 kPa  [LOW - nominal: 21.2 kPa]\nCarbon Dioxide:    2.1 kPa  [CRITICAL - max safe: 0.5 kPa]\nArgon (Ar):        0.9 kPa  [NOMINAL]\nWater Vapor:       0.5 kPa  [NOMINAL]\nTrace Gases:       0.1 kPa  [NOMINAL]\n---\nThe numbers confirm what your headache already told you. CO2 is at four times the maximum safe level. Oxygen is depressed -- not yet dangerous, but trending the wrong direction. The scrubbers must be restored.",
+          "stateChange": {
+            "set": {
+              "atmosphere_analyzed": true,
+              "current_co2_kpa": 2.1,
+              "current_o2_kpa": 19.9,
+              "target_co2_kpa": 0.4,
+              "co2_excess_kpa": 1.7
+            }
+          }
+        },
+        {
+          "id": "ls_step_3",
+          "action": "calculate_scrubber_capacity",
+          "description": "The replacement CO2 scrubber cartridge is rated for 0.85 kPa removal per hour in a standard ship volume. The life support panel shows the ship's pressurized volume: 4,200 cubic meters. You need to reduce CO2 from 2.1 kPa to below 0.5 kPa -- a reduction of at least 1.7 kPa. But the cartridge rating assumes a sealed system with no ongoing CO2 production. With you breathing, your metabolic output adds approximately 0.02 kPa per hour. How long will the scrubber take to bring the air back to safe levels?",
+          "hint": "Net scrubbing rate = cartridge rate - metabolic production = 0.85 - 0.02 = 0.83 kPa/hour. Required reduction: 2.1 - 0.4 (target with safety margin) = 1.7 kPa. Time = 1.7 / 0.83 = approximately 2.05 hours. Round up to 2.1 hours or roughly 126 minutes. The system will need to run uninterrupted for this period.",
+          "validation": {
+            "type": "calculation",
+            "correctAnswer": 2.05,
+            "tolerance": 0.15,
+            "unit": "hours",
+            "formula": "co2_reduction_needed / (scrubber_rate - metabolic_output)",
+            "variables": {
+              "co2_reduction_needed": 1.7,
+              "scrubber_rate": 0.85,
+              "metabolic_output": 0.02
+            }
+          },
+          "result": "Two hours. You have two hours of scrubbing ahead of you -- two hours of headaches and labored breathing while the cartridge does its work. But two hours is survivable. Two hours is a gift. Without the scrubber, you had perhaps six hours before unconsciousness and twelve before the CO2 concentration would stop your heart.",
+          "stateChange": {
+            "set": {
+              "scrubber_time_calculated": true,
+              "scrubber_duration_hours": 2.05
+            }
+          }
+        },
+        {
+          "id": "ls_step_4",
+          "action": "install_scrubber_cartridge",
+          "description": "The scrubber housing is a floor-to-ceiling unit against the aft wall of the life support bay, its access panel held shut by four quick-release latches. Inside, the old cartridge sits in its cradle -- spent, its lithium hydroxide beds exhausted to calcium carbonate dust. The chemical reaction that should have saved you: LiOH + CO2 -> Li2CO3 + H2O. Simple. Elegant. And utterly dependent on having a fresh cartridge to burn through.",
+          "hint": "Remove the spent cartridge and install the co2_scrubber_cartridge. Ensure the seal is tight -- any gap will reduce scrubbing efficiency. The cartridge slots in only one way; align the guide rails.",
+          "validation": {
+            "type": "item_use",
+            "requiredItems": ["co2_scrubber_cartridge"],
+            "requiredState": {
+              "scrubber_time_calculated": true
+            }
+          },
+          "result": "The spent cartridge slides out in a shower of white calcium carbonate dust that hangs in the recycled air like cremation ash. You slot the fresh cartridge in -- it resists for a moment, then seats with a decisive thunk. The seal indicators go green. The unit begins to hum, and you can almost imagine you feel the air growing cleaner, though you know it will be hours yet before the numbers reach safety.",
+          "stateChange": {
+            "set": {
+              "scrubber_installed": true,
+              "co2_timer_started": true
+            },
+            "start_timer": {
+              "id": "co2_scrubbing",
+              "duration_minutes": 126,
+              "on_complete": {
+                "set": {
+                  "atmosphere_safe": true,
+                  "current_co2_kpa": 0.4,
+                  "current_o2_kpa": 21.0
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "ls_step_5",
+          "action": "recalibrate_system",
+          "description": "With the new cartridge installed, the life support system needs recalibration. The automated systems have been running on emergency parameters for who-knows-how-long, and their sensor baselines have drifted. The recalibration interface asks for target partial pressures for each gas -- the numbers the system should maintain once the scrubber brings levels back to normal.",
+          "hint": "Enter the correct target partial pressures: O2 at 21.2 kPa, CO2 at 0.04 kPa (normal, not just 'safe'), N2 as balance (79.0 kPa to account for Ar and trace gases). Total must equal 101.3 kPa. The system will reject inputs that don't sum correctly -- Dalton's Law enforced by engineering.",
+          "validation": {
+            "type": "input_values",
+            "requiredValues": {
+              "o2_target": { "value": 21.2, "tolerance": 0.1 },
+              "co2_target": { "value": 0.04, "tolerance": 0.01 },
+              "n2_target": { "value": 79.0, "tolerance": 0.5 }
+            },
+            "sumCheck": {
+              "target": 101.3,
+              "tolerance": 0.5,
+              "includeFields": ["o2_target", "co2_target", "n2_target", "argon", "water_vapor", "trace"],
+              "fixedValues": {
+                "argon": 0.93,
+                "water_vapor": 0.5,
+                "trace": 0.1
+              }
+            }
+          },
+          "result": "The recalibration sequence accepts your inputs with a confirming chime. TARGET ATMOSPHERE LOCKED. SCRUBBING IN PROGRESS. ESTIMATED TIME TO NOMINAL: 123 MINUTES. The life support panel shifts from red to amber -- not safe yet, but on its way. You allow yourself one deep breath, knowing that each one after this will be incrementally less poisonous than the last.",
+          "stateChange": {
+            "set": {
+              "life_support_calibrated": true,
+              "life_support_status": "recovering"
+            },
+            "unlock": ["deck_c_full_access"]
+          }
+        }
+      ],
+      "reward": {
+        "type": "system_restoration",
+        "description": "Life support restored to automatic operation. CO2 scrubbing active. The slow suffocation of the ship is arrested. Deck C fully accessible without health penalties. Background CO2 timer runs -- atmosphere reaches safe levels in approximately 2 hours of game time.",
+        "unlocks": ["deck_c_full_access", "act3_trigger"],
+        "items": [],
+        "removes_hazard": "co2_poisoning"
+      },
+      "failureConsequence": {
+        "wrong_calibration": {
+          "description": "The system accepts the values but the balance is wrong. Oxygen runs slightly high -- not enough to be immediately dangerous, but enough to make everything more flammable. You won't notice until something sparks near an oxygen-rich pocket, and by then the damage will be done.",
+          "effect": {
+            "hidden_hazard": "oxygen_enrichment",
+            "fire_risk_multiplier": 2.0,
+            "duration": "until_recalibrated"
+          }
+        },
+        "skipped_analysis": {
+          "description": "Without proper atmospheric analysis, you're guessing at the problem. The scrubber cartridge helps -- CO2 levels drop -- but you've missed the subtle oxygen depletion. Periodic dizziness and impaired judgment persist, manifesting as occasional wrong choices or missed observations.",
+          "effect": {
+            "stat_penalty": {
+              "cognition": -1,
+              "perception": -1,
+              "duration": "permanent"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "electrical_reroute",
+      "name": "The Path of Least Resistance",
+      "description": "The lights have been lying to you. Their steady glow suggested normalcy, but the power distribution panel in the electrical bay tells a different story. Three of the ship's twelve primary circuits are dead -- not tripped, not overloaded, but burned through, their copper veins melted into useless slag. The remaining nine circuits are carrying load they were never designed to bear, and the system is shedding power to non-essential systems to keep the essentials alive. Worse: the failed circuits include the one that feeds the reactor room's safety interlocks. Without that circuit, the reactor room door locks are unpowered -- not locked, not unlocked, but frozen in an indeterminate state. You need to reroute power around the dead circuits before the cascade takes down something you cannot live without.",
+      "location": "electrical",
+      "deck": "C",
+      "requiredItems": ["circuit_tester", "cable_spool", "insulation_tape"],
+      "prerequisitePuzzles": ["cryo_recovery"],
+      "difficulty": 3,
+      "scienceDomain": "Electrical engineering / Ohm's Law / Circuit design",
+      "scienceNotes": "Ohm's Law: V = IR. Power: P = IV = I^2R = V^2/R. Ship runs on 240V DC main bus. Each primary circuit is rated for 30 amps (7,200 watts). The cable_spool contains copper cable rated for 20 amps. Using two runs in parallel doubles the current capacity to 40 amps (sufficient). Must calculate total load on rerouted circuit to ensure it doesn't exceed cable rating. Resistance per meter of cable: 0.017 ohms. Route length: approximately 12 meters.",
+      "steps": [
+        {
+          "id": "er_step_1",
+          "action": "diagnose_circuits",
+          "description": "The circuit tester is a handheld device with two probes and a backlit display. You work methodically through the distribution panel, testing each circuit in turn. Probe in, reading out. Probe in, reading out. The healthy circuits show clean sinusoidal traces and resistance values within spec. The dead ones show nothing at all -- open circuits, infinite resistance, the electrical equivalent of a severed artery.",
+          "hint": "Use the circuit_tester on the distribution panel. You need to identify which three circuits have failed and what loads they were carrying. This information is critical for planning the reroute -- you must know the total amperage that needs to be redirected.",
+          "validation": {
+            "type": "item_use",
+            "requiredItems": ["circuit_tester"],
+            "requiredLocation": "electrical"
+          },
+          "result": "CIRCUIT DIAGNOSTIC REPORT:\n\nCircuit 04 (Deck C, Reactor Safety): FAILED -- Open circuit at junction J-14. Load: 18.5 amps.\nCircuit 07 (Deck B, Secondary Lighting): FAILED -- Open circuit at junction J-22. Load: 8.2 amps.\nCircuit 11 (Deck A, Sensor Array): FAILED -- Open circuit at junction J-31. Load: 12.1 amps.\n\nAll three failures at junction points. All three junctions showed signs of thermal damage -- not wear, not fatigue, but acute overheating. As if someone ran far too much current through them all at once. Or as if someone deliberately overloaded them.",
+          "stateChange": {
+            "set": {
+              "circuits_diagnosed": true,
+              "failed_circuits": ["circuit_04", "circuit_07", "circuit_11"],
+              "critical_reroute": "circuit_04",
+              "circuit_04_load_amps": 18.5,
+              "circuit_07_load_amps": 8.2,
+              "circuit_11_load_amps": 12.1
+            }
+          }
+        },
+        {
+          "id": "er_step_2",
+          "action": "calculate_cable_requirements",
+          "description": "Circuit 04 is the priority -- reactor safety interlocks. The cable spool in your hand is rated for 20 amps, and Circuit 04 carries 18.5 amps. That's uncomfortably close to the cable's maximum rating. Running a single cable at 92.5% capacity for an extended period risks thermal degradation. But the spool has enough cable for two parallel runs. Two cables in parallel: the current splits evenly, each carrying half the load. 9.25 amps per cable, well within rating. The route from the nearest healthy junction to the reactor safety bus is approximately 12 meters. You'll need 24 meters of cable for the double run, plus 2 meters for connections. The spool holds 30 meters. Enough, with little to spare.",
+          "hint": "Calculate total resistance of the parallel cable run: each cable is 12m at 0.017 ohms/m = 0.204 ohms. Two in parallel: R_total = R/2 = 0.102 ohms. Voltage drop: V = IR = 18.5 * 0.102 = 1.887V. On a 240V system that's 0.79% drop -- acceptable (under 3% threshold). Power dissipated in cables: P = I^2 * R = 18.5^2 * 0.102 = 34.9 watts -- warm but safe.",
+          "validation": {
+            "type": "calculation",
+            "correctAnswer": 1.887,
+            "tolerance": 0.1,
+            "unit": "volts",
+            "formula": "I_total * (R_per_meter * length / num_parallel_cables)",
+            "variables": {
+              "I_total": 18.5,
+              "R_per_meter": 0.017,
+              "length": 12,
+              "num_parallel_cables": 2
+            }
+          },
+          "result": "The math works. Two parallel runs, 12 meters each, carrying 18.5 amps total with a voltage drop under 2 volts. The cables will run warm but stable. You won't win any engineering awards for elegance, but elegance isn't the point. Survival is.",
+          "stateChange": {
+            "set": {
+              "cable_calculation_complete": true,
+              "voltage_drop": 1.887,
+              "cable_needed_meters": 26
+            }
+          }
+        },
+        {
+          "id": "er_step_3",
+          "action": "prepare_insulated_cable",
+          "description": "The cable spool contains bare copper conductor -- rated for the current but lacking the insulation needed to run safely through the ship's cable trays alongside other live circuits. The insulation tape is a self-fusing silicone rubber compound, rated to 600 volts and designed for exactly this kind of emergency field repair. You cut two 13-meter lengths and begin wrapping, overlapping each pass by half the tape width to ensure full coverage.",
+          "hint": "Combine cable_spool and insulation_tape to create insulated_cable. The tape must be applied with 50% overlap for proper insulation rating. This is a crafting step -- the resulting insulated cable is a new item.",
+          "validation": {
+            "type": "crafting",
+            "requiredItems": ["cable_spool", "insulation_tape"],
+            "output": "insulated_cable"
+          },
+          "result": "Twenty minutes of methodical wrapping. Your fingers ache from maintaining tension on the tape, but the result is two clean runs of insulated conductor, each terminated with stripped ends ready for connection. Not factory quality -- but field-serviceable and safe.",
+          "stateChange": {
+            "set": {
+              "insulated_cable_crafted": true
+            },
+            "add_item": {
+              "id": "insulated_cable",
+              "name": "Insulated Bypass Cable",
+              "description": "Two parallel runs of copper conductor wrapped in self-fusing silicone tape, terminated and ready for installation. Rated for 40 amps combined."
+            },
+            "remove_items": ["cable_spool", "insulation_tape"]
+          }
+        },
+        {
+          "id": "er_step_4",
+          "action": "reroute_power",
+          "description": "This is the dangerous part. You must connect the bypass cable to a live 240-volt bus. The distribution panel has isolation switches for each junction point, but the bypass route connects from Junction J-08 (healthy, currently carrying 14 amps on Circuit 03) to the reactor safety bus. You must: isolate J-08, connect the bypass cables, verify continuity with the circuit tester, then re-energize. The reactor safety interlocks will be without power during the connection -- a window of perhaps ten minutes where the reactor runs without its safety net.",
+          "hint": "Isolate the junction BEFORE connecting cables. Verify zero voltage with circuit tester before touching bare conductors. Double-check polarity. The ship uses color-coded terminals: red for positive rail, blue for negative rail, green for ground. All three must be connected for the safety interlocks to function.",
+          "validation": {
+            "type": "sequence",
+            "requiredItems": ["insulated_cable", "circuit_tester"],
+            "correctSequence": ["isolate_junction", "verify_zero_voltage", "connect_positive", "connect_negative", "connect_ground", "verify_continuity", "energize_junction"],
+            "requiredLocation": "electrical"
+          },
+          "result": "The isolation switch clunks home. You verify: zero volts across the terminals. Dead bus. Safe to touch. The connections go quickly -- positive, negative, ground, each one torqued finger-tight and verified with a tug. Continuity check: the circuit tester shows a clean path, 0.102 ohms end to end, exactly what you calculated. You take a breath, say something unrepeatable to no one in particular, and throw the isolation switch back to LIVE. The panel lights shift. Circuit 04's indicator blinks from red to green. Somewhere on Deck C, the reactor room's safety interlocks hum back to life.",
+          "stateChange": {
+            "set": {
+              "power_rerouted": true,
+              "circuit_04_restored": true,
+              "reactor_safety_online": true
+            },
+            "unlock": ["reactor_room_access"],
+            "remove_items": ["insulated_cable"]
+          }
+        }
+      ],
+      "reward": {
+        "type": "access",
+        "description": "Reactor room safety interlocks restored, granting safe access to the reactor room. Secondary lighting on Deck B partially restored. Sensor array on Deck A remains offline but is lower priority.",
+        "unlocks": ["reactor_room_access", "deck_b_lighting"],
+        "items": [],
+        "removes_hazard": "reactor_safety_offline"
+      },
+      "failureConsequence": {
+        "single_cable_run": {
+          "description": "Running a single cable at 92.5% capacity works -- for now. But the cable runs warm, then hot. Within hours, the insulation tape begins to soften. You won't know there's a problem until the acrid smell of burning silicone reaches you, and by then the cable may have already shorted against an adjacent circuit. A fire in the electrical bay, on a ship with enriched oxygen pockets, would be catastrophic.",
+          "effect": {
+            "delayed_hazard": "cable_fire",
+            "trigger_time": "4_hours",
+            "severity": "critical"
+          }
+        },
+        "wrong_polarity": {
+          "description": "Reversed polarity on the safety interlocks doesn't just fail to work -- it feeds inverted signals to the reactor's control systems. The safety systems report 'nominal' when they should report 'warning.' You've made the reactor room more dangerous, not less, and you have no way to know it until something goes wrong.",
+          "effect": {
+            "hidden_hazard": "inverted_safety_signals",
+            "reactor_risk_multiplier": 3.0
+          }
+        }
+      }
+    },
+    {
+      "id": "reactor_shielding",
+      "name": "Half-Life",
+      "description": "The radiation badge clipped to your collar has turned from white to pale yellow. It should have stayed white for months of normal exposure. The fact that it has changed color in hours tells you that somewhere on Deck C, something is leaking radiation at a rate that will accumulate to dangerous levels within days. The reactor room door opens now -- thanks to the restored safety interlocks -- and the moment it does, your badge deepens to amber. Through the reinforced viewport, you can see it: one of the reactor's neutron shielding panels has shifted on its mounting bolts, leaving a gap of perhaps eight centimeters. Eight centimeters of unshielded neutron flux, pouring invisible death into the ship. The inverse square law is your only ally here -- every meter of distance halves the intensity. But to fix the panel, you must get close.",
+      "location": "reactor_room",
+      "deck": "C",
+      "requiredItems": ["radiation_badge", "torque_wrench", "radiation_shield_panel"],
+      "prerequisitePuzzles": ["electrical_reroute"],
+      "difficulty": 4,
+      "scienceDomain": "Nuclear physics / Radiation protection / Inverse square law",
+      "scienceNotes": "Inverse square law: radiation intensity decreases with the square of the distance from the source. If intensity at 1 meter is I, then at 2 meters it's I/4, at 3 meters it's I/9, etc. Formula: I = I_0 / r^2. Safe exposure limit: 50 millisieverts (mSv) per work session. Badge readings allow calculation of dose rate at measured distance. The gap emits approximately 800 mSv/hr at 1 meter. At 2 meters: 200 mSv/hr. At 3 meters: approximately 89 mSv/hr. Safe working time at 1 meter (panel distance): 50/800 = 0.0625 hours = 3.75 minutes. Work must be done in timed intervals with retreat to safe distance between sessions.",
+      "steps": [
+        {
+          "id": "rs_step_1",
+          "action": "assess_radiation_levels",
+          "description": "Before you enter the reactor room, you need data. The radiation badge gives a cumulative reading but not a real-time dose rate. However, the badge's color chart printed on its backing card provides approximate dose rate ranges for each color. Your badge went from white to amber crossing the threshold of the reactor room door -- approximately 4 meters from the gap. That gives you a data point. By checking the badge color at the door (4 meters) and comparing to the color chart, you can calculate the source intensity using the inverse square law, then determine safe working distances and times.",
+          "hint": "Badge reads approximately 50 mSv/hr at 4 meters (amber zone). Using inverse square law: I_0 = I_measured * r^2 = 50 * 16 = 800 mSv/hr at 1 meter from the gap. At working distance (1 meter from panel = 1 meter from gap): dose rate = 800 mSv/hr. Safe exposure per session: 50 mSv. Safe time at 1 meter: 50/800 hours = 3.75 minutes.",
+          "validation": {
+            "type": "calculation",
+            "correctAnswer": 3.75,
+            "tolerance": 0.25,
+            "unit": "minutes",
+            "formula": "(safe_dose / (I_measured * distance_measured^2)) * 60",
+            "variables": {
+              "safe_dose": 50,
+              "I_measured": 50,
+              "distance_measured": 4,
+              "working_distance": 1
+            }
+          },
+          "result": "Three minutes and forty-five seconds. That's how long you can stand at the reactor panel before your accumulated dose crosses the safety threshold. Not long enough to be careless. Not short enough to be impossible. You'll need to work fast, work smart, and retreat the moment your time is up. Multiple trips. Precise movements. No fumbling.",
+          "stateChange": {
+            "set": {
+              "radiation_assessed": true,
+              "source_intensity_1m": 800,
+              "safe_work_time_minutes": 3.75,
+              "work_sessions_needed": 3
+            }
+          }
+        },
+        {
+          "id": "rs_step_2",
+          "action": "remove_damaged_panel",
+          "description": "First work session. You walk toward the reactor housing with the torque wrench in hand, counting seconds in your head. The damaged panel is a slab of borated polyethylene backed with lead -- heavy, dense, purpose-built to stop neutrons. Three of its four mounting bolts are intact. The fourth is sheared, and the panel has pivoted around the remaining three, opening the gap. You need to remove the three good bolts to take the damaged panel off entirely before the replacement can go on. The torque wrench fits the bolt heads. Each bolt requires approximately forty seconds to remove. Three bolts. Two minutes. You have three minutes forty-five seconds. Tight, but possible.",
+          "hint": "Enter the reactor room with the torque_wrench. You have 3.75 minutes of safe working time. Removing three bolts at 40 seconds each = 120 seconds = 2 minutes. Add 30 seconds for approach and retreat. Total: 2.5 minutes -- within your window. Remove all three bolts in a single session, then retreat to the corridor (4+ meters) to let your dose rate drop before the next session.",
+          "validation": {
+            "type": "timed_action",
+            "requiredItems": ["torque_wrench"],
+            "requiredLocation": "reactor_room",
+            "timeLimit_seconds": 225,
+            "requiredState": {
+              "radiation_assessed": true
+            }
+          },
+          "result": "You move with the controlled urgency of someone who understands what invisible things can do to human cells. First bolt: forty-two seconds, the wrench slipping once on corroded threads. Second bolt: thirty-eight seconds, smoother now. Third bolt: forty-one seconds. The damaged panel sags free, and you catch it -- fifty kilograms of shielding material trying to obey gravity while your muscles scream at the unexpected weight. You lower it to the floor, turn, and walk briskly back to the corridor. Not running. Running causes falls, and falls cost seconds. In the corridor, you press your back against the wall and check your badge: deep amber, approaching red. Time to breathe.",
+          "stateChange": {
+            "set": {
+              "damaged_panel_removed": true,
+              "radiation_exposure_session_1": 42,
+              "total_radiation_exposure": 42
+            }
+          }
+        },
+        {
+          "id": "rs_step_3",
+          "action": "install_replacement_panel",
+          "description": "Second work session. After fifteen minutes in the corridor to let the per-session exposure window reset (your badge tracks cumulative, but the acute dose rate is what causes immediate harm), you return with the replacement shielding panel. This panel is new -- pulled from the maintenance stores. Four fresh bolts. Each must be torqued to 45 Newton-meters to ensure a seal against neutron flux. Under-torqued and the panel will shift again. Over-torqued and the mounting threads strip in the reactor housing, leaving you with no way to secure the panel at all.",
+          "hint": "Carry the radiation_shield_panel into the reactor room. Align the four bolt holes with the mounting points on the reactor housing. Hand-start each bolt to avoid cross-threading, then torque to exactly 45 Nm using the torque_wrench. Four bolts at 50 seconds each = 200 seconds = 3.33 minutes. Within your 3.75-minute window, but barely. Move with purpose.",
+          "validation": {
+            "type": "timed_action",
+            "requiredItems": ["radiation_shield_panel", "torque_wrench"],
+            "requiredLocation": "reactor_room",
+            "timeLimit_seconds": 225,
+            "torqueValue": {
+              "target": 45,
+              "unit": "Nm",
+              "tolerance": 5
+            }
+          },
+          "result": "The replacement panel weighs the same as the old one -- your shoulders remember. You align the bolt holes by feel as much as by sight, and the first bolt threads in with a gratifying smoothness. Torque wrench set to 45 Newton-meters. Click. Second bolt. Click. Third bolt. Click. Fourth bolt -- the threads resist, and your heart hammers for the two seconds it takes to back the bolt out and re-start it straight. Click. Four for four. The gap is sealed. The invisible river of neutrons meets borated polyethylene and stops. You retreat to the corridor again and watch your badge. It holds at deep amber. No longer darkening. The leak is contained.",
+          "stateChange": {
+            "set": {
+              "replacement_panel_installed": true,
+              "reactor_shielding_restored": true,
+              "radiation_leak_sealed": true,
+              "radiation_exposure_session_2": 48,
+              "total_radiation_exposure": 90
+            },
+            "unlock": ["engine_room_access"],
+            "remove_items": ["radiation_shield_panel"]
+          }
+        },
+        {
+          "id": "rs_step_4",
+          "action": "verify_shielding",
+          "description": "Third session -- verification. You re-enter the reactor room one final time, this time to check the badge reading at the panel surface. If the replacement is properly seated and torqued, the dose rate at contact should drop below 5 mSv/hr -- safe for brief maintenance work. This is the test. If the number is wrong, you'll need to go back in and re-torque.",
+          "hint": "Approach the reactor with the radiation_badge visible. Check the reading at 1 meter from the new panel. The color should be shifting back toward yellow (low dose) or even white (nominal). Compare against the chart on the badge backing.",
+          "validation": {
+            "type": "item_check",
+            "requiredItems": ["radiation_badge"],
+            "requiredLocation": "reactor_room",
+            "expectedReading": "yellow_or_lower"
+          },
+          "result": "At one meter from the new panel: the badge holds at pale yellow. Below 5 mSv/hr. Safe. The shielding is holding. You allow yourself to stand there for ten full seconds, watching the badge color, waiting for it to darken. It does not. You exhale a breath you did not know you were holding. The reactor continues its patient fusion burn, pushing Kepler's Promise through the void at 0.12c, exactly as it has for nineteen years. But now it does so without poisoning you.",
+          "stateChange": {
+            "set": {
+              "shielding_verified": true,
+              "reactor_room_safe": true,
+              "reactor_radiation_level": "nominal"
+            },
+            "unlock": ["engine_room_safe_access"]
+          }
+        }
+      ],
+      "reward": {
+        "type": "access_and_safety",
+        "description": "Reactor room radiation levels returned to nominal. Engine room access now safe for extended work (needed for navigation correction burn). Cumulative radiation exposure logged but within career limits.",
+        "unlocks": ["engine_room_safe_access", "reactor_maintenance_access"],
+        "items": [],
+        "removes_hazard": "radiation_leak"
+      },
+      "failureConsequence": {
+        "exceeded_time_limit": {
+          "description": "You stayed too long. The work is done, the panel is in place, but your badge has gone red. Deep red, the color of a warning you can no longer heed because the damage is already written into your DNA. Over the coming hours, nausea will set in. Then fatigue. Acute radiation syndrome doesn't kill quickly -- it kills in stages, each one worse than the last. You may have saved the ship. You may not have saved yourself.",
+          "effect": {
+            "radiation_sickness": true,
+            "stat_penalty": {
+              "constitution": -3,
+              "dexterity": -2,
+              "progression": "worsening"
+            },
+            "health_reduction": 40,
+            "duration": "permanent"
+          }
+        },
+        "undertorqued_bolts": {
+          "description": "The panel holds. For now. But the bolts are not at specification, and the vibration of the reactor -- a constant, subsonic hum that you feel in your molars -- will slowly work them loose. In days, the gap will reopen. You'll need to fix it again, and next time your cumulative exposure will leave even less margin for error.",
+          "effect": {
+            "delayed_hazard": "shielding_failure_recurrence",
+            "trigger_time": "72_hours",
+            "severity": "high"
+          }
+        }
+      }
+    },
+    {
+      "id": "hull_breach_repair",
+      "name": "The Skin of Things",
+      "description": "The hull integrity monitor has been flashing amber since you restored the sensor array, but you told yourself it could wait. It cannot wait any longer. Deck D, Frame 47, Starboard -- a micrometeorite impact, the monitor says, though the probability of an impact at 0.12c should be vanishingly small. The particle was likely no larger than a grain of sand, but at twelve percent of light speed, a grain of sand carries the kinetic energy of a hand grenade. The outer hull is breached. The inner hull is holding, but the pressure differential sensors show it deforming -- slowly, steadily, like a balloon being squeezed. When it fails, the atmosphere of Deck D will try to equalize with the vacuum of interstellar space. It will not be a gentle process.",
+      "location": "hull_exterior",
+      "deck": "D",
+      "requiredItems": ["eva_suit", "oxygen_tank", "sealant_gun", "epoxy_resin", "welding_torch", "fuel_cell"],
+      "prerequisitePuzzles": ["life_support_repair"],
+      "difficulty": 4,
+      "scienceDomain": "Materials science / Pressure differentials / Newton's Third Law",
+      "scienceNotes": "Pressure differential: interior at 101.3 kPa, exterior at 0 kPa. Force on a 10cm x 10cm patch: F = P * A = 101,300 Pa * 0.01 m^2 = 1,013 N (approximately 228 lbs of force pushing outward). This is why the patch must be applied from outside -- the pressure differential will push an interior patch outward and blow it off. An exterior patch is pushed against the hull by the pressure differential. Newton's Third Law: the welding torch expels hot gas, which pushes the welder in the opposite direction. In zero-g EVA, without a tether, this force would send the player tumbling away from the hull. Tethering is mandatory.",
+      "steps": [
+        {
+          "id": "hb_step_1",
+          "action": "prepare_eva",
+          "description": "The EVA suit hangs in the airlock like a shed skin, white and rigid and waiting. It has not been worn in nineteen years. You check the seals methodically -- neck ring, wrist rings, waist connector, boot locks. Each one must click twice to indicate a positive seal. The oxygen tank slots into the life support backpack with a pressurized hiss. Four hours of oxygen at normal consumption. The suit's heads-up display activates, scrolling through system checks in green text. You load the sealant gun with a cartridge of vacuum-rated epoxy resin and mag-lock it to the suit's tool belt. The welding torch goes on the other hip, fuel cell already seated. You are as ready as you will ever be to step into the nothing.",
+          "hint": "Equip the eva_suit, attach the oxygen_tank, load the sealant_gun with epoxy_resin, and attach the welding_torch with fuel_cell. All items must be prepared before entering the airlock. The suit's HUD will display a checklist -- all items must show green before the outer door will open.",
+          "validation": {
+            "type": "equipment_check",
+            "requiredItems": ["eva_suit", "oxygen_tank", "sealant_gun", "epoxy_resin", "welding_torch", "fuel_cell"],
+            "allMustBeEquipped": true
+          },
+          "result": "Every indicator green. Suit integrity: nominal. O2: four hours. Tools: secured. You seal the inner airlock door behind you and listen to the pumps evacuate the small chamber. The sound fades as the air thins -- first to a whisper, then to silence. The outer door opens onto the void. Stars. Billions of them, undimmed by atmosphere, burning with a steady ferocity that no planet-dweller ever truly sees. The hull of ISV Kepler's Promise stretches away from you in every direction, a continent of gray titanium alloy, scarred by nineteen years of interstellar transit.",
+          "stateChange": {
+            "set": {
+              "eva_prepared": true,
+              "in_eva": true,
+              "oxygen_remaining_hours": 4.0
+            }
+          }
+        },
+        {
+          "id": "hb_step_2",
+          "action": "locate_and_tether",
+          "description": "Frame 47, Starboard. The hull integrity monitor gave you coordinates, but finding the actual damage in the vast gray expanse of the outer hull requires the suit's damage overlay -- an augmented reality layer that highlights structural anomalies. You mag-boot your way across the hull, each step a deliberate decision in zero gravity, until the overlay paints a circle of angry red around a section of hull plating. The impact crater is small -- no wider than your fist -- but the metal around it is starred with fractures radiating outward like frozen lightning. Before you do anything else, you clip your tether to the nearest structural hardpoint. Newton's Third Law is absolute, and you are about to use tools that push back.",
+          "hint": "Navigate to Frame 47 Starboard using the EVA suit's HUD navigation. CRITICAL: Attach the tether to a structural hardpoint BEFORE beginning any work. The welding torch's exhaust and the physical force of pressing the sealant gun will both exert reaction forces that will push you away from the hull. Without a tether, you will drift into interstellar space with no way to return.",
+          "validation": {
+            "type": "sequence",
+            "correctSequence": ["navigate_to_damage", "attach_tether", "inspect_damage"],
+            "requiredState": {
+              "in_eva": true
+            }
+          },
+          "result": "Tether secured. You tug it twice -- hard -- and feel the reassuring resistance of the structural hardpoint holding firm. The damage is worse up close. The micrometeorite punched clean through the 12mm outer hull plate, leaving an entry hole approximately 35mm in diameter, surrounded by a halo of deformed and fractured metal extending 15cm in every direction. Through the hole, you can see the inner hull -- dented inward but unbroken. Between the two hulls, insulation material floats in the vacuum like frozen cotton. This is your workspace. This is where you keep the ship alive.",
+          "stateChange": {
+            "set": {
+              "damage_located": true,
+              "tethered": true,
+              "breach_diameter_mm": 35,
+              "fracture_radius_cm": 15
+            }
+          }
+        },
+        {
+          "id": "hb_step_3",
+          "action": "apply_sealant_patch",
+          "description": "The sealant gun applies a vacuum-rated epoxy resin that cures in ninety seconds when exposed to UV -- and interstellar space is full of UV from the ship's forward-facing star. The resin must cover not just the hole but the entire fracture zone. Fifteen centimeters of fracture radius means you need a patch at least 35 centimeters in diameter to ensure full coverage. The sealant gun's nozzle allows a 2-centimeter-wide bead. You begin at the center, spiraling outward, letting each bead overlap the last. The gun pushes back against your hands with each squeeze -- Newton's Third, reminding you that every action in this universe has consequences. The tether catches you each time, keeping you pressed to the hull.",
+          "hint": "Apply epoxy_resin using the sealant_gun in a spiral pattern from center outward. The patch must extend beyond the fracture zone. Apply from OUTSIDE the hull -- the 101.3 kPa pressure differential from inside will press the cured patch firmly against the outer hull surface, creating a stronger seal. If applied from inside, that same pressure would push the patch outward and blow it off (Force = 101,300 Pa * area). The tether will counteract the gun's reaction force.",
+          "validation": {
+            "type": "item_use",
+            "requiredItems": ["sealant_gun"],
+            "requiredState": {
+              "tethered": true,
+              "damage_located": true
+            },
+            "requiredApproach": "exterior"
+          },
+          "result": "Spiral outward. Squeeze, bead, overlap. Squeeze, bead, overlap. The resin goes on translucent gray and begins curing almost immediately in the harsh UV bath of naked starlight, turning milky white and then opaque. The tether jerks taut with each squeeze of the gun -- you are pushing yourself away from the hull with every bead of sealant, and only the tether brings you back. In three minutes, the patch is laid: a 40-centimeter disc of cured epoxy, bonded to the titanium hull plate, covering every fracture line. The pressure from inside -- 101.3 kilopascals, over a thousand newtons of force pressing outward -- seats the patch against the hull like a hand pressing a bandage to a wound. Physics, for once, is on your side.",
+          "stateChange": {
+            "set": {
+              "sealant_applied": true,
+              "patch_cured": true
+            },
+            "remove_items": ["epoxy_resin"]
+          }
+        },
+        {
+          "id": "hb_step_4",
+          "action": "structural_weld",
+          "description": "The epoxy patch will hold against pressure, but it is not a structural repair. The fractured metal around the impact site is weakened, and another impact in the same region -- unlikely but not impossible over the remaining twenty-three years of transit -- would shatter it. The welding torch can fuse the fracture lines, restoring structural integrity to the hull plate. But welding in zero-g is its own challenge. The torch expels a jet of superheated plasma, and Newton does not negotiate: for every newton of force the plasma exerts on the hull, the torch exerts an equal and opposite force on you. Your tether must be short enough to keep you in contact with the work surface, or the torch will push you away from the hull with each pulse.",
+          "hint": "Use the welding_torch (powered by fuel_cell) to trace each fracture line, fusing the cracked metal back together. Shorten your tether to minimize play -- you need to be pressed against the hull to counteract the torch's reaction force. Weld radial fractures from the outside in, toward the patched center. The torch's reaction force at full power: approximately 5 N. Your mass in the suit: approximately 120 kg. Acceleration = F/m = 0.042 m/s^2 -- slow, but in zero-g, any acceleration is enough to drift you away without a tether.",
+          "validation": {
+            "type": "item_use",
+            "requiredItems": ["welding_torch"],
+            "requiredState": {
+              "sealant_applied": true,
+              "tethered": true
+            }
+          },
+          "result": "You shorten the tether to half a meter, pressing yourself flat against the hull. The welding torch ignites with a blue-white flare that your helmet visor auto-dims to protect your eyes. Each pulse kicks you gently backward, and the tether catches you, and you drift back in. Pulse. Catch. Drift. Pulse. Catch. Drift. A rhythm develops, almost meditative, and in twenty minutes the major fracture lines are fused -- glowing orange seams that cool quickly in the vacuum to dull gray. Not pretty. Not factory. But whole. The hull of Kepler's Promise is whole again, and the dark between the stars stays where it belongs: outside.",
+          "stateChange": {
+            "set": {
+              "structural_weld_complete": true,
+              "hull_breach_repaired": true,
+              "hull_integrity_restored": true
+            },
+            "remove_items": ["fuel_cell"],
+            "unlock": ["hull_secure_status"]
+          }
+        },
+        {
+          "id": "hb_step_5",
+          "action": "return_to_airlock",
+          "description": "The work is done. You release the tether from the hardpoint, coil it, and mag-boot your way back toward the airlock, navigating by the suit's HUD overlay. The stars wheel slowly overhead as the ship rotates on its long axis -- a gentle spin for structural stability. You have been outside for forty-seven minutes. The airlock opens at your approach, and you step back into the ship's embrace, waiting as the pumps fill the chamber with atmosphere. Sound returns gradually -- first as a hiss, then as a hum, then as the full familiar chorus of a living ship. The inner door opens, and air that tastes of recycled humanity has never been so welcome.",
+          "hint": "Return to the airlock and cycle back inside. Verify hull integrity readings from the interior panel once re-pressurized.",
+          "validation": {
+            "type": "navigation",
+            "destination": "airlock",
+            "requiredState": {
+              "hull_breach_repaired": true
+            }
+          },
+          "result": "Inside. Pressurized. Alive. The hull integrity monitor updates as you watch: Frame 47, Starboard -- REPAIRED (FIELD). The amber warning extinguishes, replaced by a steady green that feels like forgiveness. You strip off the EVA suit with hands that shake only slightly, and hang it back in its alcove. It looks the same as before -- white, rigid, waiting. But you are not the same. You have walked in the void and returned.",
+          "stateChange": {
+            "set": {
+              "in_eva": false,
+              "hull_status": "repaired_field",
+              "deck_d_pressure_stable": true
+            }
+          }
+        }
+      ],
+      "reward": {
+        "type": "ship_integrity",
+        "description": "Hull breach sealed and structurally reinforced. Deck D pressure stabilized. The ship's structural integrity is restored to serviceable levels for the remaining 22.7 years of transit. EVA suit returned to storage (available for future use if needed).",
+        "unlocks": ["hull_secure_status"],
+        "items": [],
+        "removes_hazard": "hull_breach"
+      },
+      "failureConsequence": {
+        "no_tether": {
+          "description": "The first squeeze of the sealant gun pushes you away from the hull. Slowly -- barely perceptible. But in zero gravity, barely perceptible is enough. By the time you realize you are drifting, you are two meters from the hull and accelerating at the infinitesimal rate of Newton's uncaring Third Law. You fire the torch backward to push yourself toward the hull -- but now you are tumbling. The stars spin. The ship recedes. This is how the void takes you: not with violence, but with geometry. GAME OVER: Lost in interstellar space.",
+          "effect": {
+            "game_over": true,
+            "ending": "ending_void_lost",
+            "description": "The player drifts away from the ship with no means of return. Death by hypothermia and oxygen depletion follows in hours."
+          }
+        },
+        "interior_patch": {
+          "description": "You try to patch from inside, reasoning that you can avoid the EVA entirely. The epoxy goes on, cures, holds -- for eleven seconds. Then 101,300 pascals of atmospheric pressure, pushing outward on the patch with over a thousand newtons of force, peels it away from the hull like a bandage from wet skin. The atmosphere rushes through the gap with a scream of escaping air. Emergency bulkheads slam shut, sealing Deck D. You are safe, but everything on Deck D is now inaccessible until you do the repair properly -- from outside.",
+          "effect": {
+            "deck_d_sealed": true,
+            "atmosphere_loss": 15,
+            "items_locked": ["all_deck_d_items"],
+            "must_retry_from_exterior": true
+          }
+        }
+      }
+    },
+    {
+      "id": "navigation_correction",
+      "name": "The Tsiolkovsky Imperative",
+      "description": "The bridge is silent except for the soft tick of navigational instruments measuring the distance between where you are and where you should be. The main display tells the story in stark geometry: a planned trajectory -- a gentle curve from Sol to 82 Eridani, calculated twenty years ago by Earth's finest astrodynamicists -- and your actual trajectory, diverging from it like a crack spreading through glass. Someone altered the course. The delta-v was small, applied over hours through the maneuvering thrusters, but at 0.12c, even a fractional change in heading translates to light-years of error over the remaining journey. If you do not correct, ISV Kepler's Promise will miss 82 Eridani entirely and sail into the empty dark between stars, carrying four thousand sleeping colonists to a slow death by entropy. The math to save them is written in the language of Konstantin Tsiolkovsky, and you are the only one awake to speak it.",
+      "location": "bridge",
+      "deck": "A",
+      "requiredItems": ["navigation_chip"],
+      "prerequisitePuzzles": ["reactor_shielding"],
+      "difficulty": 5,
+      "scienceDomain": "Orbital mechanics / Tsiolkovsky rocket equation / Hohmann transfer principles",
+      "scienceNotes": "Tsiolkovsky rocket equation: delta-v = v_e * ln(m_0 / m_f), where v_e = effective exhaust velocity, m_0 = initial mass (wet), m_f = final mass (dry, after fuel burn). Ship data: v_e = 30,000 m/s (fusion drive), m_0 = 2,450,000 kg (current mass with remaining fuel), dry mass m_f_min = 2,200,000 kg (mass with zero fuel -- cannot go below this). Maximum available delta-v = 30,000 * ln(2,450,000 / 2,200,000) = 30,000 * ln(1.1136) = 30,000 * 0.1074 = 3,222 m/s. Required correction delta-v: 2,847 m/s. This is achievable but uses most remaining fuel. Fuel mass needed: m_f = m_0 / e^(delta-v / v_e) = 2,450,000 / e^(2847/30000) = 2,450,000 / e^0.0949 = 2,450,000 / 1.0995 = 2,228,286 kg. Fuel consumed: 2,450,000 - 2,228,286 = 221,714 kg. This leaves only 28,286 kg of fuel reserve (1.28% of current fuel mass) -- enough for arrival deceleration if perfectly executed, but with almost zero margin for error. The player must understand this tradeoff.",
+      "steps": [
+        {
+          "id": "nc_step_1",
+          "action": "extract_navigation_data",
+          "description": "The bridge's primary navigation computer is locked in an error state -- its last valid trajectory data corrupted by whoever altered the course. But the backup navigation chip, a hardened solid-state module, contains the original flight plan as loaded at departure from Sol. You need to extract this chip, take it to the lab for analysis on a clean system, and compare the original trajectory to your current position and velocity to determine the exact correction needed.",
+          "hint": "Remove the navigation_chip from its slot in the bridge console. The chip is a physical backup specifically designed to survive system failures. It contains the original trajectory data from Earth -- heading, velocity profile, waypoints, and the planned arrival parameters for 82 Eridani.",
+          "validation": {
+            "type": "item_retrieval",
+            "item": "navigation_chip",
+            "location": "bridge"
+          },
+          "result": "The navigation chip slides from its hardened slot with a click. It is small -- no larger than a playing card -- and heavy for its size, encased in radiation-shielded tungsten. Twenty years ago, someone on Earth loaded this chip with the mathematical description of a journey across 19.7 light-years. Every number on it was checked and re-checked by teams of people who would never make this journey, who would be dead before it ended, but who poured their expertise into ensuring that four thousand strangers would arrive safely at a new world. You hold their work in your hand, and it is not too late for it to matter.",
+          "stateChange": {
+            "set": {
+              "navigation_chip_extracted": true
+            },
+            "add_item": {
+              "id": "navigation_chip",
+              "name": "Navigation Backup Chip",
+              "description": "Tungsten-shielded solid-state module containing the original 82 Eridani flight plan."
+            }
+          }
+        },
+        {
+          "id": "nc_step_2",
+          "action": "analyze_trajectory_deviation",
+          "description": "In the science lab, you slot the navigation chip into the analysis terminal. The screen fills with numbers: planned versus actual position, planned versus actual velocity vector. The deviation is small in absolute terms -- a heading error of 0.0034 radians -- but at interstellar distances, radians multiply into light-years. The terminal calculates the required correction and presents it as a single number that will determine whether four thousand people live or die: the delta-v needed to return to the correct trajectory.",
+          "hint": "Use the lab's analysis terminal to compare current trajectory against the navigation_chip's original flight plan. The system will calculate the required correction delta-v. You will need this number for the Tsiolkovsky equation: Required delta-v = 2,847 m/s.",
+          "validation": {
+            "type": "item_use",
+            "requiredItems": ["navigation_chip"],
+            "requiredLocation": "lab"
+          },
+          "result": "TRAJECTORY ANALYSIS:\n\nPlanned heading: 078.4421 / -12.3387 (galactic coordinates)\nCurrent heading: 078.4455 / -12.3370\nDeviation: 0.0034 radians lateral, 0.0017 radians vertical\n\nRequired correction delta-v: 2,847 m/s\nCorrection burn angle: 247.3 degrees from current heading\n\nThe number stares at you from the screen. 2,847 meters per second of velocity change. Not large by the standards of the journey -- the ship accelerated to 36,000 km/s during its departure burn. But that burn used fuel that is already gone, converted to energy and left behind as a fading trail of fusion exhaust. The question now is whether enough fuel remains to make this correction and still decelerate at journey's end.",
+          "stateChange": {
+            "set": {
+              "trajectory_analyzed": true,
+              "required_delta_v": 2847,
+              "correction_angle": 247.3
+            }
+          }
+        },
+        {
+          "id": "nc_step_3",
+          "action": "calculate_fuel_requirements",
+          "description": "The Tsiolkovsky rocket equation. The most important equation in spaceflight, and right now, the most important equation in the lives of four thousand sleeping people. Delta-v equals exhaust velocity times the natural logarithm of the ratio of initial mass to final mass. You know the required delta-v (2,847 m/s). You know the exhaust velocity of the fusion drive (30,000 m/s). You know the ship's current mass (2,450,000 kg) and its dry mass (2,200,000 kg -- the mass with zero fuel). The question is: how much fuel will this burn consume, and will enough remain for the deceleration burn at 82 Eridani?",
+          "hint": "Tsiolkovsky equation: delta-v = v_e * ln(m_0 / m_f). Rearrange for m_f: m_f = m_0 / e^(delta-v / v_e) = 2,450,000 / e^(2847/30000) = 2,450,000 / e^0.0949 = 2,450,000 / 1.0995 = 2,228,286 kg. Fuel consumed = 2,450,000 - 2,228,286 = 221,714 kg. Remaining fuel after correction: 2,228,286 - 2,200,000 = 28,286 kg. Original deceleration fuel budget: 250,000 kg. Remaining budget after correction: 28,286 kg. This is 11.3% of the planned deceleration fuel. The correction is possible but leaves almost no margin.",
+          "validation": {
+            "type": "calculation",
+            "correctAnswer": 221714,
+            "tolerance": 500,
+            "unit": "kg",
+            "formula": "m_0 - (m_0 / e^(delta_v / v_e))",
+            "variables": {
+              "m_0": 2450000,
+              "delta_v": 2847,
+              "v_e": 30000
+            }
+          },
+          "result": "221,714 kilograms of fuel. That is what the correction will cost. You stare at the number and then at the fuel remaining readout: 250,000 kilograms total. The correction will consume 88.7% of remaining fuel reserves, leaving 28,286 kilograms for the deceleration burn at 82 Eridani. The planned deceleration budget was 250,000 kilograms. You will arrive with 11.3% of that budget. It can be done -- the deceleration can be stretched over a longer arc, trading time for fuel efficiency -- but there is no room for error. None. Not a single kilogram wasted. The margin between salvation and oblivion has become terrifyingly thin. But it exists. And that is enough.",
+          "stateChange": {
+            "set": {
+              "fuel_calculated": true,
+              "fuel_to_consume": 221714,
+              "fuel_remaining_after": 28286,
+              "deceleration_margin_percent": 11.3
+            }
+          }
+        },
+        {
+          "id": "nc_step_4",
+          "action": "program_correction_burn",
+          "description": "Back on the bridge, you load the correction parameters into the navigation computer: delta-v of 2,847 m/s, burn angle 247.3 degrees from current heading, fuel allocation 221,714 kg. The computer calculates burn duration: at the fusion drive's thrust rating, the correction will take 14 hours and 23 minutes of continuous burn. Nearly fifteen hours of the ship's engine firing, spending fuel that was meant for arrival, to undo what someone deliberately did to the trajectory. The CONFIRM button pulses red on the console.",
+          "hint": "Enter the correction parameters on the bridge navigation console. The system will ask for confirmation -- this is an irreversible fuel expenditure. Verify the numbers one final time before confirming. Burn duration: fuel_mass / mass_flow_rate. The drive's mass flow rate at rated thrust: approximately 4.28 kg/s. 221,714 / 4.28 = 51,801 seconds = 863.4 minutes = 14.39 hours.",
+          "validation": {
+            "type": "input_values",
+            "requiredValues": {
+              "delta_v": { "value": 2847, "tolerance": 10 },
+              "burn_angle": { "value": 247.3, "tolerance": 0.5 },
+              "fuel_allocation": { "value": 221714, "tolerance": 1000 }
+            },
+            "requiredLocation": "bridge"
+          },
+          "result": "You check the numbers. Then you check them again. Then you close your eyes and check them a third time from memory, because this is the kind of decision that earns or forfeits the right to carry four thousand lives through the dark. The numbers hold. You press CONFIRM. The deck trembles beneath your feet as the fusion drive ignites -- a deep, subsonic vibration that you feel in your bones rather than hear with your ears. The main display updates: CORRECTION BURN IN PROGRESS. DURATION: 14:23:07. FUEL CONSUMPTION: NOMINAL. On the navigation plot, your trajectory begins to bend -- slowly, imperceptibly, but with mathematical certainty -- back toward the star that four thousand people left everything they knew to reach.",
+          "stateChange": {
+            "set": {
+              "correction_burn_active": true,
+              "burn_duration_hours": 14.39
+            },
+            "start_timer": {
+              "id": "correction_burn",
+              "duration_minutes": 863,
+              "on_complete": {
+                "set": {
+                  "course_corrected": true,
+                  "trajectory_status": "nominal",
+                  "remaining_fuel_kg": 28286,
+                  "correction_burn_active": false
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "nc_step_5",
+          "action": "verify_new_trajectory",
+          "description": "Fourteen hours later -- hours spent pacing, checking instruments, running the numbers again and again -- the fusion drive cuts out. The silence is sudden and enormous. The navigation display updates with the post-burn trajectory, and you lean forward to read the verdict.",
+          "hint": "After the burn completes, verify the new trajectory against the original flight plan. The heading should now match the planned trajectory within acceptable tolerances. Check fuel remaining against the deceleration budget.",
+          "validation": {
+            "type": "state_check",
+            "requiredState": {
+              "correction_burn_active": false,
+              "course_corrected": true
+            }
+          },
+          "result": "POST-BURN TRAJECTORY ANALYSIS:\n\nPlanned heading: 078.4421 / -12.3387\nCurrent heading: 078.4421 / -12.3387\nDeviation: 0.0000 radians\nStatus: ON COURSE\n\nFuel remaining: 28,286 kg (11.3% of deceleration budget)\nArrival estimate: 22.7 years\nDeceleration margin: MINIMAL -- EXTENDED BRAKING ARC REQUIRED\n\nThe numbers match. For the first time since you woke in that cold pod, the ship is going where it was meant to go. The cost was nearly all of your remaining fuel, and the arrival will require a deceleration maneuver of surgical precision, but the destination is correct. 82 Eridani. A yellow star not unlike Sol, orbited by a world that humanity chose -- after decades of observation and analysis -- as the place to plant its next garden. The course is true. The promise of the ship's name has been kept, at least for now.",
+          "stateChange": {
+            "set": {
+              "trajectory_verified": true,
+              "navigation_puzzle_complete": true
+            },
+            "unlock": ["act4_complete", "comms_restoration_available"]
+          }
+        }
+      ],
+      "reward": {
+        "type": "story_progression",
+        "description": "Ship trajectory corrected. ISV Kepler's Promise is back on course for 82 Eridani. The cost: 88.7% of remaining fuel reserves, leaving a razor-thin margin for arrival deceleration. This heightens the stakes for the final act -- there is no room for any further course alterations. The decision is made, the fuel is spent, and the destination is locked.",
+        "unlocks": ["act5_preparation", "comms_restoration_available"],
+        "items": [],
+        "removes_hazard": "trajectory_deviation"
+      },
+      "failureConsequence": {
+        "calculation_error": {
+          "description": "The burn executes with incorrect parameters. Fuel is consumed -- there is no getting it back -- but the correction is imprecise. The ship is closer to the right course than before, but not on it. With the remaining fuel, there may not be enough for a second correction AND deceleration. The math becomes an exercise in impossible optimization: which is worse, missing the star by a little or arriving at it too fast to stop?",
+          "effect": {
+            "partial_correction": true,
+            "remaining_deviation_radians": 0.0008,
+            "fuel_wasted": true,
+            "ending_modifier": "difficult_arrival"
+          }
+        },
+        "wrong_angle": {
+          "description": "The burn angle is wrong. The fuel is gone and the ship has moved -- but in the wrong direction. The trajectory deviation is now larger than before. With insufficient fuel for another full correction, the ship will miss 82 Eridani entirely. Four thousand people will sleep through the approach of a star that should have been their new home, and never wake up, because there is nowhere to wake up to. The journey becomes the destination, and the destination is nowhere.",
+          "effect": {
+            "game_over": true,
+            "ending": "ending_lost_in_void",
+            "description": "The ship sails past 82 Eridani with insufficient fuel to correct. The colonists never wake."
+          }
+        }
+      }
+    },
+    {
+      "id": "comms_restoration",
+      "name": "Voices in the Deep",
+      "description": "The communications array has been offline since you woke -- its primary antenna assembly stripped of a critical component, the high-gain amplifier module, which you find conspicuously absent from its mounting bracket. Whoever was awake before you did not merely neglect the comms system. They dismantled it. The question that gnaws at you as you stand in the comms room, staring at the empty bracket, is: did they dismantle it to prevent the ship from calling for help, or to prevent someone from calling the ship? The answer matters. But first, you must find the missing component, reinstall it, and find out what -- if anything -- the array transmitted before it was disabled.",
+      "location": "comms_room",
+      "deck": "A",
+      "requiredItems": ["antenna_component"],
+      "prerequisitePuzzles": ["electrical_reroute"],
+      "difficulty": 3,
+      "scienceDomain": "Electromagnetics / Signal processing / Speed of light",
+      "scienceNotes": "Signal travel time: electromagnetic signals travel at c (299,792,458 m/s). Distance to nearest known relay station: 9.7 light-years. Round-trip signal time: 19.4 years. The ship is 19.3 years into its 42-year journey, meaning it is approximately 12.2 light-years from Sol and 7.5 light-years from 82 Eridani (not accounting for the ship's own motion). A signal sent to the relay 2 years ago (when the saboteur was active) would still be approximately 7.7 years from reaching it. The ship cannot receive a response before arrival. Signal frequency: 1420 MHz (hydrogen line -- universal hailing frequency). Signal strength calculation: inverse square law applies to electromagnetic radiation just as it does to radiation. Antenna gain and transmission power determine the effective range.",
+      "steps": [
+        {
+          "id": "cr_step_1",
+          "action": "find_antenna_component",
+          "description": "The antenna component is not in the comms room. It is not in any of the places it should logically be stored. Someone took it and hid it, or disposed of it. You search the ship methodically, deck by deck, compartment by compartment, driven by an urgency that borders on obsession. If the comms array sent a signal before it was disabled, you need to know what it said and to whom. The component could be anywhere -- shoved behind equipment, locked in a storage container, or simply left in a place no one would think to look.",
+          "hint": "Search the cargo_bay on Deck D. The antenna_component was hidden behind a stack of colony supply crates, wrapped in anti-static cloth. The saboteur hid it rather than destroying it -- which tells you something about their state of mind. They wanted the option of using it again.",
+          "validation": {
+            "type": "item_search",
+            "item": "antenna_component",
+            "location": "cargo_bay",
+            "searchDifficulty": "moderate"
+          },
+          "result": "You find it in the cargo bay, behind three metric tons of colony prefab housing components, wrapped in anti-static cloth like a gift no one asked for. The high-gain amplifier module -- a precision-machined assembly of waveguides and transistors, no larger than a hardcover book but worth more than its weight in platinum out here, where replacement is impossible. It is undamaged. Whoever hid it did so with care. They did not want to destroy the ship's ability to communicate. They wanted to control it.",
+          "stateChange": {
+            "set": {
+              "antenna_component_found": true
+            },
+            "add_item": {
+              "id": "antenna_component",
+              "name": "High-Gain Amplifier Module",
+              "description": "Precision communications component. Found hidden in the cargo bay, wrapped in anti-static cloth."
+            }
+          }
+        },
+        {
+          "id": "cr_step_2",
+          "action": "install_component",
+          "description": "Back in the comms room, the amplifier module seats into its mounting bracket with the precision of a key entering a lock. Four retaining screws secure it, and the diagnostic display flickers to life as the antenna array powers up for the first time in -- you check the system log -- seventeen months. The array was disabled seventeen months ago. Someone has been awake on this ship for at least seventeen months.",
+          "hint": "Install the antenna_component into the empty bracket in the comms_room. The system will run a self-diagnostic upon installation. Pay attention to the system logs -- they contain timestamps that narrow down when the comms were disabled.",
+          "validation": {
+            "type": "item_use",
+            "requiredItems": ["antenna_component"],
+            "requiredLocation": "comms_room"
+          },
+          "result": "COMMS ARRAY DIAGNOSTIC:\n\nHigh-Gain Amplifier Module: INSTALLED -- NOMINAL\nAntenna Alignment: DRIFTED -- REQUIRES RECALIBRATION\nSystem Logs: AVAILABLE\n\nLast system activity: 17 months, 4 days ago\nLast transmission: 17 months, 4 days ago\nTransmission type: ENCODED BURST -- CLASSIFIED\nRecipient: UNKNOWN (non-standard frequency)\n\nThe blood in your veins goes cold. Not a distress call. Not a standard check-in with Earth. An encoded burst on a non-standard frequency, sent seventeen months ago to an unknown recipient. Someone on this ship woke up, sent a secret message into the void, and then disabled the comms array to prevent anyone from knowing.",
+          "stateChange": {
+            "set": {
+              "component_installed": true,
+              "comms_log_discovered": true,
+              "mystery_transmission_found": true,
+              "saboteur_timeline": "17_months"
+            }
+          }
+        },
+        {
+          "id": "cr_step_3",
+          "action": "realign_antenna",
+          "description": "The antenna has drifted during its seventeen months of powered-down operation. The ship's slow axial rotation, combined with the antenna's own thermal expansion and contraction cycling, has shifted its pointing by 0.3 degrees -- enough to make it useless for the kind of precision communication that interstellar distances demand. The realignment procedure requires you to calculate the current pointing direction, determine the required correction, and account for the signal travel time to the nearest relay station. The math is straightforward but the implications are staggering.",
+          "hint": "Realign the antenna toward the nearest communications relay. The relay is 9.7 light-years away (at the time of departure; adjust for the ship's current position). At the speed of light, a signal from the ship's current position will take approximately 7.7 years to reach the relay, and a response another 7.7 years to return -- total round-trip of 15.4 years. The ship will arrive at 82 Eridani in 22.7 years. A distress signal sent NOW could potentially reach the relay and prompt a response before the ship arrives, but only barely.",
+          "validation": {
+            "type": "calculation",
+            "correctAnswer": 15.4,
+            "tolerance": 0.5,
+            "unit": "years",
+            "formula": "2 * (relay_distance - ship_distance_from_relay_current)",
+            "variables": {
+              "relay_distance_from_sol": 9.7,
+              "ship_current_distance_from_sol": 12.2,
+              "ship_distance_from_relay": 7.7,
+              "speed_of_light": 1.0,
+              "note": "All distances in light-years, time in years at c"
+            }
+          },
+          "result": "You enter the alignment coordinates and the antenna begins its slow correction, tracking actuators humming as they pivot the dish fractions of a degree. Fifteen point four years for a round trip signal to the relay. You will be old by then -- old or dead, depending on how well the remaining twenty-three years of this journey go. A distress call sent now might bring help to 82 Eridani before you arrive. Or it might not. The margins on this journey have become unbearably thin. But communication is possible. The ship is no longer silent. And that silence -- you understand now -- was deliberate.",
+          "stateChange": {
+            "set": {
+              "antenna_aligned": true,
+              "comms_operational": true,
+              "signal_roundtrip_years": 15.4
+            }
+          }
+        },
+        {
+          "id": "cr_step_4",
+          "action": "decode_previous_transmission",
+          "description": "The comms system logged the encoded burst that was sent seventeen months ago. The encryption is military-grade, but the decryption keys are stored in the ship's security module -- whoever sent the message used ship systems, which means ship protocols, which means ship keys. You run the decryption. It takes four minutes. Four minutes of watching a progress bar while the fate of a mystery unravels character by character.",
+          "hint": "Access the comms system security logs and run the decryption routine on the stored transmission. The message was encoded with the ship's own encryption keys, which means it can be decoded by the ship's own systems. The content of this message is a major story revelation.",
+          "validation": {
+            "type": "system_interaction",
+            "target": "comms_security_logs",
+            "requiredState": {
+              "comms_operational": true
+            }
+          },
+          "result": "DECRYPTED TRANSMISSION -- CLASSIFIED\n\nOrigin: ISV Kepler's Promise, Comms Terminal Alpha\nTimestamp: Mission Year 17.9\nFrequency: 1427.3 MHz (non-standard)\nRecipient designation: JANUS STATION\nSender ID: Navigation Officer Chen, Wei-Lin\n\nMessage content:\n\"JANUS STATION this is Chen aboard Kepler's Promise. I have confirmed the Eriksson data. The 82 Eridani survey was falsified. Tau-3 spectral analysis shows [CORRUPTED] incompatible with mission parameters. Adjusting course to alternate target per contingency protocol SEVEN. Request acknowledgment and updated orbital insertion parameters for [CORRUPTED]. The colonists must not arrive at 82 Eridani. Repeat: the colonists MUST NOT arrive at 82 Eridani. Chen out.\"\n\nThe comms room is very quiet. You read the message again. And again. And the ship hurtles on through the dark toward a star that someone desperately tried to steer it away from, and you have just spent nearly all the remaining fuel to put it back on course.",
+          "stateChange": {
+            "set": {
+              "transmission_decoded": true,
+              "saboteur_identified": "chen_wei_lin",
+              "saboteur_role": "navigation_officer",
+              "mission_secret_revealed": true,
+              "destination_doubt": true
+            },
+            "unlock": ["act5_trigger", "captains_quarters_search"]
+          }
+        }
+      ],
+      "reward": {
+        "type": "story_revelation",
+        "description": "Communications restored. The mystery transmission decoded, revealing Navigation Officer Chen Wei-Lin as the person who altered the ship's course, and raising the terrifying possibility that the original mission destination was itself compromised. The player now faces the central dilemma: was Chen a saboteur or a savior? Was the course correction you just performed the right thing to do, or did you doom the colonists by steering them back toward a falsified destination?",
+        "unlocks": ["act5_trigger", "captains_quarters_access", "chen_quarters_access", "final_choice"],
+        "items": [],
+        "story_impact": "Recontextualizes all previous events. The 'sabotage' may have been an attempted rescue."
+      },
+      "failureConsequence": {
+        "cannot_decrypt": {
+          "description": "The encryption resists your attempts. Without the message content, you know someone sent a signal but not what it said or why. The mystery remains unsolved, and you must make the final decisions of the game without the crucial context of Chen's warning. You are flying toward 82 Eridani on faith alone.",
+          "effect": {
+            "story_modifier": "incomplete_information",
+            "removes_choice": "informed_final_decision",
+            "ending_modifier": "uncertain"
+          }
+        }
+      }
+    }
+  ]
+}
