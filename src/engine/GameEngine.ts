@@ -291,11 +291,14 @@ class GameEngine {
   _getIntroText(): string {
     return `
 ═══════════════════════════════════════════════════════════════
-                       V O I D   T R A N S I T
+                  V O I D   T R A N S I T
+                       PART ONE
 ═══════════════════════════════════════════════════════════════
 
          ISV Kepler's Promise  ·  Mission TRANSIT-7
            Destination: 82 Eridani  ·  Year 19.3 of 42
+              Colonists: 2,847  ·  Crew: 14
+                Status: ██████ UNKNOWN ██████
 
 ═══════════════════════════════════════════════════════════════
 
@@ -313,6 +316,11 @@ your mind, you know it means something bad.
 
 The ship's AI is silent. That's wrong. The AI should be
 talking.
+
+Four rows down, another cryo pod stands open. Its interior
+is dry. Whoever was inside woke up a long time ago.
+
+They didn't come to find you.
 
 You are alone. And you shouldn't be awake.
 

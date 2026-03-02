@@ -14,7 +14,7 @@
       "id": "bridge",
       "name": "Bridge - ISV Kepler's Promise",
       "deck": "A",
-      "description": "The nerve center of the Kepler's Promise opens before you in a sweeping arc of instrumentation and glass. The forward viewport dominates the room -- a vast trapezoid of reinforced quartz beyond which the stars hang in their ancient, indifferent configurations. 82 Eridani is not yet distinguishable from the thousands of other points of light, but the navigation display on the central console insists it is there, dead ahead, still 22.7 years away. The captain's chair sits on a raised platform at the center, its restraint harness unbuckled and hanging loose. Three duty stations curve around it: navigation, communications, and systems oversight. Every screen is active, but several cycle through error states, amber text scrolling too fast to read. The overhead lights are set to a dim blue-shift nightwatch mode that no one apparently ordered. There is a faint smell in the air -- something chemical, something that doesn't belong on a bridge.",
+      "description": "The nerve center of the Kepler's Promise opens before you in a sweeping arc of instrumentation and glass. The forward viewport dominates the room -- a vast trapezoid of reinforced quartz beyond which the stars hang in their ancient, indifferent configurations. 82 Eridani is not yet distinguishable from the thousands of other points of light, but the navigation display on the central console insists it is there, dead ahead, still 22.7 years away. A secondary display shows the long-range sensor feed -- and there, barely visible against the noise floor, a gravitational anomaly marker blinks amber near 82 Eridani's coordinates, flagged but unreviewed. The captain's chair sits on a raised platform at the center, its restraint harness unbuckled and hanging loose. Three duty stations curve around it: navigation, communications, and systems oversight. Every screen is active, but several cycle through error states, amber text scrolling too fast to read. The overhead lights are set to a dim blue-shift nightwatch mode that no one apparently ordered. There is a faint smell in the air -- something chemical, something that doesn't belong on a bridge.",
       "exits": {
         "s": "corridor_a"
       },
@@ -27,7 +27,7 @@
       "id": "corridor_a",
       "name": "Central Corridor - Deck A",
       "deck": "A",
-      "description": "Deck A's central corridor is a narrow, utilitarian passage sheathed in brushed aluminum panels and conduit runs. Emergency track lighting along the floor casts the space in a pale, clinical wash that makes your shadow stretch long and strange behind you. The air here carries that same faint chemical tang -- sharper now, almost metallic, like the ghost of a soldering iron left too long on a joint. Forward, the corridor terminates at the bridge access hatch. To the east, a door marked CPT. R. VASQUEZ -- PRIVATE stands closed. To the west, the communications suite hums with the white noise of deep-space signal processing. A ladder well in the center of the corridor drops down to Deck B, its rungs worn smooth by years of use that haven't happened yet.",
+      "description": "Deck A's central corridor is a narrow, utilitarian passage sheathed in brushed aluminum panels and conduit runs. Emergency track lighting along the floor casts the space in a pale, clinical wash that makes your shadow stretch long and strange behind you. The air here carries that same faint chemical tang -- sharper now, almost metallic, like the ghost of a soldering iron left too long on a joint. Forward, the corridor terminates at the bridge access hatch. To the east, a door marked CPT. A. LINDQVIST -- PRIVATE stands closed. To the west, the communications suite hums with the white noise of deep-space signal processing. A ladder well in the center of the corridor drops down to Deck B, its rungs worn smooth by years of use that haven't happened yet.",
       "exits": {
         "n": "bridge",
         "e": "captains_quarters",
@@ -43,31 +43,31 @@
       "id": "captains_quarters",
       "name": "Captain's Quarters",
       "deck": "A",
-      "description": "Captain Vasquez's quarters are spartan by any standard -- a narrow bunk with magnetic restraints for zero-g sleep, a fold-down desk bolted to the bulkhead, and a personal terminal whose screen saver traces lazy Lissajous curves in the dark. A photo is mag-clipped to the wall above the bunk: a woman and two children standing in what looks like Quito, the Andes white-capped behind them, all of them squinting into a sun that is now 19.3 light-years away. Beneath the desk, a small personal safe is set into the bulkhead, its status light glowing a steady red. The captain's dress uniform hangs in an open locker, pressed and pristine, as though she expected to need it. A personal datapad rests on the pillow, its screen dark but not locked.",
+      "description": "Captain Lindqvist's quarters are spartan by any standard -- a narrow bunk with magnetic restraints for zero-g sleep, a fold-down desk bolted to the bulkhead, and a personal terminal whose screen saver traces lazy Lissajous curves in the dark. A photo is mag-clipped to the wall above the bunk: a woman and two children standing on a rocky shore beneath the pale sky of a Swedish winter, the Baltic frozen behind them, all of them laughing at something outside the frame -- a private joke preserved across 19.3 light-years of void. Beneath the desk, a small personal safe is set into the bulkhead, its status light glowing a steady red. The captain's dress uniform hangs in an open locker, pressed and pristine, as though she expected to need it. A personal datapad rests on the pillow, its screen dark but not locked.",
       "exits": {
         "w": "corridor_a"
       },
-      "items": ["personal_datapad", "vasquez_photo"],
+      "items": ["personal_datapad"],
       "conditions": {
         "enter": {
           "has_captains_key": true,
           "fail_message": "The door to the captain's quarters is locked. A biometric panel glows red beside the handle. You'll need the captain's key-card to override it."
         }
       },
-      "firstVisit": "The door clicks open and the lights stir reluctantly to life. The room smells of recycled air and something else -- perfume, maybe, or the memory of it, molecules that have been circulating through the ship's atmosphere for nineteen years. Everything is in its place. Too much in its place, as though the room were a museum exhibit: HOW A STARSHIP CAPTAIN LIVED, CIRCA 2187."
+      "firstVisit": "The door clicks open and the lights stir reluctantly to life. The room smells of recycled air and old paper -- the captain's desk is covered with printed star charts, hand-annotated in precise black ink. Not Lindqvist's handwriting. Someone else has been using this room. Chen's handwriting, you realise -- the same small, meticulous script from the maintenance logs. She lived here during her seventeen months alone, turning the captain's quarters into a war room. Everything is covered with calculations, orbital diagrams, and spectral analysis printouts. A single word is circled in red on the largest chart: PERIAPSIS."
     },
 
     "comms_room": {
       "id": "comms_room",
       "name": "Communications Suite",
       "deck": "A",
-      "description": "The communications suite is a cocoon of electronics, every surface studded with displays, signal processors, and the quiet industry of machines talking to the void. The primary deep-space antenna array is controlled from a central console, its status board a constellation of red and amber indicators where green should dominate. The main display shows the ship's communication log -- a long column of automated position reports dutifully transmitted every 72 hours to a species that won't receive them for decades. The last manual transmission was logged 19.3 years ago, departure day, a brief message from Captain Vasquez to Mission Control: ALL SYSTEMS NOMINAL. BEGINNING CRYO SEQUENCE. SEE YOU ON THE OTHER SIDE. The high-gain antenna's azimuth readout is drifting, which shouldn't be possible during coast phase. Something has knocked it off alignment.",
+      "description": "The communications suite is a cocoon of electronics, every surface studded with displays, signal processors, and the quiet industry of machines talking to the void. The primary deep-space antenna array is controlled from a central console, its status board a constellation of red and amber indicators where green should dominate. The main display shows the ship's communication log -- a long column of automated position reports dutifully transmitted every 72 hours to a species that won't receive them for decades. The last manual transmission was logged 19.3 years ago, departure day, a brief message from Captain Lindqvist to Mission Control: ALL SYSTEMS NOMINAL. BEGINNING CRYO SEQUENCE. SEE YOU ON THE OTHER SIDE. The high-gain antenna's azimuth readout is drifting, which shouldn't be possible during coast phase. Something has knocked it off alignment.",
       "exits": {
         "e": "corridor_a"
       },
       "items": ["comms_log", "antenna_diagnostic"],
       "conditions": {},
-      "firstVisit": "As you enter, a burst of static erupts from the overhead speaker -- sharp, loud, then gone. The room settles back into its low electronic murmur. On the main display, you notice something odd: there's a gap in the automated transmission log. A period of 31 hours, roughly six days ago by ship time, where no position report was sent. The system logged the reason as ANTENNA REALIGNMENT IN PROGRESS. But there's no corresponding maintenance order."
+      "firstVisit": "As you enter, a burst of static erupts from the overhead speaker -- sharp, loud, then gone. The room settles back into its low electronic murmur. On the main display, you notice something that makes you stop: the incoming signal buffer is not empty. A data packet sits in the queue, received 11 hours ago, from coordinates that match no known relay station. The packet header reads JANUS-7 RESPONSE // PRIORITY ALPHA // ENCRYPTION: CHEN-PERSONAL. Someone sent a message months ago, encrypted with personal credentials. And something answered. The signal strength implies a source approximately 0.3 light-years away. There is nothing 0.3 light-years away. Nothing on any chart. You stare at the blinking UNREAD indicator and feel the hairs on the back of your neck stand up."
     },
 
     "corridor_b": {
@@ -85,20 +85,20 @@
       },
       "items": [],
       "conditions": {},
-      "firstVisit": "You pull yourself up from the ladder well and feel gravity assert itself as you cross the threshold into the ring section -- a gentle, insistent tug that orients your inner ear and tells your body which way is down. After the weightlessness of the spine, it feels almost luxurious. The hub is empty, as it should be. But the air smells of coffee. Not the stale ghost of old grounds in a filter, but coffee. Recently brewed."
+      "firstVisit": "You pull yourself up from the ladder well and feel gravity assert itself as you cross the threshold into the ring section -- a gentle, insistent tug that orients your inner ear and tells your body which way is down. After the weightlessness of the spine, it feels almost luxurious. The hub is empty, as it should be. But the air carries a ghost -- tea, green tea, the molecules still circulating months after someone brewed it, trapped in the ship's closed-loop atmosphere with nowhere to go. Chen's scent, preserved by the very life support system she modified."
     },
 
     "med_bay": {
       "id": "med_bay",
       "name": "Medical Bay",
       "deck": "B",
-      "description": "The medical bay is a clean, white room that aspires to the calm authority of a planetside hospital and mostly achieves the antiseptic anxiety of a veterinary clinic. An autodoc unit dominates the center -- a reclining pod bristling with articulated surgical arms, currently folded in standby position like the legs of a sleeping spider. Pharmaceutical cabinets line the starboard wall, their glass fronts revealing neat rows of labeled vials, blister packs, and emergency hyposprays. One cabinet is open. Several items have been removed and not returned: broad-spectrum antibiotics, a coagulant spray, and -- conspicuously -- a bottle of high-grade surgical anesthetic. The diagnostic terminal on the port wall displays crew biometric data, all 2,847 colonists and 14 crew showing the slow, glacial vital signs of cryogenic suspension. Except for you. And except for one other entry, which reads simply: STATUS UNKNOWN.",
+      "description": "The medical bay is a clean, white room that aspires to the calm authority of a planetside hospital and mostly achieves the antiseptic anxiety of a veterinary clinic. An autodoc unit dominates the center -- a reclining pod bristling with articulated surgical arms, currently folded in standby position like the legs of a sleeping spider. Pharmaceutical cabinets line the starboard wall, their glass fronts revealing neat rows of labeled vials, blister packs, and emergency hyposprays. One cabinet is open. Several items have been removed and not returned: broad-spectrum antibiotics, a coagulant spray, and a bottle of stimulant hyposprays -- the kind used to maintain alertness during extended solo operations. The diagnostic terminal on the port wall displays crew biometric data, all 2,847 colonists and 14 crew showing the slow, glacial vital signs of cryogenic suspension. Except for you. And except for one other entry -- CHEN, W. -- whose status reads: ACTIVE (MANUAL OVERRIDE REVIVAL). The system has been tracking her vitals intermittently, and the last reading was seventeen months ago.",
       "exits": {
         "s": "corridor_b"
       },
       "items": ["medical_scanner", "stim_pack", "autodoc_log"],
       "conditions": {},
-      "firstVisit": "The lights snap on with surgical brightness as you enter, and the autodoc emits a soft chime of readiness. A tray of instruments sits on the counter beside it, laid out in the precise order of a procedure checklist. Gauze, sutures, retractors, scalpel. They have been used. There is a faint brownish smear on the gauze -- old blood, oxidized and dry. Someone treated themselves here. Someone who didn't want the autodoc's log to record what was wrong with them, because the manual instruments don't report to the ship's computer."
+      "firstVisit": "The lights snap on with surgical brightness as you enter, and the autodoc emits a soft chime of readiness. A tray of instruments sits on the counter beside it, laid out in the precise order of a procedure checklist. Gauze, sutures, retractors, scalpel. They have been used. There is a faint brownish smear on the gauze -- old blood, oxidized and dry. Someone treated themselves here, months ago. The autodoc's log shows a single entry from Mission Year 17.6: CHEN, W. -- MINOR LACERATION, RIGHT HAND -- SELF-TREATED. No surgery, no anaesthetic. Just a woman alone on a ship, stitching her own hand back together so she could keep working."
     },
 
     "mess_hall": {
@@ -112,7 +112,7 @@
       },
       "items": ["ration_pack", "chopsticks"],
       "conditions": {},
-      "firstVisit": "The smell hits you first -- food, real food, not the sterile nothing of cryo or the metallic recycled air of the corridors. Your stomach clenches with a hunger that feels nineteen years deep. But the meal on the table stops you. Miso soup. According to the crew manifest, only one person on the Kepler's Promise listed miso as a dietary preference: Chief Engineer Tomoko Okafor. Pod 7. The pod that, according to the cryo bay's records, has been empty for six days."
+      "firstVisit": "The smell hits you first -- food, real food, not the sterile nothing of cryo or the metallic recycled air of the corridors. Your stomach clenches with a hunger that feels nineteen years deep. But the meal on the table stops you. Miso soup. According to the crew manifest, only one person on the Kepler's Promise listed miso as a dietary preference: Navigation Officer Chen Wei-Lin. Pod C-447. The pod that, according to the cryo bay's records, has been empty for six days."
     },
 
     "lab": {
@@ -125,7 +125,7 @@
       },
       "items": ["spectrometer_results", "research_terminal_access"],
       "conditions": {},
-      "firstVisit": "You notice that one of the microscopy stations has been recently used. The eyepieces are still adjusted for someone's vision, and a slide remains on the stage. You glance through the lens almost reflexively. The sample is biological -- cellular, stained with something fluorescent. You are not a biologist, but even you can see that the cell structure looks wrong. The nuclei are too large, the membranes too rigid. This isn't from the probe samples. This is fresh."
+      "firstVisit": "You notice that one of the microscopy stations has been recently used. The eyepieces are still adjusted for someone's vision -- someone shorter than you -- and a slide remains on the stage. You glance through the lens almost reflexively. The sample is biological -- cellular, stained with something fluorescent. You are not a biologist, but even you can see that the cell structure is unlike anything terrestrial. The nuclei are too large, the membranes too rigid, and the chloroplasts -- if that's what they are -- absorb across a spectrum shifted toward infrared. A label on the slide reads in Chen's handwriting: TCe-14c LEAF CROSS-SECTION. PHOTOSYNTHETIC UNDER K-DWARF SPECTRUM. She was studying alien plant biology. She was proving that Tau Ceti e could support a colony."
     },
 
     "crew_quarters": {
@@ -139,7 +139,7 @@
       },
       "items": ["crew_manifest_tablet", "torn_cryo_wrap"],
       "conditions": {},
-      "firstVisit": "The privacy screen on the used bunk is half-drawn. Behind it, the locker stands open. You check the name stenciled on the locker door: OKAFOR, T. -- CHIEF ENGINEER. Inside, her personal effects are undisturbed except for one item clearly missing from a shaped foam cutout in the locker's top shelf. The cutout is rectangular, roughly the size of a datapad. Whatever was there, she took it with her."
+      "firstVisit": "The privacy screen on the used bunk is half-drawn. Behind it, the locker stands open. You check the name stenciled on the locker door: CHEN, W. -- NAVIGATION OFFICER. Inside, her personal effects are undisturbed except for one item clearly missing from a shaped foam cutout in the locker's top shelf. The cutout is rectangular, roughly the size of a datapad. Whatever was there, she took it with her. A small framed photograph remains: a woman in her thirties standing at a telescope on what looks like the Atacama Desert, the Milky Way a river of light behind her, her expression one of fierce, private joy."
     },
 
     "hydroponics": {
@@ -152,7 +152,7 @@
       },
       "items": ["plant_sample", "irrigation_report"],
       "conditions": {},
-      "firstVisit": "Among the dead plants and the living ones, you notice something that stops you: a small trough, separate from the main rows, tucked into a corner near the atmospheric exchange vent. It contains a single plant you don't recognize from the mission's agricultural manifest. It is dark-leafed, almost black, with a thick, succulent stem. It is thriving. A handwritten label is stuck to the trough's edge in neat, small script: UNKNOWN - PROBE SAMPLE 14c - DO NOT REMOVE."
+      "firstVisit": "Among the dead plants and the living ones, you notice something that stops you: a small trough, separate from the main rows, tucked into a corner near the atmospheric exchange vent. It contains a single plant you don't recognize from the mission's agricultural manifest. It is dark-leafed, almost black, with a thick, succulent stem that suggests adaptation to low-light conditions. It is thriving. A handwritten label is stuck to the trough's edge in the same small, precise script you're beginning to recognize as Chen's: TAU CETI e - PROBE SAMPLE 14c - VIABLE. GROWS IN SHIPBOARD CONDITIONS. The word VIABLE is underlined twice. Someone was testing whether life from another world could survive alongside human life. And it can."
     },
 
     "rec_room": {
@@ -183,7 +183,7 @@
       },
       "items": [],
       "conditions": {},
-      "firstVisit": "The hum of the ship is louder here, more honest. Up in habitation, the designers worked hard to muffle and mask the reality of the machine you live inside. Down here, the machine doesn't bother to pretend. You can feel the reactor's pulse through the deck plates, a low vibration that travels up through your boots and settles in your molars. A maintenance log is taped to the bulkhead beside the ladder well. The last entry, handwritten: 'D+6847 - Water recycler showing intermittent fault. Will investigate. -T.O.' Day 6,847. That's roughly 18.7 years into the voyage. Six months ago, ship time."
+      "firstVisit": "The hum of the ship is louder here, more honest. Up in habitation, the designers worked hard to muffle and mask the reality of the machine you live inside. Down here, the machine doesn't bother to pretend. You can feel the reactor's pulse through the deck plates, a low vibration that travels up through your boots and settles in your molars. A maintenance log is taped to the bulkhead beside the ladder well. The last entry, handwritten in small, precise script: 'D+6847 - Water recycler showing intermittent fault. Will investigate. Brown dwarf perturbation model updated -- periapsis estimate now Y+38.2, not Y+41 as previously calculated. Running out of time. -W.C.' Day 6,847. That's roughly 18.7 years into the voyage. Six months ago, ship time. The phrase 'brown dwarf' is underlined twice."
     },
 
     "reactor_room": {
@@ -200,7 +200,7 @@
           "warning": "CAUTION: Elevated radiation levels detected. Exposure limited to 45 minutes per 24-hour period."
         }
       },
-      "firstVisit": "The dosimeter chirps as you enter, and the radiation warning strips on the bulkhead shift from green to yellow. You are safe, the numbers say. You will remain safe for approximately 45 minutes. After that, cumulative dose becomes a conversation you'll need to have with the autodoc. The reactor's status board tells a story if you know how to read it: someone has been making manual adjustments to the magnetic confinement parameters. Small changes, careful ones, the kind an experienced engineer would make. The modification log attributes them to OKAFOR, T. -- CHIEF ENGINEER, authenticated by biometric keycard. The most recent adjustment was made eleven hours ago."
+      "firstVisit": "The dosimeter chirps as you enter, and the radiation warning strips on the bulkhead shift from green to yellow. You are safe, the numbers say. You will remain safe for approximately 45 minutes. After that, cumulative dose becomes a conversation you'll need to have with the autodoc. The reactor's status board tells a story if you know how to read it: someone has been making manual adjustments to the magnetic confinement parameters. Small changes, careful ones, the kind a brilliant mind with engineering cross-training would make. The modification log attributes them to CHEN, W. -- NAVIGATION OFFICER, authenticated by biometric keycard. The most recent adjustment was made eleven hours ago. A handwritten note is taped to the console: 'Reactor efficiency up 2.3%. Every watt matters for the course change. -W.C.'"
     },
 
     "machine_shop": {
@@ -214,7 +214,7 @@
       },
       "items": ["welding_torch", "fabricator_manual", "multitool"],
       "conditions": {},
-      "firstVisit": "The fabrication unit's job queue is not empty. You check the log: someone has manufactured three items in the past week. The first is a replacement valve fitting for the water recycler -- mundane, expected. The second is a custom mounting bracket of no obvious standard application. The third gives you pause. It's a component you recognize from your engineering training: a signal amplifier housing, the kind used in deep-space communication arrays. But its dimensions are wrong -- too large for the Kepler's standard comms system, as though it were designed for a frequency range the ship's antenna was never meant to reach."
+      "firstVisit": "The fabrication unit's job queue is not empty. You check the log: someone has manufactured three items in the past week, all under the credentials of CHEN, W. The first is a replacement valve fitting for the water recycler -- mundane, expected. The second is a custom mounting bracket whose dimensions match no standard application in the ship's maintenance database. The third gives you pause. It's a component you recognize from your engineering training: a signal amplifier housing, the kind used in deep-space communication arrays. But its dimensions are wrong -- too large for the Kepler's standard comms system, as though it were designed to reach something much, much farther away than any relay station."
     },
 
     "life_support": {
@@ -240,7 +240,7 @@
       },
       "items": ["circuit_tester", "power_log"],
       "conditions": {},
-      "firstVisit": "You scan the breaker panels and notice something that takes a moment to register. Most breakers are in their expected positions -- habitation on reduced power, cryo systems at full, engineering nominal. But one breaker, labeled AUX COMMS - DECK A - CIRCUIT 7, has been manually switched from AUTO to MANUAL OVERRIDE. The timestamp on the override log reads six days ago. The power draw on that circuit is three times what the standard communications array should require. Whatever is plugged into Auxiliary Comms Circuit 7, it's hungry."
+      "firstVisit": "You scan the breaker panels and notice something that takes a moment to register. Most breakers are in their expected positions -- habitation on reduced power, cryo systems at full, engineering nominal. But one breaker, labeled AUX COMMS - DECK D - CIRCUIT 12, has been manually switched from AUTO to MANUAL OVERRIDE. The timestamp on the override log reads seventeen months ago. The power draw on that circuit is three times what any standard system should require -- and the circuit routes to the starboard hull, Section 7-8, where no ship system is supposed to exist. Chen wired something into the ship's power grid. Something that has been drawing current continuously for over a year. Something on the outside of the hull."
     },
 
     "cargo_bay": {
@@ -283,7 +283,7 @@
       },
       "items": ["cryo_log", "cryoprotectant_residue"],
       "conditions": {},
-      "firstVisit": "You are shivering and disoriented, cryoprotectant gel drying on your skin in sticky, cooling patches. The emergency revival protocol has left you with a pounding headache, nausea, and a ringing in your ears that might be the cryo bay's alarms or might be your auditory nerves remembering how to work. The status board above your pod reads: EMERGENCY REVIVAL - POD 14-C - REASON: SYSTEM FAULT 7734 - AUTOMATIC PROTOCOL. You were not supposed to wake up for another 22.7 years. As your vision clears, you scan the rows of pods. Green lights. Green lights. Green lights. And there -- row 1, position 7-A -- an open pod, its lid hinged back, its interior dry. Whoever was in that pod woke up long before you did. The status display reads: POD 7-A - OKAFOR, T. - REVIVAL TIMESTAMP: D+6842 - STATUS: ACTIVE. Six days ago. Chief Engineer Tomoko Okafor has been awake and alone on this ship for six days. And she has not come to find you."
+      "firstVisit": "You are shivering and disoriented, cryoprotectant gel drying on your skin in sticky, cooling patches. The emergency revival protocol has left you with a pounding headache, nausea, and a ringing in your ears that might be the cryo bay's alarms or might be your auditory nerves remembering how to work. The status board above your pod reads: EMERGENCY REVIVAL - POD 14-C - REASON: SYSTEM FAULT 7734 - AUTOMATIC PROTOCOL. You were not supposed to wake up for another 22.7 years. As your vision clears, you scan the rows of pods. Green lights. Green lights. Green lights. And there -- row 4, position C-447 -- an open pod, its lid hinged back, its interior dry. Whoever was in that pod woke up long before you did. The status display reads: POD C-447 - CHEN, W. - REVIVAL TIMESTAMP: D+6842 - STATUS: ACTIVE. Six days ago. Navigation Officer Chen Wei-Lin has been awake and alone on this ship for six days. And she has not come to find you."
     },
 
     "engine_room": {
@@ -296,7 +296,7 @@
       },
       "items": ["engine_status_report", "thrust_calculator"],
       "conditions": {},
-      "firstVisit": "The engine room's main display activates as you approach, and the deceleration profile loads with its familiar curves and numbers. You studied this during training; you could recite the burn sequence from memory. But something is different. You stare at the display for a long time before you see it: the fuel margin has changed. The pre-departure calculation showed 4.2% reserve. The current readout shows 3.1%. The ship has consumed fuel it shouldn't have. During coast phase, the drive is off -- fuel consumption should be zero, limited to the tiny amounts used by the reactor. But something has been burning fuel. Not much. Not enough to endanger the mission, not yet. But enough to notice, if you know where to look. The consumption log attributes it to UNSCHEDULED ATTITUDE CORRECTION - AUTOMATIC. The ship turned. While everyone slept, the ship turned, spent fuel to point somewhere it wasn't supposed to point, and then turned back."
+      "firstVisit": "The engine room's main display activates as you approach, and the deceleration profile loads with its familiar curves and numbers. You studied this during training; you could recite the burn sequence from memory. But something is different. You stare at the display for a long time before you see it: the fuel margin has changed. The pre-departure calculation showed 4.2% reserve. The current readout shows 3.1%. The ship has consumed fuel it shouldn't have. During coast phase, the drive is off -- fuel consumption should be zero, limited to the tiny amounts used by the reactor. But someone has been burning fuel. The consumption log has been edited -- clumsily, by someone more comfortable with navigation mathematics than with database forensics -- to attribute the loss to UNSCHEDULED ATTITUDE CORRECTION - AUTOMATIC. But the thermal signature in the drive nozzle tells the truth: a sustained burn, precisely calculated, executed during Mission Year 17.9. The ship didn't just turn. It changed course. And then, months later, it was turned back -- or rather, the automatic course-keeping system reasserted the original trajectory once the manual override expired. Two courses. Two intentions. One ship, hurtling through the dark, pulled between where it was told to go and where someone tried to send it."
     },
 
     "fuel_storage": {
@@ -309,7 +309,7 @@
       },
       "items": ["fuel_gauge_reading", "tank_6_analysis"],
       "conditions": {},
-      "firstVisit": "You pull up Tank 6's detailed diagnostic and the data makes your stomach drop. The missing fuel -- 6.8% of capacity -- wasn't consumed by the engines. The flow logs show no transfer to the reactor or the drive. The fuel simply... decreased. Over a period of approximately 200 days, Tank 6's level dropped incrementally, a fraction of a percent at a time, with no corresponding outflow. The monitoring system logged each decrease as MEASUREMENT DRIFT - SENSOR RECALIBRATION RECOMMENDED. But 6.8% is not sensor drift. 6.8% of a helium-3 tank is a meaningful quantity of fuel. It went somewhere. The temperature differential and the pressure oscillations suggest the remaining contents are behaving as though the tank's internal geometry has changed -- as though something is in there that wasn't there before."
+      "firstVisit": "You pull up Tank 6's detailed diagnostic and the data tells a story Chen tried to hide. The missing fuel -- 6.8% of capacity -- was consumed by the drive. The flow logs were manually edited to mask the transfer, but the thermal signature is unmistakable: Tank 6 fed the fusion drive during a series of small correction burns spread across Mission Year 17.9. Someone fired the engines while the ship was supposed to be coasting. Someone changed the course. The burn profile is precise, calculated -- not the work of a malfunction but of a navigator who knew exactly how much delta-v was needed and exactly how much fuel it would cost. The temperature differential and pressure oscillations are aftereffects of the rapid fuel extraction, the tank's internal baffles still settling after being drained faster than their design specification. This was deliberate. This was planned. And the margin it left for the deceleration burn at 82 Eridani is razor-thin."
     },
 
     "airlock_inner": {
@@ -323,7 +323,7 @@
       },
       "items": ["eva_suit", "eva_checklist", "tether_line"],
       "conditions": {},
-      "firstVisit": "You examine Suit 3 more closely. It has been used -- not just checked, but worn. The boot soles show micro-abrasion consistent with mag-lock contact on hull plating, and the suit's internal atmosphere log records a single EVA session: 2 hours, 17 minutes, concluded approximately five days ago. The helmet camera should have recorded the excursion, but when you check the data port, the storage module has been removed. Someone went outside, spent over two hours on the hull, and then deleted the visual record of what they saw."
+      "firstVisit": "You examine Suit 3 more closely. It has been used -- not just checked, but worn extensively. The boot soles show deep micro-abrasion consistent with hours of mag-lock contact on hull plating, and the suit's internal atmosphere log records seven EVA sessions over a three-month period, totalling 19 hours and 42 minutes of extravehicular activity. Seven trips outside. The suit's nameplate has been updated in permanent marker: CHEN, W. The helmet camera recorded all seven sessions, and the footage is intact -- Chen didn't delete anything. She wanted someone to see what she was building. The most recent EVA was five months ago. Whatever she was installing on the hull, she finished it."
     },
 
     "airlock_outer": {
@@ -349,7 +349,7 @@
       "id": "hull_exterior",
       "name": "Hull Exterior - EVA",
       "deck": "D",
-      "description": "You are outside. Tethered to the hull of the ISV Kepler's Promise, magnetic boots holding you to the ship's skin, you float in a silence so complete it has texture. The ship stretches away from you in both directions -- forward to the sensor array and communications dishes, aft to the drive nozzle's dark bell -- a kilometer of engineered metal hurtling through the interstellar medium at 36,000 kilometers per second. The stars do not twinkle here. They are steady, sharp, merciless points of light in every direction, so numerous that the concept of constellation dissolves into a continuous field of ancient fire. The sun is behind you, indistinguishable from any other star at this distance. 82 Eridani is ahead, equally anonymous. The hull plating beneath your boots is scarred by nineteen years of micrometeorite impacts -- tiny craters, most no larger than a pinhead, that speak to the violence of traveling through space that only appears empty. And there, on the starboard hull, between sections 7 and 8, you can see it: damage. Not micrometeorite scarring. Something larger, more deliberate. A section of hull plating has been removed -- cleanly, with tools -- and beneath it, where there should be insulation and structural members, there is something else.",
+      "description": "You are outside. Tethered to the hull of the ISV Kepler's Promise, magnetic boots holding you to the ship's skin, you float in a silence so complete it has texture. The ship stretches away from you in both directions -- forward to the sensor array and communications dishes, aft to the drive nozzle's dark bell -- a kilometer of engineered metal hurtling through the interstellar medium at 36,000 kilometers per second. The stars do not twinkle here. They are steady, sharp, merciless points of light in every direction, so numerous that the concept of constellation dissolves into a continuous field of ancient fire. The sun is behind you, indistinguishable from any other star at this distance. 82 Eridani is ahead, equally anonymous. The hull plating beneath your boots is scarred by nineteen years of micrometeorite impacts -- tiny craters, most no larger than a pinhead, that speak to the violence of traveling through space that only appears empty. And there, on the starboard hull, between sections 7 and 8, you can see it: modification. Not damage -- something deliberate. A section of hull plating has been removed -- cleanly, with tools -- and in the cavity beneath, where there should be only insulation and structural members, someone has installed equipment. A hand-built antenna array, aimed at a fixed point in the void.",
       "exits": {
         "in": "airlock_outer"
       },
@@ -360,7 +360,7 @@
           "fail_message": "Exposure to hard vacuum without an EVA suit is not survivable. This is not a design limitation; it is physics."
         }
       },
-      "firstVisit": "Your helmet lamp illuminates the damaged section and your breath catches. The removed hull plate has been set aside, mag-locked to the hull nearby, not discarded -- someone intended to replace it. Beneath, in the cavity between the outer hull and the pressure vessel, something has grown. It clings to the structural members in branching, fractal patterns, dark and lustrous, like a coral formation made of obsidian. It is not metal. It is not polymer. It is not anything that was loaded onto this ship at departure. In the beam of your helmet lamp, it seems to absorb light rather than reflect it. And at its center, where the branches converge, there is a faint pulse -- not light exactly, but a rhythmic fluctuation in how dark the dark is. You think of the unknown plant in hydroponics. You think of the anomalous cell on the microscope slide. You think of Tank 6, losing fuel to something inside it. You think of Tomoko Okafor, alone with this for six days, making her careful adjustments and leaving no notes. Your suit's external sensor suite is logging data you will want to review later, assuming there is a later."
+      "firstVisit": "Your helmet lamp illuminates the damaged section and your breath catches. The removed hull plate has been set aside, mag-locked to the hull nearby, not discarded -- someone intended to replace it. Beneath, in the cavity between the outer hull and the pressure vessel, you find Chen's secret project. A custom-built antenna array, hand-fabricated from the machine shop's stock, wired into the ship's power bus through a splice so clean it would pass inspection. The array is enormous -- far too large for standard communications, its parabolic reflector aimed at a fixed point in the sky that your suit's navigation overlay identifies as... nothing. Empty space. No star, no relay station, no known object. But the array's signal log tells a different story: it has been transmitting. And receiving. A data burst, 47 seconds long, arrived eleven hours ago from the coordinates the array is aimed at. The signal strength implies a source approximately 0.3 light-years away -- impossibly close for any known deep-space installation. You think of the fabricated components in the machine shop. You think of Chen Wei-Lin, alone for seventeen months, building this with her own hands, aiming it at something she found in the dark. Your suit's sensor suite logs everything. You will want to review this data. Very carefully."
     }
   }
 }

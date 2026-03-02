@@ -19,7 +19,7 @@
         "condition": "good",
         "bladeSharp": true
       },
-      "examineDetail": "Stamped into the handle: ISV-7 KEPLER'S PROMISE - ENG KIT 14. The plasma cutter's emitter is still bright; someone maintained this kit even when they stopped maintaining everything else. Inside the emergency case where you found it, a laminated card reads: IN CASE OF EMERGENCY REVIVAL, USE CONTENTS TO ASSESS SHIP STATUS. The card is signed by Chief Engineer Vasquez. The ink has faded, but the handwriting is precise, careful -- the penmanship of someone who believed in doing things right."
+      "examineDetail": "Stamped into the handle: ISV-7 KEPLER'S PROMISE - ENG KIT 14. The plasma cutter's emitter is still bright; someone maintained this kit even when they stopped maintaining everything else. Inside the emergency case where you found it, a laminated card reads: IN CASE OF EMERGENCY REVIVAL, USE CONTENTS TO ASSESS SHIP STATUS. The card is signed by Captain Lindqvist. The ink has faded, but the handwriting is precise, careful -- the penmanship of someone who believed in doing things right."
     },
     {
       "id": "welding_torch",
@@ -137,7 +137,7 @@
         "currentRate": 0,
         "alarmThreshold": 50
       },
-      "examineDetail": "The badge is from a rack mounted on the corridor wall. Eight badges hang in their slots, each labeled with a crew member's name. This one was labeled OKONKWO but the name has been crossed out and UNASSIGNED written below it in marker. Of the eight badges, three are missing from their hooks -- yours, and two others. The badge labeled VASQUEZ shows a crystal that has darkened to a deep amber. Whoever Vasquez was, they spent a lot of time near the reactor. The badge labeled CHEN is missing entirely, hook and all, as though it was torn from the rack."
+      "examineDetail": "The badge is from a rack mounted on the corridor wall. Eight badges hang in their slots, each labeled with a crew member's name. This one was labeled OKONKWO but the name has been crossed out and UNASSIGNED written below it in marker. Of the eight badges, three are missing from their hooks -- yours, and two others. The badge labeled LINDQVIST shows a crystal that has darkened to a deep amber -- the captain spent time near the reactor during pre-departure checks. The badge labeled CHEN, W. is missing entirely, hook and all -- she must have taken it with her during her months of solo repair work."
     },
     {
       "id": "sample_container",
@@ -273,7 +273,7 @@
         "thermalRange": [-150, 120],
         "hasLight": false
       },
-      "examineDetail": "The suit's nameplate reads CHEN, M. - ENGINEERING. This was someone else's suit. Inside the left glove, someone has written coordinates in permanent marker -- a string of numbers that don't correspond to any navigational format you recognize. The suit's log shows it was last used 72 hours ago, ship time. The external surface bears fresh scuff marks on the knees and forearms, consistent with crawling along the hull. Wherever Chen went in this suit, they went on their hands and knees."
+      "examineDetail": "The suit's nameplate has been updated in permanent marker: CHEN, W. - NAV/ENG. Inside the left glove, someone has written coordinates in fine-tipped pen -- right ascension and declination for a point in deep space, far from any catalogued object. The suit's log shows seven EVA sessions totalling nearly 20 hours over three months, the last concluded five months ago. The external surface bears deep scuff marks on the knees and forearms, consistent with extensive hull-crawling. Chen spent hours outside, alone in the void, building something on the ship's skin."
     },
     {
       "id": "eva_suit_extended",
@@ -514,7 +514,7 @@
         "annotated": true,
         "critical": true
       },
-      "examineDetail": "The log entries span sixteen days and tell a disturbing story. The first few pages are routine: filter replacements, bearing inspections, calibration checks. But starting on Y7.187, the entries change character. Work orders appear at unusual hours -- 0200, 0300, 0400 ship time -- logged by crew member CHEN, M., ENGINEERING. The descriptions are vague: 'Reactor subsystem adjustment,' 'Communications array recalibration,' 'Navigation system maintenance.' None of these were scheduled, and none were authorized by the chief engineer.\n\nIn the margins, a different hand -- neater, more controlled -- has written annotations: 'NOT ON SCHEDULE.' 'What is this?' 'Checked reactor -- settings changed, WHY?' 'Chen won't explain. Going to captain.'\n\nThe last annotation, on the final page, is written larger and underlined twice: 'Captain knows. Captain APPROVED this. What the hell is going on?'\n\nThe annotator's handwriting is identified on the last page with a scrawled signature: VASQUEZ."
+      "examineDetail": "The log entries span two periods. The first is pre-departure: routine filter replacements, bearing inspections, calibration checks, all signed off by the duty engineer. Normal. Boring. Safe.\n\nBut a second set of entries begins at Mission Year 17.4 and runs for seventeen months. Every entry is logged by CHEN, W., NAVIGATION -- using her cross-training engineering clearance. The descriptions start methodical: 'CO2 scrubber efficiency assessment.' 'Reactor magnetic bottle calibration.' 'Fabrication unit test run.' But they evolve. By Month 6: 'Signal amplifier housing fabricated. Tolerance within 0.02mm.' Month 9: 'EVA #3 complete. Antenna mounting bracket installed, starboard hull section 7-8.' Month 14: 'Course alteration calculations finalised. Delta-v budget: 847 m/s. Fuel cost: 6.8% of Tank 6. Margin acceptable.'\n\nThe last entry, Month 17: 'Transmission sent. Returning to cryo. If you are reading this, please read my personal log in the captain's quarters before you undo anything. Please. -- Chen Wei-Lin.'\n\nA sticky note in different handwriting is attached to the front cover, dated pre-departure: 'Chen -- your long-range sensor request was denied by Mission Authority. Again. Stop asking. -- Capt. Lindqvist.' The captain's tone is sympathetic, almost apologetic."
     },
     {
       "id": "crew_manifest",
@@ -534,7 +534,7 @@
         "flaggedEntries": 5,
         "classification": "restricted"
       },
-      "examineDetail": "The manifest tells you who was aboard this ship. Twenty-four crew members, a mix of engineers, scientists, medical staff, and command officers. The colonists -- 1,200 of them -- are listed in a separate appendix, but you're focused on the crew.\n\nThree pages have been torn out. You can tell from context that they were the entries for crew members CHEN, M., VASQUEZ, R., and OKONKWO, A. Someone didn't want their full records available.\n\nThe flagged entries are revealing:\n- Captain MORRISON, J. -- flag is a sticky note reading 'PREVIOUS MISSION: CLASSIFIED'\n- Chen, M. -- flag reads 'BACKGROUND CHECK INCOMPLETE - SEE ADDENDUM' (but the addendum page is missing)\n- Dr. SINGH, P. (medical officer) -- flag reads 'REPORTED CONCERNS Y7.190'\n- VASQUEZ, R. (chief engineer) -- flag reads 'FILED FORMAL COMPLAINT Y7.194'\n- OKONKWO, A. (communications) -- flag reads 'REQUESTED TRANSFER Y7.191'\n\nThe story is taking shape. Something happened starting around Y7.187 that fractured this crew."
+      "examineDetail": "The manifest tells you who was aboard this ship. Fourteen crew members and 2,847 colonists, a skeleton staff for a ship this size -- everyone cross-trained, everyone essential.\n\nThe crew entries are mostly routine, but several have been flagged with sticky notes in Captain Lindqvist's handwriting:\n\n- CHEN, W. (navigation/engineering) -- flag reads 'Requested access to long-range sensor array pre-departure. DENIED by Mission Authority. She was right to ask. -A.L.'\n- Captain MORRISON, J. (previous mission commander) -- flag reads 'PREVIOUS MISSION: CLASSIFIED. Ask no questions.'\n- Dr. SINGH, P. (medical) -- flag reads 'Reported concerns about crew psych evals to Mission Authority. No response.'\n- OKONKWO, A. (communications) -- flag reads 'Found encrypted packets in mission telemetry. Requested transfer. Denied.'\n\nA handwritten note is paperclipped to the inside cover, in Lindqvist's script: 'Something is wrong with this mission. The survey data was sealed before I could review it. MA overrode my access request. I am taking this ship into the void on faith, and I do not have enough faith for a 42-year journey. If you are reading this, the faith ran out. Trust Chen. She sees things the rest of us miss. -- Capt. A. Lindqvist.'\n\nThe captain's warning, left 19 years ago, written for whoever might need it. She couldn't act. But she could leave breadcrumbs."
     },
     {
       "id": "personal_photo",
