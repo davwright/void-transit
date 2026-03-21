@@ -2,16 +2,33 @@
  * Base64 encoding for story data at rest.
  * ALL strings are encoded — both object keys and values.
  *
- * encodeObject: encodes all keys and string values recursively.
- * decodeObject: decodes all keys and string values recursively.
+ * Works in both Node.js and browser environments.
  */
 
+// Environment-agnostic base64 encode/decode
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const _isNode = typeof Buffer !== 'undefined' && typeof (globalThis as any).window === 'undefined';
+
 export function encodeString(value: string): string {
-  return Buffer.from(value, 'utf-8').toString('base64');
+  if (_isNode) {
+    return Buffer.from(value, 'utf-8').toString('base64');
+  }
+  // Browser: TextEncoder → Uint8Array → base64
+  const bytes = new TextEncoder().encode(value);
+  let binary = '';
+  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+  return btoa(binary);
 }
 
 export function decodeString(value: string): string {
-  return Buffer.from(value, 'base64').toString('utf-8');
+  if (_isNode) {
+    return Buffer.from(value, 'base64').toString('utf-8');
+  }
+  // Browser: base64 → binary string → Uint8Array → TextDecoder
+  const binary = atob(value);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
 }
 
 /**
