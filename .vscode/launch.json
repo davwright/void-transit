@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "VOID TRANSIT",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/dist/server.js",
+            "preLaunchTask": "build",
+            "serverReadyAction": {
+                "pattern": "http://localhost:([0-9]+)",
+                "uriFormat": "http://localhost:%s",
+                "action": "openExternally"
+            }
+        }
+    ]
+}

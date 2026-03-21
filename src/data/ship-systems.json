@@ -1,241 +1,253 @@
 {
-  "systems": {
-    "life_support": {
-      "name": "Life Support",
-      "status": "degraded",
-      "subsystems": {
-        "co2_scrubbers": {
-          "name": "CO2 Scrubbers",
-          "status": "failing",
-          "efficiency": 0.31,
-          "targetEfficiency": 0.95,
-          "co2_ppm": 21000,
-          "safeCo2_ppm": 5000,
-          "dangerCo2_ppm": 40000,
-          "rateOfChange": 150,
-          "notes": "Primary cartridge exhausted. Backup at 31% capacity."
+  "c3lzdGVtcw==": {
+    "bGlmZV9zdXBwb3J0": {
+      "bmFtZQ==": "TGlmZSBTdXBwb3J0",
+      "c3RhdHVz": "ZGVncmFkZWQ=",
+      "c3Vic3lzdGVtcw==": {
+        "Y28yX3NjcnViYmVycw==": {
+          "bmFtZQ==": "Q08yIFNjcnViYmVycw==",
+          "c3RhdHVz": "ZmFpbGluZw==",
+          "ZWZmaWNpZW5jeQ==": 0.31,
+          "dGFyZ2V0RWZmaWNpZW5jeQ==": 0.95,
+          "Y28yX3BwbQ==": 21000,
+          "c2FmZUNvMl9wcG0=": 5000,
+          "ZGFuZ2VyQ28yX3BwbQ==": 40000,
+          "cmF0ZU9mQ2hhbmdl": 150,
+          "bm90ZXM=": "UHJpbWFyeSBjYXJ0cmlkZ2UgZXhoYXVzdGVkLiBCYWNrdXAgYXQgMzElIGNhcGFjaXR5Lg=="
         },
-        "o2_generator": {
-          "name": "O2 Generator",
-          "status": "nominal",
-          "efficiency": 0.88,
-          "o2_kpa": 20.1,
-          "target_kpa": 21.2
+        "bzJfZ2VuZXJhdG9y": {
+          "bmFtZQ==": "TzIgR2VuZXJhdG9y",
+          "c3RhdHVz": "bm9taW5hbA==",
+          "ZWZmaWNpZW5jeQ==": 0.88,
+          "bzJfa3Bh": 20.1,
+          "dGFyZ2V0X2twYQ==": 21.2
         },
-        "temperature_control": {
-          "name": "Temperature Control",
-          "status": "degraded",
-          "currentTemp": 14.2,
-          "targetTemp": 21.0,
-          "heatingCapacity": 0.6,
-          "notes": "Reduced power allocation limiting heating capacity."
+        "dGVtcGVyYXR1cmVfY29udHJvbA==": {
+          "bmFtZQ==": "VGVtcGVyYXR1cmUgQ29udHJvbA==",
+          "c3RhdHVz": "ZGVncmFkZWQ=",
+          "Y3VycmVudFRlbXA=": 14.2,
+          "dGFyZ2V0VGVtcA==": 21,
+          "aGVhdGluZ0NhcGFjaXR5": 0.6,
+          "bm90ZXM=": "UmVkdWNlZCBwb3dlciBhbGxvY2F0aW9uIGxpbWl0aW5nIGhlYXRpbmcgY2FwYWNpdHku"
         },
-        "water_recycling": {
-          "name": "Water Recycling",
-          "status": "nominal",
-          "efficiency": 0.92,
-          "reserveLiters": 2840
+        "d2F0ZXJfcmVjeWNsaW5n": {
+          "bmFtZQ==": "V2F0ZXIgUmVjeWNsaW5n",
+          "c3RhdHVz": "bm9taW5hbA==",
+          "ZWZmaWNpZW5jeQ==": 0.92,
+          "cmVzZXJ2ZUxpdGVycw==": 2840
         }
       }
     },
-    "power": {
-      "name": "Power Distribution",
-      "status": "degraded",
-      "subsystems": {
-        "fusion_reactor": {
-          "name": "Fusion Reactor",
-          "status": "warning",
-          "output_kw": 4200,
-          "maxOutput_kw": 8500,
-          "fuelRemaining": 0.73,
-          "shieldingIntegrity": 0.64,
-          "radiationLeak_msv_hr": 2.8,
-          "safeRadiation_msv_hr": 0.5,
-          "notes": "Shielding displacement detected. Output throttled automatically."
+    "cG93ZXI=": {
+      "bmFtZQ==": "UG93ZXIgRGlzdHJpYnV0aW9u",
+      "c3RhdHVz": "ZGVncmFkZWQ=",
+      "c3Vic3lzdGVtcw==": {
+        "ZnVzaW9uX3JlYWN0b3I=": {
+          "bmFtZQ==": "RnVzaW9uIFJlYWN0b3I=",
+          "c3RhdHVz": "d2FybmluZw==",
+          "b3V0cHV0X2t3": 4200,
+          "bWF4T3V0cHV0X2t3": 8500,
+          "ZnVlbFJlbWFpbmluZw==": 0.73,
+          "c2hpZWxkaW5nSW50ZWdyaXR5": 0.64,
+          "cmFkaWF0aW9uTGVha19tc3ZfaHI=": 2.8,
+          "c2FmZVJhZGlhdGlvbl9tc3ZfaHI=": 0.5,
+          "bm90ZXM=": "U2hpZWxkaW5nIGRpc3BsYWNlbWVudCBkZXRlY3RlZC4gT3V0cHV0IHRocm90dGxlZCBhdXRvbWF0aWNhbGx5Lg=="
         },
-        "distribution_grid": {
-          "name": "Power Distribution Grid",
-          "status": "critical",
-          "busA_status": "nominal",
-          "busB_status": "failed",
-          "busC_status": "intermittent",
-          "totalLoad_kw": 3100,
-          "availableCapacity_kw": 4200,
-          "notes": "Bus B junction failure causing cascading brownouts to Deck C systems."
+        "ZGlzdHJpYnV0aW9uX2dyaWQ=": {
+          "bmFtZQ==": "UG93ZXIgRGlzdHJpYnV0aW9uIEdyaWQ=",
+          "c3RhdHVz": "Y3JpdGljYWw=",
+          "YnVzQV9zdGF0dXM=": "bm9taW5hbA==",
+          "YnVzQl9zdGF0dXM=": "ZmFpbGVk",
+          "YnVzQ19zdGF0dXM=": "aW50ZXJtaXR0ZW50",
+          "dG90YWxMb2FkX2t3": 3100,
+          "YXZhaWxhYmxlQ2FwYWNpdHlfa3c=": 4200,
+          "bm90ZXM=": "QnVzIEIganVuY3Rpb24gZmFpbHVyZSBjYXVzaW5nIGNhc2NhZGluZyBicm93bm91dHMgdG8gRGVjayBDIHN5c3RlbXMu"
         },
-        "battery_backup": {
-          "name": "Battery Backup",
-          "status": "draining",
-          "charge": 0.41,
-          "drainRate_hr": 0.02,
-          "notes": "Compensating for distribution irregularities."
+        "YmF0dGVyeV9iYWNrdXA=": {
+          "bmFtZQ==": "QmF0dGVyeSBCYWNrdXA=",
+          "c3RhdHVz": "ZHJhaW5pbmc=",
+          "Y2hhcmdl": 0.41,
+          "ZHJhaW5SYXRlX2hy": 0.02,
+          "bm90ZXM=": "Q29tcGVuc2F0aW5nIGZvciBkaXN0cmlidXRpb24gaXJyZWd1bGFyaXRpZXMu"
         }
       }
     },
-    "propulsion": {
-      "name": "Propulsion",
-      "status": "coast",
-      "subsystems": {
-        "main_drive": {
-          "name": "Fusion Drive",
-          "status": "standby",
-          "thrustCapacity_kn": 12000,
-          "specificImpulse_s": 45000,
-          "currentThrust_kn": 0,
-          "notes": "In coast phase. Drive nominal but requires reactor at full power to fire."
+    "cHJvcHVsc2lvbg==": {
+      "bmFtZQ==": "UHJvcHVsc2lvbg==",
+      "c3RhdHVz": "Y29hc3Q=",
+      "c3Vic3lzdGVtcw==": {
+        "bWFpbl9kcml2ZQ==": {
+          "bmFtZQ==": "RnVzaW9uIERyaXZl",
+          "c3RhdHVz": "c3RhbmRieQ==",
+          "dGhydXN0Q2FwYWNpdHlfa24=": 12000,
+          "c3BlY2lmaWNJbXB1bHNlX3M=": 45000,
+          "Y3VycmVudFRocnVzdF9rbg==": 0,
+          "bm90ZXM=": "SW4gY29hc3QgcGhhc2UuIERyaXZlIG5vbWluYWwgYnV0IHJlcXVpcmVzIHJlYWN0b3IgYXQgZnVsbCBwb3dlciB0byBmaXJlLg=="
         },
-        "rcs_thrusters": {
-          "name": "RCS Thrusters",
-          "status": "nominal",
-          "propellantRemaining": 0.89,
-          "notes": "Attitude control functional."
+        "cmNzX3RocnVzdGVycw==": {
+          "bmFtZQ==": "UkNTIFRocnVzdGVycw==",
+          "c3RhdHVz": "bm9taW5hbA==",
+          "cHJvcGVsbGFudFJlbWFpbmluZw==": 0.89,
+          "bm90ZXM=": "QXR0aXR1ZGUgY29udHJvbCBmdW5jdGlvbmFsLg=="
         },
-        "thrust_vectoring": {
-          "name": "Thrust Vectoring",
-          "status": "warning",
-          "valveA": "nominal",
-          "valveB": "stuck",
-          "valveC": "nominal",
-          "notes": "Valve B requiring replacement. Limits vectoring range."
+        "dGhydXN0X3ZlY3RvcmluZw==": {
+          "bmFtZQ==": "VGhydXN0IFZlY3RvcmluZw==",
+          "c3RhdHVz": "d2FybmluZw==",
+          "dmFsdmVB": "bm9taW5hbA==",
+          "dmFsdmVC": "c3R1Y2s=",
+          "dmFsdmVD": "bm9taW5hbA==",
+          "bm90ZXM=": "VmFsdmUgQiByZXF1aXJpbmcgcmVwbGFjZW1lbnQuIExpbWl0cyB2ZWN0b3JpbmcgcmFuZ2Uu"
         }
       }
     },
-    "navigation": {
-      "name": "Navigation",
-      "status": "warning",
-      "subsystems": {
-        "star_tracker": {
-          "name": "Star Tracker",
-          "status": "nominal",
-          "accuracy_arcsec": 0.01,
-          "notes": "Optical navigation functional."
+    "bmF2aWdhdGlvbg==": {
+      "bmFtZQ==": "TmF2aWdhdGlvbg==",
+      "c3RhdHVz": "d2FybmluZw==",
+      "c3Vic3lzdGVtcw==": {
+        "c3Rhcl90cmFja2Vy": {
+          "bmFtZQ==": "U3RhciBUcmFja2Vy",
+          "c3RhdHVz": "bm9taW5hbA==",
+          "YWNjdXJhY3lfYXJjc2Vj": 0.01,
+          "bm90ZXM=": "T3B0aWNhbCBuYXZpZ2F0aW9uIGZ1bmN0aW9uYWwu"
         },
-        "inertial_nav": {
-          "name": "Inertial Navigation",
-          "status": "drifted",
-          "driftAngle_deg": 0.847,
-          "driftRate_deg_yr": 0.044,
-          "notes": "Accumulated drift over 19.3 years without correction."
+        "aW5lcnRpYWxfbmF2": {
+          "bmFtZQ==": "SW5lcnRpYWwgTmF2aWdhdGlvbg==",
+          "c3RhdHVz": "ZHJpZnRlZA==",
+          "ZHJpZnRBbmdsZV9kZWc=": 0.847,
+          "ZHJpZnRSYXRlX2RlZ195cg==": 0.044,
+          "bm90ZXM=": "QWNjdW11bGF0ZWQgZHJpZnQgb3ZlciAxOS4zIHllYXJzIHdpdGhvdXQgY29ycmVjdGlvbi4="
         },
-        "flight_computer": {
-          "name": "Flight Computer",
-          "status": "degraded",
-          "lastCourseUpdate_yr": 17.1,
-          "currentVelocity_kms": 14200,
-          "plannedVelocity_kms": 14200,
-          "courseDeviation_au": 3.2,
-          "notes": "Course correction required. Last update logged 2.2 years ago."
+        "ZmxpZ2h0X2NvbXB1dGVy": {
+          "bmFtZQ==": "RmxpZ2h0IENvbXB1dGVy",
+          "c3RhdHVz": "ZGVncmFkZWQ=",
+          "bGFzdENvdXJzZVVwZGF0ZV95cg==": 17.1,
+          "Y3VycmVudFZlbG9jaXR5X2ttcw==": 14200,
+          "cGxhbm5lZFZlbG9jaXR5X2ttcw==": 14200,
+          "Y291cnNlRGV2aWF0aW9uX2F1": 3.2,
+          "bm90ZXM=": "Q291cnNlIGNvcnJlY3Rpb24gcmVxdWlyZWQuIExhc3QgdXBkYXRlIGxvZ2dlZCAyLjIgeWVhcnMgYWdvLg=="
         }
       }
     },
-    "communications": {
-      "name": "Communications",
-      "status": "offline",
-      "subsystems": {
-        "deep_space_antenna": {
-          "name": "Deep Space Antenna",
-          "status": "damaged",
-          "antennaGain_dbi": 12,
-          "requiredGain_dbi": 74,
-          "notes": "Primary feed horn component missing. Performance severely degraded."
+    "Y29tbXVuaWNhdGlvbnM=": {
+      "bmFtZQ==": "Q29tbXVuaWNhdGlvbnM=",
+      "c3RhdHVz": "b2ZmbGluZQ==",
+      "c3Vic3lzdGVtcw==": {
+        "ZGVlcF9zcGFjZV9hbnRlbm5h": {
+          "bmFtZQ==": "RGVlcCBTcGFjZSBBbnRlbm5h",
+          "c3RhdHVz": "ZGFtYWdlZA==",
+          "YW50ZW5uYUdhaW5fZGJp": 12,
+          "cmVxdWlyZWRHYWluX2RiaQ==": 74,
+          "bm90ZXM=": "UHJpbWFyeSBmZWVkIGhvcm4gY29tcG9uZW50IG1pc3NpbmcuIFBlcmZvcm1hbmNlIHNldmVyZWx5IGRlZ3JhZGVkLg=="
         },
-        "internal_comms": {
-          "name": "Internal Communications",
-          "status": "nominal",
-          "notes": "Shipboard intercom functional."
+        "aW50ZXJuYWxfY29tbXM=": {
+          "bmFtZQ==": "SW50ZXJuYWwgQ29tbXVuaWNhdGlvbnM=",
+          "c3RhdHVz": "bm9taW5hbA==",
+          "bm90ZXM=": "U2hpcGJvYXJkIGludGVyY29tIGZ1bmN0aW9uYWwu"
         },
-        "signal_log": {
-          "name": "Signal Log",
-          "status": "anomalous",
-          "lastReceived": null,
-          "lastTransmitted_yr": 18.6,
-          "transmittedTo": "unknown",
-          "notes": "Unauthorized transmission logged at mission year 18.6. Content encrypted."
+        "c2lnbmFsX2xvZw==": {
+          "bmFtZQ==": "U2lnbmFsIExvZw==",
+          "c3RhdHVz": "YW5vbWFsb3Vz",
+          "bGFzdFJlY2VpdmVk": null,
+          "bGFzdFRyYW5zbWl0dGVkX3ly": 18.6,
+          "dHJhbnNtaXR0ZWRUbw==": "dW5rbm93bg==",
+          "bm90ZXM=": "VW5hdXRob3JpemVkIHRyYW5zbWlzc2lvbiBsb2dnZWQgYXQgbWlzc2lvbiB5ZWFyIDE4LjYuIENvbnRlbnQgZW5jcnlwdGVkLg=="
         }
       }
     },
-    "cryo": {
-      "name": "Cryogenic Systems",
-      "status": "degraded",
-      "subsystems": {
-        "cryo_array": {
-          "name": "Cryo Pod Array",
-          "status": "mostly_nominal",
-          "totalPods": 48,
-          "occupied": 45,
-          "empty": 2,
-          "malfunctioning": 1,
-          "notes": "Pod 17 (player) emergency thaw. Pod 23 shows previous unscheduled thaw cycle at year 17.1. Pod 24 malfunction - status unclear."
+    "Y3J5bw==": {
+      "bmFtZQ==": "Q3J5b2dlbmljIFN5c3RlbXM=",
+      "c3RhdHVz": "ZGVncmFkZWQ=",
+      "c3Vic3lzdGVtcw==": {
+        "Y3J5b19hcnJheQ==": {
+          "bmFtZQ==": "Q3J5byBQb2QgQXJyYXk=",
+          "c3RhdHVz": "bW9zdGx5X25vbWluYWw=",
+          "dG90YWxQb2Rz": 48,
+          "b2NjdXBpZWQ=": 45,
+          "ZW1wdHk=": 2,
+          "bWFsZnVuY3Rpb25pbmc=": 1,
+          "bm90ZXM=": "UG9kIDE3IChwbGF5ZXIpIGVtZXJnZW5jeSB0aGF3LiBQb2QgMjMgc2hvd3MgcHJldmlvdXMgdW5zY2hlZHVsZWQgdGhhdyBjeWNsZSBhdCB5ZWFyIDE3LjEuIFBvZCAyNCBtYWxmdW5jdGlvbiAtIHN0YXR1cyB1bmNsZWFyLg=="
         },
-        "coolant_system": {
-          "name": "Cryo Coolant",
-          "status": "warning",
-          "coolantLevel": 0.78,
-          "coolantTemp_c": -186.4,
-          "targetTemp_c": -196.0,
-          "notes": "Coolant level below optimal. Minor leak suspected in secondary loop."
+        "Y29vbGFudF9zeXN0ZW0=": {
+          "bmFtZQ==": "Q3J5byBDb29sYW50",
+          "c3RhdHVz": "d2FybmluZw==",
+          "Y29vbGFudExldmVs": 0.78,
+          "Y29vbGFudFRlbXBfYw==": -186.4,
+          "dGFyZ2V0VGVtcF9j": -196,
+          "bm90ZXM=": "Q29vbGFudCBsZXZlbCBiZWxvdyBvcHRpbWFsLiBNaW5vciBsZWFrIHN1c3BlY3RlZCBpbiBzZWNvbmRhcnkgbG9vcC4="
         }
       }
     },
-    "hull": {
-      "name": "Hull Integrity",
-      "status": "compromised",
-      "subsystems": {
-        "primary_hull": {
-          "name": "Primary Hull",
-          "status": "breached",
-          "breachLocation": "section_7_port",
-          "breachSize_mm": 4.2,
-          "atmosphereLossRate_pa_hr": 12,
-          "notes": "Micrometeorite impact. Compartment sealed automatically. Requires EVA repair."
+    "aHVsbA==": {
+      "bmFtZQ==": "SHVsbCBJbnRlZ3JpdHk=",
+      "c3RhdHVz": "Y29tcHJvbWlzZWQ=",
+      "c3Vic3lzdGVtcw==": {
+        "cHJpbWFyeV9odWxs": {
+          "bmFtZQ==": "UHJpbWFyeSBIdWxs",
+          "c3RhdHVz": "YnJlYWNoZWQ=",
+          "YnJlYWNoTG9jYXRpb24=": "c2VjdGlvbl83X3BvcnQ=",
+          "YnJlYWNoU2l6ZV9tbQ==": 4.2,
+          "YXRtb3NwaGVyZUxvc3NSYXRlX3BhX2hy": 12,
+          "bm90ZXM=": "TWljcm9tZXRlb3JpdGUgaW1wYWN0LiBDb21wYXJ0bWVudCBzZWFsZWQgYXV0b21hdGljYWxseS4gUmVxdWlyZXMgRVZBIHJlcGFpci4="
         },
-        "radiation_shielding": {
-          "name": "Hull Radiation Shielding",
-          "status": "nominal",
-          "shieldingFactor": 0.97,
-          "notes": "External shielding intact. Internal reactor shielding is separate system."
+        "cmFkaWF0aW9uX3NoaWVsZGluZw==": {
+          "bmFtZQ==": "SHVsbCBSYWRpYXRpb24gU2hpZWxkaW5n",
+          "c3RhdHVz": "bm9taW5hbA==",
+          "c2hpZWxkaW5nRmFjdG9y": 0.97,
+          "bm90ZXM=": "RXh0ZXJuYWwgc2hpZWxkaW5nIGludGFjdC4gSW50ZXJuYWwgcmVhY3RvciBzaGllbGRpbmcgaXMgc2VwYXJhdGUgc3lzdGVtLg=="
         },
-        "structural_integrity": {
-          "name": "Structural Integrity",
-          "status": "nominal",
-          "stressPoints": [],
-          "notes": "No structural concerns. Ship rated for 2g thrust acceleration."
+        "c3RydWN0dXJhbF9pbnRlZ3JpdHk=": {
+          "bmFtZQ==": "U3RydWN0dXJhbCBJbnRlZ3JpdHk=",
+          "c3RhdHVz": "bm9taW5hbA==",
+          "c3RyZXNzUG9pbnRz": [],
+          "bm90ZXM=": "Tm8gc3RydWN0dXJhbCBjb25jZXJucy4gU2hpcCByYXRlZCBmb3IgMmcgdGhydXN0IGFjY2VsZXJhdGlvbi4="
         }
       }
     }
   },
-  "cascadeRules": [
+  "Y2FzY2FkZVJ1bGVz": [
     {
-      "if": "power.distribution_grid.busB_status === 'failed'",
-      "then": ["life_support.temperature_control.heatingCapacity = 0.6", "power.fusion_reactor.output_kw = 4200"],
-      "description": "Bus B failure reduces power to Deck C heating and limits reactor output monitoring"
+      "aWY=": "cG93ZXIuZGlzdHJpYnV0aW9uX2dyaWQuYnVzQl9zdGF0dXMgPT09ICdmYWlsZWQn",
+      "dGhlbg==": [
+        "bGlmZV9zdXBwb3J0LnRlbXBlcmF0dXJlX2NvbnRyb2wuaGVhdGluZ0NhcGFjaXR5ID0gMC42",
+        "cG93ZXIuZnVzaW9uX3JlYWN0b3Iub3V0cHV0X2t3ID0gNDIwMA=="
+      ],
+      "ZGVzY3JpcHRpb24=": "QnVzIEIgZmFpbHVyZSByZWR1Y2VzIHBvd2VyIHRvIERlY2sgQyBoZWF0aW5nIGFuZCBsaW1pdHMgcmVhY3RvciBvdXRwdXQgbW9uaXRvcmluZw=="
     },
     {
-      "if": "power.fusion_reactor.shieldingIntegrity < 0.7",
-      "then": ["power.fusion_reactor.output_kw = Math.min(output, 5000)"],
-      "description": "Low shielding forces automatic reactor throttle"
+      "aWY=": "cG93ZXIuZnVzaW9uX3JlYWN0b3Iuc2hpZWxkaW5nSW50ZWdyaXR5IDwgMC43",
+      "dGhlbg==": [
+        "cG93ZXIuZnVzaW9uX3JlYWN0b3Iub3V0cHV0X2t3ID0gTWF0aC5taW4ob3V0cHV0LCA1MDAwKQ=="
+      ],
+      "ZGVzY3JpcHRpb24=": "TG93IHNoaWVsZGluZyBmb3JjZXMgYXV0b21hdGljIHJlYWN0b3IgdGhyb3R0bGU="
     },
     {
-      "if": "life_support.co2_scrubbers.co2_ppm > 30000",
-      "then": ["player.status.dizzy = true", "player.status.impaired = true"],
-      "description": "High CO2 causes player impairment"
+      "aWY=": "bGlmZV9zdXBwb3J0LmNvMl9zY3J1YmJlcnMuY28yX3BwbSA+IDMwMDAw",
+      "dGhlbg==": [
+        "cGxheWVyLnN0YXR1cy5kaXp6eSA9IHRydWU=",
+        "cGxheWVyLnN0YXR1cy5pbXBhaXJlZCA9IHRydWU="
+      ],
+      "ZGVzY3JpcHRpb24=": "SGlnaCBDTzIgY2F1c2VzIHBsYXllciBpbXBhaXJtZW50"
     },
     {
-      "if": "life_support.co2_scrubbers.co2_ppm > 50000",
-      "then": ["player.status.unconscious = true"],
-      "description": "Lethal CO2 levels"
+      "aWY=": "bGlmZV9zdXBwb3J0LmNvMl9zY3J1YmJlcnMuY28yX3BwbSA+IDUwMDAw",
+      "dGhlbg==": [
+        "cGxheWVyLnN0YXR1cy51bmNvbnNjaW91cyA9IHRydWU="
+      ],
+      "ZGVzY3JpcHRpb24=": "TGV0aGFsIENPMiBsZXZlbHM="
     },
     {
-      "if": "hull.primary_hull.atmosphereLossRate_pa_hr > 50",
-      "then": ["life_support.o2_generator.efficiency -= 0.1"],
-      "description": "Significant atmosphere loss strains O2 generation"
+      "aWY=": "aHVsbC5wcmltYXJ5X2h1bGwuYXRtb3NwaGVyZUxvc3NSYXRlX3BhX2hyID4gNTA=",
+      "dGhlbg==": [
+        "bGlmZV9zdXBwb3J0Lm8yX2dlbmVyYXRvci5lZmZpY2llbmN5IC09IDAuMQ=="
+      ],
+      "ZGVzY3JpcHRpb24=": "U2lnbmlmaWNhbnQgYXRtb3NwaGVyZSBsb3NzIHN0cmFpbnMgTzIgZ2VuZXJhdGlvbg=="
     }
   ],
-  "tickRules": {
-    "co2_rise_per_turn": 150,
-    "atmosphere_loss_per_turn": 12,
-    "battery_drain_per_turn": 0.005,
-    "coolant_loss_per_turn": 0.001,
-    "radiation_accumulation_per_turn_in_reactor": 2.8
+  "dGlja1J1bGVz": {
+    "Y28yX3Jpc2VfcGVyX3R1cm4=": 150,
+    "YXRtb3NwaGVyZV9sb3NzX3Blcl90dXJu": 12,
+    "YmF0dGVyeV9kcmFpbl9wZXJfdHVybg==": 0.005,
+    "Y29vbGFudF9sb3NzX3Blcl90dXJu": 0.001,
+    "cmFkaWF0aW9uX2FjY3VtdWxhdGlvbl9wZXJfdHVybl9pbl9yZWFjdG9y": 2.8
   }
 }

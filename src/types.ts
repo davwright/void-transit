@@ -24,6 +24,7 @@ export interface Room {
     text: string;
   }>;
   examineTargets?: Record<string, string>;
+  cantTake?: Record<string, string>;
   openTargets?: Record<string, {
     message: string;
     revealsItem?: string;
@@ -213,6 +214,8 @@ export interface GameState {
     resultType: string;
   }>;
   globalEvents: string[];
+  worldLore: Record<string, string>;
+  lastExaminedItem?: string;
 }
 
 export interface Intent {
@@ -221,6 +224,10 @@ export interface Intent {
   instrument: string | null;
   value?: string | null;
   raw: string;
+  /** Confidence 0–1. 1.0 = deterministic match, <1.0 = statistical/corrected. */
+  confidence?: number;
+  /** Alternative interpretations, ranked by confidence (descending). */
+  alternatives?: Intent[];
 }
 
 export interface MoveResult {
@@ -281,6 +288,7 @@ export interface ActionResult {
   hints?: Array<{ puzzleName: string; hint: string | null }>;
   // Map
   visited?: Record<string, Array<{ id: string; name: string; deck: string }>>;
+  mapRooms?: Array<{ id: string; name: string; deck: string; exits: Record<string, string> }>;
   // Search
   foundItem?: string;
   // Combine
@@ -288,6 +296,10 @@ export interface ActionResult {
   // Read
   target?: string;
   originalInput?: string;
+  // Scenery examine (non-interactive room description elements)
+  roomDescription?: string;
+  // Disambiguation
+  candidates?: Intent[];
 }
 
 export interface StoryContext {

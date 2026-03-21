@@ -1,11 +1,12 @@
 {
   "name": "void-transit",
-  "version": "1.0.0",
+  "version": "1.8.2",
   "description": "VOID TRANSIT — A hard science fiction text adventure",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/server.js",
+    "prebuild": "npm version patch --no-git-tag-version",
+    "build": "tsc && node -e \"const fs=require('fs');fs.cpSync('src/frontend','dist/frontend',{recursive:true});fs.cpSync('src/data','dist/data',{recursive:true})\"",
+    "start": "npm run build && node dist/server.js",
     "dev": "ts-node src/server.ts",
     "test": "vitest run",
     "test:watch": "vitest"
@@ -24,6 +25,8 @@
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^25.3.3",
+    "@types/supertest": "^7.2.0",
+    "supertest": "^7.2.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"

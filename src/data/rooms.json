@@ -1,366 +1,417 @@
 {
-  "meta": {
-    "game": "VOID TRANSIT",
-    "ship": "ISV Kepler's Promise",
-    "destination": "82 Eridani",
-    "journey_years": 42,
-    "elapsed_years": 19.3,
-    "total_rooms": 22,
-    "total_decks": 4,
-    "start_room": "cryo_bay"
+  "bWV0YQ==": {
+    "Z2FtZQ==": "Vk9JRCBUUkFOU0lU",
+    "c2hpcA==": "SVNWIEtlcGxlcidzIFByb21pc2U=",
+    "ZGVzdGluYXRpb24=": "ODIgRXJpZGFuaQ==",
+    "am91cm5leV95ZWFycw==": 42,
+    "ZWxhcHNlZF95ZWFycw==": 19.3,
+    "dG90YWxfcm9vbXM=": 22,
+    "dG90YWxfZGVja3M=": 4,
+    "c3RhcnRfcm9vbQ==": "Y3J5b19iYXk="
   },
-  "rooms": {
-    "bridge": {
-      "id": "bridge",
-      "name": "Bridge - ISV Kepler's Promise",
-      "deck": "A",
-      "description": "The nerve center of the Kepler's Promise opens before you in a sweeping arc of instrumentation and glass. The forward viewport dominates the room -- a vast trapezoid of reinforced quartz beyond which the stars hang in their ancient, indifferent configurations. 82 Eridani is not yet distinguishable from the thousands of other points of light, but the navigation display on the central console insists it is there, dead ahead, still 22.7 years away. A secondary display shows the long-range sensor feed -- and there, barely visible against the noise floor, a gravitational anomaly marker blinks amber near 82 Eridani's coordinates, flagged but unreviewed. The captain's chair sits on a raised platform at the center, its restraint harness unbuckled and hanging loose. Three duty stations curve around it: navigation, communications, and systems oversight. Every screen is active, but several cycle through error states, amber text scrolling too fast to read. The overhead lights are set to a dim blue-shift nightwatch mode that no one apparently ordered. There is a faint smell in the air -- something chemical, something that doesn't belong on a bridge.",
-      "exits": {
-        "s": "corridor_a"
+  "cm9vbXM=": {
+    "YnJpZGdl": {
+      "aWQ=": "YnJpZGdl",
+      "bmFtZQ==": "QnJpZGdlIC0gSVNWIEtlcGxlcidzIFByb21pc2U=",
+      "ZGVjaw==": "QQ==",
+      "ZGVzY3JpcHRpb24=": "VGhlIG5lcnZlIGNlbnRlciBvZiB0aGUgS2VwbGVyJ3MgUHJvbWlzZSBvcGVucyBiZWZvcmUgeW91IGluIGEgc3dlZXBpbmcgYXJjIG9mIGluc3RydW1lbnRhdGlvbiBhbmQgZ2xhc3MuIFRoZSBmb3J3YXJkIHZpZXdwb3J0IGRvbWluYXRlcyB0aGUgcm9vbSAtLSBhIHZhc3QgdHJhcGV6b2lkIG9mIHJlaW5mb3JjZWQgcXVhcnR6IGJleW9uZCB3aGljaCB0aGUgc3RhcnMgaGFuZyBpbiB0aGVpciBhbmNpZW50LCBpbmRpZmZlcmVudCBjb25maWd1cmF0aW9ucy4gODIgRXJpZGFuaSBpcyBub3QgeWV0IGRpc3Rpbmd1aXNoYWJsZSBmcm9tIHRoZSB0aG91c2FuZHMgb2Ygb3RoZXIgcG9pbnRzIG9mIGxpZ2h0LCBidXQgdGhlIG5hdmlnYXRpb24gZGlzcGxheSBvbiB0aGUgY2VudHJhbCBjb25zb2xlIGluc2lzdHMgaXQgaXMgdGhlcmUsIGRlYWQgYWhlYWQsIHN0aWxsIDIyLjcgeWVhcnMgYXdheS4gQSBzZWNvbmRhcnkgZGlzcGxheSBzaG93cyB0aGUgbG9uZy1yYW5nZSBzZW5zb3IgZmVlZCAtLSBhbmQgdGhlcmUsIGJhcmVseSB2aXNpYmxlIGFnYWluc3QgdGhlIG5vaXNlIGZsb29yLCBhIGdyYXZpdGF0aW9uYWwgYW5vbWFseSBtYXJrZXIgYmxpbmtzIGFtYmVyIG5lYXIgODIgRXJpZGFuaSdzIGNvb3JkaW5hdGVzLCBmbGFnZ2VkIGJ1dCB1bnJldmlld2VkLiBUaGUgY2FwdGFpbidzIGNoYWlyIHNpdHMgb24gYSByYWlzZWQgcGxhdGZvcm0gYXQgdGhlIGNlbnRlciwgaXRzIHJlc3RyYWludCBoYXJuZXNzIHVuYnVja2xlZCBhbmQgaGFuZ2luZyBsb29zZS4gVGhyZWUgZHV0eSBzdGF0aW9ucyBjdXJ2ZSBhcm91bmQgaXQ6IG5hdmlnYXRpb24sIGNvbW11bmljYXRpb25zLCBhbmQgc3lzdGVtcyBvdmVyc2lnaHQuIEV2ZXJ5IHNjcmVlbiBpcyBhY3RpdmUsIGJ1dCBzZXZlcmFsIGN5Y2xlIHRocm91Z2ggZXJyb3Igc3RhdGVzLCBhbWJlciB0ZXh0IHNjcm9sbGluZyB0b28gZmFzdCB0byByZWFkLiBUaGUgb3ZlcmhlYWQgbGlnaHRzIGFyZSBzZXQgdG8gYSBkaW0gYmx1ZS1zaGlmdCBuaWdodHdhdGNoIG1vZGUgdGhhdCBubyBvbmUgYXBwYXJlbnRseSBvcmRlcmVkLiBUaGVyZSBpcyBhIGZhaW50IHNtZWxsIGluIHRoZSBhaXIgLS0gc29tZXRoaW5nIGNoZW1pY2FsLCBzb21ldGhpbmcgdGhhdCBkb2Vzbid0IGJlbG9uZyBvbiBhIGJyaWRnZS4=",
+      "ZXhpdHM=": {
+        "cw==": "Y29ycmlkb3JfYQ=="
       },
-      "items": ["nav_console_log", "captains_key"],
-      "conditions": {},
-      "firstVisit": "You have never been on the bridge before. During training, junior crew were told they'd rotate through bridge watch in Year 25. You are not supposed to be here. No one is supposed to be here for another six years. The silence is the wrong kind of silence -- not the quiet of sleeping systems, but the held breath of something waiting."
+      "aXRlbXM=": [
+        "bmF2X2NvbnNvbGVfbG9n",
+        "Y2FwdGFpbnNfa2V5"
+      ],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "WW91IGhhdmUgbmV2ZXIgYmVlbiBvbiB0aGUgYnJpZGdlIGJlZm9yZS4gRHVyaW5nIHRyYWluaW5nLCBqdW5pb3IgY3JldyB3ZXJlIHRvbGQgdGhleSdkIHJvdGF0ZSB0aHJvdWdoIGJyaWRnZSB3YXRjaCBpbiBZZWFyIDI1LiBZb3UgYXJlIG5vdCBzdXBwb3NlZCB0byBiZSBoZXJlLiBObyBvbmUgaXMgc3VwcG9zZWQgdG8gYmUgaGVyZSBmb3IgYW5vdGhlciBzaXggeWVhcnMuIFRoZSBzaWxlbmNlIGlzIHRoZSB3cm9uZyBraW5kIG9mIHNpbGVuY2UgLS0gbm90IHRoZSBxdWlldCBvZiBzbGVlcGluZyBzeXN0ZW1zLCBidXQgdGhlIGhlbGQgYnJlYXRoIG9mIHNvbWV0aGluZyB3YWl0aW5nLg=="
     },
-
-    "corridor_a": {
-      "id": "corridor_a",
-      "name": "Central Corridor - Deck A",
-      "deck": "A",
-      "description": "Deck A's central corridor is a narrow, utilitarian passage sheathed in brushed aluminum panels and conduit runs. Emergency track lighting along the floor casts the space in a pale, clinical wash that makes your shadow stretch long and strange behind you. The air here carries that same faint chemical tang -- sharper now, almost metallic, like the ghost of a soldering iron left too long on a joint. Forward, the corridor terminates at the bridge access hatch. To the east, a door marked CPT. A. LINDQVIST -- PRIVATE stands closed. To the west, the communications suite hums with the white noise of deep-space signal processing. A ladder well in the center of the corridor drops down to Deck B, its rungs worn smooth by years of use that haven't happened yet.",
-      "exits": {
-        "n": "bridge",
-        "e": "captains_quarters",
-        "w": "comms_room",
-        "down": "corridor_b"
+    "Y29ycmlkb3JfYQ==": {
+      "aWQ=": "Y29ycmlkb3JfYQ==",
+      "bmFtZQ==": "Q2VudHJhbCBDb3JyaWRvciAtIERlY2sgQQ==",
+      "ZGVjaw==": "QQ==",
+      "ZGVzY3JpcHRpb24=": "RGVjayBBJ3MgY2VudHJhbCBjb3JyaWRvciBpcyBhIG5hcnJvdywgdXRpbGl0YXJpYW4gcGFzc2FnZSBzaGVhdGhlZCBpbiBicnVzaGVkIGFsdW1pbnVtIHBhbmVscyBhbmQgY29uZHVpdCBydW5zLiBFbWVyZ2VuY3kgdHJhY2sgbGlnaHRpbmcgYWxvbmcgdGhlIGZsb29yIGNhc3RzIHRoZSBzcGFjZSBpbiBhIHBhbGUsIGNsaW5pY2FsIHdhc2ggdGhhdCBtYWtlcyB5b3VyIHNoYWRvdyBzdHJldGNoIGxvbmcgYW5kIHN0cmFuZ2UgYmVoaW5kIHlvdS4gVGhlIGFpciBoZXJlIGNhcnJpZXMgdGhhdCBzYW1lIGZhaW50IGNoZW1pY2FsIHRhbmcgLS0gc2hhcnBlciBub3csIGFsbW9zdCBtZXRhbGxpYywgbGlrZSB0aGUgZ2hvc3Qgb2YgYSBzb2xkZXJpbmcgaXJvbiBsZWZ0IHRvbyBsb25nIG9uIGEgam9pbnQuIEZvcndhcmQsIHRoZSBjb3JyaWRvciB0ZXJtaW5hdGVzIGF0IHRoZSBicmlkZ2UgYWNjZXNzIGhhdGNoLiBUbyBzdGFyYm9hcmQsIGEgZG9vciBtYXJrZWQgQ1BULiBBLiBMSU5EUVZJU1QgLS0gUFJJVkFURSBzdGFuZHMgY2xvc2VkLiBUbyBwb3J0LCB0aGUgY29tbXVuaWNhdGlvbnMgc3VpdGUgaHVtcyB3aXRoIHRoZSB3aGl0ZSBub2lzZSBvZiBkZWVwLXNwYWNlIHNpZ25hbCBwcm9jZXNzaW5nLiBBIGxhZGRlciB3ZWxsIGluIHRoZSBjZW50ZXIgb2YgdGhlIGNvcnJpZG9yIGRyb3BzIGRvd24gdG8gRGVjayBCLCBpdHMgcnVuZ3Mgd29ybiBzbW9vdGggYnkgeWVhcnMgb2YgdXNlIHRoYXQgaGF2ZW4ndCBoYXBwZW5lZCB5ZXQu",
+      "ZXhpdHM=": {
+        "bg==": "YnJpZGdl",
+        "ZQ==": "Y2FwdGFpbnNfcXVhcnRlcnM=",
+        "dw==": "Y29tbXNfcm9vbQ==",
+        "ZG93bg==": "Y29ycmlkb3JfYg=="
       },
-      "items": [],
-      "conditions": {},
-      "firstVisit": "The corridor feels too still. Standard protocol keeps Deck A sealed during cryo-transit, atmosphere maintained at minimum. But the air is warm, breathable. Someone has been up here. Recently."
+      "aXRlbXM=": [],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "VGhlIGNvcnJpZG9yIGZlZWxzIHRvbyBzdGlsbC4gU3RhbmRhcmQgcHJvdG9jb2wga2VlcHMgRGVjayBBIHNlYWxlZCBkdXJpbmcgY3J5by10cmFuc2l0LCBhdG1vc3BoZXJlIG1haW50YWluZWQgYXQgbWluaW11bS4gQnV0IHRoZSBhaXIgaXMgd2FybSwgYnJlYXRoYWJsZS4gU29tZW9uZSBoYXMgYmVlbiB1cCBoZXJlLiBSZWNlbnRseS4="
     },
-
-    "captains_quarters": {
-      "id": "captains_quarters",
-      "name": "Captain's Quarters",
-      "deck": "A",
-      "description": "Captain Lindqvist's quarters are spartan by any standard -- a narrow bunk with magnetic restraints for zero-g sleep, a fold-down desk bolted to the bulkhead, and a personal terminal whose screen saver traces lazy Lissajous curves in the dark. A photo is mag-clipped to the wall above the bunk: a woman and two children standing on a rocky shore beneath the pale sky of a Swedish winter, the Baltic frozen behind them, all of them laughing at something outside the frame -- a private joke preserved across 19.3 light-years of void. Beneath the desk, a small personal safe is set into the bulkhead, its status light glowing a steady red. The captain's dress uniform hangs in an open locker, pressed and pristine, as though she expected to need it. A personal datapad rests on the pillow, its screen dark but not locked.",
-      "exits": {
-        "w": "corridor_a"
+    "Y2FwdGFpbnNfcXVhcnRlcnM=": {
+      "aWQ=": "Y2FwdGFpbnNfcXVhcnRlcnM=",
+      "bmFtZQ==": "Q2FwdGFpbidzIFF1YXJ0ZXJz",
+      "ZGVjaw==": "QQ==",
+      "ZGVzY3JpcHRpb24=": "Q2FwdGFpbiBMaW5kcXZpc3QncyBxdWFydGVycyBhcmUgc3BhcnRhbiBieSBhbnkgc3RhbmRhcmQgLS0gYSBuYXJyb3cgYnVuayB3aXRoIG1hZ25ldGljIHJlc3RyYWludHMgZm9yIHplcm8tZyBzbGVlcCwgYSBmb2xkLWRvd24gZGVzayBib2x0ZWQgdG8gdGhlIGJ1bGtoZWFkLCBhbmQgYSBwZXJzb25hbCB0ZXJtaW5hbCB3aG9zZSBzY3JlZW4gc2F2ZXIgdHJhY2VzIGxhenkgTGlzc2Fqb3VzIGN1cnZlcyBpbiB0aGUgZGFyay4gQSBwaG90byBpcyBtYWctY2xpcHBlZCB0byB0aGUgd2FsbCBhYm92ZSB0aGUgYnVuazogYSB3b21hbiBhbmQgdHdvIGNoaWxkcmVuIHN0YW5kaW5nIG9uIGEgcm9ja3kgc2hvcmUgYmVuZWF0aCB0aGUgcGFsZSBza3kgb2YgYSBTd2VkaXNoIHdpbnRlciwgdGhlIEJhbHRpYyBmcm96ZW4gYmVoaW5kIHRoZW0sIGFsbCBvZiB0aGVtIGxhdWdoaW5nIGF0IHNvbWV0aGluZyBvdXRzaWRlIHRoZSBmcmFtZSAtLSBhIHByaXZhdGUgam9rZSBwcmVzZXJ2ZWQgYWNyb3NzIDE5LjMgbGlnaHQteWVhcnMgb2Ygdm9pZC4gQmVuZWF0aCB0aGUgZGVzaywgYSBzbWFsbCBwZXJzb25hbCBzYWZlIGlzIHNldCBpbnRvIHRoZSBidWxraGVhZCwgaXRzIHN0YXR1cyBsaWdodCBnbG93aW5nIGEgc3RlYWR5IHJlZC4gVGhlIGNhcHRhaW4ncyBkcmVzcyB1bmlmb3JtIGhhbmdzIGluIGFuIG9wZW4gbG9ja2VyLCBwcmVzc2VkIGFuZCBwcmlzdGluZSwgYXMgdGhvdWdoIHNoZSBleHBlY3RlZCB0byBuZWVkIGl0LiBBIHBlcnNvbmFsIGRhdGFwYWQgcmVzdHMgb24gdGhlIHBpbGxvdywgaXRzIHNjcmVlbiBkYXJrIGJ1dCBub3QgbG9ja2VkLg==",
+      "ZXhpdHM=": {
+        "dw==": "Y29ycmlkb3JfYQ=="
       },
-      "items": ["personal_datapad"],
-      "conditions": {
-        "enter": {
-          "has_captains_key": true,
-          "fail_message": "The door to the captain's quarters is locked. A biometric panel glows red beside the handle. You'll need the captain's key-card to override it."
+      "aXRlbXM=": [
+        "cGVyc29uYWxfZGF0YXBhZA=="
+      ],
+      "Y29uZGl0aW9ucw==": {
+        "ZW50ZXI=": {
+          "aGFzX2NhcHRhaW5zX2tleQ==": true,
+          "ZmFpbF9tZXNzYWdl": "VGhlIGRvb3IgdG8gdGhlIGNhcHRhaW4ncyBxdWFydGVycyBpcyBsb2NrZWQuIEEgYmlvbWV0cmljIHBhbmVsIGdsb3dzIHJlZCBiZXNpZGUgdGhlIGhhbmRsZS4gWW91J2xsIG5lZWQgdGhlIGNhcHRhaW4ncyBrZXktY2FyZCB0byBvdmVycmlkZSBpdC4="
         }
       },
-      "firstVisit": "The door clicks open and the lights stir reluctantly to life. The room smells of recycled air and old paper -- the captain's desk is covered with printed star charts, hand-annotated in precise black ink. Not Lindqvist's handwriting. Someone else has been using this room. Chen's handwriting, you realise -- the same small, meticulous script from the maintenance logs. She lived here during her seventeen months alone, turning the captain's quarters into a war room. Everything is covered with calculations, orbital diagrams, and spectral analysis printouts. A single word is circled in red on the largest chart: PERIAPSIS."
+      "Zmlyc3RWaXNpdA==": "VGhlIGRvb3IgY2xpY2tzIG9wZW4gYW5kIHRoZSBsaWdodHMgc3RpciByZWx1Y3RhbnRseSB0byBsaWZlLiBUaGUgcm9vbSBzbWVsbHMgb2YgcmVjeWNsZWQgYWlyIGFuZCBvbGQgcGFwZXIuIFRoZSBjYXB0YWluJ3MgZGVzayBpcyBjb3ZlcmVkIHdpdGggcHJpbnRlZCBzdGFyIGNoYXJ0cywgaGFuZC1hbm5vdGF0ZWQgaW4gcHJlY2lzZSBibGFjayBpbmsgLS0gYnV0IGl0J3Mgbm90IHRoZSBjYXB0YWluJ3MgaGFuZHdyaXRpbmcuIFNvbWVvbmUgZWxzZSBoYXMgYmVlbiB1c2luZyB0aGlzIHJvb20uIFRoZSBkZXNrIGlzIGNvdmVyZWQgd2l0aCBjYWxjdWxhdGlvbnMsIG9yYml0YWwgZGlhZ3JhbXMsIGFuZCBzcGVjdHJhbCBhbmFseXNpcyBwcmludG91dHMuIEEgc2luZ2xlIHdvcmQgaXMgY2lyY2xlZCBpbiByZWQgb24gdGhlIGxhcmdlc3QgY2hhcnQuIEEgcGVyc29uYWwgZGF0YXBhZCByZXN0cyBvbiB0aGUgcGlsbG93LCBpdHMgc2NyZWVuIGRhcmsu"
     },
-
-    "comms_room": {
-      "id": "comms_room",
-      "name": "Communications Suite",
-      "deck": "A",
-      "description": "The communications suite is a cocoon of electronics, every surface studded with displays, signal processors, and the quiet industry of machines talking to the void. The primary deep-space antenna array is controlled from a central console, its status board a constellation of red and amber indicators where green should dominate. The main display shows the ship's communication log -- a long column of automated position reports dutifully transmitted every 72 hours to a species that won't receive them for decades. The last manual transmission was logged 19.3 years ago, departure day, a brief message from Captain Lindqvist to Mission Control: ALL SYSTEMS NOMINAL. BEGINNING CRYO SEQUENCE. SEE YOU ON THE OTHER SIDE. The high-gain antenna's azimuth readout is drifting, which shouldn't be possible during coast phase. Something has knocked it off alignment.",
-      "exits": {
-        "e": "corridor_a"
+    "Y29tbXNfcm9vbQ==": {
+      "aWQ=": "Y29tbXNfcm9vbQ==",
+      "bmFtZQ==": "Q29tbXVuaWNhdGlvbnMgU3VpdGU=",
+      "ZGVjaw==": "QQ==",
+      "ZGVzY3JpcHRpb24=": "VGhlIGNvbW11bmljYXRpb25zIHN1aXRlIGlzIGEgY29jb29uIG9mIGVsZWN0cm9uaWNzLCBldmVyeSBzdXJmYWNlIHN0dWRkZWQgd2l0aCBkaXNwbGF5cywgc2lnbmFsIHByb2Nlc3NvcnMsIGFuZCB0aGUgcXVpZXQgaW5kdXN0cnkgb2YgbWFjaGluZXMgdGFsa2luZyB0byB0aGUgdm9pZC4gVGhlIHByaW1hcnkgZGVlcC1zcGFjZSBhbnRlbm5hIGFycmF5IGlzIGNvbnRyb2xsZWQgZnJvbSBhIGNlbnRyYWwgY29uc29sZSwgaXRzIHN0YXR1cyBib2FyZCBhIGNvbnN0ZWxsYXRpb24gb2YgcmVkIGFuZCBhbWJlciBpbmRpY2F0b3JzIHdoZXJlIGdyZWVuIHNob3VsZCBkb21pbmF0ZS4gVGhlIG1haW4gZGlzcGxheSBzaG93cyB0aGUgc2hpcCdzIGNvbW11bmljYXRpb24gbG9nIC0tIGEgbG9uZyBjb2x1bW4gb2YgYXV0b21hdGVkIHBvc2l0aW9uIHJlcG9ydHMgZHV0aWZ1bGx5IHRyYW5zbWl0dGVkIGV2ZXJ5IDcyIGhvdXJzIHRvIGEgc3BlY2llcyB0aGF0IHdvbid0IHJlY2VpdmUgdGhlbSBmb3IgZGVjYWRlcy4gVGhlIGxhc3QgbWFudWFsIHRyYW5zbWlzc2lvbiB3YXMgbG9nZ2VkIDE5LjMgeWVhcnMgYWdvLCBkZXBhcnR1cmUgZGF5LCBhIGJyaWVmIG1lc3NhZ2UgZnJvbSBDYXB0YWluIExpbmRxdmlzdCB0byBNaXNzaW9uIENvbnRyb2w6IEFMTCBTWVNURU1TIE5PTUlOQUwuIEJFR0lOTklORyBDUllPIFNFUVVFTkNFLiBTRUUgWU9VIE9OIFRIRSBPVEhFUiBTSURFLiBUaGUgaGlnaC1nYWluIGFudGVubmEncyBhemltdXRoIHJlYWRvdXQgaXMgZHJpZnRpbmcsIHdoaWNoIHNob3VsZG4ndCBiZSBwb3NzaWJsZSBkdXJpbmcgY29hc3QgcGhhc2UuIFNvbWV0aGluZyBoYXMga25vY2tlZCBpdCBvZmYgYWxpZ25tZW50Lg==",
+      "ZXhpdHM=": {
+        "ZQ==": "Y29ycmlkb3JfYQ=="
       },
-      "items": ["comms_log", "antenna_diagnostic"],
-      "conditions": {},
-      "firstVisit": "As you enter, a burst of static erupts from the overhead speaker -- sharp, loud, then gone. The room settles back into its low electronic murmur. On the main display, you notice something that makes you stop: the incoming signal buffer is not empty. A data packet sits in the queue, received 11 hours ago, from coordinates that match no known relay station. The packet header reads JANUS-7 RESPONSE // PRIORITY ALPHA // ENCRYPTION: CHEN-PERSONAL. Someone sent a message months ago, encrypted with personal credentials. And something answered. The signal strength implies a source approximately 0.3 light-years away. There is nothing 0.3 light-years away. Nothing on any chart. You stare at the blinking UNREAD indicator and feel the hairs on the back of your neck stand up."
+      "aXRlbXM=": [
+        "Y29tbXNfbG9n",
+        "YW50ZW5uYV9kaWFnbm9zdGlj"
+      ],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "QXMgeW91IGVudGVyLCBhIGJ1cnN0IG9mIHN0YXRpYyBlcnVwdHMgZnJvbSB0aGUgb3ZlcmhlYWQgc3BlYWtlciAtLSBzaGFycCwgbG91ZCwgdGhlbiBnb25lLiBUaGUgcm9vbSBzZXR0bGVzIGJhY2sgaW50byBpdHMgbG93IGVsZWN0cm9uaWMgbXVybXVyLiBPbiB0aGUgbWFpbiBkaXNwbGF5LCB5b3Ugbm90aWNlIHNvbWV0aGluZyB0aGF0IG1ha2VzIHlvdSBzdG9wOiB0aGUgaW5jb21pbmcgc2lnbmFsIGJ1ZmZlciBpcyBub3QgZW1wdHkuIEEgZGF0YSBwYWNrZXQgc2l0cyBpbiB0aGUgcXVldWUsIHJlY2VpdmVkIDExIGhvdXJzIGFnbywgZnJvbSBjb29yZGluYXRlcyB0aGF0IG1hdGNoIG5vIGtub3duIHJlbGF5IHN0YXRpb24uIFRoZSBwYWNrZXQgaGVhZGVyIHJlYWRzIEpBTlVTLTcgUkVTUE9OU0UgLy8gUFJJT1JJVFkgQUxQSEEgLy8gRU5DUllQVElPTjogQ0hFTi1QRVJTT05BTC4gU29tZW9uZSBzZW50IGEgbWVzc2FnZSBtb250aHMgYWdvLCBlbmNyeXB0ZWQgd2l0aCBwZXJzb25hbCBjcmVkZW50aWFscy4gQW5kIHNvbWV0aGluZyBhbnN3ZXJlZC4gVGhlIHNpZ25hbCBzdHJlbmd0aCBpbXBsaWVzIGEgc291cmNlIGFwcHJveGltYXRlbHkgMC4zIGxpZ2h0LXllYXJzIGF3YXkuIFRoZXJlIGlzIG5vdGhpbmcgMC4zIGxpZ2h0LXllYXJzIGF3YXkuIE5vdGhpbmcgb24gYW55IGNoYXJ0LiBZb3Ugc3RhcmUgYXQgdGhlIGJsaW5raW5nIFVOUkVBRCBpbmRpY2F0b3IgYW5kIGZlZWwgdGhlIGhhaXJzIG9uIHRoZSBiYWNrIG9mIHlvdXIgbmVjayBzdGFuZCB1cC4="
     },
-
-    "corridor_b": {
-      "id": "corridor_b",
-      "name": "Central Hub - Deck B",
-      "deck": "B",
-      "description": "Deck B's central hub is the widest open space on the ship, a circular junction where the centrifugal ring's simulated gravity holds you at a comfortable 0.7g. The floor curves almost imperceptibly upward in every direction -- a reminder that you are standing on the inside of a wheel, not on solid ground. Four corridors radiate outward like the spokes of that wheel: north to medical, south to the mess hall, east to the science lab, west to crew quarters. The lighting here is warmer than Deck A, tuned to a solar-spectrum approximation that is supposed to stave off circadian drift. It almost works. A central information kiosk displays the ship's status in broad strokes -- all systems nominal, it claims, though the timestamp on the display is six hours old and the word NOMINAL feels like it's trying too hard.",
-      "exits": {
-        "n": "med_bay",
-        "s": "mess_hall",
-        "e": "lab",
-        "w": "crew_quarters",
-        "up": "corridor_a",
-        "down": "corridor_c"
+    "Y29ycmlkb3JfYg==": {
+      "aWQ=": "Y29ycmlkb3JfYg==",
+      "bmFtZQ==": "Q2VudHJhbCBIdWIgLSBEZWNrIEI=",
+      "ZGVjaw==": "Qg==",
+      "ZGVzY3JpcHRpb24=": "RGVjayBCJ3MgY2VudHJhbCBodWIgaXMgdGhlIHdpZGVzdCBvcGVuIHNwYWNlIG9uIHRoZSBzaGlwLCBhIGNpcmN1bGFyIGp1bmN0aW9uIHdoZXJlIHRoZSBjZW50cmlmdWdhbCByaW5nJ3Mgc2ltdWxhdGVkIGdyYXZpdHkgaG9sZHMgeW91IGF0IGEgY29tZm9ydGFibGUgMC43Zy4gVGhlIGZsb29yIGN1cnZlcyBhbG1vc3QgaW1wZXJjZXB0aWJseSB1cHdhcmQgaW4gZXZlcnkgZGlyZWN0aW9uIC0tIGEgcmVtaW5kZXIgdGhhdCB5b3UgYXJlIHN0YW5kaW5nIG9uIHRoZSBpbnNpZGUgb2YgYSB3aGVlbCwgbm90IG9uIHNvbGlkIGdyb3VuZC4gRm91ciBjb3JyaWRvcnMgcmFkaWF0ZSBvdXR3YXJkIGxpa2UgdGhlIHNwb2tlcyBvZiB0aGF0IHdoZWVsOiBmb3JlIHRvIG1lZGljYWwsIGFmdCB0byB0aGUgbWVzcyBoYWxsLCBzdGFyYm9hcmQgdG8gdGhlIHNjaWVuY2UgbGFiLCBwb3J0IHRvIGNyZXcgcXVhcnRlcnMuIFRoZSBsaWdodGluZyBoZXJlIGlzIHdhcm1lciB0aGFuIERlY2sgQSwgdHVuZWQgdG8gYSBzb2xhci1zcGVjdHJ1bSBhcHByb3hpbWF0aW9uIHRoYXQgaXMgc3VwcG9zZWQgdG8gc3RhdmUgb2ZmIGNpcmNhZGlhbiBkcmlmdC4gSXQgYWxtb3N0IHdvcmtzLiBBIGNlbnRyYWwgaW5mb3JtYXRpb24ga2lvc2sgZGlzcGxheXMgdGhlIHNoaXAncyBzdGF0dXMgaW4gYnJvYWQgc3Ryb2tlcyAtLSBhbGwgc3lzdGVtcyBub21pbmFsLCBpdCBjbGFpbXMsIHRob3VnaCB0aGUgdGltZXN0YW1wIG9uIHRoZSBkaXNwbGF5IGlzIHNpeCBob3VycyBvbGQgYW5kIHRoZSB3b3JkIE5PTUlOQUwgZmVlbHMgbGlrZSBpdCdzIHRyeWluZyB0b28gaGFyZC4=",
+      "ZXhpdHM=": {
+        "bg==": "bWVkX2JheQ==",
+        "cw==": "bWVzc19oYWxs",
+        "ZQ==": "bGFi",
+        "dw==": "Y3Jld19xdWFydGVycw==",
+        "dXA=": "Y29ycmlkb3JfYQ==",
+        "ZG93bg==": "Y29ycmlkb3JfYw=="
       },
-      "items": [],
-      "conditions": {},
-      "firstVisit": "You pull yourself up from the ladder well and feel gravity assert itself as you cross the threshold into the ring section -- a gentle, insistent tug that orients your inner ear and tells your body which way is down. After the weightlessness of the spine, it feels almost luxurious. The hub is empty, as it should be. But the air carries a ghost -- tea, green tea, the molecules still circulating months after someone brewed it, trapped in the ship's closed-loop atmosphere with nowhere to go. Chen's scent, preserved by the very life support system she modified."
+      "aXRlbXM=": [],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "WW91IHB1bGwgeW91cnNlbGYgdXAgZnJvbSB0aGUgbGFkZGVyIHdlbGwgYW5kIGZlZWwgZ3Jhdml0eSBhc3NlcnQgaXRzZWxmIGFzIHlvdSBjcm9zcyB0aGUgdGhyZXNob2xkIGludG8gdGhlIHJpbmcgc2VjdGlvbiAtLSBhIGdlbnRsZSwgaW5zaXN0ZW50IHR1ZyB0aGF0IG9yaWVudHMgeW91ciBpbm5lciBlYXIgYW5kIHRlbGxzIHlvdXIgYm9keSB3aGljaCB3YXkgaXMgZG93bi4gQWZ0ZXIgdGhlIHdlaWdodGxlc3NuZXNzIG9mIHRoZSBzcGluZSwgaXQgZmVlbHMgYWxtb3N0IGx1eHVyaW91cy4gVGhlIGh1YiBpcyBlbXB0eSwgYXMgaXQgc2hvdWxkIGJlLiBCdXQgdGhlIGFpciBjYXJyaWVzIHNvbWV0aGluZyAtLSBhIGZhaW50IGdob3N0IG9mIGdyZWVuIHRlYSwgdGhlIG1vbGVjdWxlcyBzdGlsbCBjaXJjdWxhdGluZyBtb250aHMgYWZ0ZXIgc29tZW9uZSBicmV3ZWQgaXQsIHRyYXBwZWQgaW4gdGhlIHNoaXAncyBjbG9zZWQtbG9vcCBhdG1vc3BoZXJlIHdpdGggbm93aGVyZSB0byBnby4="
     },
-
-    "med_bay": {
-      "id": "med_bay",
-      "name": "Medical Bay",
-      "deck": "B",
-      "description": "The medical bay is a clean, white room that aspires to the calm authority of a planetside hospital and mostly achieves the antiseptic anxiety of a veterinary clinic. An autodoc unit dominates the center -- a reclining pod bristling with articulated surgical arms, currently folded in standby position like the legs of a sleeping spider. Pharmaceutical cabinets line the starboard wall, their glass fronts revealing neat rows of labeled vials, blister packs, and emergency hyposprays. One cabinet is open. Several items have been removed and not returned: broad-spectrum antibiotics, a coagulant spray, and a bottle of stimulant hyposprays -- the kind used to maintain alertness during extended solo operations. The diagnostic terminal on the port wall displays crew biometric data, all 2,847 colonists and 14 crew showing the slow, glacial vital signs of cryogenic suspension. Except for you. And except for one other entry -- CHEN, W. -- whose status reads: ACTIVE (MANUAL OVERRIDE REVIVAL). The system has been tracking her vitals intermittently, and the last reading was seventeen months ago.",
-      "exits": {
-        "s": "corridor_b"
+    "bWVkX2JheQ==": {
+      "aWQ=": "bWVkX2JheQ==",
+      "bmFtZQ==": "TWVkaWNhbCBCYXk=",
+      "ZGVjaw==": "Qg==",
+      "ZGVzY3JpcHRpb24=": "VGhlIG1lZGljYWwgYmF5IGlzIGEgY2xlYW4sIHdoaXRlIHJvb20gdGhhdCBhc3BpcmVzIHRvIHRoZSBjYWxtIGF1dGhvcml0eSBvZiBhIHBsYW5ldHNpZGUgaG9zcGl0YWwgYW5kIG1vc3RseSBhY2hpZXZlcyB0aGUgYW50aXNlcHRpYyBhbnhpZXR5IG9mIGEgdmV0ZXJpbmFyeSBjbGluaWMuIEFuIGF1dG9kb2MgdW5pdCBkb21pbmF0ZXMgdGhlIGNlbnRlciAtLSBhIHJlY2xpbmluZyBwb2QgYnJpc3RsaW5nIHdpdGggYXJ0aWN1bGF0ZWQgc3VyZ2ljYWwgYXJtcywgY3VycmVudGx5IGZvbGRlZCBpbiBzdGFuZGJ5IHBvc2l0aW9uIGxpa2UgdGhlIGxlZ3Mgb2YgYSBzbGVlcGluZyBzcGlkZXIuIFBoYXJtYWNldXRpY2FsIGNhYmluZXRzIGxpbmUgdGhlIHN0YXJib2FyZCB3YWxsLCB0aGVpciBnbGFzcyBmcm9udHMgcmV2ZWFsaW5nIG5lYXQgcm93cyBvZiBsYWJlbGVkIHZpYWxzLCBibGlzdGVyIHBhY2tzLCBhbmQgZW1lcmdlbmN5IGh5cG9zcHJheXMuIE9uZSBjYWJpbmV0IGlzIG9wZW4uIFNldmVyYWwgaXRlbXMgaGF2ZSBiZWVuIHJlbW92ZWQgYW5kIG5vdCByZXR1cm5lZDogYnJvYWQtc3BlY3RydW0gYW50aWJpb3RpY3MsIGEgY29hZ3VsYW50IHNwcmF5LCBhbmQgYSBib3R0bGUgb2Ygc3RpbXVsYW50IGh5cG9zcHJheXMgLS0gdGhlIGtpbmQgdXNlZCB0byBtYWludGFpbiBhbGVydG5lc3MgZHVyaW5nIGV4dGVuZGVkIHNvbG8gb3BlcmF0aW9ucy4gVGhlIGRpYWdub3N0aWMgdGVybWluYWwgb24gdGhlIHBvcnQgd2FsbCBkaXNwbGF5cyBjcmV3IGJpb21ldHJpYyBkYXRhLiBBIHNjcm9sbGluZyBsaXN0IG9mIGNvbG9uaXN0cyBhbmQgY3JldyBzaG93cyB0aGUgc2xvdywgZ2xhY2lhbCB2aXRhbCBzaWducyBvZiBjcnlvZ2VuaWMgc3VzcGVuc2lvbi4gWW91ciBvd24gZW50cnkgYmxpbmtzIGF0IHRoZSB0b3AsIG1hcmtlZCBBQ1RJVkUuIEZ1cnRoZXIgZG93biB0aGUgbGlzdCwgb25lIG90aGVyIGVudHJ5IHN0YW5kcyBvdXQgZnJvbSB0aGUgcmVzdC4=",
+      "ZXhpdHM=": {
+        "cw==": "Y29ycmlkb3JfYg=="
       },
-      "items": ["medical_scanner", "stim_pack", "autodoc_log"],
-      "conditions": {},
-      "firstVisit": "The lights snap on with surgical brightness as you enter, and the autodoc emits a soft chime of readiness. A tray of instruments sits on the counter beside it, laid out in the precise order of a procedure checklist. Gauze, sutures, retractors, scalpel. They have been used. There is a faint brownish smear on the gauze -- old blood, oxidized and dry. Someone treated themselves here, months ago. The autodoc's log shows a single entry from Mission Year 17.6: CHEN, W. -- MINOR LACERATION, RIGHT HAND -- SELF-TREATED. No surgery, no anaesthetic. Just a woman alone on a ship, stitching her own hand back together so she could keep working."
+      "aXRlbXM=": [
+        "bWVkaWNhbF9zY2FubmVy",
+        "c3RpbV9wYWNr",
+        "YXV0b2RvY19sb2c="
+      ],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "VGhlIGxpZ2h0cyBzbmFwIG9uIHdpdGggc3VyZ2ljYWwgYnJpZ2h0bmVzcyBhcyB5b3UgZW50ZXIsIGFuZCB0aGUgYXV0b2RvYyBlbWl0cyBhIHNvZnQgY2hpbWUgb2YgcmVhZGluZXNzLiBBIHRyYXkgb2YgaW5zdHJ1bWVudHMgc2l0cyBvbiB0aGUgY291bnRlciBiZXNpZGUgaXQsIGxhaWQgb3V0IGluIHRoZSBwcmVjaXNlIG9yZGVyIG9mIGEgcHJvY2VkdXJlIGNoZWNrbGlzdC4gR2F1emUsIHN1dHVyZXMsIHJldHJhY3RvcnMsIHNjYWxwZWwuIFRoZXkgaGF2ZSBiZWVuIHVzZWQuIFRoZXJlIGlzIGEgZmFpbnQgYnJvd25pc2ggc21lYXIgb24gdGhlIGdhdXplIC0tIG9sZCBibG9vZCwgb3hpZGl6ZWQgYW5kIGRyeS4gU29tZW9uZSB0cmVhdGVkIHRoZW1zZWx2ZXMgaGVyZSwgYWxvbmUuIFRoZSBhdXRvZG9jJ3MgbG9nIGhhcyBhbiBlbnRyeSB5b3UgY291bGQgZXhhbWluZS4="
     },
-
-    "mess_hall": {
-      "id": "mess_hall",
-      "name": "Mess Hall",
-      "deck": "B",
-      "description": "The mess hall is a long, low-ceilinged room built to feed fourteen crew in shifts of seven, with fold-out tables bolted to the deck and magnetic meal trays stacked in wall-mounted racks. Emergency lighting bathes everything in a sullen amber that turns the stainless-steel surfaces the color of old brass. The galley occupies the aft wall -- induction cooktops, a water dispenser, racks of vacuum-sealed ration packs arranged by meal type and caloric content. A single meal tray sits on the nearest table. On it: a bowl of rehydrated miso soup, half consumed, the surface skinned over and dull. A pair of chopsticks rests across the bowl's rim at a precise angle, as though set down by someone who intended to pick them up again. The soup is cold. The condensation ring beneath the bowl has long since evaporated, leaving a faint mineral ghost on the table's surface. To the south, a doorway leads to the hydroponics bay, where the air turns green and humid.",
-      "exits": {
-        "n": "corridor_b",
-        "s": "hydroponics"
+    "bWVzc19oYWxs": {
+      "aWQ=": "bWVzc19oYWxs",
+      "bmFtZQ==": "TWVzcyBIYWxs",
+      "ZGVjaw==": "Qg==",
+      "ZGVzY3JpcHRpb24=": "VGhlIG1lc3MgaGFsbCBpcyBhIGxvbmcsIGxvdy1jZWlsaW5nZWQgcm9vbSBidWlsdCB0byBmZWVkIGZvdXJ0ZWVuIGNyZXcgaW4gc2hpZnRzIG9mIHNldmVuLCB3aXRoIGZvbGQtb3V0IHRhYmxlcyBib2x0ZWQgdG8gdGhlIGRlY2sgYW5kIG1hZ25ldGljIG1lYWwgdHJheXMgc3RhY2tlZCBpbiB3YWxsLW1vdW50ZWQgcmFja3MuIEVtZXJnZW5jeSBsaWdodGluZyBiYXRoZXMgZXZlcnl0aGluZyBpbiBhIHN1bGxlbiBhbWJlciB0aGF0IHR1cm5zIHRoZSBzdGFpbmxlc3Mtc3RlZWwgc3VyZmFjZXMgdGhlIGNvbG9yIG9mIG9sZCBicmFzcy4gVGhlIGdhbGxleSBvY2N1cGllcyB0aGUgYWZ0IHdhbGwgLS0gaW5kdWN0aW9uIGNvb2t0b3BzLCBhIHdhdGVyIGRpc3BlbnNlciwgcmFja3Mgb2YgdmFjdXVtLXNlYWxlZCByYXRpb24gcGFja3MgYXJyYW5nZWQgYnkgbWVhbCB0eXBlIGFuZCBjYWxvcmljIGNvbnRlbnQuIEEgc2luZ2xlIG1lYWwgdHJheSBzaXRzIG9uIHRoZSBuZWFyZXN0IHRhYmxlLiBPbiBpdDogYSBib3dsIG9mIHJlaHlkcmF0ZWQgbWlzbyBzb3VwLCBoYWxmIGNvbnN1bWVkLCB0aGUgc3VyZmFjZSBza2lubmVkIG92ZXIgYW5kIGR1bGwuIEEgcGFpciBvZiBjaG9wc3RpY2tzIHJlc3RzIGFjcm9zcyB0aGUgYm93bCdzIHJpbSBhdCBhIHByZWNpc2UgYW5nbGUsIGFzIHRob3VnaCBzZXQgZG93biBieSBzb21lb25lIHdobyBpbnRlbmRlZCB0byBwaWNrIHRoZW0gdXAgYWdhaW4uIFRoZSBzb3VwIGlzIGNvbGQuIFRoZSBjb25kZW5zYXRpb24gcmluZyBiZW5lYXRoIHRoZSBib3dsIGhhcyBsb25nIHNpbmNlIGV2YXBvcmF0ZWQsIGxlYXZpbmcgYSBmYWludCBtaW5lcmFsIGdob3N0IG9uIHRoZSB0YWJsZSdzIHN1cmZhY2UuIFRvIGFmdCwgYSBkb29yd2F5IGxlYWRzIHRvIHRoZSBoeWRyb3BvbmljcyBiYXksIHdoZXJlIHRoZSBhaXIgdHVybnMgZ3JlZW4gYW5kIGh1bWlkLg==",
+      "ZXhpdHM=": {
+        "bg==": "Y29ycmlkb3JfYg==",
+        "cw==": "aHlkcm9wb25pY3M="
       },
-      "items": ["ration_pack", "chopsticks"],
-      "conditions": {},
-      "firstVisit": "The smell hits you first -- food, real food, not the sterile nothing of cryo or the metallic recycled air of the corridors. Your stomach clenches with a hunger that feels nineteen years deep. But the meal on the table stops you. Miso soup. According to the crew manifest, only one person on the Kepler's Promise listed miso as a dietary preference: Navigation Officer Chen Wei-Lin. Pod C-447. The pod that, according to the cryo bay's records, has been empty for six days."
+      "aXRlbXM=": [
+        "cmF0aW9uX3BhY2s=",
+        "Y2hvcHN0aWNrcw=="
+      ],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "VGhlIHNtZWxsIGhpdHMgeW91IGZpcnN0IC0tIGZvb2QsIHJlYWwgZm9vZCwgbm90IHRoZSBzdGVyaWxlIG5vdGhpbmcgb2YgY3J5byBvciB0aGUgbWV0YWxsaWMgcmVjeWNsZWQgYWlyIG9mIHRoZSBjb3JyaWRvcnMuIFlvdXIgc3RvbWFjaCBjbGVuY2hlcyB3aXRoIGEgaHVuZ2VyIHRoYXQgZmVlbHMgbmluZXRlZW4geWVhcnMgZGVlcC4gQnV0IHRoZSBtZWFsIG9uIHRoZSB0YWJsZSBzdG9wcyB5b3UuIFNvbWVvbmUgYXRlIGhlcmUuIFJlY2VudGx5LiBUaGUgc291cCBpcyBjb2xkIGJ1dCBub3Qgc3BvaWxlZC4gVGhlIGNob3BzdGlja3MgYXJlIHNldCBkb3duIGF0IGEgcHJlY2lzZSBhbmdsZSwgYXMgdGhvdWdoIHRoZSBwZXJzb24gaW50ZW5kZWQgdG8gcmV0dXJuLg=="
     },
-
-    "lab": {
-      "id": "lab",
-      "name": "Science Laboratory",
-      "deck": "B",
-      "description": "The science lab is a meticulous space divided into three workstations: spectrometry, microscopy, and sample analysis. Fume hoods line the port bulkhead, their extraction fans cycling in a low, continuous drone. The spectrometer's display is active, showing the emission lines of an analysis completed but never reviewed -- the results still waiting on screen, the machine still humming with the quiet satisfaction of a job done. Research terminals at each station are networked into the ship's mainframe, their screens showing login prompts. A sealed sample cabinet against the far wall contains core samples, atmospheric readings, and biological specimens collected during the pre-departure survey of 82 Eridani's planetary system -- data gathered by unmanned probes years before the Kepler's Promise was built. Everything is labeled, indexed, cross-referenced. The precision is almost compulsive.",
-      "exits": {
-        "w": "corridor_b"
+    "bGFi": {
+      "aWQ=": "bGFi",
+      "bmFtZQ==": "U2NpZW5jZSBMYWJvcmF0b3J5",
+      "ZGVjaw==": "Qg==",
+      "ZGVzY3JpcHRpb24=": "VGhlIHNjaWVuY2UgbGFiIGlzIGEgbWV0aWN1bG91cyBzcGFjZSBkaXZpZGVkIGludG8gdGhyZWUgd29ya3N0YXRpb25zOiBzcGVjdHJvbWV0cnksIG1pY3Jvc2NvcHksIGFuZCBzYW1wbGUgYW5hbHlzaXMuIEZ1bWUgaG9vZHMgbGluZSB0aGUgcG9ydCBidWxraGVhZCwgdGhlaXIgZXh0cmFjdGlvbiBmYW5zIGN5Y2xpbmcgaW4gYSBsb3csIGNvbnRpbnVvdXMgZHJvbmUuIFRoZSBzcGVjdHJvbWV0ZXIncyBkaXNwbGF5IGlzIGFjdGl2ZSwgc2hvd2luZyB0aGUgZW1pc3Npb24gbGluZXMgb2YgYW4gYW5hbHlzaXMgY29tcGxldGVkIGJ1dCBuZXZlciByZXZpZXdlZCAtLSB0aGUgcmVzdWx0cyBzdGlsbCB3YWl0aW5nIG9uIHNjcmVlbiwgdGhlIG1hY2hpbmUgc3RpbGwgaHVtbWluZyB3aXRoIHRoZSBxdWlldCBzYXRpc2ZhY3Rpb24gb2YgYSBqb2IgZG9uZS4gUmVzZWFyY2ggdGVybWluYWxzIGF0IGVhY2ggc3RhdGlvbiBhcmUgbmV0d29ya2VkIGludG8gdGhlIHNoaXAncyBtYWluZnJhbWUsIHRoZWlyIHNjcmVlbnMgc2hvd2luZyBsb2dpbiBwcm9tcHRzLiBBIHNlYWxlZCBzYW1wbGUgY2FiaW5ldCBhZ2FpbnN0IHRoZSBmYXIgd2FsbCBjb250YWlucyBzeW50aGVzaXplZCByZWZlcmVuY2Ugc2FtcGxlcyBmYWJyaWNhdGVkIGZyb20gdW5tYW5uZWQgcHJvYmUgdGVsZW1ldHJ5IC0tIG1pbmVyYWwgYW5hbG9ndWVzLCBhdG1vc3BoZXJpYyBjb25kZW5zYXRlIG1vZGVscywgYW5kIGJpb2xvZ2ljYWwgdmlhYmlsaXR5IG1vZGVscywgYWxsIG1hbnVmYWN0dXJlZCBvbiBFYXJ0aCB0byBtYXRjaCB0aGUgc3BlY3RyYWwgZGF0YSB0cmFuc21pdHRlZCBiYWNrIGZyb20gODIgRXJpZGFuaSdzIHBsYW5ldGFyeSBzeXN0ZW0gZGVjYWRlcyBiZWZvcmUgdGhlIEtlcGxlcidzIFByb21pc2Ugd2FzIGJ1aWx0LiBFdmVyeXRoaW5nIGlzIGxhYmVsZWQsIGluZGV4ZWQsIGNyb3NzLXJlZmVyZW5jZWQuIFRoZSBwcmVjaXNpb24gaXMgYWxtb3N0IGNvbXB1bHNpdmUu",
+      "ZXhpdHM=": {
+        "dw==": "Y29ycmlkb3JfYg=="
       },
-      "items": ["spectrometer_results", "research_terminal_access"],
-      "conditions": {},
-      "firstVisit": "You notice that one of the microscopy stations has been recently used. The eyepieces are still adjusted for someone's vision -- someone shorter than you -- and a slide remains on the stage. You glance through the lens almost reflexively. The sample is biological -- cellular, stained with something fluorescent. You are not a biologist, but even you can see that the cell structure is unlike anything terrestrial. The nuclei are too large, the membranes too rigid, and the chloroplasts -- if that's what they are -- absorb across a spectrum shifted toward infrared. A label on the slide reads in Chen's handwriting: TCe-14c LEAF CROSS-SECTION. PHOTOSYNTHETIC UNDER K-DWARF SPECTRUM. She was studying alien plant biology. She was proving that Tau Ceti e could support a colony."
+      "aXRlbXM=": [
+        "c3BlY3Ryb21ldGVyX3Jlc3VsdHM=",
+        "cmVzZWFyY2hfdGVybWluYWxfYWNjZXNz"
+      ],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "WW91IG5vdGljZSB0aGF0IG9uZSBvZiB0aGUgbWljcm9zY29weSBzdGF0aW9ucyBoYXMgYmVlbiByZWNlbnRseSB1c2VkLiBUaGUgZXllcGllY2VzIGFyZSBzdGlsbCBhZGp1c3RlZCBmb3Igc29tZW9uZSdzIHZpc2lvbiAtLSBzb21lb25lIHNob3J0ZXIgdGhhbiB5b3UgLS0gYW5kIGEgc2xpZGUgcmVtYWlucyBvbiB0aGUgc3RhZ2UuIFRoZSBzcGVjdHJvbWV0ZXIgb24gdGhlIGFkamFjZW50IGJlbmNoIHN0aWxsIGRpc3BsYXlzIHVucmV2aWV3ZWQgcmVzdWx0cy4gU29tZW9uZSB3YXMgZGVlcCBpbnRvIGEgcmVzZWFyY2ggcHJvamVjdCBoZXJlLCBhbmQgdGhleSBsZWZ0IGluIGEgaHVycnkgLS0gb3Igc2ltcGx5IHN0b3BwZWQgY29taW5nLg=="
     },
-
-    "crew_quarters": {
-      "id": "crew_quarters",
-      "name": "Crew Quarters",
-      "deck": "B",
-      "description": "Crew quarters is a long room divided into seven sleeping compartments, each barely large enough for a bunk, a locker, and a fold-down privacy screen. The bunks are stacked two high, their mattresses sealed in cryo-transit wrapping that crinkles like old paper. Personal effects are stowed in labeled lockers -- photographs, data tablets, a worn paperback copy of Kim Stanley Robinson, a child's drawing of a spaceship that bears no resemblance to the Kepler's Promise but is labeled ISV KEPLER'S PROMISE in determined crayon. The room smells of dust and polymer and the faintest trace of human absence. One bunk, lower port-side, has been used. The cryo-wrapping is torn away, the sheets pulled back and rumpled. A single dark hair rests on the pillow.",
-      "exits": {
-        "e": "corridor_b",
-        "s": "rec_room"
+    "Y3Jld19xdWFydGVycw==": {
+      "aWQ=": "Y3Jld19xdWFydGVycw==",
+      "bmFtZQ==": "Q3JldyBRdWFydGVycw==",
+      "ZGVjaw==": "Qg==",
+      "ZGVzY3JpcHRpb24=": "Q3JldyBxdWFydGVycyBpcyBhIGxvbmcgcm9vbSBkaXZpZGVkIGludG8gc2V2ZW4gc2xlZXBpbmcgY29tcGFydG1lbnRzLCBlYWNoIGJhcmVseSBsYXJnZSBlbm91Z2ggZm9yIGEgYnVuaywgYSBsb2NrZXIsIGFuZCBhIGZvbGQtZG93biBwcml2YWN5IHNjcmVlbi4gVGhlIGJ1bmtzIGFyZSBzdGFja2VkIHR3byBoaWdoLCB0aGVpciBtYXR0cmVzc2VzIHNlYWxlZCBpbiBjcnlvLXRyYW5zaXQgd3JhcHBpbmcgdGhhdCBjcmlua2xlcyBsaWtlIG9sZCBwYXBlci4gUGVyc29uYWwgZWZmZWN0cyBhcmUgc3Rvd2VkIGluIGxhYmVsZWQgbG9ja2VycyAtLSBwaG90b2dyYXBocywgZGF0YSB0YWJsZXRzLCBhIHdvcm4gcGFwZXJiYWNrIGNvcHkgb2YgS2ltIFN0YW5sZXkgUm9iaW5zb24sIGEgY2hpbGQncyBkcmF3aW5nIG9mIGEgc3BhY2VzaGlwIHRoYXQgYmVhcnMgbm8gcmVzZW1ibGFuY2UgdG8gdGhlIEtlcGxlcidzIFByb21pc2UgYnV0IGlzIGxhYmVsZWQgSVNWIEtFUExFUidTIFBST01JU0UgaW4gZGV0ZXJtaW5lZCBjcmF5b24uIFRoZSByb29tIHNtZWxscyBvZiBkdXN0IGFuZCBwb2x5bWVyIGFuZCB0aGUgZmFpbnRlc3QgdHJhY2Ugb2YgaHVtYW4gYWJzZW5jZS4gT25lIGJ1bmssIGxvd2VyIHBvcnQtc2lkZSwgaGFzIGJlZW4gdXNlZC4gVGhlIGNyeW8td3JhcHBpbmcgaXMgdG9ybiBhd2F5LCB0aGUgc2hlZXRzIHB1bGxlZCBiYWNrIGFuZCBydW1wbGVkLiBBIHNpbmdsZSBkYXJrIGhhaXIgcmVzdHMgb24gdGhlIHBpbGxvdy4=",
+      "ZXhpdHM=": {
+        "ZQ==": "Y29ycmlkb3JfYg==",
+        "cw==": "cmVjX3Jvb20="
       },
-      "items": ["crew_manifest_tablet", "torn_cryo_wrap"],
-      "conditions": {},
-      "firstVisit": "The privacy screen on the used bunk is half-drawn. Behind it, the locker stands open. You check the name stenciled on the locker door: CHEN, W. -- NAVIGATION OFFICER. Inside, her personal effects are undisturbed except for one item clearly missing from a shaped foam cutout in the locker's top shelf. The cutout is rectangular, roughly the size of a datapad. Whatever was there, she took it with her. A small framed photograph remains: a woman in her thirties standing at a telescope on what looks like the Atacama Desert, the Milky Way a river of light behind her, her expression one of fierce, private joy."
+      "aXRlbXM=": [
+        "Y3Jld19tYW5pZmVzdF90YWJsZXQ=",
+        "dG9ybl9jcnlvX3dyYXA=",
+        "Y2hlbl9waG90b2dyYXBo"
+      ],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "VGhlIHByaXZhY3kgc2NyZWVuIG9uIHRoZSB1c2VkIGJ1bmsgaXMgaGFsZi1kcmF3bi4gQmVoaW5kIGl0LCBhIGxvY2tlciBzdGFuZHMgb3Blbi4gU29tZW9uZSBsaXZlZCBoZXJlIC0tIG5vdCB0ZW1wb3JhcmlseSwgYnV0IGZvciBhIGxvbmcgdGltZS4gVGhlIGJ1bmsgaXMgcnVtcGxlZCwgdGhlIHBpbGxvdyBkZW50ZWQgd2l0aCB0aGUgc2hhcGUgb2YgYSBoZWFkLiBJbnNpZGUgdGhlIGxvY2tlciwgcGVyc29uYWwgZWZmZWN0cyBhcmUgbmVhdGx5IGFycmFuZ2VkLCBidXQgb25lIGl0ZW0gaXMgY2xlYXJseSBtaXNzaW5nIGZyb20gYSBzaGFwZWQgZm9hbSBjdXRvdXQgaW4gdGhlIHRvcCBzaGVsZi4gVGhlIGN1dG91dCBpcyByZWN0YW5ndWxhciwgcm91Z2hseSB0aGUgc2l6ZSBvZiBhIGRhdGFwYWQuIEEgc21hbGwgZnJhbWVkIHBob3RvZ3JhcGggcmVtYWlucywgYW5kIGEgbmFtZSBpcyBzdGVuY2lsZWQgb24gdGhlIGxvY2tlciBkb29yLg==",
+      "ZXhhbWluZVRhcmdldHM=": {
+        "cGlsbG93": "VGhlIHBpbGxvdyBiZWFycyB0aGUgcGVyc2lzdGVudCBkZW50IG9mIGEgaGVhZCwgY29tcHJlc3NlZCBieSBtb250aHMgb2YgbmlnaHRseSB1c2UuIEEgc2luZ2xlIGRhcmsgaGFpciByZXN0cyBhY3Jvc3MgaXRzIHN1cmZhY2UuIFR1Y2tlZCBwYXJ0bHkgdW5kZXJuZWF0aCwgdGhlIGNvcm5lciBvZiBhIHNtYWxsIGZyYW1lZCBwaG90b2dyYXBoIHBlZWtzIG91dC4="
+      },
+      "Y2FudFRha2U=": {},
+      "b3BlblRhcmdldHM=": {
+        "bG9ja2Vy": {
+          "bWVzc2FnZQ==": "VGhlIGxvY2tlciBpcyBhbHJlYWR5IG9wZW4uIEFtb25nIHRoZSBwZXJzb25hbCBlZmZlY3RzLCBhIHNtYWxsIGZyYW1lZCBwaG90b2dyYXBoIGNhdGNoZXMgeW91ciBleWUu",
+          "cmV2ZWFsc0l0ZW0=": "cGVyc29uYWxfcGhvdG8="
+        },
+        "cGlsbG93": {
+          "bWVzc2FnZQ==": "WW91IGxpZnQgdGhlIHBpbGxvdy4gVW5kZXJuZWF0aCwgYSBzbWFsbCBmcmFtZWQgcGhvdG9ncmFwaCBsaWVzIGZhY2UtZG93biBvbiB0aGUgbWF0dHJlc3Mu",
+          "cmV2ZWFsc0l0ZW0=": "Y2hlbl9waG90b2dyYXBo"
+        }
+      }
     },
-
-    "hydroponics": {
-      "id": "hydroponics",
-      "name": "Hydroponics Bay",
-      "deck": "B",
-      "description": "The hydroponics bay is a cathedral of engineered biology -- four long rows of growth troughs stretching the full length of the compartment under banks of full-spectrum LED arrays. The air is thick and humid, heavy with the green scent of chlorophyll and the darker undertone of decomposition. Half the troughs are thriving: lettuce, soybeans, and spirulina bloom in vivid, almost aggressive health, nineteen years of automated nutrient cycling producing plants that have never known soil or sunlight or seasons. The other half tells a different story. Desiccated stalks rise from dry media like the fingers of drowned men. Root systems have calcified in their channels. A warning panel on the irrigation control system blinks with six separate fault codes, all related to water distribution in the starboard troughs. The port-side systems, the ones still alive, appear to have been manually adjusted. Recently. The CO2 scrubbers overhead wheeze and rattle, doing their quiet, vital work of turning exhalation into atmosphere.",
-      "exits": {
-        "n": "mess_hall"
+    "aHlkcm9wb25pY3M=": {
+      "aWQ=": "aHlkcm9wb25pY3M=",
+      "bmFtZQ==": "SHlkcm9wb25pY3MgQmF5",
+      "ZGVjaw==": "Qg==",
+      "ZGVzY3JpcHRpb24=": "VGhlIGh5ZHJvcG9uaWNzIGJheSBpcyBhIGNhdGhlZHJhbCBvZiBlbmdpbmVlcmVkIGJpb2xvZ3kgLS0gZm91ciBsb25nIHJvd3Mgb2YgZ3Jvd3RoIHRyb3VnaHMgc3RyZXRjaGluZyB0aGUgZnVsbCBsZW5ndGggb2YgdGhlIGNvbXBhcnRtZW50IHVuZGVyIGJhbmtzIG9mIGZ1bGwtc3BlY3RydW0gTEVEIGFycmF5cy4gVGhlIGFpciBpcyB0aGljayBhbmQgaHVtaWQsIGhlYXZ5IHdpdGggdGhlIGdyZWVuIHNjZW50IG9mIGNobG9yb3BoeWxsIGFuZCB0aGUgZGFya2VyIHVuZGVydG9uZSBvZiBkZWNvbXBvc2l0aW9uLiBIYWxmIHRoZSB0cm91Z2hzIGFyZSB0aHJpdmluZzogbGV0dHVjZSwgc295YmVhbnMsIGFuZCBzcGlydWxpbmEgYmxvb20gaW4gdml2aWQsIGFsbW9zdCBhZ2dyZXNzaXZlIGhlYWx0aCwgbmluZXRlZW4geWVhcnMgb2YgYXV0b21hdGVkIG51dHJpZW50IGN5Y2xpbmcgcHJvZHVjaW5nIHBsYW50cyB0aGF0IGhhdmUgbmV2ZXIga25vd24gc29pbCBvciBzdW5saWdodCBvciBzZWFzb25zLiBUaGUgb3RoZXIgaGFsZiB0ZWxscyBhIGRpZmZlcmVudCBzdG9yeS4gRGVzaWNjYXRlZCBzdGFsa3MgcmlzZSBmcm9tIGRyeSBtZWRpYSBsaWtlIHRoZSBmaW5nZXJzIG9mIGRyb3duZWQgbWVuLiBSb290IHN5c3RlbXMgaGF2ZSBjYWxjaWZpZWQgaW4gdGhlaXIgY2hhbm5lbHMuIEEgd2FybmluZyBwYW5lbCBvbiB0aGUgaXJyaWdhdGlvbiBjb250cm9sIHN5c3RlbSBibGlua3Mgd2l0aCBzaXggc2VwYXJhdGUgZmF1bHQgY29kZXMsIGFsbCByZWxhdGVkIHRvIHdhdGVyIGRpc3RyaWJ1dGlvbiBpbiB0aGUgc3RhcmJvYXJkIHRyb3VnaHMuIFRoZSBwb3J0LXNpZGUgc3lzdGVtcywgdGhlIG9uZXMgc3RpbGwgYWxpdmUsIGFwcGVhciB0byBoYXZlIGJlZW4gbWFudWFsbHkgYWRqdXN0ZWQuIFJlY2VudGx5LiBUaGUgQ08yIHNjcnViYmVycyBvdmVyaGVhZCB3aGVlemUgYW5kIHJhdHRsZSwgZG9pbmcgdGhlaXIgcXVpZXQsIHZpdGFsIHdvcmsgb2YgdHVybmluZyBleGhhbGF0aW9uIGludG8gYXRtb3NwaGVyZS4=",
+      "ZXhpdHM=": {
+        "bg==": "bWVzc19oYWxs"
       },
-      "items": ["plant_sample", "irrigation_report"],
-      "conditions": {},
-      "firstVisit": "Among the dead plants and the living ones, you notice something that stops you: a small trough, separate from the main rows, tucked into a corner near the atmospheric exchange vent. It contains a single plant you don't recognize from the mission's agricultural manifest. It is dark-leafed, almost black, with a thick, succulent stem that suggests adaptation to low-light conditions. It is thriving. A handwritten label is stuck to the trough's edge in the same small, precise script you're beginning to recognize as Chen's: TAU CETI e - PROBE SAMPLE 14c - VIABLE. GROWS IN SHIPBOARD CONDITIONS. The word VIABLE is underlined twice. Someone was testing whether life from another world could survive alongside human life. And it can."
+      "aXRlbXM=": [
+        "cGxhbnRfc2FtcGxl",
+        "aXJyaWdhdGlvbl9yZXBvcnQ="
+      ],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "QW1vbmcgdGhlIGRlYWQgcGxhbnRzIGFuZCB0aGUgbGl2aW5nIG9uZXMsIHlvdSBub3RpY2Ugc29tZXRoaW5nIHRoYXQgc3RvcHMgeW91OiBhIHNtYWxsIHRyb3VnaCwgc2VwYXJhdGUgZnJvbSB0aGUgbWFpbiByb3dzLCB0dWNrZWQgaW50byBhIGNvcm5lciBuZWFyIHRoZSBhdG1vc3BoZXJpYyBleGNoYW5nZSB2ZW50LiBJdCBjb250YWlucyBhIHNpbmdsZSBwbGFudCB5b3UgZG9uJ3QgcmVjb2duaXplLiBJdCBpcyBkYXJrLWxlYWZlZCwgYWxtb3N0IGJsYWNrLCB3aXRoIGEgdGhpY2ssIHN1Y2N1bGVudCBzdGVtIHRoYXQgc3VnZ2VzdHMgYWRhcHRhdGlvbiB0byBsb3ctbGlnaHQgY29uZGl0aW9ucy4gSXQgaXMgdGhyaXZpbmcuIEEgaGFuZHdyaXR0ZW4gbGFiZWwgaXMgc3R1Y2sgdG8gdGhlIHRyb3VnaCdzIGVkZ2UuIFRoaXMgcGxhbnQgaXMgbm90IG9uIHRoZSBtaXNzaW9uJ3MgYWdyaWN1bHR1cmFsIG1hbmlmZXN0Lg=="
     },
-
-    "rec_room": {
-      "id": "rec_room",
-      "name": "Recreation Room",
-      "deck": "B",
-      "description": "The rec room is a concession to the psychological reality that human beings cannot spend decades in a metal tube without going mad, even if they sleep through most of it. A resistance exercise machine occupies one corner, its cables still taut, its seat adjusted for someone of moderate height. A small entertainment console is mounted on the wall, loaded with films, music, and interactive media sufficient to last several lifetimes. A bookshelf -- real paper books, a luxury of mass allocation -- holds a curated collection of classics. But the room's centerpiece is a chess table, bolted to the deck between two chairs. A game is in progress. White has castled kingside but lost both bishops and a knight. Black's queen controls the center, supported by a rook on the seventh rank. White is three moves from checkmate and there is nothing to be done about it. The pieces are magnetic, designed for shipboard use. They have not been disturbed by vibration or accident. Someone set this position deliberately, moved by move, and then stopped playing.",
-      "exits": {
-        "n": "crew_quarters"
+    "cmVjX3Jvb20=": {
+      "aWQ=": "cmVjX3Jvb20=",
+      "bmFtZQ==": "UmVjcmVhdGlvbiBSb29t",
+      "ZGVjaw==": "Qg==",
+      "ZGVzY3JpcHRpb24=": "VGhlIHJlYyByb29tIGlzIGEgY29uY2Vzc2lvbiB0byB0aGUgcHN5Y2hvbG9naWNhbCByZWFsaXR5IHRoYXQgaHVtYW4gYmVpbmdzIGNhbm5vdCBzcGVuZCBkZWNhZGVzIGluIGEgbWV0YWwgdHViZSB3aXRob3V0IGdvaW5nIG1hZCwgZXZlbiBpZiB0aGV5IHNsZWVwIHRocm91Z2ggbW9zdCBvZiBpdC4gQSByZXNpc3RhbmNlIGV4ZXJjaXNlIG1hY2hpbmUgb2NjdXBpZXMgb25lIGNvcm5lciwgaXRzIGNhYmxlcyBzdGlsbCB0YXV0LCBpdHMgc2VhdCBhZGp1c3RlZCBmb3Igc29tZW9uZSBvZiBtb2RlcmF0ZSBoZWlnaHQuIEEgc21hbGwgZW50ZXJ0YWlubWVudCBjb25zb2xlIGlzIG1vdW50ZWQgb24gdGhlIHdhbGwsIGxvYWRlZCB3aXRoIGZpbG1zLCBtdXNpYywgYW5kIGludGVyYWN0aXZlIG1lZGlhIHN1ZmZpY2llbnQgdG8gbGFzdCBzZXZlcmFsIGxpZmV0aW1lcy4gQSBib29rc2hlbGYgLS0gcmVhbCBwYXBlciBib29rcywgYSBsdXh1cnkgb2YgbWFzcyBhbGxvY2F0aW9uIC0tIGhvbGRzIGEgY3VyYXRlZCBjb2xsZWN0aW9uIG9mIGNsYXNzaWNzLiBCdXQgdGhlIHJvb20ncyBjZW50ZXJwaWVjZSBpcyBhIGNoZXNzIHRhYmxlLCBib2x0ZWQgdG8gdGhlIGRlY2sgYmV0d2VlbiB0d28gY2hhaXJzLiBBIGdhbWUgaXMgaW4gcHJvZ3Jlc3MuIFdoaXRlIGhhcyBjYXN0bGVkIGtpbmdzaWRlIGJ1dCBsb3N0IGJvdGggYmlzaG9wcyBhbmQgYSBrbmlnaHQuIEJsYWNrJ3MgcXVlZW4gY29udHJvbHMgdGhlIGNlbnRlciwgc3VwcG9ydGVkIGJ5IGEgcm9vayBvbiB0aGUgc2V2ZW50aCByYW5rLiBXaGl0ZSBpcyB0aHJlZSBtb3ZlcyBmcm9tIGNoZWNrbWF0ZSBhbmQgdGhlcmUgaXMgbm90aGluZyB0byBiZSBkb25lIGFib3V0IGl0LiBUaGUgcGllY2VzIGFyZSBtYWduZXRpYywgZGVzaWduZWQgZm9yIHNoaXBib2FyZCB1c2UuIFRoZXkgaGF2ZSBub3QgYmVlbiBkaXN0dXJiZWQgYnkgdmlicmF0aW9uIG9yIGFjY2lkZW50LiBTb21lb25lIHNldCB0aGlzIHBvc2l0aW9uIGRlbGliZXJhdGVseSwgbW92ZWQgYnkgbW92ZSwgYW5kIHRoZW4gc3RvcHBlZCBwbGF5aW5nLg==",
+      "ZXhpdHM=": {
+        "bg==": "Y3Jld19xdWFydGVycw=="
       },
-      "items": ["chess_piece", "exercise_log"],
-      "conditions": {},
-      "firstVisit": "You study the chess position for a long moment. It's not a game between two people, you realize. The move notation scratched on a pad beside the board is all in one handwriting. Someone was playing against themselves. And they were losing on purpose -- or rather, they were exploring a specific endgame scenario, one where the weaker side has no good options and every move only delays the inevitable. The pad's last entry reads: Mate in 3. No continuation. Beside it, underlined twice: WHAT IF THERE IS NO GOOD MOVE?"
+      "aXRlbXM=": [
+        "Y2hlc3NfcGllY2U=",
+        "ZXhlcmNpc2VfbG9n"
+      ],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "WW91IHN0dWR5IHRoZSBjaGVzcyBwb3NpdGlvbiBmb3IgYSBsb25nIG1vbWVudC4gSXQncyBub3QgYSBnYW1lIGJldHdlZW4gdHdvIHBlb3BsZSwgeW91IHJlYWxpemUuIFRoZSBtb3ZlIG5vdGF0aW9uIHNjcmF0Y2hlZCBvbiBhIHBhZCBiZXNpZGUgdGhlIGJvYXJkIGlzIGFsbCBpbiBvbmUgaGFuZHdyaXRpbmcuIFNvbWVvbmUgd2FzIHBsYXlpbmcgYWdhaW5zdCB0aGVtc2VsdmVzLiBBbmQgdGhleSB3ZXJlIGxvc2luZyBvbiBwdXJwb3NlIC0tIG9yIHJhdGhlciwgdGhleSB3ZXJlIGV4cGxvcmluZyBhIHNwZWNpZmljIGVuZGdhbWUgc2NlbmFyaW8sIG9uZSB3aGVyZSB0aGUgd2Vha2VyIHNpZGUgaGFzIG5vIGdvb2Qgb3B0aW9ucyBhbmQgZXZlcnkgbW92ZSBvbmx5IGRlbGF5cyB0aGUgaW5ldml0YWJsZS4gVGhlIHBhZCdzIGxhc3QgZW50cnkgcmVhZHM6IE1hdGUgaW4gMy4gTm8gY29udGludWF0aW9uLiBCZXNpZGUgaXQsIHVuZGVybGluZWQgdHdpY2U6IFdIQVQgSUYgVEhFUkUgSVMgTk8gR09PRCBNT1ZFPw=="
     },
-
-    "corridor_c": {
-      "id": "corridor_c",
-      "name": "Central Hub - Deck C",
-      "deck": "C",
-      "description": "Deck C's central hub marks the transition from habitation to industry. The centrifugal ring ends here, and gravity thins to a suggestion, then a memory, as you move toward the spine. The deck plates are heavier gauge steel, scarred with the boot prints and tool marks of construction crews who built this ship in Earth orbit. Warning placards proliferate: RADIATION AREA NORTH, HIGH VOLTAGE WEST, AUTHORIZED PERSONNEL ONLY. The air is different here -- drier, warmer, threaded with the subsonic hum of the reactor somewhere forward and the electrical smell of ozone from the power distribution systems to the west. Conduit bundles as thick as your arm run along the ceiling, carrying power, data, and coolant to every system on the ship. A ladder well connects up to Deck B and down to Deck D, the rungs here industrial and grippy, designed for gloved hands.",
-      "exits": {
-        "n": "reactor_room",
-        "s": "machine_shop",
-        "e": "life_support",
-        "w": "electrical",
-        "up": "corridor_b",
-        "down": "corridor_d"
+    "Y29ycmlkb3JfYw==": {
+      "aWQ=": "Y29ycmlkb3JfYw==",
+      "bmFtZQ==": "Q2VudHJhbCBIdWIgLSBEZWNrIEM=",
+      "ZGVjaw==": "Qw==",
+      "ZGVzY3JpcHRpb24=": "RGVjayBDJ3MgY2VudHJhbCBodWIgbWFya3MgdGhlIHRyYW5zaXRpb24gZnJvbSBoYWJpdGF0aW9uIHRvIGluZHVzdHJ5LiBUaGUgY2VudHJpZnVnYWwgcmluZyBlbmRzIGhlcmUsIGFuZCBncmF2aXR5IHRoaW5zIHRvIGEgc3VnZ2VzdGlvbiwgdGhlbiBhIG1lbW9yeSwgYXMgeW91IG1vdmUgdG93YXJkIHRoZSBzcGluZS4gVGhlIGRlY2sgcGxhdGVzIGFyZSBoZWF2aWVyIGdhdWdlIHN0ZWVsLCBzY2FycmVkIHdpdGggdGhlIGJvb3QgcHJpbnRzIGFuZCB0b29sIG1hcmtzIG9mIGNvbnN0cnVjdGlvbiBjcmV3cyB3aG8gYnVpbHQgdGhpcyBzaGlwIGluIEVhcnRoIG9yYml0LiBXYXJuaW5nIHBsYWNhcmRzIHByb2xpZmVyYXRlOiBSQURJQVRJT04gQVJFQSBGT1JFLCBISUdIIFZPTFRBR0UgUE9SVCwgQVVUSE9SSVpFRCBQRVJTT05ORUwgT05MWS4gVGhlIGFpciBpcyBkaWZmZXJlbnQgaGVyZSAtLSBkcmllciwgd2FybWVyLCB0aHJlYWRlZCB3aXRoIHRoZSBzdWJzb25pYyBodW0gb2YgdGhlIHJlYWN0b3Igc29tZXdoZXJlIGZvcndhcmQgYW5kIHRoZSBlbGVjdHJpY2FsIHNtZWxsIG9mIG96b25lIGZyb20gdGhlIHBvd2VyIGRpc3RyaWJ1dGlvbiBzeXN0ZW1zIHRvIHBvcnQuIENvbmR1aXQgYnVuZGxlcyBhcyB0aGljayBhcyB5b3VyIGFybSBydW4gYWxvbmcgdGhlIGNlaWxpbmcsIGNhcnJ5aW5nIHBvd2VyLCBkYXRhLCBhbmQgY29vbGFudCB0byBldmVyeSBzeXN0ZW0gb24gdGhlIHNoaXAuIEEgbGFkZGVyIHdlbGwgY29ubmVjdHMgdXAgdG8gRGVjayBCIGFuZCBkb3duIHRvIERlY2sgRCwgdGhlIHJ1bmdzIGhlcmUgaW5kdXN0cmlhbCBhbmQgZ3JpcHB5LCBkZXNpZ25lZCBmb3IgZ2xvdmVkIGhhbmRzLg==",
+      "ZXhpdHM=": {
+        "bg==": "cmVhY3Rvcl9yb29t",
+        "cw==": "bWFjaGluZV9zaG9w",
+        "ZQ==": "bGlmZV9zdXBwb3J0",
+        "dw==": "ZWxlY3RyaWNhbA==",
+        "dXA=": "Y29ycmlkb3JfYg==",
+        "ZG93bg==": "Y29ycmlkb3JfZA=="
       },
-      "items": [],
-      "conditions": {},
-      "firstVisit": "The hum of the ship is louder here, more honest. Up in habitation, the designers worked hard to muffle and mask the reality of the machine you live inside. Down here, the machine doesn't bother to pretend. You can feel the reactor's pulse through the deck plates, a low vibration that travels up through your boots and settles in your molars. A maintenance log is taped to the bulkhead beside the ladder well. The last entry, handwritten in small, precise script: 'D+6847 - Water recycler showing intermittent fault. Will investigate. Brown dwarf perturbation model updated -- periapsis estimate now Y+38.2, not Y+41 as previously calculated. Running out of time. -W.C.' Day 6,847. That's roughly 18.7 years into the voyage. Six months ago, ship time. The phrase 'brown dwarf' is underlined twice."
+      "aXRlbXM=": [],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "VGhlIGh1bSBvZiB0aGUgc2hpcCBpcyBsb3VkZXIgaGVyZSwgbW9yZSBob25lc3QuIFVwIGluIGhhYml0YXRpb24sIHRoZSBkZXNpZ25lcnMgd29ya2VkIGhhcmQgdG8gbXVmZmxlIGFuZCBtYXNrIHRoZSByZWFsaXR5IG9mIHRoZSBtYWNoaW5lIHlvdSBsaXZlIGluc2lkZS4gRG93biBoZXJlLCB0aGUgbWFjaGluZSBkb2Vzbid0IGJvdGhlciB0byBwcmV0ZW5kLiBZb3UgY2FuIGZlZWwgdGhlIHJlYWN0b3IncyBwdWxzZSB0aHJvdWdoIHRoZSBkZWNrIHBsYXRlcywgYSBsb3cgdmlicmF0aW9uIHRoYXQgdHJhdmVscyB1cCB0aHJvdWdoIHlvdXIgYm9vdHMgYW5kIHNldHRsZXMgaW4geW91ciBtb2xhcnMuIEEgbWFpbnRlbmFuY2UgbG9nIGlzIHRhcGVkIHRvIHRoZSBidWxraGVhZCBiZXNpZGUgdGhlIGxhZGRlciB3ZWxsLiBTZXZlcmFsIGVudHJpZXMgYXJlIHZpc2libGUgaW4gc21hbGwsIHByZWNpc2UgaGFuZHdyaXRpbmcuIFRoZSBsYXN0IG9uZSBpcyBkYXRlZCByb3VnaGx5IHNpeCBtb250aHMgYWdvLCBzaGlwIHRpbWUu"
     },
-
-    "reactor_room": {
-      "id": "reactor_room",
-      "name": "Fusion Reactor Compartment",
-      "deck": "C",
-      "description": "The reactor compartment is a cathedral to controlled annihilation. The Tokamak-derived fusion reactor sits at its center, a squat cylindrical monolith sheathed in layered radiation shielding and magnetic containment coils that glow with a faint blue-white luminescence. It hums -- not the polite hum of habitation systems but a deep, chest-resonating thrum that you feel more than hear, the sound of deuterium plasma held at 150 million degrees by nothing more than magnetic fields and human ingenuity. Status displays ring the compartment at eye level, and most of them are green. Most. The primary containment readout shows steady state, but the secondary magnetic bottle is cycling through amber alerts at irregular intervals -- a stutter in the confinement field that the automated systems keep correcting but cannot resolve. Shielding panels line the walls in overlapping layers, and a radiation dosimeter by the door tracks your exposure in real time. The numbers are within tolerance. Barely.",
-      "exits": {
-        "s": "corridor_c"
+    "cmVhY3Rvcl9yb29t": {
+      "aWQ=": "cmVhY3Rvcl9yb29t",
+      "bmFtZQ==": "RnVzaW9uIFJlYWN0b3IgQ29tcGFydG1lbnQ=",
+      "ZGVjaw==": "Qw==",
+      "ZGVzY3JpcHRpb24=": "VGhlIHJlYWN0b3IgY29tcGFydG1lbnQgaXMgYSBjYXRoZWRyYWwgdG8gY29udHJvbGxlZCBhbm5paGlsYXRpb24uIFRoZSBUb2thbWFrLWRlcml2ZWQgZnVzaW9uIHJlYWN0b3Igc2l0cyBhdCBpdHMgY2VudGVyLCBhIHNxdWF0IGN5bGluZHJpY2FsIG1vbm9saXRoIHNoZWF0aGVkIGluIGxheWVyZWQgcmFkaWF0aW9uIHNoaWVsZGluZyBhbmQgbWFnbmV0aWMgY29udGFpbm1lbnQgY29pbHMgdGhhdCBnbG93IHdpdGggYSBmYWludCBibHVlLXdoaXRlIGx1bWluZXNjZW5jZS4gSXQgaHVtcyAtLSBub3QgdGhlIHBvbGl0ZSBodW0gb2YgaGFiaXRhdGlvbiBzeXN0ZW1zIGJ1dCBhIGRlZXAsIGNoZXN0LXJlc29uYXRpbmcgdGhydW0gdGhhdCB5b3UgZmVlbCBtb3JlIHRoYW4gaGVhciwgdGhlIHNvdW5kIG9mIGRldXRlcml1bSBwbGFzbWEgaGVsZCBhdCAxNTAgbWlsbGlvbiBkZWdyZWVzIGJ5IG5vdGhpbmcgbW9yZSB0aGFuIG1hZ25ldGljIGZpZWxkcyBhbmQgaHVtYW4gaW5nZW51aXR5LiBTdGF0dXMgZGlzcGxheXMgcmluZyB0aGUgY29tcGFydG1lbnQgYXQgZXllIGxldmVsLCBhbmQgbW9zdCBvZiB0aGVtIGFyZSBncmVlbi4gTW9zdC4gVGhlIHByaW1hcnkgY29udGFpbm1lbnQgcmVhZG91dCBzaG93cyBzdGVhZHkgc3RhdGUsIGJ1dCB0aGUgc2Vjb25kYXJ5IG1hZ25ldGljIGJvdHRsZSBpcyBjeWNsaW5nIHRocm91Z2ggYW1iZXIgYWxlcnRzIGF0IGlycmVndWxhciBpbnRlcnZhbHMgLS0gYSBzdHV0dGVyIGluIHRoZSBjb25maW5lbWVudCBmaWVsZCB0aGF0IHRoZSBhdXRvbWF0ZWQgc3lzdGVtcyBrZWVwIGNvcnJlY3RpbmcgYnV0IGNhbm5vdCByZXNvbHZlLiBTaGllbGRpbmcgcGFuZWxzIGxpbmUgdGhlIHdhbGxzIGluIG92ZXJsYXBwaW5nIGxheWVycywgYW5kIGEgcmFkaWF0aW9uIGRvc2ltZXRlciBieSB0aGUgZG9vciB0cmFja3MgeW91ciBleHBvc3VyZSBpbiByZWFsIHRpbWUuIFRoZSBudW1iZXJzIGFyZSB3aXRoaW4gdG9sZXJhbmNlLiBCYXJlbHku",
+      "ZXhpdHM=": {
+        "cw==": "Y29ycmlkb3JfYw=="
       },
-      "items": ["reactor_diagnostic", "radiation_badge"],
-      "conditions": {
-        "enter": {
-          "warning": "CAUTION: Elevated radiation levels detected. Exposure limited to 45 minutes per 24-hour period."
+      "aXRlbXM=": [
+        "cmVhY3Rvcl9kaWFnbm9zdGlj",
+        "cmFkaWF0aW9uX2JhZGdl"
+      ],
+      "Y29uZGl0aW9ucw==": {
+        "ZW50ZXI=": {
+          "d2FybmluZw==": "Q0FVVElPTjogRWxldmF0ZWQgcmFkaWF0aW9uIGxldmVscyBkZXRlY3RlZC4gRXhwb3N1cmUgbGltaXRlZCB0byA0NSBtaW51dGVzIHBlciAyNC1ob3VyIHBlcmlvZC4="
         }
       },
-      "firstVisit": "The dosimeter chirps as you enter, and the radiation warning strips on the bulkhead shift from green to yellow. You are safe, the numbers say. You will remain safe for approximately 45 minutes. After that, cumulative dose becomes a conversation you'll need to have with the autodoc. The reactor's status board tells a story if you know how to read it: someone has been making manual adjustments to the magnetic confinement parameters. Small changes, careful ones, the kind a brilliant mind with engineering cross-training would make. The modification log attributes them to CHEN, W. -- NAVIGATION OFFICER, authenticated by biometric keycard. The most recent adjustment was made eleven hours ago. A handwritten note is taped to the console: 'Reactor efficiency up 2.3%. Every watt matters for the course change. -W.C.'"
+      "Zmlyc3RWaXNpdA==": "VGhlIGRvc2ltZXRlciBjaGlycHMgYXMgeW91IGVudGVyLCBhbmQgdGhlIHJhZGlhdGlvbiB3YXJuaW5nIHN0cmlwcyBvbiB0aGUgYnVsa2hlYWQgc2hpZnQgZnJvbSBncmVlbiB0byB5ZWxsb3cuIFlvdSBhcmUgc2FmZSwgdGhlIG51bWJlcnMgc2F5LiBZb3Ugd2lsbCByZW1haW4gc2FmZSBmb3IgYXBwcm94aW1hdGVseSA0NSBtaW51dGVzLiBBZnRlciB0aGF0LCBjdW11bGF0aXZlIGRvc2UgYmVjb21lcyBhIGNvbnZlcnNhdGlvbiB5b3UnbGwgbmVlZCB0byBoYXZlIHdpdGggdGhlIGF1dG9kb2MuIFRoZSByZWFjdG9yJ3Mgc3RhdHVzIGJvYXJkIHRlbGxzIGEgc3RvcnkgaWYgeW91IGtub3cgaG93IHRvIHJlYWQgaXQ6IHNvbWVvbmUgaGFzIGJlZW4gbWFraW5nIG1hbnVhbCBhZGp1c3RtZW50cyB0byB0aGUgbWFnbmV0aWMgY29uZmluZW1lbnQgcGFyYW1ldGVycy4gU21hbGwgY2hhbmdlcywgY2FyZWZ1bCBvbmVzLiBBIGhhbmR3cml0dGVuIG5vdGUgaXMgdGFwZWQgdG8gdGhlIGNvbnNvbGUuIFRoZSByZWFjdG9yIGRpYWdub3N0aWMgYW5kIG1vZGlmaWNhdGlvbiBsb2cgY291bGQgdGVsbCB5b3Ugd2hvLCBhbmQgd2h5Lg=="
     },
-
-    "machine_shop": {
-      "id": "machine_shop",
-      "name": "Machine Shop",
-      "deck": "C",
-      "description": "The machine shop is a working space in the truest sense -- a place where theory surrenders to the brute reality of metal, friction, and torque. A CNC fabrication unit occupies the center, capable of machining replacement parts from raw stock stored in wall-mounted bins. Welding gear hangs on a pegboard in military-precise arrangement: MIG, TIG, plasma cutter, each in its labeled outline. A workbench runs the length of the port bulkhead, its surface scarred and oil-stained, equipped with a vise, drill press, and a set of hand tools that would not have been out of place in a twentieth-century garage. The air smells of cutting fluid and aluminum shavings. A parts manifest is displayed on a wall-mounted terminal, tracking every fabricated component and its destination. To the south, a heavy freight door leads to the cargo bay, large enough to move equipment pallets through.",
-      "exits": {
-        "n": "corridor_c",
-        "s": "cargo_bay"
+    "bWFjaGluZV9zaG9w": {
+      "aWQ=": "bWFjaGluZV9zaG9w",
+      "bmFtZQ==": "TWFjaGluZSBTaG9w",
+      "ZGVjaw==": "Qw==",
+      "ZGVzY3JpcHRpb24=": "VGhlIG1hY2hpbmUgc2hvcCBpcyBhIHdvcmtpbmcgc3BhY2UgaW4gdGhlIHRydWVzdCBzZW5zZSAtLSBhIHBsYWNlIHdoZXJlIHRoZW9yeSBzdXJyZW5kZXJzIHRvIHRoZSBicnV0ZSByZWFsaXR5IG9mIG1ldGFsLCBmcmljdGlvbiwgYW5kIHRvcnF1ZS4gQSBDTkMgZmFicmljYXRpb24gdW5pdCBvY2N1cGllcyB0aGUgY2VudGVyLCBjYXBhYmxlIG9mIG1hY2hpbmluZyByZXBsYWNlbWVudCBwYXJ0cyBmcm9tIHJhdyBzdG9jayBzdG9yZWQgaW4gd2FsbC1tb3VudGVkIGJpbnMuIFdlbGRpbmcgZ2VhciBoYW5ncyBvbiBhIHBlZ2JvYXJkIGluIG1pbGl0YXJ5LXByZWNpc2UgYXJyYW5nZW1lbnQ6IE1JRywgVElHLCBwbGFzbWEgY3V0dGVyLCBlYWNoIGluIGl0cyBsYWJlbGVkIG91dGxpbmUuIEEgd29ya2JlbmNoIHJ1bnMgdGhlIGxlbmd0aCBvZiB0aGUgcG9ydCBidWxraGVhZCwgaXRzIHN1cmZhY2Ugc2NhcnJlZCBhbmQgb2lsLXN0YWluZWQsIGVxdWlwcGVkIHdpdGggYSB2aXNlLCBkcmlsbCBwcmVzcywgYW5kIGEgc2V0IG9mIGhhbmQgdG9vbHMgdGhhdCB3b3VsZCBub3QgaGF2ZSBiZWVuIG91dCBvZiBwbGFjZSBpbiBhIHR3ZW50aWV0aC1jZW50dXJ5IGdhcmFnZS4gVGhlIGFpciBzbWVsbHMgb2YgY3V0dGluZyBmbHVpZCBhbmQgYWx1bWludW0gc2hhdmluZ3MuIEEgcGFydHMgbWFuaWZlc3QgaXMgZGlzcGxheWVkIG9uIGEgd2FsbC1tb3VudGVkIHRlcm1pbmFsLCB0cmFja2luZyBldmVyeSBmYWJyaWNhdGVkIGNvbXBvbmVudCBhbmQgaXRzIGRlc3RpbmF0aW9uLiBUbyBhZnQsIGEgaGVhdnkgZnJlaWdodCBkb29yIGxlYWRzIHRvIHRoZSBjYXJnbyBiYXksIGxhcmdlIGVub3VnaCB0byBtb3ZlIGVxdWlwbWVudCBwYWxsZXRzIHRocm91Z2gu",
+      "ZXhpdHM=": {
+        "bg==": "Y29ycmlkb3JfYw==",
+        "cw==": "Y2FyZ29fYmF5"
       },
-      "items": ["welding_torch", "fabricator_manual", "multitool"],
-      "conditions": {},
-      "firstVisit": "The fabrication unit's job queue is not empty. You check the log: someone has manufactured three items in the past week, all under the credentials of CHEN, W. The first is a replacement valve fitting for the water recycler -- mundane, expected. The second is a custom mounting bracket whose dimensions match no standard application in the ship's maintenance database. The third gives you pause. It's a component you recognize from your engineering training: a signal amplifier housing, the kind used in deep-space communication arrays. But its dimensions are wrong -- too large for the Kepler's standard comms system, as though it were designed to reach something much, much farther away than any relay station."
+      "aXRlbXM=": [
+        "d2VsZGluZ190b3JjaA==",
+        "ZmFicmljYXRvcl9tYW51YWw=",
+        "bXVsdGl0b29s"
+      ],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "VGhlIGZhYnJpY2F0aW9uIHVuaXQncyBqb2IgcXVldWUgaXMgbm90IGVtcHR5LiBTb21lb25lIGhhcyBtYW51ZmFjdHVyZWQgc2V2ZXJhbCBpdGVtcyByZWNlbnRseS4gVGhlIGZpcnN0IGlzIGEgbXVuZGFuZSByZXBsYWNlbWVudCBwYXJ0IC0tIHJvdXRpbmUgbWFpbnRlbmFuY2UuIEJ1dCB0aGUgb3RoZXJzIGFyZSB1bnVzdWFsLiBBIGN1c3RvbSBtb3VudGluZyBicmFja2V0IHdob3NlIGRpbWVuc2lvbnMgbWF0Y2ggbm8gc3RhbmRhcmQgYXBwbGljYXRpb24gaW4gdGhlIHNoaXAncyBtYWludGVuYW5jZSBkYXRhYmFzZS4gQW5kIGEgY29tcG9uZW50IHlvdSByZWNvZ25pemUgZnJvbSB5b3VyIGVuZ2luZWVyaW5nIHRyYWluaW5nOiBhIHNpZ25hbCBhbXBsaWZpZXIgaG91c2luZywgdGhlIGtpbmQgdXNlZCBpbiBkZWVwLXNwYWNlIGNvbW11bmljYXRpb24gYXJyYXlzLiBCdXQgaXRzIGRpbWVuc2lvbnMgYXJlIHdyb25nIC0tIHRvbyBsYXJnZSBmb3IgYW55IHN0YW5kYXJkIHN5c3RlbSBvbiB0aGUgS2VwbGVyLiBUaGUgZmFicmljYXRvciBsb2cgY291bGQgdGVsbCB5b3UgbW9yZS4="
     },
-
-    "life_support": {
-      "id": "life_support",
-      "name": "Life Support Systems",
-      "deck": "C",
-      "description": "Life support is the room that keeps every other room alive. Air recycling units line the forward bulkhead, massive cylindrical scrubbers that pull CO2 from the atmosphere and crack it back into breathable oxygen. Water reclamation occupies the port side -- a closed-loop system of filters, UV sterilizers, and mineral reinjection modules that has been turning the crew's waste back into drinking water for nineteen years without complaint. Humidity controllers, temperature regulators, and atmospheric composition monitors fill the remaining space, their displays painting a comprehensive portrait of the ship's internal environment. Most readings are nominal. The CO2 scrubbers in quadrant three are flagged amber -- efficiency down 12%, filter replacement recommended. The atmospheric mix display shows O2 at 20.8%, N2 at 78.1%, CO2 at 0.041%. The trace gas analysis, however, shows something irregular: elevated levels of an organic compound the system has flagged but cannot identify.",
-      "exits": {
-        "w": "corridor_c"
+    "bGlmZV9zdXBwb3J0": {
+      "aWQ=": "bGlmZV9zdXBwb3J0",
+      "bmFtZQ==": "TGlmZSBTdXBwb3J0IFN5c3RlbXM=",
+      "ZGVjaw==": "Qw==",
+      "ZGVzY3JpcHRpb24=": "TGlmZSBzdXBwb3J0IGlzIHRoZSByb29tIHRoYXQga2VlcHMgZXZlcnkgb3RoZXIgcm9vbSBhbGl2ZS4gQWlyIHJlY3ljbGluZyB1bml0cyBsaW5lIHRoZSBmb3J3YXJkIGJ1bGtoZWFkLCBtYXNzaXZlIGN5bGluZHJpY2FsIHNjcnViYmVycyB0aGF0IHB1bGwgQ08yIGZyb20gdGhlIGF0bW9zcGhlcmUgYW5kIGNyYWNrIGl0IGJhY2sgaW50byBicmVhdGhhYmxlIG94eWdlbi4gV2F0ZXIgcmVjbGFtYXRpb24gb2NjdXBpZXMgdGhlIHBvcnQgc2lkZSAtLSBhIGNsb3NlZC1sb29wIHN5c3RlbSBvZiBmaWx0ZXJzLCBVViBzdGVyaWxpemVycywgYW5kIG1pbmVyYWwgcmVpbmplY3Rpb24gbW9kdWxlcyB0aGF0IGhhcyBiZWVuIHR1cm5pbmcgdGhlIGNyZXcncyB3YXN0ZSBiYWNrIGludG8gZHJpbmtpbmcgd2F0ZXIgZm9yIG5pbmV0ZWVuIHllYXJzIHdpdGhvdXQgY29tcGxhaW50LiBIdW1pZGl0eSBjb250cm9sbGVycywgdGVtcGVyYXR1cmUgcmVndWxhdG9ycywgYW5kIGF0bW9zcGhlcmljIGNvbXBvc2l0aW9uIG1vbml0b3JzIGZpbGwgdGhlIHJlbWFpbmluZyBzcGFjZSwgdGhlaXIgZGlzcGxheXMgcGFpbnRpbmcgYSBjb21wcmVoZW5zaXZlIHBvcnRyYWl0IG9mIHRoZSBzaGlwJ3MgaW50ZXJuYWwgZW52aXJvbm1lbnQuIE1vc3QgcmVhZGluZ3MgYXJlIG5vbWluYWwuIFRoZSBDTzIgc2NydWJiZXJzIGluIHF1YWRyYW50IHRocmVlIGFyZSBmbGFnZ2VkIGFtYmVyIC0tIGVmZmljaWVuY3kgZG93biAxMiUsIGZpbHRlciByZXBsYWNlbWVudCByZWNvbW1lbmRlZC4gVGhlIGF0bW9zcGhlcmljIG1peCBkaXNwbGF5IHNob3dzIE8yIGF0IDIwLjglLCBOMiBhdCA3OC4xJSwgQ08yIGF0IDAuMDQxJS4gVGhlIHRyYWNlIGdhcyBhbmFseXNpcywgaG93ZXZlciwgc2hvd3Mgc29tZXRoaW5nIGlycmVndWxhcjogZWxldmF0ZWQgbGV2ZWxzIG9mIGFuIG9yZ2FuaWMgY29tcG91bmQgdGhlIHN5c3RlbSBoYXMgZmxhZ2dlZCBidXQgY2Fubm90IGlkZW50aWZ5Lg==",
+      "ZXhpdHM=": {
+        "dw==": "Y29ycmlkb3JfYw=="
       },
-      "items": ["co2_filter", "atmo_report"],
-      "conditions": {},
-      "firstVisit": "The alarm panel draws your eye immediately -- three amber lights blinking in a slow, patient rhythm. Two are routine: filter degradation, calibration drift. The third is the one that doesn't belong. It reads: TRACE ATMOSPHERIC ANOMALY - UNIDENTIFIED ORGANIC COMPOUND - CONCENTRATION 0.003 PPM - WITHIN SAFETY PARAMETERS - SOURCE: UNKNOWN. The system detected it four days ago and has been faithfully logging it ever since, waiting for a human to investigate. The compound's molecular signature doesn't match anything in the ship's chemical database. It is not a known byproduct of any system on board."
+      "aXRlbXM=": [
+        "Y28yX2ZpbHRlcg==",
+        "YXRtb19yZXBvcnQ="
+      ],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "VGhlIGFsYXJtIHBhbmVsIGRyYXdzIHlvdXIgZXllIGltbWVkaWF0ZWx5IC0tIHRocmVlIGFtYmVyIGxpZ2h0cyBibGlua2luZyBpbiBhIHNsb3csIHBhdGllbnQgcmh5dGhtLiBUd28gYXJlIHJvdXRpbmU6IGZpbHRlciBkZWdyYWRhdGlvbiwgY2FsaWJyYXRpb24gZHJpZnQuIFRoZSB0aGlyZCBpcyB0aGUgb25lIHRoYXQgZG9lc24ndCBiZWxvbmcuIEl0IHJlYWRzOiBUUkFDRSBBVE1PU1BIRVJJQyBBTk9NQUxZIC0gVU5JREVOVElGSUVEIE9SR0FOSUMgQ09NUE9VTkQgLSBDT05DRU5UUkFUSU9OIDAuMDAzIFBQTSAtIFdJVEhJTiBTQUZFVFkgUEFSQU1FVEVSUyAtIFNPVVJDRTogVU5LTk9XTi4gVGhlIHN5c3RlbSBkZXRlY3RlZCBpdCBmb3VyIGRheXMgYWdvIGFuZCBoYXMgYmVlbiBmYWl0aGZ1bGx5IGxvZ2dpbmcgaXQgZXZlciBzaW5jZSwgd2FpdGluZyBmb3IgYSBodW1hbiB0byBpbnZlc3RpZ2F0ZS4gVGhlIGNvbXBvdW5kJ3MgbW9sZWN1bGFyIHNpZ25hdHVyZSBkb2Vzbid0IG1hdGNoIGFueXRoaW5nIGluIHRoZSBzaGlwJ3MgY2hlbWljYWwgZGF0YWJhc2UuIEl0IGlzIG5vdCBhIGtub3duIGJ5cHJvZHVjdCBvZiBhbnkgc3lzdGVtIG9uIGJvYXJkLg=="
     },
-
-    "electrical": {
-      "id": "electrical",
-      "name": "Power Distribution Junction",
-      "deck": "C",
-      "description": "The electrical junction is a wall of power -- literally. Floor-to-ceiling circuit breaker panels line three of the four bulkheads, hundreds of labeled switches controlling the flow of electricity from the reactor to every system on the ship. The room buzzes with a constant, teeth-edge hum of high-amperage current moving through copper and superconducting cable. The air tastes of ozone, sharp and mineral, the signature of electricity arcing at connection points that should be sealed but aren't, quite. Diagnostic panels between the breaker banks show power consumption by deck and system, a real-time portrait of the ship's electrical metabolism. Cable runs as thick as a human wrist emerge from the deck and disappear into the overhead, bundled and labeled with obsessive precision. A main distribution bus bar runs the length of the room, copper bright where it's been recently cleaned and dark with patina where it hasn't.",
-      "exits": {
-        "e": "corridor_c"
+    "ZWxlY3RyaWNhbA==": {
+      "aWQ=": "ZWxlY3RyaWNhbA==",
+      "bmFtZQ==": "UG93ZXIgRGlzdHJpYnV0aW9uIEp1bmN0aW9u",
+      "ZGVjaw==": "Qw==",
+      "ZGVzY3JpcHRpb24=": "VGhlIGVsZWN0cmljYWwganVuY3Rpb24gaXMgYSB3YWxsIG9mIHBvd2VyIC0tIGxpdGVyYWxseS4gRmxvb3ItdG8tY2VpbGluZyBjaXJjdWl0IGJyZWFrZXIgcGFuZWxzIGxpbmUgdGhyZWUgb2YgdGhlIGZvdXIgYnVsa2hlYWRzLCBodW5kcmVkcyBvZiBsYWJlbGVkIHN3aXRjaGVzIGNvbnRyb2xsaW5nIHRoZSBmbG93IG9mIGVsZWN0cmljaXR5IGZyb20gdGhlIHJlYWN0b3IgdG8gZXZlcnkgc3lzdGVtIG9uIHRoZSBzaGlwLiBUaGUgcm9vbSBidXp6ZXMgd2l0aCBhIGNvbnN0YW50LCB0ZWV0aC1lZGdlIGh1bSBvZiBoaWdoLWFtcGVyYWdlIGN1cnJlbnQgbW92aW5nIHRocm91Z2ggY29wcGVyIGFuZCBzdXBlcmNvbmR1Y3RpbmcgY2FibGUuIFRoZSBhaXIgdGFzdGVzIG9mIG96b25lLCBzaGFycCBhbmQgbWluZXJhbCwgdGhlIHNpZ25hdHVyZSBvZiBlbGVjdHJpY2l0eSBhcmNpbmcgYXQgY29ubmVjdGlvbiBwb2ludHMgdGhhdCBzaG91bGQgYmUgc2VhbGVkIGJ1dCBhcmVuJ3QsIHF1aXRlLiBEaWFnbm9zdGljIHBhbmVscyBiZXR3ZWVuIHRoZSBicmVha2VyIGJhbmtzIHNob3cgcG93ZXIgY29uc3VtcHRpb24gYnkgZGVjayBhbmQgc3lzdGVtLCBhIHJlYWwtdGltZSBwb3J0cmFpdCBvZiB0aGUgc2hpcCdzIGVsZWN0cmljYWwgbWV0YWJvbGlzbS4gQ2FibGUgcnVucyBhcyB0aGljayBhcyBhIGh1bWFuIHdyaXN0IGVtZXJnZSBmcm9tIHRoZSBkZWNrIGFuZCBkaXNhcHBlYXIgaW50byB0aGUgb3ZlcmhlYWQsIGJ1bmRsZWQgYW5kIGxhYmVsZWQgd2l0aCBvYnNlc3NpdmUgcHJlY2lzaW9uLiBBIG1haW4gZGlzdHJpYnV0aW9uIGJ1cyBiYXIgcnVucyB0aGUgbGVuZ3RoIG9mIHRoZSByb29tLCBjb3BwZXIgYnJpZ2h0IHdoZXJlIGl0J3MgYmVlbiByZWNlbnRseSBjbGVhbmVkIGFuZCBkYXJrIHdpdGggcGF0aW5hIHdoZXJlIGl0IGhhc24ndC4=",
+      "ZXhpdHM=": {
+        "ZQ==": "Y29ycmlkb3JfYw=="
       },
-      "items": ["circuit_tester", "power_log"],
-      "conditions": {},
-      "firstVisit": "You scan the breaker panels and notice something that takes a moment to register. Most breakers are in their expected positions -- habitation on reduced power, cryo systems at full, engineering nominal. But one breaker, labeled AUX COMMS - DECK D - CIRCUIT 12, has been manually switched from AUTO to MANUAL OVERRIDE. The timestamp on the override log reads seventeen months ago. The power draw on that circuit is three times what any standard system should require -- and the circuit routes to the starboard hull, Section 7-8, where no ship system is supposed to exist. Chen wired something into the ship's power grid. Something that has been drawing current continuously for over a year. Something on the outside of the hull."
+      "aXRlbXM=": [
+        "Y2lyY3VpdF90ZXN0ZXI=",
+        "cG93ZXJfbG9n"
+      ],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "WW91IHNjYW4gdGhlIGJyZWFrZXIgcGFuZWxzIGFuZCBub3RpY2Ugc29tZXRoaW5nIHRoYXQgdGFrZXMgYSBtb21lbnQgdG8gcmVnaXN0ZXIuIE1vc3QgYnJlYWtlcnMgYXJlIGluIHRoZWlyIGV4cGVjdGVkIHBvc2l0aW9ucyAtLSBoYWJpdGF0aW9uIG9uIHJlZHVjZWQgcG93ZXIsIGNyeW8gc3lzdGVtcyBhdCBmdWxsLCBlbmdpbmVlcmluZyBub21pbmFsLiBCdXQgb25lIGJyZWFrZXIsIGxhYmVsZWQgQVVYIENPTU1TIC0gREVDSyBEIC0gQ0lSQ1VJVCAxMiwgaGFzIGJlZW4gbWFudWFsbHkgc3dpdGNoZWQgZnJvbSBBVVRPIHRvIE1BTlVBTCBPVkVSUklERS4gVGhlIHBvd2VyIGRyYXcgb24gdGhhdCBjaXJjdWl0IGlzIGZhciBoaWdoZXIgdGhhbiBhbnkgc3RhbmRhcmQgc3lzdGVtIHNob3VsZCByZXF1aXJlIC0tIGFuZCB0aGUgY2lyY3VpdCByb3V0ZXMgdG8gdGhlIHN0YXJib2FyZCBodWxsLCB3aGVyZSBubyBzaGlwIHN5c3RlbSBpcyBzdXBwb3NlZCB0byBleGlzdC4gU29tZW9uZSB3aXJlZCBzb21ldGhpbmcgaW50byB0aGUgcG93ZXIgZ3JpZC4gVGhlIHBvd2VyIGxvZyBjb3VsZCB0ZWxsIHlvdSB3aGVuLg=="
     },
-
-    "cargo_bay": {
-      "id": "cargo_bay",
-      "name": "Cargo Bay",
-      "deck": "C",
-      "description": "The cargo bay is the largest single compartment on the Kepler's Promise, a cavernous space stacked floor to ceiling with sealed cargo containers in standardized intermodal units. Each container is labeled with a manifest code, weight, and contents summary: agricultural equipment, prefabricated habitat modules, seed stock, medical supplies, cultural archives, educational materials -- the compressed essence of a civilization packed into metal boxes for a 42-year journey. The containers are secured to the deck with mag-locks and tension straps rated for 15g, overkill for a ship that rarely exceeds 0.01g of acceleration during coast phase. A cargo manifest terminal near the entrance provides a searchable index of every item on board, cross-referenced by container, weight, and priority classification. The bay is cold -- climate control runs minimal here to save power -- and your breath makes thin ghosts in the air.",
-      "exits": {
-        "n": "machine_shop"
+    "Y2FyZ29fYmF5": {
+      "aWQ=": "Y2FyZ29fYmF5",
+      "bmFtZQ==": "Q2FyZ28gQmF5",
+      "ZGVjaw==": "Qw==",
+      "ZGVzY3JpcHRpb24=": "VGhlIGNhcmdvIGJheSBpcyB0aGUgbGFyZ2VzdCBzaW5nbGUgY29tcGFydG1lbnQgb24gdGhlIEtlcGxlcidzIFByb21pc2UsIGEgY2F2ZXJub3VzIHNwYWNlIHN0YWNrZWQgZmxvb3IgdG8gY2VpbGluZyB3aXRoIHNlYWxlZCBjYXJnbyBjb250YWluZXJzIGluIHN0YW5kYXJkaXplZCBpbnRlcm1vZGFsIHVuaXRzLiBFYWNoIGNvbnRhaW5lciBpcyBsYWJlbGVkIHdpdGggYSBtYW5pZmVzdCBjb2RlLCB3ZWlnaHQsIGFuZCBjb250ZW50cyBzdW1tYXJ5OiBhZ3JpY3VsdHVyYWwgZXF1aXBtZW50LCBwcmVmYWJyaWNhdGVkIGhhYml0YXQgbW9kdWxlcywgc2VlZCBzdG9jaywgbWVkaWNhbCBzdXBwbGllcywgY3VsdHVyYWwgYXJjaGl2ZXMsIGVkdWNhdGlvbmFsIG1hdGVyaWFscyAtLSB0aGUgY29tcHJlc3NlZCBlc3NlbmNlIG9mIGEgY2l2aWxpemF0aW9uIHBhY2tlZCBpbnRvIG1ldGFsIGJveGVzIGZvciBhIDQyLXllYXIgam91cm5leS4gVGhlIGNvbnRhaW5lcnMgYXJlIHNlY3VyZWQgdG8gdGhlIGRlY2sgd2l0aCBtYWctbG9ja3MgYW5kIHRlbnNpb24gc3RyYXBzIHJhdGVkIGZvciAxNWcsIG92ZXJraWxsIGZvciBhIHNoaXAgdGhhdCByYXJlbHkgZXhjZWVkcyAwLjAxZyBvZiBhY2NlbGVyYXRpb24gZHVyaW5nIGNvYXN0IHBoYXNlLiBBIGNhcmdvIG1hbmlmZXN0IHRlcm1pbmFsIG5lYXIgdGhlIGVudHJhbmNlIHByb3ZpZGVzIGEgc2VhcmNoYWJsZSBpbmRleCBvZiBldmVyeSBpdGVtIG9uIGJvYXJkLCBjcm9zcy1yZWZlcmVuY2VkIGJ5IGNvbnRhaW5lciwgd2VpZ2h0LCBhbmQgcHJpb3JpdHkgY2xhc3NpZmljYXRpb24uIFRoZSBiYXkgaXMgY29sZCAtLSBjbGltYXRlIGNvbnRyb2wgcnVucyBtaW5pbWFsIGhlcmUgdG8gc2F2ZSBwb3dlciAtLSBhbmQgeW91ciBicmVhdGggbWFrZXMgdGhpbiBnaG9zdHMgaW4gdGhlIGFpci4=",
+      "ZXhpdHM=": {
+        "bg==": "bWFjaGluZV9zaG9w"
       },
-      "items": ["cargo_manifest", "pry_bar"],
-      "conditions": {},
-      "firstVisit": "The manifest terminal is already active when you approach it, its screen showing the results of a recent search. Someone queried the database for all containers classified under MISSION CONTINGENCY - RESTRICTED. There are four such containers on the ship, and the search results show their locations and contents summaries. Three are what you'd expect: emergency rations, backup communications equipment, and a sealed weapons locker (AUTHORIZED PERSONNEL ONLY - CAPTAIN'S DISCRETION). The fourth container's contents field reads simply: CLASSIFIED - SEE MISSION DIRECTIVE 7. You have never heard of Mission Directive 7."
+      "aXRlbXM=": [
+        "Y2FyZ29fbWFuaWZlc3Q=",
+        "cHJ5X2Jhcg=="
+      ],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "VGhlIG1hbmlmZXN0IHRlcm1pbmFsIGlzIGFscmVhZHkgYWN0aXZlIHdoZW4geW91IGFwcHJvYWNoIGl0LCBpdHMgc2NyZWVuIHNob3dpbmcgdGhlIHJlc3VsdHMgb2YgYSByZWNlbnQgc2VhcmNoLiBTb21lb25lIHF1ZXJpZWQgdGhlIGRhdGFiYXNlIGZvciBhbGwgY29udGFpbmVycyBjbGFzc2lmaWVkIHVuZGVyIE1JU1NJT04gQ09OVElOR0VOQ1kgLSBSRVNUUklDVEVELiBUaGVyZSBhcmUgZm91ciBzdWNoIGNvbnRhaW5lcnMgb24gdGhlIHNoaXAsIGFuZCB0aGUgc2VhcmNoIHJlc3VsdHMgc2hvdyB0aGVpciBsb2NhdGlvbnMgYW5kIGNvbnRlbnRzIHN1bW1hcmllcy4gVGhyZWUgYXJlIHdoYXQgeW91J2QgZXhwZWN0OiBlbWVyZ2VuY3kgcmF0aW9ucywgYmFja3VwIGNvbW11bmljYXRpb25zIGVxdWlwbWVudCwgYW5kIGEgc2VhbGVkIHdlYXBvbnMgbG9ja2VyIChBVVRIT1JJWkVEIFBFUlNPTk5FTCBPTkxZIC0gQ0FQVEFJTidTIERJU0NSRVRJT04pLiBUaGUgZm91cnRoIGNvbnRhaW5lcidzIGNvbnRlbnRzIGZpZWxkIHJlYWRzIHNpbXBseTogQ0xBU1NJRklFRCAtIFNFRSBNSVNTSU9OIERJUkVDVElWRSA3LiBZb3UgaGF2ZSBuZXZlciBoZWFyZCBvZiBNaXNzaW9uIERpcmVjdGl2ZSA3Lg=="
     },
-
-    "corridor_d": {
-      "id": "corridor_d",
-      "name": "Spine Passage - Deck D",
-      "deck": "D",
-      "description": "Deck D's spine passage is the lowest inhabited level of the Kepler's Promise, a zero-gravity corridor that runs along the ship's central axis like a vertebral column. Handrails line both walls, and your movements here are the slow, deliberate translations of microgravity -- push, drift, catch, redirect. The passage is narrower than the upper decks, functional rather than comfortable, its walls crowded with access panels and maintenance hatches. The lighting is harsh fluorescent, the kind that makes healthy skin look cadaverous and cadaverous skin look worse. Forward leads to the cryo bay, where 2,847 colonists dream their frozen dreams. Aft leads to the engine room, where the fusion drive waits in cold silence for the deceleration burn still decades away. The air is colder here, closer to the hull, and you can almost feel the void pressing in from outside -- not physically, but psychologically, a weight of emptiness measured in light-years.",
-      "exits": {
-        "n": "cryo_bay",
-        "s": "engine_room",
-        "e": "fuel_storage",
-        "w": "airlock_inner",
-        "up": "corridor_c"
+    "Y29ycmlkb3JfZA==": {
+      "aWQ=": "Y29ycmlkb3JfZA==",
+      "bmFtZQ==": "U3BpbmUgUGFzc2FnZSAtIERlY2sgRA==",
+      "ZGVjaw==": "RA==",
+      "ZGVzY3JpcHRpb24=": "RGVjayBEJ3Mgc3BpbmUgcGFzc2FnZSBpcyB0aGUgbG93ZXN0IGluaGFiaXRlZCBsZXZlbCBvZiB0aGUgS2VwbGVyJ3MgUHJvbWlzZSwgYSB6ZXJvLWdyYXZpdHkgY29ycmlkb3IgdGhhdCBydW5zIGFsb25nIHRoZSBzaGlwJ3MgY2VudHJhbCBheGlzIGxpa2UgYSB2ZXJ0ZWJyYWwgY29sdW1uLiBIYW5kcmFpbHMgbGluZSBib3RoIHdhbGxzLCBhbmQgeW91ciBtb3ZlbWVudHMgaGVyZSBhcmUgdGhlIHNsb3csIGRlbGliZXJhdGUgdHJhbnNsYXRpb25zIG9mIG1pY3JvZ3Jhdml0eSAtLSBwdXNoLCBkcmlmdCwgY2F0Y2gsIHJlZGlyZWN0LiBUaGUgcGFzc2FnZSBpcyBuYXJyb3dlciB0aGFuIHRoZSB1cHBlciBkZWNrcywgZnVuY3Rpb25hbCByYXRoZXIgdGhhbiBjb21mb3J0YWJsZSwgaXRzIHdhbGxzIGNyb3dkZWQgd2l0aCBhY2Nlc3MgcGFuZWxzIGFuZCBtYWludGVuYW5jZSBoYXRjaGVzLiBUaGUgbGlnaHRpbmcgaXMgaGFyc2ggZmx1b3Jlc2NlbnQsIHRoZSBraW5kIHRoYXQgbWFrZXMgaGVhbHRoeSBza2luIGxvb2sgY2FkYXZlcm91cyBhbmQgY2FkYXZlcm91cyBza2luIGxvb2sgd29yc2UuIEZvcndhcmQgbGVhZHMgdG8gdGhlIGNyeW8gYmF5LCB3aGVyZSAyLDg0NyBjb2xvbmlzdHMgZHJlYW0gdGhlaXIgZnJvemVuIGRyZWFtcy4gQWZ0IGxlYWRzIHRvIHRoZSBlbmdpbmUgcm9vbSwgd2hlcmUgdGhlIGZ1c2lvbiBkcml2ZSB3YWl0cyBpbiBjb2xkIHNpbGVuY2UgZm9yIHRoZSBkZWNlbGVyYXRpb24gYnVybiBzdGlsbCBkZWNhZGVzIGF3YXkuIFRoZSBhaXIgaXMgY29sZGVyIGhlcmUsIGNsb3NlciB0byB0aGUgaHVsbCwgYW5kIHlvdSBjYW4gYWxtb3N0IGZlZWwgdGhlIHZvaWQgcHJlc3NpbmcgaW4gZnJvbSBvdXRzaWRlIC0tIG5vdCBwaHlzaWNhbGx5LCBidXQgcHN5Y2hvbG9naWNhbGx5LCBhIHdlaWdodCBvZiBlbXB0aW5lc3MgbWVhc3VyZWQgaW4gbGlnaHQteWVhcnMu",
+      "ZXhpdHM=": {
+        "bg==": "Y3J5b19iYXk=",
+        "cw==": "ZW5naW5lX3Jvb20=",
+        "ZQ==": "ZnVlbF9zdG9yYWdl",
+        "dw==": "YWlybG9ja19pbm5lcg==",
+        "dXA=": "Y29ycmlkb3JfYw=="
       },
-      "items": [],
-      "conditions": {},
-      "firstVisit": "As you drift through the passage, your hand brushes a section of wall that feels different from the rest -- warmer, almost imperceptibly, as though something behind the panel is generating heat. You press your palm flat against it. Yes. Warmth. But according to the ship's schematics, there is nothing behind this section of bulkhead except hull insulation and the cold of interstellar space. You file the observation away and keep moving, but the warmth stays in your palm like a question."
+      "aXRlbXM=": [],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "QXMgeW91IGRyaWZ0IHRocm91Z2ggdGhlIHBhc3NhZ2UsIHlvdXIgaGFuZCBicnVzaGVzIGEgc2VjdGlvbiBvZiB3YWxsIHRoYXQgZmVlbHMgZGlmZmVyZW50IGZyb20gdGhlIHJlc3QgLS0gd2FybWVyLCBhbG1vc3QgaW1wZXJjZXB0aWJseSwgYXMgdGhvdWdoIHNvbWV0aGluZyBiZWhpbmQgdGhlIHBhbmVsIGlzIGdlbmVyYXRpbmcgaGVhdC4gWW91IHByZXNzIHlvdXIgcGFsbSBmbGF0IGFnYWluc3QgaXQuIFllcy4gV2FybXRoLiBCdXQgYWNjb3JkaW5nIHRvIHRoZSBzaGlwJ3Mgc2NoZW1hdGljcywgdGhlcmUgaXMgbm90aGluZyBiZWhpbmQgdGhpcyBzZWN0aW9uIG9mIGJ1bGtoZWFkIGV4Y2VwdCBodWxsIGluc3VsYXRpb24gYW5kIHRoZSBjb2xkIG9mIGludGVyc3RlbGxhciBzcGFjZS4gWW91IGZpbGUgdGhlIG9ic2VydmF0aW9uIGF3YXkgYW5kIGtlZXAgbW92aW5nLCBidXQgdGhlIHdhcm10aCBzdGF5cyBpbiB5b3VyIHBhbG0gbGlrZSBhIHF1ZXN0aW9uLg=="
     },
-
-    "cryo_bay": {
-      "id": "cryo_bay",
-      "name": "Cryogenic Suspension Bay",
-      "deck": "D",
-      "description": "The cryo bay is a vast, cold reliquary. Rows of cryogenic suspension pods stretch in precise formation across the compartment, 2,847 units arranged in banks of twelve, each pod a brushed-steel sarcophagus with a narrow viewport frosted over from the inside. Status lights glow steady green above each unit -- the slow, faithful heartbeat of lives suspended between one breath and the next. The temperature hovers at 4 degrees Celsius, cold enough to make your fingers clumsy and your breath visible. Frost clings to every surface, delicate crystal lattices that shatter at a touch. The monitoring station near the entrance displays aggregate vitals: core temperatures, metabolic rates, neural activity -- all within nominal parameters, all indicating that the colonists sleep their dreamless sleep exactly as intended. The hum of the cooling systems is the loudest sound, a deep refrigerant drone that vibrates through the deck plates. Your pod is here, third row, position 14-C. Its lid is open, its interior still wet with cryoprotectant gel. You remember nothing of the waking.",
-      "exits": {
-        "s": "corridor_d"
+    "Y3J5b19iYXk=": {
+      "aWQ=": "Y3J5b19iYXk=",
+      "bmFtZQ==": "Q3J5b2dlbmljIFN1c3BlbnNpb24gQmF5",
+      "ZGVjaw==": "RA==",
+      "ZGVzY3JpcHRpb24=": "VGhlIGNyeW8gYmF5IGlzIHZhc3QgYW5kIGNvbGQuIFJvd3Mgb2YgY3J5b2dlbmljIHN1c3BlbnNpb24gcG9kcyBzdHJldGNoIGluIHByZWNpc2UgZm9ybWF0aW9uIGFjcm9zcyB0aGUgY29tcGFydG1lbnQsIGJhbmtzIG9mIHR3ZWx2ZSwgZWFjaCBwb2QgYSBicnVzaGVkLXN0ZWVsIHNhcmNvcGhhZ3VzIHdpdGggYSBuYXJyb3cgdmlld3BvcnQgZnJvc3RlZCBvdmVyIGZyb20gdGhlIGluc2lkZS4gU3RhdHVzIGxpZ2h0cyBnbG93IGFib3ZlIGVhY2ggdW5pdC4gVGhlIGh1bSBvZiBjb29saW5nIHN5c3RlbXMgdmlicmF0ZXMgdGhyb3VnaCB0aGUgZGVjayBwbGF0ZXMgLS0gdGhlIGxvdWRlc3Qgc291bmQsIGFwYXJ0IGZyb20geW91ciBvd24gYnJlYXRoaW5nLiBDb25kZW5zYXRpb24gYmVhZHMgb24gZXZlcnkgbWV0YWwgc3VyZmFjZS4gVGhlIGFpciBpcyBiaXR0ZXIgY29sZCwgYW5kIHlvdXIgYnJlYXRoIGhhbmdzIHZpc2libGUgaW4gZnJvbnQgb2YgeW91LiBZb3VyIHBvZCBpcyBoZXJlLCB0aGlyZCByb3csIGl0cyBsaWQgb3BlbiwgaXRzIGludGVyaW9yIHN0aWxsIHdldC4gQSBtb25pdG9yaW5nIHN0YXRpb24gc3RhbmRzIG5lYXIgdGhlIGVudHJhbmNlLiBTb21ld2hlcmUsIGEgZmFpbnQgYWxhcm0gdG9uZSBpcyByZXBlYXRpbmcu",
+      "ZXhpdHM=": {
+        "cw==": "Y29ycmlkb3JfZA=="
       },
-      "items": ["cryo_log", "cryoprotectant_residue"],
-      "conditions": {},
-      "firstVisit": "You are shivering and disoriented, cryoprotectant gel drying on your skin in sticky, cooling patches. The emergency revival protocol has left you with a pounding headache, nausea, and a ringing in your ears that might be the cryo bay's alarms or might be your auditory nerves remembering how to work. The status board above your pod reads: EMERGENCY REVIVAL - POD 14-C - REASON: SYSTEM FAULT 7734 - AUTOMATIC PROTOCOL. You were not supposed to wake up for another 22.7 years. As your vision clears, you scan the rows of pods. Green lights. Green lights. Green lights. And there -- row 4, position C-447 -- an open pod, its lid hinged back, its interior dry. Whoever was in that pod woke up long before you did. The status display reads: POD C-447 - CHEN, W. - REVIVAL TIMESTAMP: D+6842 - STATUS: ACTIVE. Six days ago. Navigation Officer Chen Wei-Lin has been awake and alone on this ship for six days. And she has not come to find you."
+      "aXRlbXM=": [
+        "Y3J5b19sb2c=",
+        "Y3J5b3Byb3RlY3RhbnRfcmVzaWR1ZQ=="
+      ],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "WW91IGFyZSBzaGl2ZXJpbmcuIENyeW9wcm90ZWN0YW50IGdlbCBpcyBkcnlpbmcgb24geW91ciBza2luIGluIHN0aWNreSwgY29vbGluZyBwYXRjaGVzLiBZb3VyIGhlYWQgcG91bmRzLiBOYXVzZWEgcm9sbHMgdGhyb3VnaCB5b3UgaW4gc2xvdyB3YXZlcy4gVGhlcmUgaXMgYSByaW5naW5nIGluIHlvdXIgZWFycyAtLSB5b3VyIGF1ZGl0b3J5IG5lcnZlcyByZW1lbWJlcmluZyBob3cgdG8gd29yaywgb3Igc29tZXRoaW5nIGVsc2UuIFlvdSBjYW4ndCB0ZWxsIHlldC4gWW91ciBoYW5kcyBhcmUgc2hha2luZyB0b28gYmFkbHkgdG8gZ3JpcCB0aGUgZWRnZSBvZiB0aGUgcG9kLiBZb3Ugcm9sbCBzaWRld2F5cyBhbmQgbmVhcmx5IGZhbGwgdG8gdGhlIGRlY2sgcGxhdGVzLiBUaGUgY29sZCBvZiB0aGUgbWV0YWwgZmxvb3IgYWdhaW5zdCB5b3VyIGJhcmUgZmVldCBpcyBhIHNlY29uZCBzaG9jay4gWW91IGFyZSBhd2FrZS4gWW91IGRvbid0IGtub3cgd2h5Lg=="
     },
-
-    "engine_room": {
-      "id": "engine_room",
-      "name": "Main Engine Room",
-      "deck": "D",
-      "description": "The engine room is a cathedral of propulsion, dominated by the magnetic nozzle assembly of the ship's fusion drive -- a massive, bell-shaped structure that narrows to a throat where superheated plasma would be directed to produce thrust. It is silent now, dormant, the drive shut down for the long coast phase between acceleration and deceleration burns. The chamber has the reverent stillness of a weapon at rest. Thrust vectoring actuators ring the nozzle like the petals of a steel flower, each capable of redirecting the exhaust plume by fractions of a degree for course corrections. Control consoles line the forward bulkhead, displaying engine status, fuel consumption curves, and the planned deceleration profile -- a carefully calculated burn sequence that will begin in 16.4 years and slow the ship from 12% of lightspeed to orbital velocity around 82 Eridani e. The math is beautiful and merciless: there is exactly enough fuel, with a 4.2% margin. Exactly enough.",
-      "exits": {
-        "n": "corridor_d"
+    "ZW5naW5lX3Jvb20=": {
+      "aWQ=": "ZW5naW5lX3Jvb20=",
+      "bmFtZQ==": "TWFpbiBFbmdpbmUgUm9vbQ==",
+      "ZGVjaw==": "RA==",
+      "ZGVzY3JpcHRpb24=": "VGhlIGVuZ2luZSByb29tIGlzIGEgY2F0aGVkcmFsIG9mIHByb3B1bHNpb24sIGRvbWluYXRlZCBieSB0aGUgbWFnbmV0aWMgbm96emxlIGFzc2VtYmx5IG9mIHRoZSBzaGlwJ3MgZnVzaW9uIGRyaXZlIC0tIGEgbWFzc2l2ZSwgYmVsbC1zaGFwZWQgc3RydWN0dXJlIHRoYXQgbmFycm93cyB0byBhIHRocm9hdCB3aGVyZSBzdXBlcmhlYXRlZCBwbGFzbWEgd291bGQgYmUgZGlyZWN0ZWQgdG8gcHJvZHVjZSB0aHJ1c3QuIEl0IGlzIHNpbGVudCBub3csIGRvcm1hbnQsIHRoZSBkcml2ZSBzaHV0IGRvd24gZm9yIHRoZSBsb25nIGNvYXN0IHBoYXNlIGJldHdlZW4gYWNjZWxlcmF0aW9uIGFuZCBkZWNlbGVyYXRpb24gYnVybnMuIFRoZSBjaGFtYmVyIGhhcyB0aGUgcmV2ZXJlbnQgc3RpbGxuZXNzIG9mIGEgd2VhcG9uIGF0IHJlc3QuIFRocnVzdCB2ZWN0b3JpbmcgYWN0dWF0b3JzIHJpbmcgdGhlIG5venpsZSBsaWtlIHRoZSBwZXRhbHMgb2YgYSBzdGVlbCBmbG93ZXIsIGVhY2ggY2FwYWJsZSBvZiByZWRpcmVjdGluZyB0aGUgZXhoYXVzdCBwbHVtZSBieSBmcmFjdGlvbnMgb2YgYSBkZWdyZWUgZm9yIGNvdXJzZSBjb3JyZWN0aW9ucy4gQ29udHJvbCBjb25zb2xlcyBsaW5lIHRoZSBmb3J3YXJkIGJ1bGtoZWFkLCBkaXNwbGF5aW5nIGVuZ2luZSBzdGF0dXMsIGZ1ZWwgY29uc3VtcHRpb24gY3VydmVzLCBhbmQgdGhlIHBsYW5uZWQgZGVjZWxlcmF0aW9uIHByb2ZpbGUgLS0gYSBjYXJlZnVsbHkgY2FsY3VsYXRlZCBidXJuIHNlcXVlbmNlIHRoYXQgd2lsbCBiZWdpbiBpbiAxNi40IHllYXJzIGFuZCBzbG93IHRoZSBzaGlwIGZyb20gMTIlIG9mIGxpZ2h0c3BlZWQgdG8gb3JiaXRhbCB2ZWxvY2l0eSBhcm91bmQgODIgRXJpZGFuaSBlLiBUaGUgbWF0aCBpcyBiZWF1dGlmdWwgYW5kIG1lcmNpbGVzczogdGhlcmUgaXMgZXhhY3RseSBlbm91Z2ggZnVlbCwgd2l0aCBhIDQuMiUgbWFyZ2luLiBFeGFjdGx5IGVub3VnaC4=",
+      "ZXhpdHM=": {
+        "bg==": "Y29ycmlkb3JfZA=="
       },
-      "items": ["engine_status_report", "thrust_calculator"],
-      "conditions": {},
-      "firstVisit": "The engine room's main display activates as you approach, and the deceleration profile loads with its familiar curves and numbers. You studied this during training; you could recite the burn sequence from memory. But something is different. You stare at the display for a long time before you see it: the fuel margin has changed. The pre-departure calculation showed 4.2% reserve. The current readout shows 3.1%. The ship has consumed fuel it shouldn't have. During coast phase, the drive is off -- fuel consumption should be zero, limited to the tiny amounts used by the reactor. But someone has been burning fuel. The consumption log has been edited -- clumsily, by someone more comfortable with navigation mathematics than with database forensics -- to attribute the loss to UNSCHEDULED ATTITUDE CORRECTION - AUTOMATIC. But the thermal signature in the drive nozzle tells the truth: a sustained burn, precisely calculated, executed during Mission Year 17.9. The ship didn't just turn. It changed course. And then, months later, it was turned back -- or rather, the automatic course-keeping system reasserted the original trajectory once the manual override expired. Two courses. Two intentions. One ship, hurtling through the dark, pulled between where it was told to go and where someone tried to send it."
+      "aXRlbXM=": [
+        "ZW5naW5lX3N0YXR1c19yZXBvcnQ=",
+        "dGhydXN0X2NhbGN1bGF0b3I="
+      ],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "VGhlIGVuZ2luZSByb29tJ3MgbWFpbiBkaXNwbGF5IGFjdGl2YXRlcyBhcyB5b3UgYXBwcm9hY2gsIGFuZCB0aGUgZGVjZWxlcmF0aW9uIHByb2ZpbGUgbG9hZHMgd2l0aCBpdHMgZmFtaWxpYXIgY3VydmVzIGFuZCBudW1iZXJzLiBZb3Ugc3R1ZGllZCB0aGlzIGR1cmluZyB0cmFpbmluZzsgeW91IGNvdWxkIHJlY2l0ZSB0aGUgYnVybiBzZXF1ZW5jZSBmcm9tIG1lbW9yeS4gQnV0IHNvbWV0aGluZyBpcyBkaWZmZXJlbnQuIFlvdSBzdGFyZSBhdCB0aGUgbnVtYmVycyBmb3IgYSBsb25nIHRpbWUgYmVmb3JlIHlvdSBub3RpY2UgaXQ6IHRoZSBmdWVsIHJlc2VydmUgcGVyY2VudGFnZSBpcyBub3Qgd2hhdCBpdCBzaG91bGQgYmUuIFRoZSBkaXNjcmVwYW5jeSBpcyBzbWFsbC4gQnV0IGl0IHNob3VsZG4ndCBleGlzdCBhdCBhbGwuIER1cmluZyBjb2FzdCBwaGFzZSwgdGhlIGRyaXZlIGlzIG9mZi4gRnVlbCBjb25zdW1wdGlvbiBzaG91bGQgYmUgemVyby4gVGhlIGVuZ2luZSBzdGF0dXMgcmVwb3J0IGFuZCBkcml2ZSBub3p6bGUgZGlhZ25vc3RpY3MgbWlnaHQgdGVsbCB5b3UgbW9yZS4="
     },
-
-    "fuel_storage": {
-      "id": "fuel_storage",
-      "name": "Fuel Storage Compartment",
-      "deck": "D",
-      "description": "The fuel storage compartment is a room-sized monitoring station wrapped around the ship's fuel infrastructure. The actual fuel -- deuterium and helium-3 in cryogenic tanks -- is stored in the outer hull, inaccessible from inside, visible only through status displays and sensor readings. Six tank status monitors line the walls, each showing fill level, temperature, pressure, and flow rate for one of the ship's fuel reserves. Tanks 1 through 5 read nominal: full to projected levels, temperatures stable, pressures within spec. Tank 6 is the anomaly. Its fill level reads 87.3% where it should read 94.1%. Its temperature is 0.3 degrees above the other tanks -- insignificant in absolute terms but meaningful in a system designed for uniformity. A pressure fluctuation graph on the adjacent display shows irregular oscillations over the past six days, a sawtooth pattern that suggests the tank's contents are not entirely at rest. The room is cold, insulated by proximity to the fuel tanks, and your breath leaves brief clouds that drift in the near-zero gravity.",
-      "exits": {
-        "w": "corridor_d"
+    "ZnVlbF9zdG9yYWdl": {
+      "aWQ=": "ZnVlbF9zdG9yYWdl",
+      "bmFtZQ==": "RnVlbCBTdG9yYWdlIENvbXBhcnRtZW50",
+      "ZGVjaw==": "RA==",
+      "ZGVzY3JpcHRpb24=": "VGhlIGZ1ZWwgc3RvcmFnZSBjb21wYXJ0bWVudCBpcyBhIHJvb20tc2l6ZWQgbW9uaXRvcmluZyBzdGF0aW9uIHdyYXBwZWQgYXJvdW5kIHRoZSBzaGlwJ3MgZnVlbCBpbmZyYXN0cnVjdHVyZS4gVGhlIGFjdHVhbCBmdWVsIC0tIGRldXRlcml1bSBhbmQgaGVsaXVtLTMgaW4gY3J5b2dlbmljIHRhbmtzIC0tIGlzIHN0b3JlZCBpbiB0aGUgb3V0ZXIgaHVsbCwgaW5hY2Nlc3NpYmxlIGZyb20gaW5zaWRlLCB2aXNpYmxlIG9ubHkgdGhyb3VnaCBzdGF0dXMgZGlzcGxheXMgYW5kIHNlbnNvciByZWFkaW5ncy4gU2l4IHRhbmsgc3RhdHVzIG1vbml0b3JzIGxpbmUgdGhlIHdhbGxzLCBlYWNoIHNob3dpbmcgZmlsbCBsZXZlbCwgdGVtcGVyYXR1cmUsIHByZXNzdXJlLCBhbmQgZmxvdyByYXRlIGZvciBvbmUgb2YgdGhlIHNoaXAncyBmdWVsIHJlc2VydmVzLiBUYW5rcyAxIHRocm91Z2ggNSByZWFkIG5vbWluYWw6IGZ1bGwgdG8gcHJvamVjdGVkIGxldmVscywgdGVtcGVyYXR1cmVzIHN0YWJsZSwgcHJlc3N1cmVzIHdpdGhpbiBzcGVjLiBUYW5rIDYgaXMgdGhlIGFub21hbHkuIEl0cyBmaWxsIGxldmVsIHJlYWRzIDg3LjMlIHdoZXJlIGl0IHNob3VsZCByZWFkIDk0LjElLiBJdHMgdGVtcGVyYXR1cmUgaXMgMC4zIGRlZ3JlZXMgYWJvdmUgdGhlIG90aGVyIHRhbmtzIC0tIGluc2lnbmlmaWNhbnQgaW4gYWJzb2x1dGUgdGVybXMgYnV0IG1lYW5pbmdmdWwgaW4gYSBzeXN0ZW0gZGVzaWduZWQgZm9yIHVuaWZvcm1pdHkuIEEgcHJlc3N1cmUgZmx1Y3R1YXRpb24gZ3JhcGggb24gdGhlIGFkamFjZW50IGRpc3BsYXkgc2hvd3MgaXJyZWd1bGFyIG9zY2lsbGF0aW9ucyBvdmVyIHRoZSBwYXN0IHNpeCBkYXlzLCBhIHNhd3Rvb3RoIHBhdHRlcm4gdGhhdCBzdWdnZXN0cyB0aGUgdGFuaydzIGNvbnRlbnRzIGFyZSBub3QgZW50aXJlbHkgYXQgcmVzdC4gVGhlIHJvb20gaXMgY29sZCwgaW5zdWxhdGVkIGJ5IHByb3hpbWl0eSB0byB0aGUgZnVlbCB0YW5rcywgYW5kIHlvdXIgYnJlYXRoIGxlYXZlcyBicmllZiBjbG91ZHMgdGhhdCBkcmlmdCBpbiB0aGUgbmVhci16ZXJvIGdyYXZpdHku",
+      "ZXhpdHM=": {
+        "dw==": "Y29ycmlkb3JfZA=="
       },
-      "items": ["fuel_gauge_reading", "tank_6_analysis"],
-      "conditions": {},
-      "firstVisit": "You pull up Tank 6's detailed diagnostic and the data tells a story Chen tried to hide. The missing fuel -- 6.8% of capacity -- was consumed by the drive. The flow logs were manually edited to mask the transfer, but the thermal signature is unmistakable: Tank 6 fed the fusion drive during a series of small correction burns spread across Mission Year 17.9. Someone fired the engines while the ship was supposed to be coasting. Someone changed the course. The burn profile is precise, calculated -- not the work of a malfunction but of a navigator who knew exactly how much delta-v was needed and exactly how much fuel it would cost. The temperature differential and pressure oscillations are aftereffects of the rapid fuel extraction, the tank's internal baffles still settling after being drained faster than their design specification. This was deliberate. This was planned. And the margin it left for the deceleration burn at 82 Eridani is razor-thin."
+      "aXRlbXM=": [
+        "ZnVlbF9nYXVnZV9yZWFkaW5n",
+        "dGFua182X2FuYWx5c2lz"
+      ],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "VGFuayA2IGRyYXdzIHlvdXIgYXR0ZW50aW9uLiBJdHMgZmlsbCBsZXZlbCBpcyBsb3dlciB0aGFuIGl0IHNob3VsZCBiZSwgYW5kIGl0cyB0ZW1wZXJhdHVyZSByZWFkcyBzbGlnaHRseSBoaWdoZXIgdGhhbiB0aGUgb3RoZXJzIC0tIGluc2lnbmlmaWNhbnQgaW4gYWJzb2x1dGUgdGVybXMsIGJ1dCBtZWFuaW5nZnVsIGluIGEgc3lzdGVtIGRlc2lnbmVkIGZvciB1bmlmb3JtaXR5LiBBIHByZXNzdXJlIGZsdWN0dWF0aW9uIGdyYXBoIG9uIHRoZSBhZGphY2VudCBkaXNwbGF5IHNob3dzIGlycmVndWxhciBvc2NpbGxhdGlvbnMsIGEgc2F3dG9vdGggcGF0dGVybiB0aGF0IHN1Z2dlc3RzIHRoZSB0YW5rJ3MgY29udGVudHMgYXJlIG5vdCBlbnRpcmVseSBhdCByZXN0LiBTb21ldGhpbmcgaGFwcGVuZWQgdG8gdGhpcyB0YW5rLiBUaGUgZGV0YWlsZWQgZGlhZ25vc3RpY3MgYW5kIGZsb3cgbG9ncyBjb3VsZCB0ZWxsIHlvdSB3aGF0Lg=="
     },
-
-    "airlock_inner": {
-      "id": "airlock_inner",
-      "name": "Airlock - Inner Chamber",
-      "deck": "D",
-      "description": "The inner airlock chamber is a transitional space between the ship's atmosphere and the void, a small room with two heavy doors: one leading back into the spine passage, one leading to the outer airlock and, beyond it, the hull exterior. EVA suits hang in four alcoves along the port wall, each in its own maintenance cradle with helmet, gloves, and life-support pack. Three suits are pristine, sealed in their transit packaging. The fourth -- Suit 3, sized for a medium frame -- has been removed from its packaging, checked, and returned to its cradle. The helmet visor has been cleaned recently; there are still faint wipe marks on the polycarbonate. A pre-EVA checklist is posted on the bulkhead beside the suit alcoves, and a status panel confirms atmosphere on both sides of the inner door. The outer door's status light glows red: OUTER DOOR SEALED - VACUUM BEYOND.",
-      "exits": {
-        "e": "corridor_d",
-        "out": "airlock_outer"
+    "YWlybG9ja19pbm5lcg==": {
+      "aWQ=": "YWlybG9ja19pbm5lcg==",
+      "bmFtZQ==": "QWlybG9jayAtIElubmVyIENoYW1iZXI=",
+      "ZGVjaw==": "RA==",
+      "ZGVzY3JpcHRpb24=": "VGhlIGlubmVyIGFpcmxvY2sgY2hhbWJlciBpcyBhIHRyYW5zaXRpb25hbCBzcGFjZSBiZXR3ZWVuIHRoZSBzaGlwJ3MgYXRtb3NwaGVyZSBhbmQgdGhlIHZvaWQsIGEgc21hbGwgcm9vbSB3aXRoIHR3byBoZWF2eSBkb29yczogb25lIGxlYWRpbmcgYmFjayBpbnRvIHRoZSBzcGluZSBwYXNzYWdlLCBvbmUgbGVhZGluZyB0byB0aGUgb3V0ZXIgYWlybG9jayBhbmQsIGJleW9uZCBpdCwgdGhlIGh1bGwgZXh0ZXJpb3IuIEVWQSBzdWl0cyBoYW5nIGluIGZvdXIgYWxjb3ZlcyBhbG9uZyB0aGUgcG9ydCB3YWxsLCBlYWNoIGluIGl0cyBvd24gbWFpbnRlbmFuY2UgY3JhZGxlIHdpdGggaGVsbWV0LCBnbG92ZXMsIGFuZCBsaWZlLXN1cHBvcnQgcGFjay4gVGhyZWUgc3VpdHMgYXJlIHByaXN0aW5lLCBzZWFsZWQgaW4gdGhlaXIgdHJhbnNpdCBwYWNrYWdpbmcuIFRoZSBmb3VydGggLS0gU3VpdCAzLCBzaXplZCBmb3IgYSBtZWRpdW0gZnJhbWUgLS0gaGFzIGJlZW4gcmVtb3ZlZCBmcm9tIGl0cyBwYWNrYWdpbmcsIGNoZWNrZWQsIGFuZCByZXR1cm5lZCB0byBpdHMgY3JhZGxlLiBUaGUgaGVsbWV0IHZpc29yIGhhcyBiZWVuIGNsZWFuZWQgcmVjZW50bHk7IHRoZXJlIGFyZSBzdGlsbCBmYWludCB3aXBlIG1hcmtzIG9uIHRoZSBwb2x5Y2FyYm9uYXRlLiBBIHByZS1FVkEgY2hlY2tsaXN0IGlzIHBvc3RlZCBvbiB0aGUgYnVsa2hlYWQgYmVzaWRlIHRoZSBzdWl0IGFsY292ZXMsIGFuZCBhIHN0YXR1cyBwYW5lbCBjb25maXJtcyBhdG1vc3BoZXJlIG9uIGJvdGggc2lkZXMgb2YgdGhlIGlubmVyIGRvb3IuIFRoZSBvdXRlciBkb29yJ3Mgc3RhdHVzIGxpZ2h0IGdsb3dzIHJlZDogT1VURVIgRE9PUiBTRUFMRUQgLSBWQUNVVU0gQkVZT05ELg==",
+      "ZXhpdHM=": {
+        "ZQ==": "Y29ycmlkb3JfZA==",
+        "b3V0": "YWlybG9ja19vdXRlcg=="
       },
-      "items": ["eva_suit", "eva_checklist", "tether_line"],
-      "conditions": {},
-      "firstVisit": "You examine Suit 3 more closely. It has been used -- not just checked, but worn extensively. The boot soles show deep micro-abrasion consistent with hours of mag-lock contact on hull plating, and the suit's internal atmosphere log records seven EVA sessions over a three-month period, totalling 19 hours and 42 minutes of extravehicular activity. Seven trips outside. The suit's nameplate has been updated in permanent marker: CHEN, W. The helmet camera recorded all seven sessions, and the footage is intact -- Chen didn't delete anything. She wanted someone to see what she was building. The most recent EVA was five months ago. Whatever she was installing on the hull, she finished it."
+      "aXRlbXM=": [
+        "ZXZhX3N1aXQ=",
+        "ZXZhX2NoZWNrbGlzdA==",
+        "dGV0aGVyX2xpbmU="
+      ],
+      "Y29uZGl0aW9ucw==": {},
+      "Zmlyc3RWaXNpdA==": "WW91IGV4YW1pbmUgU3VpdCAzIG1vcmUgY2xvc2VseS4gSXQgaGFzIGJlZW4gdXNlZCAtLSBub3QganVzdCBjaGVja2VkLCBidXQgd29ybiBleHRlbnNpdmVseS4gVGhlIGJvb3Qgc29sZXMgc2hvdyBkZWVwIG1pY3JvLWFicmFzaW9uIGNvbnNpc3RlbnQgd2l0aCBob3VycyBvZiBtYWctbG9jayBjb250YWN0IG9uIGh1bGwgcGxhdGluZy4gU29tZW9uZSBzcGVudCBhIGxvdCBvZiB0aW1lIG91dHNpZGUuIFRoZSBzdWl0J3MgbmFtZXBsYXRlIGhhcyBiZWVuIHVwZGF0ZWQgaW4gcGVybWFuZW50IG1hcmtlciwgYW5kIHRoZSBoZWxtZXQgY2FtZXJhIGFwcGVhcnMgdG8gY29udGFpbiByZWNvcmRlZCBmb290YWdlLiBUaGUgRVZBIGNoZWNrbGlzdCBhbmQgc3VpdCBsb2dzIGNvdWxkIHRlbGwgeW91IG1vcmUu"
     },
-
-    "airlock_outer": {
-      "id": "airlock_outer",
-      "name": "Airlock - Outer Chamber",
-      "deck": "D",
-      "description": "The outer airlock is barely large enough for two suited figures. Its walls are bare metal, uninsulated, and cold radiates from them in waves you can feel even through an EVA suit's thermal regulation. A single porthole in the outer door offers a disk of absolute blackness -- not the darkness of a room with the lights off, but the void itself, the absence of everything, occasionally punctuated by the hard, unwinking point of a star. Status displays flanking the outer door show external conditions: temperature -270.4 Celsius, pressure 0.000 atmospheres, radiation nominal. A cycling control panel allows you to depressurize the chamber and open the outer door, a process that takes 90 seconds and is accompanied by the deeply unsettling sound of air being pumped out of the space you occupy. Tether attachment points are bolted to the frame of the outer door, rated for 500kg of dynamic load.",
-      "exits": {
-        "in": "airlock_inner",
-        "out": "hull_exterior"
+    "YWlybG9ja19vdXRlcg==": {
+      "aWQ=": "YWlybG9ja19vdXRlcg==",
+      "bmFtZQ==": "QWlybG9jayAtIE91dGVyIENoYW1iZXI=",
+      "ZGVjaw==": "RA==",
+      "ZGVzY3JpcHRpb24=": "VGhlIG91dGVyIGFpcmxvY2sgaXMgYmFyZWx5IGxhcmdlIGVub3VnaCBmb3IgdHdvIHN1aXRlZCBmaWd1cmVzLiBJdHMgd2FsbHMgYXJlIGJhcmUgbWV0YWwsIHVuaW5zdWxhdGVkLCBhbmQgY29sZCByYWRpYXRlcyBmcm9tIHRoZW0gaW4gd2F2ZXMgeW91IGNhbiBmZWVsIGV2ZW4gdGhyb3VnaCBhbiBFVkEgc3VpdCdzIHRoZXJtYWwgcmVndWxhdGlvbi4gQSBzaW5nbGUgcG9ydGhvbGUgaW4gdGhlIG91dGVyIGRvb3Igb2ZmZXJzIGEgZGlzayBvZiBhYnNvbHV0ZSBibGFja25lc3MgLS0gbm90IHRoZSBkYXJrbmVzcyBvZiBhIHJvb20gd2l0aCB0aGUgbGlnaHRzIG9mZiwgYnV0IHRoZSB2b2lkIGl0c2VsZiwgdGhlIGFic2VuY2Ugb2YgZXZlcnl0aGluZywgb2NjYXNpb25hbGx5IHB1bmN0dWF0ZWQgYnkgdGhlIGhhcmQsIHVud2lua2luZyBwb2ludCBvZiBhIHN0YXIuIFN0YXR1cyBkaXNwbGF5cyBmbGFua2luZyB0aGUgb3V0ZXIgZG9vciBzaG93IGV4dGVybmFsIGNvbmRpdGlvbnM6IHRlbXBlcmF0dXJlIC0yNzAuNCBDZWxzaXVzLCBwcmVzc3VyZSAwLjAwMCBhdG1vc3BoZXJlcywgcmFkaWF0aW9uIG5vbWluYWwuIEEgY3ljbGluZyBjb250cm9sIHBhbmVsIGFsbG93cyB5b3UgdG8gZGVwcmVzc3VyaXplIHRoZSBjaGFtYmVyIGFuZCBvcGVuIHRoZSBvdXRlciBkb29yLCBhIHByb2Nlc3MgdGhhdCB0YWtlcyA5MCBzZWNvbmRzIGFuZCBpcyBhY2NvbXBhbmllZCBieSB0aGUgZGVlcGx5IHVuc2V0dGxpbmcgc291bmQgb2YgYWlyIGJlaW5nIHB1bXBlZCBvdXQgb2YgdGhlIHNwYWNlIHlvdSBvY2N1cHkuIFRldGhlciBhdHRhY2htZW50IHBvaW50cyBhcmUgYm9sdGVkIHRvIHRoZSBmcmFtZSBvZiB0aGUgb3V0ZXIgZG9vciwgcmF0ZWQgZm9yIDUwMGtnIG9mIGR5bmFtaWMgbG9hZC4=",
+      "ZXhpdHM=": {
+        "aW4=": "YWlybG9ja19pbm5lcg==",
+        "b3V0": "aHVsbF9leHRlcmlvcg=="
       },
-      "items": [],
-      "conditions": {
-        "enter": {
-          "has_eva_suit": true,
-          "fail_message": "You cannot enter the outer airlock without an EVA suit. The depressurization cycle would kill you in approximately 15 seconds -- loss of consciousness in 10, ebullism and hypoxia completing the process shortly after. The inner door's safety interlock will not allow cycling without a sealed suit on the occupant."
+      "aXRlbXM=": [],
+      "Y29uZGl0aW9ucw==": {
+        "ZW50ZXI=": {
+          "aGFzX2V2YV9zdWl0": true,
+          "ZmFpbF9tZXNzYWdl": "WW91IGNhbm5vdCBlbnRlciB0aGUgb3V0ZXIgYWlybG9jayB3aXRob3V0IGFuIEVWQSBzdWl0LiBUaGUgZGVwcmVzc3VyaXphdGlvbiBjeWNsZSB3b3VsZCBraWxsIHlvdSBpbiBhcHByb3hpbWF0ZWx5IDE1IHNlY29uZHMgLS0gbG9zcyBvZiBjb25zY2lvdXNuZXNzIGluIDEwLCBlYnVsbGlzbSBhbmQgaHlwb3hpYSBjb21wbGV0aW5nIHRoZSBwcm9jZXNzIHNob3J0bHkgYWZ0ZXIuIFRoZSBpbm5lciBkb29yJ3Mgc2FmZXR5IGludGVybG9jayB3aWxsIG5vdCBhbGxvdyBjeWNsaW5nIHdpdGhvdXQgYSBzZWFsZWQgc3VpdCBvbiB0aGUgb2NjdXBhbnQu"
         }
       },
-      "firstVisit": "As the inner door seals behind you and the chamber begins to depressurize, the sound drains away in stages -- first the high frequencies, then the mids, then everything, until your own breathing inside the helmet is the loudest sound in the universe. The suit's heads-up display shows your vitals, oxygen reserves, and tether status. Through the porthole, as the outer door's locks disengage, you see something you have only ever seen in photographs and simulations: interstellar space, unmediated by atmosphere or viewport glass, raw and immediate and vast beyond the capacity of human cognition to process. You are 19.3 light-years from home. There is no one coming to help."
+      "Zmlyc3RWaXNpdA==": "QXMgdGhlIGlubmVyIGRvb3Igc2VhbHMgYmVoaW5kIHlvdSBhbmQgdGhlIGNoYW1iZXIgYmVnaW5zIHRvIGRlcHJlc3N1cml6ZSwgdGhlIHNvdW5kIGRyYWlucyBhd2F5IGluIHN0YWdlcyAtLSBmaXJzdCB0aGUgaGlnaCBmcmVxdWVuY2llcywgdGhlbiB0aGUgbWlkcywgdGhlbiBldmVyeXRoaW5nLCB1bnRpbCB5b3VyIG93biBicmVhdGhpbmcgaW5zaWRlIHRoZSBoZWxtZXQgaXMgdGhlIGxvdWRlc3Qgc291bmQgaW4gdGhlIHVuaXZlcnNlLiBUaGUgc3VpdCdzIGhlYWRzLXVwIGRpc3BsYXkgc2hvd3MgeW91ciB2aXRhbHMsIG94eWdlbiByZXNlcnZlcywgYW5kIHRldGhlciBzdGF0dXMuIFRocm91Z2ggdGhlIHBvcnRob2xlLCBhcyB0aGUgb3V0ZXIgZG9vcidzIGxvY2tzIGRpc2VuZ2FnZSwgeW91IHNlZSBzb21ldGhpbmcgeW91IGhhdmUgb25seSBldmVyIHNlZW4gaW4gcGhvdG9ncmFwaHMgYW5kIHNpbXVsYXRpb25zOiBpbnRlcnN0ZWxsYXIgc3BhY2UsIHVubWVkaWF0ZWQgYnkgYXRtb3NwaGVyZSBvciB2aWV3cG9ydCBnbGFzcywgcmF3IGFuZCBpbW1lZGlhdGUgYW5kIHZhc3QgYmV5b25kIHRoZSBjYXBhY2l0eSBvZiBodW1hbiBjb2duaXRpb24gdG8gcHJvY2Vzcy4gWW91IGFyZSAxOS4zIGxpZ2h0LXllYXJzIGZyb20gaG9tZS4gVGhlcmUgaXMgbm8gb25lIGNvbWluZyB0byBoZWxwLg=="
     },
-
-    "hull_exterior": {
-      "id": "hull_exterior",
-      "name": "Hull Exterior - EVA",
-      "deck": "D",
-      "description": "You are outside. Tethered to the hull of the ISV Kepler's Promise, magnetic boots holding you to the ship's skin, you float in a silence so complete it has texture. The ship stretches away from you in both directions -- forward to the sensor array and communications dishes, aft to the drive nozzle's dark bell -- a kilometer of engineered metal hurtling through the interstellar medium at 36,000 kilometers per second. The stars do not twinkle here. They are steady, sharp, merciless points of light in every direction, so numerous that the concept of constellation dissolves into a continuous field of ancient fire. The sun is behind you, indistinguishable from any other star at this distance. 82 Eridani is ahead, equally anonymous. The hull plating beneath your boots is scarred by nineteen years of micrometeorite impacts -- tiny craters, most no larger than a pinhead, that speak to the violence of traveling through space that only appears empty. And there, on the starboard hull, between sections 7 and 8, you can see it: modification. Not damage -- something deliberate. A section of hull plating has been removed -- cleanly, with tools -- and in the cavity beneath, where there should be only insulation and structural members, someone has installed equipment. A hand-built antenna array, aimed at a fixed point in the void.",
-      "exits": {
-        "in": "airlock_outer"
+    "aHVsbF9leHRlcmlvcg==": {
+      "aWQ=": "aHVsbF9leHRlcmlvcg==",
+      "bmFtZQ==": "SHVsbCBFeHRlcmlvciAtIEVWQQ==",
+      "ZGVjaw==": "RA==",
+      "ZGVzY3JpcHRpb24=": "WW91IGFyZSBvdXRzaWRlLiBUZXRoZXJlZCB0byB0aGUgaHVsbCBvZiB0aGUgSVNWIEtlcGxlcidzIFByb21pc2UsIG1hZ25ldGljIGJvb3RzIGhvbGRpbmcgeW91IHRvIHRoZSBzaGlwJ3Mgc2tpbiwgeW91IGZsb2F0IGluIGEgc2lsZW5jZSBzbyBjb21wbGV0ZSBpdCBoYXMgdGV4dHVyZS4gVGhlIHNoaXAgc3RyZXRjaGVzIGF3YXkgZnJvbSB5b3UgaW4gYm90aCBkaXJlY3Rpb25zIC0tIGZvcndhcmQgdG8gdGhlIHNlbnNvciBhcnJheSBhbmQgY29tbXVuaWNhdGlvbnMgZGlzaGVzLCBhZnQgdG8gdGhlIGRyaXZlIG5venpsZSdzIGRhcmsgYmVsbCAtLSBhIGtpbG9tZXRlciBvZiBlbmdpbmVlcmVkIG1ldGFsIGh1cnRsaW5nIHRocm91Z2ggdGhlIGludGVyc3RlbGxhciBtZWRpdW0gYXQgMzYsMDAwIGtpbG9tZXRlcnMgcGVyIHNlY29uZC4gVGhlIHN0YXJzIGRvIG5vdCB0d2lua2xlIGhlcmUuIFRoZXkgYXJlIHN0ZWFkeSwgc2hhcnAsIG1lcmNpbGVzcyBwb2ludHMgb2YgbGlnaHQgaW4gZXZlcnkgZGlyZWN0aW9uLCBzbyBudW1lcm91cyB0aGF0IHRoZSBjb25jZXB0IG9mIGNvbnN0ZWxsYXRpb24gZGlzc29sdmVzIGludG8gYSBjb250aW51b3VzIGZpZWxkIG9mIGFuY2llbnQgZmlyZS4gVGhlIHN1biBpcyBiZWhpbmQgeW91LCBpbmRpc3Rpbmd1aXNoYWJsZSBmcm9tIGFueSBvdGhlciBzdGFyIGF0IHRoaXMgZGlzdGFuY2UuIDgyIEVyaWRhbmkgaXMgYWhlYWQsIGVxdWFsbHkgYW5vbnltb3VzLiBUaGUgaHVsbCBwbGF0aW5nIGJlbmVhdGggeW91ciBib290cyBpcyBzY2FycmVkIGJ5IG5pbmV0ZWVuIHllYXJzIG9mIG1pY3JvbWV0ZW9yaXRlIGltcGFjdHMgLS0gdGlueSBjcmF0ZXJzLCBtb3N0IG5vIGxhcmdlciB0aGFuIGEgcGluaGVhZCwgdGhhdCBzcGVhayB0byB0aGUgdmlvbGVuY2Ugb2YgdHJhdmVsaW5nIHRocm91Z2ggc3BhY2UgdGhhdCBvbmx5IGFwcGVhcnMgZW1wdHkuIEFuZCB0aGVyZSwgb24gdGhlIHN0YXJib2FyZCBodWxsLCBiZXR3ZWVuIHNlY3Rpb25zIDcgYW5kIDgsIHlvdSBjYW4gc2VlIGl0OiBtb2RpZmljYXRpb24uIE5vdCBkYW1hZ2UgLS0gc29tZXRoaW5nIGRlbGliZXJhdGUuIEEgc2VjdGlvbiBvZiBodWxsIHBsYXRpbmcgaGFzIGJlZW4gcmVtb3ZlZCAtLSBjbGVhbmx5LCB3aXRoIHRvb2xzIC0tIGFuZCBpbiB0aGUgY2F2aXR5IGJlbmVhdGgsIHdoZXJlIHRoZXJlIHNob3VsZCBiZSBvbmx5IGluc3VsYXRpb24gYW5kIHN0cnVjdHVyYWwgbWVtYmVycywgc29tZW9uZSBoYXMgaW5zdGFsbGVkIGVxdWlwbWVudC4gQSBoYW5kLWJ1aWx0IGFudGVubmEgYXJyYXksIGFpbWVkIGF0IGEgZml4ZWQgcG9pbnQgaW4gdGhlIHZvaWQu",
+      "ZXhpdHM=": {
+        "aW4=": "YWlybG9ja19vdXRlcg=="
       },
-      "items": ["hull_sample", "damage_photo"],
-      "conditions": {
-        "enter": {
-          "has_eva_suit": true,
-          "fail_message": "Exposure to hard vacuum without an EVA suit is not survivable. This is not a design limitation; it is physics."
+      "aXRlbXM=": [
+        "aHVsbF9zYW1wbGU=",
+        "ZGFtYWdlX3Bob3Rv"
+      ],
+      "Y29uZGl0aW9ucw==": {
+        "ZW50ZXI=": {
+          "aGFzX2V2YV9zdWl0": true,
+          "ZmFpbF9tZXNzYWdl": "RXhwb3N1cmUgdG8gaGFyZCB2YWN1dW0gd2l0aG91dCBhbiBFVkEgc3VpdCBpcyBub3Qgc3Vydml2YWJsZS4gVGhpcyBpcyBub3QgYSBkZXNpZ24gbGltaXRhdGlvbjsgaXQgaXMgcGh5c2ljcy4="
         }
       },
-      "firstVisit": "Your helmet lamp illuminates the damaged section and your breath catches. The removed hull plate has been set aside, mag-locked to the hull nearby, not discarded -- someone intended to replace it. Beneath, in the cavity between the outer hull and the pressure vessel, you find Chen's secret project. A custom-built antenna array, hand-fabricated from the machine shop's stock, wired into the ship's power bus through a splice so clean it would pass inspection. The array is enormous -- far too large for standard communications, its parabolic reflector aimed at a fixed point in the sky that your suit's navigation overlay identifies as... nothing. Empty space. No star, no relay station, no known object. But the array's signal log tells a different story: it has been transmitting. And receiving. A data burst, 47 seconds long, arrived eleven hours ago from the coordinates the array is aimed at. The signal strength implies a source approximately 0.3 light-years away -- impossibly close for any known deep-space installation. You think of the fabricated components in the machine shop. You think of Chen Wei-Lin, alone for seventeen months, building this with her own hands, aiming it at something she found in the dark. Your suit's sensor suite logs everything. You will want to review this data. Very carefully."
+      "Zmlyc3RWaXNpdA==": "WW91ciBoZWxtZXQgbGFtcCBpbGx1bWluYXRlcyB0aGUgbW9kaWZpZWQgc2VjdGlvbiBhbmQgeW91ciBicmVhdGggY2F0Y2hlcy4gQSBodWxsIHBsYXRlIGhhcyBiZWVuIHJlbW92ZWQgYW5kIHNldCBhc2lkZSwgbWFnLWxvY2tlZCB0byB0aGUgaHVsbCBuZWFyYnkgLS0gbm90IGRpc2NhcmRlZCwgYXMgdGhvdWdoIHNvbWVvbmUgaW50ZW5kZWQgdG8gcmVwbGFjZSBpdC4gQmVuZWF0aCwgaW4gdGhlIGNhdml0eSBiZXR3ZWVuIHRoZSBvdXRlciBodWxsIGFuZCB0aGUgcHJlc3N1cmUgdmVzc2VsLCB5b3UgZmluZCBzb21ldGhpbmcgdGhhdCBzaG91bGQgbm90IGV4aXN0LiBBIGN1c3RvbS1idWlsdCBhbnRlbm5hIGFycmF5LCBoYW5kLWZhYnJpY2F0ZWQsIHdpcmVkIGludG8gdGhlIHNoaXAncyBwb3dlciBidXMgdGhyb3VnaCBhIHNwbGljZSBzbyBjbGVhbiBpdCB3b3VsZCBwYXNzIGluc3BlY3Rpb24uIFRoZSBhcnJheSBpcyBlbm9ybW91cyAtLSBmYXIgdG9vIGxhcmdlIGZvciBzdGFuZGFyZCBjb21tdW5pY2F0aW9ucy4gSXRzIHBhcmFib2xpYyByZWZsZWN0b3IgaXMgYWltZWQgYXQgYSBmaXhlZCBwb2ludCBpbiB0aGUgc2t5LiBZb3VyIHN1aXQncyBuYXZpZ2F0aW9uIG92ZXJsYXkgaWRlbnRpZmllcyB0aGUgdGFyZ2V0IGNvb3JkaW5hdGVzIGFzIGVtcHR5IHNwYWNlLiBObyBzdGFyLiBObyByZWxheSBzdGF0aW9uLiBObyBrbm93biBvYmplY3QuIEJ1dCB0aGUgYXJyYXkncyBzaWduYWwgbG9nIHRlbGxzIGEgZGlmZmVyZW50IHN0b3J5LiBZb3VyIHN1aXQncyBzZW5zb3Igc3VpdGUgbG9ncyBldmVyeXRoaW5nLiBZb3Ugd2lsbCB3YW50IHRvIHJldmlldyB0aGlzIGRhdGEgY2FyZWZ1bGx5Lg=="
     }
   }
 }

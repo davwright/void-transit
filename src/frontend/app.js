@@ -94,9 +94,11 @@
     }
   });
 
-  // Click anywhere to focus input
+  // Click anywhere to focus input (but not if user is selecting text)
   document.addEventListener('click', function () {
-    input.focus();
+    if (!window.getSelection().toString()) {
+      input.focus();
+    }
   });
 
   async function processInput(text) {
@@ -146,6 +148,29 @@
   function handleResponse(data) {
     if (data.prose) {
       appendNarrative(data.prose);
+    }
+
+    // If disambiguation, show numbered choices (clickable or type the number)
+    if (data.type === 'disambiguate' && data.candidates) {
+      const choiceDiv = document.createElement('div');
+      choiceDiv.className = 'disambiguation';
+      data.candidates.forEach((c, i) => {
+        const btn = document.createElement('div');
+        btn.className = 'choice-btn';
+        btn.textContent = `  ${i + 1}. ${c.label}`;
+        btn.style.cursor = 'pointer';
+        btn.addEventListener('click', () => {
+          choiceDiv.remove();
+          processInput(String(i + 1));
+        });
+        choiceDiv.appendChild(btn);
+      });
+      const hint = document.createElement('div');
+      hint.className = 'meta-text';
+      hint.textContent = 'Type a number or click to choose.';
+      choiceDiv.appendChild(hint);
+      output.appendChild(choiceDiv);
+      scrollToBottom();
     }
 
     updateStatus({
@@ -226,25 +251,18 @@
   // --- Init ---
 
   async function init() {
-    // Check if we have an existing session
-    if (sessionId) {
-      try {
-        const res = await fetch('/api/command', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ sessionId, input: 'look' })
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          appendMeta('Session resumed.');
-          handleResponse(data);
-          return;
-        }
-      } catch {
-        // Session expired or server restarted
+    // Show version in browser title
+    try {
+      const vRes = await fetch('/api/version');
+      if (vRes.ok) {
+        const { version } = await vRes.json();
+        document.title = `VOID TRANSIT v${version}`;
       }
-    }
+    } catch { /* ignore */ }
+
+    // Always start fresh
+    sessionId = null;
+    localStorage.removeItem('voidtransit_session');
 
     // No valid session — start new game
     await startNewGame();

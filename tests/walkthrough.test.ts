@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import GameEngine from '../src/engine/GameEngine';
-import { parse } from '../src/nlp/FallbackParser';
+import { parse } from '../src/nlp/Parser';
 import { GameState, ActionResult } from '../src/types';
 
 /**
@@ -45,6 +45,7 @@ describe('Complete Walkthrough', () => {
     });
 
     it('can pick up starting items', () => {
+      cmd('search');  // multitool is hidden until searched
       cmd('take multitool');
       cmd('take datapad');
       expect(hasItem('multitool')).toBe(true);
@@ -145,6 +146,7 @@ describe('Complete Walkthrough', () => {
   describe('Item Interactions', () => {
     it('can pick up and examine items from multiple rooms', () => {
       // Get items from cryo_bay
+      cmd('search');  // reveal hidden multitool
       cmd('take multitool');
       cmd('take datapad');
       expect(hasItem('multitool')).toBe(true);
@@ -274,7 +276,8 @@ describe('Complete Walkthrough', () => {
   describe('Error Handling', () => {
     it('handles unknown commands gracefully', () => {
       const result = cmd('xyzzy plugh');
-      expect(result.type).toBe('unknown');
+      // Unknown words are now treated as examine attempts
+      expect(result.type).toBe('examine_failed');
     });
 
     it('handles examining nonexistent items gracefully', () => {

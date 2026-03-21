@@ -2,6 +2,7 @@ import { GameState } from '../types';
 import * as fs from 'fs';
 import * as path from 'path';
 import config from '../config';
+import { encodeObject, decodeObject } from '../encoding';
 
 interface SaveData {
   version: number;
@@ -34,6 +35,7 @@ interface SerializedState {
   radiationExposure: number;
   conversationHistory: Array<{ turn: number; intent: unknown; resultType: string }>;
   globalEvents: string[];
+  worldLore: Record<string, string>;
 }
 
 interface SaveResult {
@@ -92,7 +94,7 @@ class SaveManager {
 
     const filename = `${this._sanitize(slotName)}.json`;
     const filepath = path.join(this.savesDir, filename);
-    fs.writeFileSync(filepath, JSON.stringify(saveData, null, 2), 'utf-8');
+    fs.writeFileSync(filepath, JSON.stringify(encodeObject(saveData), null, 2), 'utf-8');
 
     return { success: true, filename, timestamp: saveData.timestamp };
   }
@@ -106,7 +108,10 @@ class SaveManager {
     }
 
     const raw = fs.readFileSync(filepath, 'utf-8');
-    const saveData: SaveData = JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    // Detect old (plaintext) vs new (encoded) save format
+    const isEncoded = !('version' in parsed) && !('state' in parsed);
+    const saveData: SaveData = isEncoded ? decodeObject(parsed) : parsed;
 
     return {
       success: true,
@@ -133,7 +138,9 @@ class SaveManager {
     for (const file of files) {
       try {
         const raw = fs.readFileSync(path.join(this.savesDir, file), 'utf-8');
-        const data: SaveData = JSON.parse(raw);
+        const parsed = JSON.parse(raw);
+        const isEncoded = !('version' in parsed) && !('state' in parsed);
+        const data: SaveData = isEncoded ? decodeObject(parsed) : parsed;
         saves.push({
           slotName: data.slotName,
           filename: file,
@@ -183,7 +190,8 @@ class SaveManager {
       playerHealth: gameState.playerHealth,
       radiationExposure: gameState.radiationExposure || 0,
       conversationHistory: (gameState.conversationHistory || []).slice(-config.maxTurnHistory),
-      globalEvents: [...(gameState.globalEvents || [])]
+      globalEvents: [...(gameState.globalEvents || [])],
+      worldLore: { ...(gameState.worldLore || {}) }
     };
   }
 
@@ -191,7 +199,8 @@ class SaveManager {
     return {
       ...saved,
       visitedRooms: new Set(saved.visitedRooms),
-      conversationHistory: saved.conversationHistory || []
+      conversationHistory: saved.conversationHistory || [],
+      worldLore: saved.worldLore || {}
     } as GameState;
   }
 

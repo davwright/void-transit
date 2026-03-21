@@ -181,6 +181,9 @@ class StoryManager {
         if (!(value as Record<string, unknown>[]).every(t => this._checkTrigger(t, gameState))) return false;
       } else if (key === 'or') {
         if (!(value as Record<string, unknown>[]).some(t => this._checkTrigger(t, gameState))) return false;
+      } else if (key === 'type' && value === 'game_start') {
+        // game_start triggers on the first turn only
+        if (gameState.turnCount > 1) return false;
       } else if (key === 'room') {
         if (gameState.currentRoom !== value) return false;
       } else if (key === 'turnCount_gte') {
@@ -195,6 +198,9 @@ class StoryManager {
         if (gameState.visitedRooms.has(key.substring(8)) !== value) return false;
       } else if (key === 'health_below') {
         if ((gameState.playerHealth || 100) >= (value as number)) return false;
+      } else if (key !== 'type') {
+        // Unknown trigger key — fail safe, don't silently match
+        return false;
       }
     }
     return true;

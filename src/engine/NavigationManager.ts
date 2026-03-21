@@ -164,28 +164,28 @@ class NavigationManager {
   }
 
   _noExitMessage(direction: string): string {
-    const long = this._longDir(direction) || direction;
+    const display = this._longDir(direction) || direction;
     const messages: Record<string, string> = {
-      north: 'There is nothing to the north.',
-      south: 'There is nothing to the south.',
-      east: 'There is nothing to the east.',
-      west: 'There is nothing to the west.',
+      fore: 'Nothing lies fore.',
+      aft: 'Nothing lies aft.',
+      port: 'Nothing lies to port.',
+      starboard: 'Nothing lies to starboard.',
       up: 'There is nothing above you.',
       down: 'There is nothing below you.',
       in: 'There is nothing to enter here.',
       out: 'There is no way out in that direction.'
     };
-    return messages[long] || `You can't go ${direction}.`;
+    return messages[display] || `You can't go ${direction}.`;
   }
 
-  // Direction abbreviation helpers — room data may use 'n','s','e','w' or 'north','south', etc.
+  // Direction display helpers — room data uses 'n','s','e','w', display uses nautical
   _shortDir(dir: string): string {
-    const map: Record<string, string> = { north: 'n', south: 's', east: 'e', west: 'w', up: 'up', down: 'down', in: 'in', out: 'out' };
+    const map: Record<string, string> = { north: 'n', south: 's', east: 'e', west: 'w', fore: 'n', aft: 's', port: 'w', starboard: 'e', up: 'up', down: 'down', in: 'in', out: 'out' };
     return map[dir] || dir;
   }
 
   _longDir(dir: string): string {
-    const map: Record<string, string> = { n: 'north', s: 'south', e: 'east', w: 'west', u: 'up', d: 'down' };
+    const map: Record<string, string> = { n: 'fore', s: 'aft', e: 'starboard', w: 'port', north: 'fore', south: 'aft', east: 'starboard', west: 'port', u: 'up', d: 'down' };
     return map[dir] || dir;
   }
 }

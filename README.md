@@ -104,12 +104,99 @@ USE_HAIKU=false npm start
 ```
 src/
   engine/          Game logic (navigation, inventory, puzzles, story, save/load)
+  engine/InteractionLogger.ts   Interaction & Haiku call logger
   nlp/             NLP layer (Haiku parser, prose generator, fallback parser)
   data/            Game content (rooms, items, puzzles, story, ship systems)
   frontend/        Browser UI (terminal-style interface)
   server.ts        Express API server
   debug.ts         Debug console (development only)
+logs/              Auto-generated JSONL log files (gitignored)
 ```
+
+---
+
+## Data Management & Story Improvement
+
+Every game session generates structured log data that feeds back into story quality. Two JSONL log files are written to `logs/`, rotated daily:
+
+### Haiku Dataset (`logs/haiku-YYYY-MM-DD.jsonl`)
+
+Every call to Claude Haiku is captured as a training/evaluation record:
+
+| Field | Description |
+|---|---|
+| `callType` | `parse` (NLP parsing), `scenery` (freeform questions), or `prose` (narration) |
+| `prompt` | Full prompt including tone directives and system instructions |
+| `response` | Haiku's complete output |
+| `durationMs` | Response latency |
+| `room`, `turnCount` | Game context at time of call |
+| `error` | Failure details if the call failed |
+
+This captures the tone and style guidance sent to Haiku alongside each response, so you can audit whether the prose matches the intended voice, identify drift, and build evaluation sets.
+
+### Interaction Log (`logs/interactions-YYYY-MM-DD.jsonl`)
+
+Every player command is logged end-to-end:
+
+| Field | Description |
+|---|---|
+| `rawInput` | Exactly what the player typed |
+| `parsedIntent` | Action, target, confidence score, whether alternatives existed |
+| `parseMethod` | `local` (deterministic parser) or `haiku` (LLM fallback) |
+| `resultType` | Engine result (e.g. `move_success`, `examine_failed`, `unknown`) |
+| `proseSource` | Whether the displayed text came from Haiku or built-in fallback |
+| `storyContext` | Current act, tension level at time of interaction |
+
+### Using the Logs
+
+**Find parser failures:**
+```bash
+# Commands the parser couldn't handle
+grep '"resultType":"unknown"' logs/interactions-*.jsonl
+```
+
+**Find story inconsistencies:**
+```bash
+# All scenery responses — check for contradictions in the same room
+grep '"callType":"scenery"' logs/haiku-*.jsonl | jq '{room, prompt, response}'
+```
+
+**Audit tone/quality:**
+```bash
+# Review all Haiku prose with the full system prompt that generated it
+grep '"callType":"prose"' logs/haiku-*.jsonl | jq '{prompt, response}'
+```
+
+**Measure Haiku reliability:**
+```bash
+# Error rate and latency
+grep '"error"' logs/haiku-*.jsonl
+grep -o '"durationMs":[0-9]*' logs/haiku-*.jsonl | sort -t: -k2 -n
+```
+
+**Programmatic access** (for tests or analysis scripts):
+```typescript
+import { logger } from './engine/InteractionLogger';
+
+const haikuCalls = logger.readHaikuLogs();      // all haiku prompt/response pairs
+const interactions = logger.readInteractionLogs(); // all player interactions
+
+// Find scenery responses that might contradict each other
+const sceneryByRoom = new Map<string, typeof haikuCalls>();
+for (const entry of haikuCalls.filter(e => e.callType === 'scenery')) {
+  const list = sceneryByRoom.get(entry.room) || [];
+  list.push(entry);
+  sceneryByRoom.set(entry.room, list);
+}
+```
+
+### Improvement Workflow
+
+1. **Play the game** — logs accumulate automatically
+2. **Review failures** — filter for `unknown`, `examine_failed`, `take_failed` to find gaps in parser coverage or missing game content
+3. **Audit Haiku output** — compare scenery responses within the same room for contradictions; check tone against the style guide
+4. **Build regression tests** — use logged prompt/response pairs as expected baselines in test suites
+5. **Expand game data** — when players consistently ask about something missing, add it to `scenery.json` or `items.json`
 
 ---
 

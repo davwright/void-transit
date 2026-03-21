@@ -8,6 +8,7 @@ export interface Config {
   claudeCmd: string;
   maxTurnHistory: number;
   autosaveInterval: number;
+  logsDir: string;
   shipName: string;
   missionName: string;
   destinationSystem: string;
@@ -24,6 +25,7 @@ const config: Config = {
   claudeCmd: 'claude',
   maxTurnHistory: 20,
   autosaveInterval: 5,
+  logsDir: path.join(__dirname, '..', 'logs'),
   shipName: 'ISV Kepler\'s Promise',
   missionName: 'TRANSIT-7',
   destinationSystem: '82 Eridani',

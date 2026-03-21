@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import GameEngine from '../src/engine/GameEngine';
-import { parse } from '../src/nlp/FallbackParser';
+import { parse } from '../src/nlp/Parser';
 import { GameState, ActionResult } from '../src/types';
 
 describe('GameEngine', () => {
@@ -78,6 +78,7 @@ describe('GameEngine', () => {
     });
 
     it('can pick up items in current room', () => {
+      engine.processCommand(SID, parse('search'));  // multitool is hidden until searched
       const result = engine.processCommand(SID, parse('take multitool'));
       expect(result.type).toBe('take_success');
     });
@@ -88,6 +89,7 @@ describe('GameEngine', () => {
     });
 
     it('picked up items appear in inventory', () => {
+      engine.processCommand(SID, parse('search'));
       engine.processCommand(SID, parse('take multitool'));
       const result = engine.processCommand(SID, parse('inventory'));
       expect(result.items!.length).toBeGreaterThan(0);
@@ -95,6 +97,7 @@ describe('GameEngine', () => {
     });
 
     it('can drop items', () => {
+      engine.processCommand(SID, parse('search'));
       engine.processCommand(SID, parse('take multitool'));
       const result = engine.processCommand(SID, parse('drop multitool'));
       expect(result.type).toBe('drop_success');
@@ -107,6 +110,7 @@ describe('GameEngine', () => {
     });
 
     it('can examine items in room', () => {
+      engine.processCommand(SID, parse('search'));  // reveal hidden multitool
       const result = engine.processCommand(SID, parse('examine multitool'));
       expect(result.type).toBe('examine');
       expect(result.text).toBeTruthy();
@@ -121,6 +125,29 @@ describe('GameEngine', () => {
     it('cannot examine nonexistent items', () => {
       const result = engine.processCommand(SID, parse('examine unicorn'));
       expect(result.type).toBe('examine_failed');
+    });
+
+    it('resolves follow-up questions about examined items', () => {
+      // "examine datapad" should find the personal datapad in cryo_bay
+      const r1 = engine.processCommand(SID, parse('examine datapad'));
+      expect(r1.type).toBe('examine');
+      expect(r1.itemId).toBe('datapad');
+
+      // Follow-up question about the datapad should resolve via lastExaminedItem
+      const r2 = engine.processCommand(SID, parse('what is on the datapad'));
+      expect(r2.type).not.toBe('examine_failed');
+    });
+
+    it('word-level matching does not produce false positives', () => {
+      // Navigate to crew_quarters and reveal the photo
+      engine.processCommand(SID, parse('south'));   // corridor_d
+      engine.processCommand(SID, parse('north'));   // corridor_c... need actual path
+      // "examine datapad" in cryo_bay should match datapad, not something else
+      const state = engine.getState(SID)!;
+      state.currentRoom = 'cryo_bay'; // reset for simplicity
+      const result = engine.processCommand(SID, parse('examine personal datapad'));
+      expect(result.type).toBe('examine');
+      expect(result.itemId).toBe('datapad');
     });
   });
 
@@ -174,8 +201,10 @@ describe('GameEngine', () => {
     });
 
     it('can save and load game', () => {
-      // Make some progress
+      // Search to reveal hidden multitool, then take it
+      engine.processCommand(SID, parse('search'));
       engine.processCommand(SID, parse('take multitool'));
+      // Move south to make some progress
       engine.processCommand(SID, parse('south'));
 
       // Save
@@ -255,6 +284,38 @@ describe('GameEngine', () => {
       const result = engine.processCommand(SID, parse('map'));
       expect(result.type).toBe('map');
       expect(result.visited).toBeDefined();
+    });
+  });
+
+  describe('disambiguation', () => {
+    beforeEach(() => {
+      engine.newGame(SID);
+    });
+
+    it('disambiguate picks the valid interpretation when only one works', () => {
+      // An intent with alternatives where only the primary is valid
+      const state = engine.getState(SID)!;
+      const intent = {
+        action: 'examine',
+        target: 'pod',   // "pod" is mentioned in cryo_bay description
+        instrument: null,
+        raw: 'pod',
+        confidence: 0.8,
+        alternatives: [
+          { action: 'move', target: 'pod', instrument: null, raw: 'pod', confidence: 0.3 }
+        ]
+      };
+
+      const result = engine.processCommand(SID, intent);
+      // Should not be a disambiguate response — move to "pod" fails, so examine wins
+      expect(result.type).not.toBe('disambiguate');
+    });
+
+    it('deterministic commands bypass disambiguation entirely', () => {
+      const intent = parse('look');
+      expect(intent.alternatives).toBeUndefined();
+      const result = engine.processCommand(SID, intent);
+      expect(result.type).toBe('look');
     });
   });
 });

@@ -24,12 +24,12 @@ class CommandProcessor {
 
     switch (action) {
       case 'move': return this._handleMove(target, gameState);
-      case 'look': return this._handleLook(target, gameState);
-      case 'examine': return this._handleExamine(target, gameState);
+      case 'look': return this._handleLook(target, gameState, intent.raw);
+      case 'examine': return this._handleExamine(target, gameState, intent.raw);
       case 'take': case 'get': case 'pick_up': return this._handleTake(target, gameState);
       case 'drop': return this._handleDrop(target, gameState);
       case 'inventory': return this._handleInventory(gameState);
-      case 'use': return this._handleUse(target, instrument, gameState);
+      case 'use': case 'activate': case 'deactivate': return this._handleUse(target, instrument, gameState);
       case 'combine': return this._handleCombine(target, instrument, gameState);
       case 'equip': case 'wear': case 'put_on': return this._handleEquip(target, gameState);
       case 'unequip': case 'remove': return this._handleUnequip(target, gameState);
@@ -42,21 +42,15 @@ class CommandProcessor {
       case 'wait': return this._handleWait(gameState);
       case 'puzzle_action': return this._handlePuzzleAction(target, intent.value || null, gameState);
       case 'talk': return this._handleTalk(target, gameState);
-      case 'search': return this._handleSearch(target, gameState);
+      case 'search': return this._handleSearch(target, gameState, intent.raw);
       case 'map': return this._handleMap(gameState);
+      case 'rejected': return { type: 'rejected', message: intent.value || 'That won\'t help you here.' };
       default: return this._handleUnknown(intent, gameState);
     }
   }
 
   _handleMove(direction: string | null, gameState: GameState): ActionResult {
-    const dirMap: Record<string, string> = {
-      north: 'north', n: 'north', south: 'south', s: 'south',
-      east: 'east', e: 'east', west: 'west', w: 'west',
-      up: 'up', u: 'up', down: 'down', d: 'down',
-      in: 'in', enter: 'in', out: 'out', exit: 'out'
-    };
-
-    const dir = dirMap[direction || ''] || direction || '';
+    const dir = direction || '';
     const result = this.nav.move(gameState.currentRoom, dir, gameState);
 
     if (!result.allowed) {
@@ -85,7 +79,7 @@ class CommandProcessor {
     };
   }
 
-  _handleLook(target: string | null, gameState: GameState): ActionResult {
+  _handleLook(target: string | null, gameState: GameState, rawInput?: string): ActionResult {
     if (!target || target === 'around' || target === 'room') {
       const room = this.nav.getRoom(gameState.currentRoom);
       const roomDesc = this.nav.getRoomDescription(gameState.currentRoom, gameState);
@@ -102,11 +96,25 @@ class CommandProcessor {
       };
     }
 
-    return this._handleExamine(target, gameState);
+    return this._handleExamine(target, gameState, rawInput);
   }
 
-  _handleExamine(target: string | null, gameState: GameState): ActionResult {
-    const itemId = this._resolveItemId(target, gameState);
+  _handleExamine(target: string | null, gameState: GameState, rawInput?: string): ActionResult {
+    let itemId = this._resolveItemId(target, gameState);
+
+    // If we can't resolve the target, try the last-examined item as context
+    // (e.g. player examines photo, then asks "who is the person in the photo")
+    if (!itemId && gameState.lastExaminedItem) {
+      const lastDef = this.inv.getItemDef(gameState.lastExaminedItem);
+      if (lastDef && target) {
+        const lastText = (lastDef.examineDetail || lastDef.description || '').toLowerCase();
+        const targetWords = target.toLowerCase().split(/\s+/).filter(w => w.length >= 3);
+        if (targetWords.some(w => lastText.includes(w))) {
+          itemId = gameState.lastExaminedItem;
+        }
+      }
+    }
+
     if (!itemId) {
       const room = this.nav.getRoom(gameState.currentRoom);
       if (room && room.examineTargets && room.examineTargets[target!]) {
@@ -116,7 +124,33 @@ class CommandProcessor {
           text: room.examineTargets[target!]
         };
       }
-      return { type: 'examine_failed', message: `You don't see "${target}" here.` };
+
+      // Check if the target is mentioned in the room description — scenery the player can ask about
+      if (target && room) {
+        // Check against full description (including firstVisit) for matching
+        const fullDesc = this.nav.getRoomDescription(room.id, gameState);
+        const fullDescLower = fullDesc.toLowerCase();
+        const normalizedTarget = target.toLowerCase();
+
+        // Try exact match first, then individual significant words (3+ chars)
+        const targetWords = normalizedTarget.split(/\s+/).filter(w => w.length >= 3);
+        const mentioned = fullDescLower.includes(normalizedTarget) ||
+          targetWords.some(w => fullDescLower.includes(w));
+
+        if (mentioned) {
+          // Pass only the base room.description to Haiku — NOT the firstVisit narration
+          return {
+            type: 'examine_scenery',
+            target: target,
+            originalInput: rawInput || target,
+            roomDescription: room.description,
+            roomName: room.name,
+            message: `You look more closely at the ${target}.`
+          };
+        }
+      }
+
+      return { type: 'examine_failed', message: `You don't see any ${target} here.` };
     }
 
     const result = this.inv.examine(itemId, gameState);
@@ -124,12 +158,38 @@ class CommandProcessor {
       return { type: 'examine_failed', message: result.reason };
     }
 
+    // Track what was last examined for follow-up questions
+    gameState.lastExaminedItem = itemId;
+
+    // If the player asked a question about the item (not just "examine X"), route to Haiku
+    if (rawInput && /^(who|what|why|how|where|when|is |are |can |could |does |do |was |were |tell )/i.test(rawInput)) {
+      const room = this.nav.getRoom(gameState.currentRoom);
+      return {
+        type: 'examine_scenery',
+        target: result.item!.name,
+        originalInput: rawInput,
+        roomDescription: result.text || '',
+        roomName: room?.name || '',
+        message: result.text || `You look at the ${result.item!.name}.`
+      };
+    }
+
     return { type: 'examine', target: result.item!.name, text: result.text, itemId };
   }
 
   _handleTake(target: string | null, gameState: GameState): ActionResult {
+    // Check cantTake scenery first — things described in room that can't be picked up
+    if (target) {
+      const room = this.nav.getRoom(gameState.currentRoom);
+      if (room?.cantTake) {
+        const normalized = target.toLowerCase();
+        const cantMsg = room.cantTake[normalized];
+        if (cantMsg) return { type: 'take_failed', message: cantMsg };
+      }
+    }
+
     const itemId = this._resolveItemId(target, gameState);
-    if (!itemId) return { type: 'take_failed', message: `You don't see "${target}" here.` };
+    if (!itemId) return { type: 'take_failed', message: `You don't see any ${target} here.` };
 
     const result = this.inv.pickUp(itemId, gameState);
     return result.allowed
@@ -243,7 +303,7 @@ class CommandProcessor {
 
   _handleRead(target: string | null, gameState: GameState): ActionResult {
     const itemId = this._resolveItemId(target, gameState);
-    if (!itemId) return { type: 'read_failed', message: `You don't see "${target}" to read.` };
+    if (!itemId) return { type: 'read_failed', message: `You don't see any ${target} to read.` };
 
     const def = this.inv.getItemDef(itemId);
     if (!def) return { type: 'read_failed', message: "That doesn't exist." };
@@ -309,7 +369,7 @@ class CommandProcessor {
     };
   }
 
-  _handleSearch(target: string | null, gameState: GameState): ActionResult {
+  _handleSearch(target: string | null, gameState: GameState, rawInput?: string): ActionResult {
     if (!target || target === 'room' || target === 'around') {
       const items = this.inv.getItemsInRoom(gameState.currentRoom, gameState);
       const hiddenItems = items.filter(i => i.hidden);
@@ -326,7 +386,7 @@ class CommandProcessor {
       return { type: 'search_nothing', message: "You search thoroughly but find nothing new." };
     }
 
-    return this._handleExamine(target, gameState);
+    return this._handleExamine(target, gameState, rawInput);
   }
 
   _handleTalk(target: string | null, gameState: GameState): ActionResult {
@@ -346,10 +406,26 @@ class CommandProcessor {
       deckMap[room.deck].push(room);
     }
 
+    // Build mapRooms with exit data for spatial rendering
+    const mapRooms: Array<{ id: string; name: string; deck: string; exits: Record<string, string> }> = [];
+    for (const id of visited) {
+      const room = this.nav.getRoom(id);
+      if (!room) continue;
+      const exits: Record<string, string> = {};
+      for (const [dir, exit] of Object.entries(room.exits)) {
+        const hidden = typeof exit === 'object' && exit.hidden;
+        if (!hidden || gameState.flags[`revealed_${id}_${dir}`]) {
+          exits[dir] = typeof exit === 'string' ? exit : exit.roomId;
+        }
+      }
+      mapRooms.push({ id, name: room.name, deck: room.deck, exits });
+    }
+
     return {
       type: 'map',
       currentRoom: gameState.currentRoom,
-      visited: deckMap
+      visited: deckMap,
+      mapRooms
     };
   }
 
@@ -357,10 +433,10 @@ class CommandProcessor {
     return {
       type: 'help',
       message: `Available commands:
-MOVEMENT: north/n, south/s, east/e, west/w, up/u, down/d, in, out
-  SHIP:   fore/bow, aft/stern, port, starboard
+MOVEMENT: fore/f, aft/a, port/p, starboard/sb, up/u, down/d, in, out
 ACTIONS:  look, examine [target], take [item], drop [item]
           use [item] on [target], open [target], search
+          turn on/off [item], activate/deactivate [item]
 ITEMS:    inventory/i, combine [item] with [item]
           equip [item], remove [item]
 INFO:     status, systems, map, hint, read [item]
@@ -371,9 +447,20 @@ Commands can be abbreviated: "exa" for examine, "inv" for inventory, etc.`
   }
 
   _handleUnknown(intent: Intent, gameState: GameState): ActionResult {
+    // Try to be helpful — look for any noun-like word that matches something in the room or inventory
+    if (intent.raw) {
+      const words = intent.raw.toLowerCase().split(/\s+/).filter(w => w.length >= 3);
+      for (const word of words) {
+        const itemId = this._resolveItemId(word, gameState);
+        if (itemId) {
+          return this._handleExamine(word, gameState);
+        }
+      }
+    }
+
     return {
       type: 'unknown',
-      message: "I don't understand that command.",
+      message: "You can't do that here. Try 'look' to see your surroundings, or 'help' for available commands.",
       originalInput: intent.raw
     };
   }
@@ -387,9 +474,14 @@ Commands can be abbreviated: "exa" for examine, "inv" for inventory, etc.`
       if (def && this._nameMatches(normalized, def)) return id;
     }
 
+    // Check all room items — hidden items are findable by name (described in room text)
+    // but they get auto-revealed when the player explicitly references them
     const roomItems = this.inv.getItemsInRoom(gameState.currentRoom, gameState);
     for (const item of roomItems) {
-      if (!item.hidden && this._nameMatches(normalized, item)) return item.id;
+      if (this._nameMatches(normalized, item)) {
+        if (item.hidden) gameState.itemHidden[item.id] = false;
+        return item.id;
+      }
     }
 
     if (this.inv.getItemDef(normalized)) return normalized;
@@ -416,12 +508,115 @@ Commands can be abbreviated: "exa" for examine, "inv" for inventory, etc.`
     const name = itemDef.name.toLowerCase();
     const aliases = (itemDef.aliases || []).map(a => a.toLowerCase());
 
+    // Exact or substring match on id/name
     if (input === id || input === name) return true;
     if (id.includes(input) || name.includes(input)) return true;
     if (aliases.some(a => a === input || a.includes(input))) return true;
     if (input.replace(/ /g, '_') === id) return true;
 
+    // Word-level matching: if any significant input word (3+ chars) exactly matches
+    // a word in the item name, id, or aliases, count it as a match
+    const inputWords = input.split(/[\s_]+/).filter(w => w.length >= 3);
+    const nameWords = name.split(/[\s_]+/).filter(w => w.length >= 3);
+    const idWords = id.split(/[\s_]+/).filter(w => w.length >= 3);
+    const aliasWords = aliases.flatMap(a => a.split(/[\s_]+/).filter(w => w.length >= 3));
+    const allItemWords = new Set([...nameWords, ...idWords, ...aliasWords]);
+
+    if (inputWords.length > 0 && inputWords.some(iw => allItemWords.has(iw))) return true;
+
     return false;
+  }
+
+  /**
+   * Evaluate an intent against game state WITHOUT side effects.
+   * Returns true if this intent would produce a successful result.
+   * Used for disambiguation: test all candidate interpretations against
+   * the current game state, keep only the ones that work.
+   */
+  wouldSucceed(intent: Intent, gameState: GameState): boolean {
+    const action = intent.action;
+    const target = intent.target;
+
+    switch (action) {
+      case 'move': {
+        if (!target) return false;
+        const result = this.nav.canMove(gameState.currentRoom, target, gameState);
+        return result.allowed;
+      }
+      case 'examine': {
+        if (!target) return true; // bare "look" always succeeds
+        // Check item in room/inventory
+        const itemId = this._resolveItemId(target, { ...gameState, itemHidden: { ...gameState.itemHidden } });
+        if (itemId) return true;
+        // Check examineTargets
+        const room = this.nav.getRoom(gameState.currentRoom);
+        if (room?.examineTargets?.[target]) return true;
+        // Check scenery (mentioned in room description)
+        if (room) {
+          const desc = this.nav.getRoomDescription(room.id, gameState).toLowerCase();
+          const targetLower = target.toLowerCase();
+          if (desc.includes(targetLower) || targetLower.split(/\s+/).filter(w => w.length >= 3).some(w => desc.includes(w))) {
+            return true;
+          }
+        }
+        return false;
+      }
+      case 'take': case 'get': case 'pick_up': {
+        if (!target) return false;
+        const itemId = this._resolveItemId(target, { ...gameState, itemHidden: { ...gameState.itemHidden } });
+        return itemId !== null;
+      }
+      case 'use': case 'activate': case 'deactivate': {
+        if (!target) return false;
+        // Check if target is in inventory or room
+        const itemId = this._resolveItemId(target, { ...gameState, itemHidden: { ...gameState.itemHidden } });
+        return itemId !== null;
+      }
+      case 'look': return true;
+      case 'inventory': case 'status': case 'help': case 'systems':
+      case 'hint': case 'wait': case 'map': case 'saves':
+        return true;
+      case 'save': case 'load':
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * Given an intent with alternatives, evaluate all candidates against game state.
+   * Returns the best valid intent, or the primary if none are clearly better.
+   * If multiple alternatives are valid, attaches them for potential disambiguation.
+   */
+  disambiguate(intent: Intent, gameState: GameState): Intent {
+    if (!intent.alternatives?.length) return intent;
+
+    const allCandidates = [intent, ...intent.alternatives];
+    const valid: Intent[] = [];
+
+    for (const candidate of allCandidates) {
+      if (this.wouldSucceed(candidate, gameState)) {
+        valid.push(candidate);
+      }
+    }
+
+    if (valid.length === 0) {
+      // Nothing works — return primary for error message, strip alternatives
+      const { alternatives: _, ...primary } = intent;
+      return primary as Intent;
+    }
+
+    if (valid.length === 1) {
+      // Exactly one works — use it, strip alternatives (unambiguous)
+      const { alternatives: _, ...resolved } = valid[0];
+      return resolved as Intent;
+    }
+
+    // Multiple valid interpretations — return highest confidence, attach rest as alternatives
+    valid.sort((a, b) => (b.confidence || 0) - (a.confidence || 0));
+    const best = { ...valid[0] };
+    best.alternatives = valid.slice(1);
+    return best;
   }
 
   _getShipValue(gameState: GameState, path: string): unknown {

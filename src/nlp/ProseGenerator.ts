@@ -1,31 +1,110 @@
 import { callClaude } from './HaikuParser';
 import { ActionResult, StoryContext, GameState } from '../types';
+import { decodeObject } from '../encoding';
+import * as fs from 'fs';
+import * as path from 'path';
+import config from '../config';
 
-const PROSE_SYSTEM = `You are the narrator for VOID TRANSIT, a hard science fiction text adventure game. You write atmospheric, literary prose — tense, precise, and grounded in real physics.
+// Cache Haiku responses — same question in same context returns cached answer
+const proseCache = new Map<string, string>();
+const CACHE_MAX = 200;
 
-Style guidelines:
-- Second person present tense ("You see...", "The corridor stretches...")
-- Concise but evocative — 2-4 sentences for most actions, up to a paragraph for major moments
-- SENSORY DETAIL is paramount: temperature on skin, sounds in corridors (dripping, humming, silence), smells (ozone, glycol, cold metal, recycled air), the quality of light, textures under fingertips
-- Technical accuracy — refer to real physics, engineering, chemistry when relevant
-- PACING: Short sentences for tension. Fragments. Sharp. Longer, lyrical sentences during calm or awe. Match prose rhythm to the emotional beat.
-- Show, don't tell — describe physical reactions instead of emotions. "Your mouth floods with saliva" not "you feel sick." "Your hands are steady" not "you feel brave."
-- Foreshadow through environmental detail — the warmth of a bulkhead that should be cold, a sound that doesn't belong, an absence where something should be
-- End scenes on hooks — the last sentence should make the player want to keep going
-- The universe is the antagonist. It is vast, indifferent, and does not negotiate. Physics doesn't care about heroism.
-- A woman named Chen Wei-Lin was awake and alone on this ship for 17 months. She was brilliant, determined, and terrified. Her traces are everywhere. Describe her legacy with respect — she is not a villain. She may be the only person who understood the truth.
-- Never break immersion — no game mechanics language, no "you gained X"
-- Never mention game concepts like "points", "levels", or "commands"
+function getCacheKey(actionResult: ActionResult, gameState: GameState): string | null {
+  // Cache scenery examines, regular examines, and look results — keyed by type+target+room
+  const cacheable = ['examine_scenery', 'examine', 'look'];
+  if (!cacheable.includes(actionResult.type)) return null;
+  // For scenery, include the original question so "what is gel?" and "can I eat gel?" cache separately
+  const extra = actionResult.originalInput || '';
+  return `${actionResult.type}:${actionResult.target || ''}:${extra}:${gameState.currentRoom}`;
+}
 
-Ship: ISV Kepler's Promise, interstellar colony ship, 19.3 years into a 42-year journey to 82 Eridani.
-Tone: Isolated, tense, methodical. Think Ridley Scott's Alien meets The Martian meets Arthur C. Clarke's Rendezvous with Rama — the dread of systematic exploration, the awe of scale, the horror of what you cannot see.`;
+// Prompts loaded from data file (encoded at rest, decoded at init)
+const _prompts = decodeObject(
+  JSON.parse(fs.readFileSync(path.join(config.dataDir, 'prompts.json'), 'utf-8'))
+) as Record<string, string>;
+const PROSE_SYSTEM = _prompts.proseSystem;
+const SCENERY_PREAMBLE = _prompts.sceneryPreamble;
+const SCENERY_RULES = _prompts.sceneryRules;
+const LORE_PREAMBLE = _prompts.lorePreamble;
+const LORE_CONSISTENCY = _prompts.loreConsistency;
+
+/** Build a normalized key for the persistent world lore cache */
+function loreCacheKey(room: string, target: string, question: string): string {
+  return `${room}::${target.toLowerCase().trim()}::${question.toLowerCase().trim()}`;
+}
+
+/** Get all previously established lore entries for a room */
+function getRoomLore(worldLore: Record<string, string>, room: string): Array<{ target: string; answer: string }> {
+  const prefix = `${room}::`;
+  const entries: Array<{ target: string; answer: string }> = [];
+  for (const [key, answer] of Object.entries(worldLore)) {
+    if (key.startsWith(prefix)) {
+      const parts = key.substring(prefix.length).split('::');
+      if (parts.length >= 1) {
+        entries.push({ target: parts[0], answer });
+      }
+    }
+  }
+  return entries;
+}
 
 export async function generateProse(actionResult: ActionResult, storyContext: StoryContext, gameState: GameState): Promise<string> {
-  const prompt = buildPrompt(actionResult, storyContext, gameState);
+  // Check volatile cache first
+  const cacheKey = getCacheKey(actionResult, gameState);
+  if (cacheKey && proseCache.has(cacheKey)) {
+    return proseCache.get(cacheKey)!;
+  }
+
+  // For scenery questions, check persistent world lore cache
+  if (actionResult.type === 'examine_scenery' && gameState.worldLore) {
+    const loreKey = loreCacheKey(
+      gameState.currentRoom,
+      actionResult.target || '',
+      actionResult.originalInput || actionResult.target || ''
+    );
+    if (gameState.worldLore[loreKey]) {
+      if (cacheKey) proseCache.set(cacheKey, gameState.worldLore[loreKey]);
+      return gameState.worldLore[loreKey];
+    }
+  }
+
+  // Gather existing lore for this room to keep Haiku consistent
+  const roomLore = (actionResult.type === 'examine_scenery' && gameState.worldLore)
+    ? getRoomLore(gameState.worldLore, gameState.currentRoom)
+    : [];
+
+  const prompt = buildPrompt(actionResult, storyContext, gameState, roomLore);
 
   try {
-    const prose = await callClaude(prompt);
-    return prose.trim();
+    const callType = actionResult.type === 'examine_scenery' ? 'scenery' as const : 'prose' as const;
+    const prose = await callClaude(prompt, callType);
+    let trimmed = prose.trim();
+
+    // For scenery answers, strip any room description Haiku appends after the answer
+    if (actionResult.type === 'examine_scenery') {
+      trimmed = trimSceneryResponse(trimmed);
+
+      // Persist to world lore (survives save/load)
+      if (gameState.worldLore) {
+        const loreKey = loreCacheKey(
+          gameState.currentRoom,
+          actionResult.target || '',
+          actionResult.originalInput || actionResult.target || ''
+        );
+        gameState.worldLore[loreKey] = trimmed;
+      }
+    }
+
+    // Volatile cache
+    if (cacheKey) {
+      if (proseCache.size >= CACHE_MAX) {
+        const firstKey = proseCache.keys().next().value!;
+        proseCache.delete(firstKey);
+      }
+      proseCache.set(cacheKey, trimmed);
+    }
+
+    return trimmed;
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
     console.warn('Prose generation failed, using raw result:', msg);
@@ -33,7 +112,46 @@ export async function generateProse(actionResult: ActionResult, storyContext: St
   }
 }
 
-function buildPrompt(actionResult: ActionResult, storyContext: StoryContext, gameState: GameState): string {
+/** Strip any room description or extra narration Haiku appends after answering the question */
+function trimSceneryResponse(text: string): string {
+  // Take only the first paragraph — a double newline usually signals Haiku
+  // switching from the answer into an unsolicited room description
+  const firstPara = text.split(/\n\n/)[0].trim();
+  return firstPara || text;
+}
+
+function buildSceneryPrompt(actionResult: ActionResult, roomLore: Array<{ target: string; answer: string }> = []): string {
+  const target = actionResult.target || 'that';
+  const question = actionResult.originalInput || target;
+  const roomDesc = actionResult.roomDescription || '';
+
+  let loreSection = '';
+  if (roomLore.length > 0) {
+    loreSection = `\n${LORE_PREAMBLE}\n`;
+    for (const entry of roomLore) {
+      loreSection += `- About "${entry.target}": ${entry.answer}\n`;
+    }
+    loreSection += '\n';
+  }
+
+  return `${SCENERY_PREAMBLE}
+
+The player asked: "${question}"
+
+Room context for reference only (DO NOT narrate this):
+---
+${roomDesc}
+---
+${loreSection}- Write ONLY 2-3 sentences answering the specific question about "${target}"
+${SCENERY_RULES}${roomLore.length > 0 ? `\n- ${LORE_CONSISTENCY}` : ''}`;
+}
+
+function buildPrompt(actionResult: ActionResult, storyContext: StoryContext, gameState: GameState, roomLore: Array<{ target: string; answer: string }> = []): string {
+  // Scenery questions get their own focused prompt — no narrator preamble
+  if (actionResult.type === 'examine_scenery') {
+    return buildSceneryPrompt(actionResult, roomLore);
+  }
+
   let prompt = PROSE_SYSTEM + '\n\n';
   prompt += `Current situation:\n`;
   prompt += `- Location: ${gameState.currentRoom}\n`;
@@ -127,6 +245,312 @@ function buildPrompt(actionResult: ActionResult, storyContext: StoryContext, gam
   return prompt;
 }
 
+/**
+ * Render a spatial ASCII map from mapRooms data.
+ * Directions in room exits: n=fore(up), s=aft(down), w=port(left), e=starboard(right), up/down=deck changes.
+ */
+function renderSpatialMap(actionResult: ActionResult): string {
+  if (!actionResult.mapRooms || actionResult.mapRooms.length === 0) {
+    return '=== Ship Map ===\nNo areas explored yet.';
+  }
+
+  const currentRoom = actionResult.currentRoom || '';
+  const visitedSet = new Set(actionResult.mapRooms.map(r => r.id));
+
+  // Collect all rooms by deck, including unvisited neighbors
+  interface MapNode {
+    id: string;
+    label: string;
+    deck: string;
+    visited: boolean;
+    isCurrent: boolean;
+    exits: Record<string, string>;
+  }
+
+  const allNodes = new Map<string, MapNode>();
+
+  // Add visited rooms
+  for (const r of actionResult.mapRooms) {
+    allNodes.set(r.id, {
+      id: r.id,
+      label: abbreviateRoom(r.name),
+      deck: r.deck,
+      visited: true,
+      isCurrent: r.id === currentRoom,
+      exits: r.exits
+    });
+  }
+
+  // Add unvisited neighbors (shown as [?])
+  for (const r of actionResult.mapRooms) {
+    for (const [dir, targetId] of Object.entries(r.exits)) {
+      if (!allNodes.has(targetId)) {
+        // Infer deck: up/down changes deck, otherwise same deck
+        let neighborDeck = r.deck;
+        if (dir === 'up' || dir === 'u') {
+          neighborDeck = String.fromCharCode(r.deck.charCodeAt(0) - 1);
+        } else if (dir === 'down' || dir === 'd') {
+          neighborDeck = String.fromCharCode(r.deck.charCodeAt(0) + 1);
+        }
+        allNodes.set(targetId, {
+          id: targetId,
+          label: '?',
+          deck: neighborDeck,
+          visited: false,
+          isCurrent: false,
+          exits: {}
+        });
+      }
+    }
+  }
+
+  // Group by deck
+  const deckNodes = new Map<string, MapNode[]>();
+  for (const node of allNodes.values()) {
+    if (!deckNodes.has(node.deck)) deckNodes.set(node.deck, []);
+    deckNodes.get(node.deck)!.push(node);
+  }
+
+  // Sort decks alphabetically
+  const sortedDecks = [...deckNodes.keys()].sort();
+
+  let output = '=== Ship Map ===\n';
+  output += 'FORE (forward)\n';
+
+  for (const deck of sortedDecks) {
+    const nodes = deckNodes.get(deck)!;
+    output += `\n--- Deck ${deck} ---\n`;
+    output += renderDeckGrid(nodes, allNodes, visitedSet);
+  }
+
+  output += '\nAFT (aft)\n';
+  output += '\n[*] = You   [ ] = Visited   [?] = Unexplored   \u25B2\u25BC = Up/Down';
+  return output;
+}
+
+/** Abbreviate a room name to fit in map cells */
+function abbreviateRoom(name: string): string {
+  // Strip common suffixes/prefixes for brevity
+  let short = name
+    .replace(/\s*-\s*ISV Kepler's Promise/i, '')
+    .replace(/\s*-\s*Deck [A-D]/i, '')
+    .trim();
+  // Truncate to 12 chars max
+  if (short.length > 12) {
+    // Try to use initials of multi-word names
+    const words = short.split(/\s+/);
+    if (words.length >= 2) {
+      // Use first word abbreviated + key word
+      short = short.substring(0, 12);
+    } else {
+      short = short.substring(0, 12);
+    }
+  }
+  return short;
+}
+
+/**
+ * Render one deck as a 2D grid.
+ * Uses BFS from an arbitrary node to assign grid positions based on n/s/e/w exits.
+ */
+function renderDeckGrid(
+  nodes: Array<{ id: string; label: string; visited: boolean; isCurrent: boolean; exits: Record<string, string> }>,
+  allNodes: Map<string, { id: string; label: string; deck: string; visited: boolean; isCurrent: boolean; exits: Record<string, string> }>,
+  visitedIds: Set<string>
+): string {
+  if (nodes.length === 0) return '';
+
+  // Assign grid positions via BFS using horizontal/vertical exits
+  const positions = new Map<string, { col: number; row: number }>();
+  const dirDeltas: Record<string, { dr: number; dc: number }> = {
+    n: { dr: -1, dc: 0 },
+    s: { dr: 1, dc: 0 },
+    e: { dr: 0, dc: 1 },
+    w: { dr: 0, dc: -1 },
+  };
+
+  const nodeIds = new Set(nodes.map(n => n.id));
+
+  // Start BFS from a visited node if possible, preferring current room
+  const startNode = nodes.find(n => n.isCurrent) || nodes.find(n => n.visited) || nodes[0];
+  positions.set(startNode.id, { col: 0, row: 0 });
+
+  const queue: string[] = [startNode.id];
+  const processed = new Set<string>([startNode.id]);
+
+  while (queue.length > 0) {
+    const id = queue.shift()!;
+    const pos = positions.get(id)!;
+    const node = allNodes.get(id);
+    if (!node) continue;
+
+    for (const [dir, targetId] of Object.entries(node.exits)) {
+      if (!nodeIds.has(targetId)) continue; // skip cross-deck exits
+      if (positions.has(targetId)) continue;
+      const delta = dirDeltas[dir];
+      if (!delta) continue; // skip up/down
+
+      positions.set(targetId, { col: pos.col + delta.dc, row: pos.row + delta.dr });
+      if (!processed.has(targetId)) {
+        processed.add(targetId);
+        queue.push(targetId);
+      }
+    }
+  }
+
+  // Handle any disconnected nodes on this deck (place them to the right)
+  let maxCol = 0;
+  for (const p of positions.values()) {
+    if (p.col > maxCol) maxCol = p.col;
+  }
+  for (const node of nodes) {
+    if (!positions.has(node.id)) {
+      maxCol += 2;
+      positions.set(node.id, { col: maxCol, row: 0 });
+    }
+  }
+
+  // Normalize positions to start at 0,0
+  let minRow = Infinity, minCol = Infinity;
+  for (const p of positions.values()) {
+    if (p.row < minRow) minRow = p.row;
+    if (p.col < minCol) minCol = p.col;
+  }
+  for (const p of positions.values()) {
+    p.row -= minRow;
+    p.col -= minCol;
+  }
+
+  // Find grid bounds
+  let maxRow = 0;
+  maxCol = 0;
+  for (const p of positions.values()) {
+    if (p.row > maxRow) maxRow = p.row;
+    if (p.col > maxCol) maxCol = p.col;
+  }
+
+  // Cell width: label (max 12) + brackets + padding = 16
+  const CELL_W = 16;
+  const CONN_W = 3; // " \u2190\u2192 " connector width between cells
+  // Build the grid lines
+  const lines: string[] = [];
+
+  for (let row = 0; row <= maxRow; row++) {
+    // Room row
+    let roomLine = '';
+    for (let col = 0; col <= maxCol; col++) {
+      const nodeAtPos = findNodeAt(row, col, positions, allNodes);
+      if (nodeAtPos) {
+        const bracket = nodeAtPos.isCurrent ? '[*' : nodeAtPos.visited ? '[ ' : '[?';
+        const bracketEnd = nodeAtPos.isCurrent ? '*]' : nodeAtPos.visited ? ' ]' : '?]';
+        const lbl = nodeAtPos.isCurrent
+          ? `*${nodeAtPos.label}*`
+          : nodeAtPos.label;
+        const cellContent = `${bracket} ${lbl} ${bracketEnd}`;
+        roomLine += centerPad(cellContent, CELL_W);
+      } else {
+        roomLine += ' '.repeat(CELL_W);
+      }
+
+      // Horizontal connector
+      if (col < maxCol) {
+        const nodeHere = findNodeAt(row, col, positions, allNodes);
+        const nodeRight = findNodeAt(row, col + 1, positions, allNodes);
+        if (nodeHere && nodeRight && hasConnection(nodeHere.id, nodeRight.id, 'e', allNodes)) {
+          roomLine += '\u2190\u2192\u2190';
+        } else {
+          roomLine += ' '.repeat(CONN_W);
+        }
+      }
+    }
+    lines.push(roomLine.trimEnd());
+
+    // Vertical connectors + up/down markers
+    if (row < maxRow) {
+      let connLine = '';
+      for (let col = 0; col <= maxCol; col++) {
+        const nodeAbove = findNodeAt(row, col, positions, allNodes);
+        const nodeBelow = findNodeAt(row + 1, col, positions, allNodes);
+        if (nodeAbove && nodeBelow && hasConnection(nodeAbove.id, nodeBelow.id, 's', allNodes)) {
+          connLine += centerPad('\u2191\u2193', CELL_W);
+        } else {
+          connLine += ' '.repeat(CELL_W);
+        }
+        if (col < maxCol) {
+          connLine += ' '.repeat(CONN_W);
+        }
+      }
+      lines.push(connLine.trimEnd());
+    }
+
+    // Up/down deck markers on the room row
+    // (We append these as annotations after the room line)
+  }
+
+  // Add up/down annotations
+  const deckAnnotations: string[] = [];
+  for (const node of nodes) {
+    const upTargets: string[] = [];
+    const downTargets: string[] = [];
+    for (const [dir, targetId] of Object.entries(node.exits)) {
+      if (dir === 'up' || dir === 'u') upTargets.push(targetId);
+      if (dir === 'down' || dir === 'd') downTargets.push(targetId);
+    }
+    if (upTargets.length > 0 || downTargets.length > 0) {
+      const markers: string[] = [];
+      if (upTargets.length > 0) markers.push('\u25B2 Up');
+      if (downTargets.length > 0) markers.push('\u25BC Down');
+      deckAnnotations.push(`  ${node.label}: ${markers.join(', ')}`);
+    }
+  }
+
+  let result = lines.join('\n') + '\n';
+  if (deckAnnotations.length > 0) {
+    result += deckAnnotations.join('\n') + '\n';
+  }
+  return result;
+}
+
+/** Find a node at a given grid position */
+function findNodeAt(
+  row: number,
+  col: number,
+  positions: Map<string, { col: number; row: number }>,
+  allNodes: Map<string, { id: string; label: string; deck: string; visited: boolean; isCurrent: boolean; exits: Record<string, string> }>
+): { id: string; label: string; visited: boolean; isCurrent: boolean; exits: Record<string, string> } | null {
+  for (const [id, pos] of positions.entries()) {
+    if (pos.row === row && pos.col === col) {
+      const node = allNodes.get(id);
+      if (node) return node;
+    }
+  }
+  return null;
+}
+
+/** Check if two rooms are connected in a given direction */
+function hasConnection(
+  fromId: string,
+  toId: string,
+  dir: string,
+  allNodes: Map<string, { id: string; exits: Record<string, string> }>
+): boolean {
+  const from = allNodes.get(fromId);
+  if (from && from.exits[dir] === toId) return true;
+  // Check reverse direction
+  const reverse: Record<string, string> = { n: 's', s: 'n', e: 'w', w: 'e' };
+  const to = allNodes.get(toId);
+  if (to && reverse[dir] && to.exits[reverse[dir]] === fromId) return true;
+  return false;
+}
+
+/** Center-pad a string to a given width */
+function centerPad(str: string, width: number): string {
+  if (str.length >= width) return str.substring(0, width);
+  const left = Math.floor((width - str.length) / 2);
+  const right = width - str.length - left;
+  return ' '.repeat(left) + str + ' '.repeat(right);
+}
+
 export function buildFallbackProse(actionResult: ActionResult): string {
   switch (actionResult.type) {
     case 'move_success':
@@ -143,6 +567,8 @@ export function buildFallbackProse(actionResult: ActionResult): string {
     }
     case 'examine':
       return actionResult.text || `You examine the ${actionResult.target}.`;
+    case 'examine_scenery':
+      return actionResult.message || `You look more closely at the ${actionResult.target}.`;
     case 'take_success':
       return actionResult.message || `Taken.`;
     case 'take_failed':
@@ -170,8 +596,12 @@ export function buildFallbackProse(actionResult: ActionResult): string {
     }
     case 'help':
       return actionResult.message || '';
-    case 'status':
-      return `Health: ${actionResult.health}% | Radiation: ${(actionResult.radiation || 0).toFixed(1)} mSv | Turn: ${actionResult.turnCount}\nLocation: ${actionResult.location} | CO2: ${actionResult.co2Level} ppm`;
+    case 'status': {
+      const missionYear = (config.journeyYearsElapsed + (actionResult.turnCount || 0) / 35040).toFixed(3);
+      const shipDate = `Mission Year ${missionYear} (Y${missionYear})`;
+      const calYear = Math.floor(config.launchYear + parseFloat(missionYear));
+      return `${shipDate} | Calendar: ~${calYear} CE\nHealth: ${actionResult.health}% | Radiation: ${(actionResult.radiation || 0).toFixed(1)} mSv\nLocation: ${actionResult.location} | CO2: ${actionResult.co2Level || '—'} ppm | Turn: ${actionResult.turnCount}`;
+    }
     case 'systems': {
       let text = 'Ship Systems:\n';
       if (actionResult.systems) {
@@ -189,17 +619,7 @@ export function buildFallbackProse(actionResult: ActionResult): string {
       return actionResult.message || '';
     }
     case 'map': {
-      let text = `=== Ship Map ===\nYou are in: ${actionResult.currentRoom}\n\n`;
-      if (actionResult.visited) {
-        for (const [deck, rooms] of Object.entries(actionResult.visited)) {
-          text += `Deck ${deck}:\n`;
-          for (const room of rooms) {
-            const marker = room.id === actionResult.currentRoom ? ' <-- YOU' : '';
-            text += `  - ${room.name}${marker}\n`;
-          }
-        }
-      }
-      return text;
+      return renderSpatialMap(actionResult);
     }
     case 'save':
     case 'load':
@@ -218,6 +638,8 @@ export function buildFallbackProse(actionResult: ActionResult): string {
       if (actionResult.consequence) text += `\n\n${actionResult.consequence}`;
       return text;
     }
+    case 'disambiguate':
+      return actionResult.message || 'What did you mean?';
     default:
       return actionResult.message || "Something happens, but you're not sure what.";
   }

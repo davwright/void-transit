@@ -9,6 +9,15 @@ import SaveManager from './SaveManager';
 import * as fs from 'fs';
 import * as path from 'path';
 import config from '../config';
+import { decodeObject } from '../encoding';
+
+/** Human-readable description of an intent for disambiguation prompts */
+function describeIntent(intent: Intent): string {
+  const parts = [intent.action];
+  if (intent.target) parts.push(intent.target);
+  if (intent.instrument) parts.push('with', intent.instrument);
+  return parts.join(' ');
+}
 
 interface SystemEvent {
   type: string;
@@ -48,9 +57,14 @@ class GameEngine {
   cmd: CommandProcessor;
   saveManager: SaveManager;
   sessions: Map<string, GameState>;
+  messages: {
+    systemEvents: Record<string, string>;
+    intro: string;
+  };
 
   constructor() {
     this.data = this._loadData();
+    this.messages = this._loadMessages();
     this.nav = new NavigationManager(this.data.rooms);
     this.inv = new InventoryManager(this.data.items);
     this.puzzle = new PuzzleEngine(this.data.puzzles);
@@ -92,10 +106,40 @@ class GameEngine {
       return { type: 'error', message: 'No active game session. Start a new game.' };
     }
 
-    state.turnCount++;
+    // Disambiguate: if the parser produced alternatives, evaluate each against
+    // game state and pick the one that works. If multiple valid interpretations
+    // exist, the best one wins but the response may note the ambiguity.
+    if (intent.alternatives?.length) {
+      intent = this.cmd.disambiguate(intent, state);
+
+      // If there are still multiple valid alternatives after disambiguation,
+      // and they represent meaningfully different actions, ask the player
+      if (intent.alternatives?.length && intent.confidence && intent.confidence < 0.9) {
+        const alt = intent.alternatives[0];
+        if (alt.action !== intent.action) {
+          return {
+            type: 'disambiguate',
+            message: `Did you mean "${describeIntent(intent)}" or "${describeIntent(alt)}"?`,
+            candidates: [intent, alt],
+          };
+        }
+      }
+    }
 
     // Process the command
     const result = this.cmd.process(intent, state);
+
+    // Scenery questions are free — no turn cost, no side effects
+    if (result.type === 'examine_scenery') {
+      return {
+        ...result,
+        storyContext: this.story.getStoryContext(state),
+        turnCount: state.turnCount,
+        currentRoom: state.currentRoom
+      };
+    }
+
+    state.turnCount++;
 
     // Tick ship systems
     const systemEvents = this._tickSystems(state);
@@ -210,7 +254,8 @@ class GameEngine {
       playerHealth: 65,
       radiationExposure: 0,
       conversationHistory: [],
-      globalEvents: []
+      globalEvents: [],
+      worldLore: {}
     };
   }
 
@@ -227,16 +272,16 @@ class GameEngine {
       if (scrubbers.status !== 'nominal') {
         (scrubbers as Record<string, number>).co2_ppm += ((ticks as Record<string, number>).co2_rise_per_turn || 150) * (1 - (scrubbers.efficiency as number));
         if ((scrubbers.co2_ppm as number) > 25000 && !state.flags.co2_warning_given) {
-          events.push({ type: 'warning', system: 'life_support', message: 'WARNING: CO2 levels approaching dangerous concentration. You feel lightheaded.' });
+          events.push({ type: 'warning', system: 'life_support', message: this.messages.systemEvents.co2_warning });
           state.flags.co2_warning_given = true;
         }
         if ((scrubbers.co2_ppm as number) > 40000 && !state.flags.co2_critical_given) {
-          events.push({ type: 'critical', system: 'life_support', message: 'CRITICAL: CO2 at dangerous levels. Vision blurring. You must fix life support immediately.' });
+          events.push({ type: 'critical', system: 'life_support', message: this.messages.systemEvents.co2_critical });
           state.flags.co2_critical_given = true;
           state.playerHealth -= 5;
         }
         if ((scrubbers.co2_ppm as number) > 50000) {
-          events.push({ type: 'fatal', system: 'life_support', message: 'You collapse. The CO2 concentration is lethal. Darkness takes you.' });
+          events.push({ type: 'fatal', system: 'life_support', message: this.messages.systemEvents.co2_fatal });
           state.playerHealth = 0;
         }
       }
@@ -250,7 +295,7 @@ class GameEngine {
       if (battery.status === 'draining') {
         battery.charge = Math.max(0, (battery.charge as number) - ((ticks as Record<string, number>).battery_drain_per_turn || 0.005));
         if ((battery.charge as number) < 0.15 && !state.flags.battery_warning_given) {
-          events.push({ type: 'warning', system: 'power', message: 'Battery backup at 15%. Emergency lighting only if this reaches zero.' });
+          events.push({ type: 'warning', system: 'power', message: this.messages.systemEvents.battery_warning });
           state.flags.battery_warning_given = true;
         }
       }
@@ -265,11 +310,11 @@ class GameEngine {
         const dose = ((ticks as Record<string, number>).radiation_accumulation_per_turn_in_reactor || 2.8) * (1 - (reactor.shieldingIntegrity as number));
         state.radiationExposure += dose;
         if (state.radiationExposure > 20 && !state.flags.radiation_warning_given) {
-          events.push({ type: 'warning', system: 'reactor', message: `Radiation exposure: ${state.radiationExposure.toFixed(1)} mSv. Your badge is turning color. Leave this area soon.` });
+          events.push({ type: 'warning', system: 'reactor', message: `${this.messages.systemEvents.radiation_warning_prefix}${state.radiationExposure.toFixed(1)}${this.messages.systemEvents.radiation_warning_suffix}` });
           state.flags.radiation_warning_given = true;
         }
         if (state.radiationExposure > 50) {
-          events.push({ type: 'critical', system: 'reactor', message: 'Acute radiation symptoms. Nausea. You need medical attention.' });
+          events.push({ type: 'critical', system: 'reactor', message: this.messages.systemEvents.radiation_critical });
           state.playerHealth -= 3;
         }
       }
@@ -289,43 +334,7 @@ class GameEngine {
   }
 
   _getIntroText(): string {
-    return `
-═══════════════════════════════════════════════════════════════
-                  V O I D   T R A N S I T
-                       PART ONE
-═══════════════════════════════════════════════════════════════
-
-         ISV Kepler's Promise  ·  Mission TRANSIT-7
-           Destination: 82 Eridani  ·  Year 19.3 of 42
-              Colonists: 2,847  ·  Crew: 14
-                Status: ██████ UNKNOWN ██████
-
-═══════════════════════════════════════════════════════════════
-
-A sound like breaking glass inside your skull.
-
-Cold. A cold so deep it has no bottom, no edges, no mercy.
-Your lungs burn with the first breath — raw, sharp, as though
-you've been breathing vacuum and someone has just reinflated
-you like a failed experiment.
-
-Your cryo pod's lid hisses open. Emergency lighting pulses
-amber. Somewhere, an alarm is repeating a three-tone pattern
-you can't quite place — but somewhere in the frozen fog of
-your mind, you know it means something bad.
-
-The ship's AI is silent. That's wrong. The AI should be
-talking.
-
-Four rows down, another cryo pod stands open. Its interior
-is dry. Whoever was inside woke up a long time ago.
-
-They didn't come to find you.
-
-You are alone. And you shouldn't be awake.
-
-[Type HELP for commands, or just tell me what you want to do.]
-═══════════════════════════════════════════════════════════════`;
+    return this.messages.intro;
   }
 
   _loadData(): GameData {
@@ -338,8 +347,8 @@ You are alone. And you shouldn't be awake.
       return JSON.parse(fs.readFileSync(filepath, 'utf-8'));
     };
 
-    // Normalize rooms: may be {rooms: {...}} object or array
-    const rawRooms = load('rooms.json') as Record<string, unknown> | Room[];
+    // Decode base64 immediately on load, before any normalization
+    const rawRooms = decodeObject(load('rooms.json')) as Record<string, unknown> | Room[];
     let rooms: Room[];
     if (Array.isArray(rawRooms)) {
       rooms = rawRooms;
@@ -351,8 +360,7 @@ You are alone. And you shouldn't be awake.
       rooms = Object.values(rawRooms) as Room[];
     }
 
-    // Normalize items: may be {items: [...]} or array
-    const rawItems = load('items.json') as Record<string, unknown> | ItemDef[];
+    const rawItems = decodeObject(load('items.json')) as Record<string, unknown> | ItemDef[];
     let items: ItemDef[];
     if (Array.isArray(rawItems)) {
       items = rawItems;
@@ -362,8 +370,7 @@ You are alone. And you shouldn't be awake.
       items = Object.values(rawItems) as ItemDef[];
     }
 
-    // Normalize puzzles: may be {puzzles: [...]} or array
-    const rawPuzzles = load('puzzles.json') as Record<string, unknown> | PuzzleDef[];
+    const rawPuzzles = decodeObject(load('puzzles.json')) as Record<string, unknown> | PuzzleDef[];
     let puzzles: PuzzleDef[];
     if (Array.isArray(rawPuzzles)) {
       puzzles = rawPuzzles;
@@ -373,17 +380,36 @@ You are alone. And you shouldn't be awake.
       puzzles = Object.values(rawPuzzles) as PuzzleDef[];
     }
 
-    // Normalize story
-    const rawStory = load('story.json') as StoryData | null;
+    // Load scenery data and merge into rooms
+    const rawScenery = decodeObject(load('scenery.json')) as Record<string, unknown> | null;
+    if (rawScenery) {
+      const examineTargets = (rawScenery.examineTargets || {}) as Record<string, Record<string, string>>;
+      const cantTake = (rawScenery.cantTake || {}) as Record<string, Record<string, string>>;
+      for (const room of rooms) {
+        if (examineTargets[room.id]) {
+          room.examineTargets = { ...(room.examineTargets || {}), ...examineTargets[room.id] };
+        }
+        if (cantTake[room.id]) {
+          room.cantTake = { ...(room.cantTake || {}), ...cantTake[room.id] };
+        }
+      }
+    }
+
+    const rawStory = decodeObject(load('story.json')) as StoryData | null;
     const story: StoryData = rawStory || { acts: [], foreshadowing: [], endings: [], globalEvents: [] };
 
-    // Normalize ship systems
-    const rawSystems = load('ship-systems.json') as ShipSystems | null;
+    const rawSystems = decodeObject(load('ship-systems.json')) as ShipSystems | null;
     const shipSystems: ShipSystems = rawSystems || { systems: {}, tickRules: {} };
 
-    console.log(`  Loaded: ${rooms.length} rooms, ${items.length} items, ${puzzles.length} puzzles, ${(story.acts || []).length} story acts`);
-
     return { rooms, items, puzzles, story, shipSystems };
+  }
+
+  _loadMessages(): { systemEvents: Record<string, string>; intro: string } {
+    const filepath = path.join(config.dataDir, 'messages.json');
+    if (!fs.existsSync(filepath)) {
+      return { systemEvents: {}, intro: '' };
+    }
+    return decodeObject(JSON.parse(fs.readFileSync(filepath, 'utf-8'))) as { systemEvents: Record<string, string>; intro: string };
   }
 }
 

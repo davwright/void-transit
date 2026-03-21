@@ -1,702 +1,707 @@
 {
-  "meta": {
-    "version": "1.0.0",
-    "title": "VOID TRANSIT",
-    "subtitle": "Aboard ISV Kepler's Promise",
-    "setting": "Interstellar colony ship, 42-year journey to 82 Eridani. Player wakes from cryogenic suspension 19.3 years into transit. 4,000 colonists remain in cryo. Something has gone catastrophically wrong.",
-    "tone": "Hard science fiction. Atmospheric dread. Isolation. The horror of vast distances and thin margins. Every decision carries weight because there is no rescue, no resupply, no second chance. The universe does not care whether you succeed.",
-    "themes": [
-      "The burden of solitary responsibility",
-      "Trust in institutions versus evidence of your own senses",
-      "The moral weight of irreversible decisions",
-      "What it means to be the only conscious mind in light-years of void",
-      "The limits of knowledge -- what we cannot see because we do not look",
-      "First contact may already have happened, unnoticed"
+  "bWV0YQ==": {
+    "dmVyc2lvbg==": "MS4wLjA=",
+    "dGl0bGU=": "Vk9JRCBUUkFOU0lU",
+    "c3VidGl0bGU=": "QWJvYXJkIElTViBLZXBsZXIncyBQcm9taXNl",
+    "c2V0dGluZw==": "SW50ZXJzdGVsbGFyIGNvbG9ueSBzaGlwLCA0Mi15ZWFyIGpvdXJuZXkgdG8gODIgRXJpZGFuaS4gUGxheWVyIHdha2VzIGZyb20gY3J5b2dlbmljIHN1c3BlbnNpb24gMTkuMyB5ZWFycyBpbnRvIHRyYW5zaXQuIDIsODQ3IGNvbG9uaXN0cyByZW1haW4gaW4gY3J5by4gU29tZXRoaW5nIGhhcyBnb25lIGNhdGFzdHJvcGhpY2FsbHkgd3Jvbmcu",
+    "dG9uZQ==": "SGFyZCBzY2llbmNlIGZpY3Rpb24uIEF0bW9zcGhlcmljIGRyZWFkLiBJc29sYXRpb24uIFRoZSBob3Jyb3Igb2YgdmFzdCBkaXN0YW5jZXMgYW5kIHRoaW4gbWFyZ2lucy4gRXZlcnkgZGVjaXNpb24gY2FycmllcyB3ZWlnaHQgYmVjYXVzZSB0aGVyZSBpcyBubyByZXNjdWUsIG5vIHJlc3VwcGx5LCBubyBzZWNvbmQgY2hhbmNlLiBUaGUgdW5pdmVyc2UgZG9lcyBub3QgY2FyZSB3aGV0aGVyIHlvdSBzdWNjZWVkLg==",
+    "dGhlbWVz": [
+      "VGhlIGJ1cmRlbiBvZiBzb2xpdGFyeSByZXNwb25zaWJpbGl0eQ==",
+      "VHJ1c3QgaW4gaW5zdGl0dXRpb25zIHZlcnN1cyBldmlkZW5jZSBvZiB5b3VyIG93biBzZW5zZXM=",
+      "VGhlIG1vcmFsIHdlaWdodCBvZiBpcnJldmVyc2libGUgZGVjaXNpb25z",
+      "V2hhdCBpdCBtZWFucyB0byBiZSB0aGUgb25seSBjb25zY2lvdXMgbWluZCBpbiBsaWdodC15ZWFycyBvZiB2b2lk",
+      "VGhlIGxpbWl0cyBvZiBrbm93bGVkZ2UgLS0gd2hhdCB3ZSBjYW5ub3Qgc2VlIGJlY2F1c2Ugd2UgZG8gbm90IGxvb2s=",
+      "Rmlyc3QgY29udGFjdCBtYXkgYWxyZWFkeSBoYXZlIGhhcHBlbmVkLCB1bm5vdGljZWQ="
     ]
   },
-  "acts": [
+  "YWN0cw==": [
     {
-      "id": "act1_awakening",
-      "name": "Awakening",
-      "description": "Consciousness returns like a wound reopening. The player wakes in the cryogenic bay of ISV Kepler's Promise, alone, wracked by cryo-sickness, surrounded by the amber pulse of system warnings. The ship is quiet in a way that ships should never be quiet -- the background hum of four thousand sleeping lives unchanged, but something else missing, something the hindbrain recognizes before the conscious mind can name it. The absence of other waking voices. The absence of the crew. The player must overcome the immediate physical crisis of cryo-sickness before they can begin to understand what has happened.",
-      "triggers": {
-        "start": {
-          "type": "game_start",
-          "condition": "always"
+      "aWQ=": "YWN0MV9hd2FrZW5pbmc=",
+      "bmFtZQ==": "QXdha2VuaW5n",
+      "ZGVzY3JpcHRpb24=": "Q29uc2Npb3VzbmVzcyByZXR1cm5zIGxpa2UgYSB3b3VuZCByZW9wZW5pbmcuIFRoZSBwbGF5ZXIgd2FrZXMgaW4gdGhlIGNyeW9nZW5pYyBiYXkgb2YgSVNWIEtlcGxlcidzIFByb21pc2UsIGFsb25lLCB3cmFja2VkIGJ5IGNyeW8tc2lja25lc3MsIHN1cnJvdW5kZWQgYnkgdGhlIGFtYmVyIHB1bHNlIG9mIHN5c3RlbSB3YXJuaW5ncy4gVGhlIHNoaXAgaXMgcXVpZXQgaW4gYSB3YXkgdGhhdCBzaGlwcyBzaG91bGQgbmV2ZXIgYmUgcXVpZXQgLS0gdGhlIGJhY2tncm91bmQgaHVtIG9mIGZvdXIgdGhvdXNhbmQgc2xlZXBpbmcgbGl2ZXMgdW5jaGFuZ2VkLCBidXQgc29tZXRoaW5nIGVsc2UgbWlzc2luZywgc29tZXRoaW5nIHRoZSBoaW5kYnJhaW4gcmVjb2duaXplcyBiZWZvcmUgdGhlIGNvbnNjaW91cyBtaW5kIGNhbiBuYW1lIGl0LiBUaGUgYWJzZW5jZSBvZiBvdGhlciB3YWtpbmcgdm9pY2VzLiBUaGUgYWJzZW5jZSBvZiB0aGUgY3Jldy4gVGhlIHBsYXllciBtdXN0IG92ZXJjb21lIHRoZSBpbW1lZGlhdGUgcGh5c2ljYWwgY3Jpc2lzIG9mIGNyeW8tc2lja25lc3MgYmVmb3JlIHRoZXkgY2FuIGJlZ2luIHRvIHVuZGVyc3RhbmQgd2hhdCBoYXMgaGFwcGVuZWQu",
+      "dHJpZ2dlcnM=": {
+        "c3RhcnQ=": {
+          "dHlwZQ==": "Z2FtZV9zdGFydA==",
+          "Y29uZGl0aW9u": "YWx3YXlz"
         },
-        "end": {
-          "type": "puzzle_complete",
-          "puzzleId": "cryo_recovery"
+        "ZW5k": {
+          "dHlwZQ==": "cHV6emxlX2NvbXBsZXRl",
+          "cHV6emxlSWQ=": "Y3J5b19yZWNvdmVyeQ=="
         }
       },
-      "beats": [
+      "YmVhdHM=": [
         {
-          "id": "beat_wake",
-          "type": "narrative",
-          "trigger": {
-            "type": "game_start"
+          "aWQ=": "YmVhdF93YWtl",
+          "dHlwZQ==": "bmFycmF0aXZl",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "Z2FtZV9zdGFydA=="
           },
-          "text": "You do not wake up. Waking up implies a gentle transition -- the slow surfacing from depth, the warm drift from sleep to awareness. This is nothing like that. This is a detonation. Your eyes open and every nerve in your body fires simultaneously, a white-hot cascade of sensation that your cryo-numbed brain cannot process into anything except agony. You are cold. You are afraid. You do not know where you are. These three facts are the entire universe for eleven terrible seconds, and then -- like a tide receding -- the pain ebbs enough for cognition to return. You are in a pod. The pod is open. The air smells of glycol and copper. Somewhere, an alarm is pulsing amber light across a ceiling you are beginning to recognize. ISV Kepler's Promise. The colony ship. You are aboard the colony ship.",
-          "location": "cryo_bay"
+          "dGV4dA==": "WW91IGRvIG5vdCB3YWtlIHVwLiBXYWtpbmcgdXAgaW1wbGllcyBhIGdlbnRsZSB0cmFuc2l0aW9uIC0tIHRoZSBzbG93IHN1cmZhY2luZyBmcm9tIGRlcHRoLCB0aGUgd2FybSBkcmlmdCBmcm9tIHNsZWVwIHRvIGF3YXJlbmVzcy4gVGhpcyBpcyBub3RoaW5nIGxpa2UgdGhhdC4gVGhpcyBpcyBhIGRldG9uYXRpb24uIFlvdXIgZXllcyBvcGVuIGFuZCBldmVyeSBuZXJ2ZSBpbiB5b3VyIGJvZHkgZmlyZXMgc2ltdWx0YW5lb3VzbHksIGEgd2hpdGUtaG90IGNhc2NhZGUgb2Ygc2Vuc2F0aW9uIHRoYXQgeW91ciBjcnlvLW51bWJlZCBicmFpbiBjYW5ub3QgcHJvY2VzcyBpbnRvIGFueXRoaW5nIGV4Y2VwdCBhZ29ueS4gWW91IGFyZSBjb2xkLiBZb3UgYXJlIGFmcmFpZC4gWW91IGRvIG5vdCBrbm93IHdoZXJlIHlvdSBhcmUuIFRoZXNlIHRocmVlIGZhY3RzIGFyZSB0aGUgZW50aXJlIHVuaXZlcnNlIGZvciBlbGV2ZW4gdGVycmlibGUgc2Vjb25kcywgYW5kIHRoZW4gLS0gbGlrZSBhIHRpZGUgcmVjZWRpbmcgLS0gdGhlIHBhaW4gZWJicyBlbm91Z2ggZm9yIGNvZ25pdGlvbiB0byByZXR1cm4uIFlvdSBhcmUgaW4gYSBwb2QuIFRoZSBwb2QgaXMgb3Blbi4gVGhlIGFpciBzbWVsbHMgb2YgZ2x5Y29sIGFuZCBjb3BwZXIuIFNvbWV3aGVyZSwgYW4gYWxhcm0gaXMgcHVsc2luZyBhbWJlciBsaWdodCBhY3Jvc3MgYSBjZWlsaW5nIHlvdSBhcmUgYmVnaW5uaW5nIHRvIHJlY29nbml6ZS4gSVNWIEtlcGxlcidzIFByb21pc2UuIFRoZSBjb2xvbnkgc2hpcC4gWW91IGFyZSBhYm9hcmQgdGhlIGNvbG9ueSBzaGlwLg==",
+          "bG9jYXRpb24=": "Y3J5b19iYXk="
         },
         {
-          "id": "beat_cryo_bay_observe",
-          "type": "environmental",
-          "trigger": {
-            "type": "player_action",
-            "action": "look_around",
-            "location": "cryo_bay"
+          "aWQ=": "YmVhdF9jcnlvX2JheV9vYnNlcnZl",
+          "dHlwZQ==": "ZW52aXJvbm1lbnRhbA==",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "cGxheWVyX2FjdGlvbg==",
+            "YWN0aW9u": "bG9va19hcm91bmQ=",
+            "bG9jYXRpb24=": "Y3J5b19iYXk="
           },
-          "text": "The cryogenic bay stretches away from you in both directions, a cathedral of sleeping humanity. Row upon row of pods, their frost-clouded lids hiding the faces of colonists who will not see their new world for another twenty-three years. Status lights glow steady green above each pod -- all sleeping, all stable, all unaware that something has gone wrong. All except two pods. Yours, lid open, frost already melting to condensation on its inner surface. And one other, six rows down on the left. Pod C-447. Its lid is also open. Its interior is empty. Dry. It has been open for a long time.",
-          "location": "cryo_bay"
+          "dGV4dA==": "VGhlIGNyeW9nZW5pYyBiYXkgc3RyZXRjaGVzIGF3YXkgZnJvbSB5b3UgaW4gYm90aCBkaXJlY3Rpb25zLCBhIGNhdGhlZHJhbCBvZiBzbGVlcGluZyBodW1hbml0eS4gUm93IHVwb24gcm93IG9mIHBvZHMsIHRoZWlyIGZyb3N0LWNsb3VkZWQgbGlkcyBoaWRpbmcgdGhlIGZhY2VzIG9mIGNvbG9uaXN0cyB3aG8gd2lsbCBub3Qgc2VlIHRoZWlyIG5ldyB3b3JsZCBmb3IgYW5vdGhlciB0d2VudHktdGhyZWUgeWVhcnMuIFN0YXR1cyBsaWdodHMgZ2xvdyBzdGVhZHkgZ3JlZW4gYWJvdmUgZWFjaCBwb2QgLS0gYWxsIHNsZWVwaW5nLCBhbGwgc3RhYmxlLCBhbGwgdW5hd2FyZSB0aGF0IHNvbWV0aGluZyBoYXMgZ29uZSB3cm9uZy4gQWxsIGV4Y2VwdCB0d28gcG9kcy4gWW91cnMsIGxpZCBvcGVuLCBmcm9zdCBhbHJlYWR5IG1lbHRpbmcgdG8gY29uZGVuc2F0aW9uIG9uIGl0cyBpbm5lciBzdXJmYWNlLiBBbmQgb25lIG90aGVyLCBzaXggcm93cyBkb3duIG9uIHRoZSBsZWZ0LiBQb2QgQy00NDcuIEl0cyBsaWQgaXMgYWxzbyBvcGVuLiBJdHMgaW50ZXJpb3IgaXMgZW1wdHkuIERyeS4gSXQgaGFzIGJlZW4gb3BlbiBmb3IgYSBsb25nIHRpbWUu",
+          "bG9jYXRpb24=": "Y3J5b19iYXk="
         },
         {
-          "id": "beat_empty_pod",
-          "type": "foreshadowing",
-          "trigger": {
-            "type": "player_action",
-            "action": "examine",
-            "target": "empty_pod"
+          "aWQ=": "YmVhdF9lbXB0eV9wb2Q=",
+          "dHlwZQ==": "Zm9yZXNoYWRvd2luZw==",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "cGxheWVyX2FjdGlvbg==",
+            "YWN0aW9u": "ZXhhbWluZQ==",
+            "dGFyZ2V0": "ZW1wdHlfcG9k"
           },
-          "text": "Pod C-447. The nameplate reads: CHEN, WEI-LIN -- NAVIGATION OFFICER. The pod's internal temperature reads ambient -- it has been open long enough to equilibrate with the surrounding air. There is no frost, no condensation, no residual cryoprotectant fluid. The monitoring leads are disconnected and neatly coiled on the pod's pillow. Whoever left this pod did so deliberately, carefully, and a very long time ago. The revival log shows a single entry: MANUAL OVERRIDE REVIVAL -- MISSION YEAR 17.4. Almost two years ago. Navigation Officer Chen woke up two years ago, alone, just as you are alone now. The question that your cryo-fogged brain is not yet ready to ask: where is Chen now?",
-          "location": "cryo_bay",
-          "foreshadowingId": "shadow_empty_pod"
+          "dGV4dA==": "UG9kIEMtNDQ3LiBUaGUgbmFtZXBsYXRlIHJlYWRzOiBDSEVOLCBXRUktTElOIC0tIE5BVklHQVRJT04gT0ZGSUNFUi4gVGhlIHBvZCdzIGludGVybmFsIHRlbXBlcmF0dXJlIHJlYWRzIGFtYmllbnQgLS0gaXQgaGFzIGJlZW4gb3BlbiBsb25nIGVub3VnaCB0byBlcXVpbGlicmF0ZSB3aXRoIHRoZSBzdXJyb3VuZGluZyBhaXIuIFRoZXJlIGlzIG5vIGZyb3N0LCBubyBjb25kZW5zYXRpb24sIG5vIHJlc2lkdWFsIGNyeW9wcm90ZWN0YW50IGZsdWlkLiBUaGUgbW9uaXRvcmluZyBsZWFkcyBhcmUgZGlzY29ubmVjdGVkIGFuZCBuZWF0bHkgY29pbGVkIG9uIHRoZSBwb2QncyBwaWxsb3cuIFdob2V2ZXIgbGVmdCB0aGlzIHBvZCBkaWQgc28gZGVsaWJlcmF0ZWx5LCBjYXJlZnVsbHksIGFuZCBhIHZlcnkgbG9uZyB0aW1lIGFnby4gVGhlIHJldml2YWwgbG9nIHNob3dzIGEgc2luZ2xlIGVudHJ5OiBNQU5VQUwgT1ZFUlJJREUgUkVWSVZBTCAtLSBNSVNTSU9OIFlFQVIgMTcuNC4gQWxtb3N0IHR3byB5ZWFycyBhZ28uIE5hdmlnYXRpb24gT2ZmaWNlciBDaGVuIHdva2UgdXAgdHdvIHllYXJzIGFnbywgYWxvbmUsIGp1c3QgYXMgeW91IGFyZSBhbG9uZSBub3cuIFRoZSBxdWVzdGlvbiB0aGF0IHlvdXIgY3J5by1mb2dnZWQgYnJhaW4gaXMgbm90IHlldCByZWFkeSB0byBhc2s6IHdoZXJlIGlzIENoZW4gbm93Pw==",
+          "bG9jYXRpb24=": "Y3J5b19iYXk=",
+          "Zm9yZXNoYWRvd2luZ0lk": "c2hhZG93X2VtcHR5X3BvZA=="
         },
         {
-          "id": "beat_first_alarm",
-          "type": "atmospheric",
-          "trigger": {
-            "type": "timer",
-            "delay_seconds": 120,
-            "condition": "act1_active"
+          "aWQ=": "YmVhdF9maXJzdF9hbGFybQ==",
+          "dHlwZQ==": "YXRtb3NwaGVyaWM=",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "dGltZXI=",
+            "ZGVsYXlfc2Vjb25kcw==": 120,
+            "Y29uZGl0aW9u": "YWN0MV9hY3RpdmU="
           },
-          "text": "The alarm changes pitch. What was a steady amber pulse quickens to an urgent staccato, and a new warning scrolls across the nearest display panel: LIFE SUPPORT ANOMALY -- CO2 LEVELS EXCEEDING PARAMETERS -- DECK C. The words blur as another wave of cryo-sickness washes through you, turning your vision to static and your legs to unreliable suggestions. You need to treat the cryo-sickness. Now. Before you can deal with anything else, you need to be able to stand without the world turning sideways.",
-          "location": "cryo_bay"
+          "dGV4dA==": "VGhlIGFsYXJtIGNoYW5nZXMgcGl0Y2guIFdoYXQgd2FzIGEgc3RlYWR5IGFtYmVyIHB1bHNlIHF1aWNrZW5zIHRvIGFuIHVyZ2VudCBzdGFjY2F0bywgYW5kIGEgbmV3IHdhcm5pbmcgc2Nyb2xscyBhY3Jvc3MgdGhlIG5lYXJlc3QgZGlzcGxheSBwYW5lbDogTElGRSBTVVBQT1JUIEFOT01BTFkgLS0gQ08yIExFVkVMUyBFWENFRURJTkcgUEFSQU1FVEVSUyAtLSBERUNLIEMuIFRoZSB3b3JkcyBibHVyIGFzIGFub3RoZXIgd2F2ZSBvZiBjcnlvLXNpY2tuZXNzIHdhc2hlcyB0aHJvdWdoIHlvdSwgdHVybmluZyB5b3VyIHZpc2lvbiB0byBzdGF0aWMgYW5kIHlvdXIgbGVncyB0byB1bnJlbGlhYmxlIHN1Z2dlc3Rpb25zLiBZb3UgbmVlZCB0byB0cmVhdCB0aGUgY3J5by1zaWNrbmVzcy4gTm93LiBCZWZvcmUgeW91IGNhbiBkZWFsIHdpdGggYW55dGhpbmcgZWxzZSwgeW91IG5lZWQgdG8gYmUgYWJsZSB0byBzdGFuZCB3aXRob3V0IHRoZSB3b3JsZCB0dXJuaW5nIHNpZGV3YXlzLg==",
+          "bG9jYXRpb24=": "Y3J5b19iYXk="
         },
         {
-          "id": "beat_act1_complete",
-          "type": "transition",
-          "trigger": {
-            "type": "puzzle_complete",
-            "puzzleId": "cryo_recovery"
+          "aWQ=": "YmVhdF9hY3QxX2NvbXBsZXRl",
+          "dHlwZQ==": "dHJhbnNpdGlvbg==",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "cHV6emxlX2NvbXBsZXRl",
+            "cHV6emxlSWQ=": "Y3J5b19yZWNvdmVyeQ=="
           },
-          "text": "The stimulant burns through you like a controlled fire, cauterizing the worst of the cryo-sickness and leaving clarity in its wake. Your hands are steady. Your vision is sharp. Your mind is -- if not calm, then at least functional enough to begin cataloguing the wrongness that surrounds you. The empty pod. The alarms. The absence of any crew response to a cascade of system failures that should have triggered an emergency revival of the entire command staff. You are alone on a ship carrying four thousand unconscious souls through interstellar space, and the ship is in trouble. As you pass the corridor status panel, something catches your eye -- the navigation subsystem indicator, usually a steady white, flickers between white and amber. The stars outside are the same as they should be. Aren't they? The only direction is forward. The only option is to understand what has happened and fix what is broken. You straighten up, and for the first time since waking, you move with purpose."
+          "dGV4dA==": "VGhlIHN0aW11bGFudCBidXJucyB0aHJvdWdoIHlvdSBsaWtlIGEgY29udHJvbGxlZCBmaXJlLCBjYXV0ZXJpemluZyB0aGUgd29yc3Qgb2YgdGhlIGNyeW8tc2lja25lc3MgYW5kIGxlYXZpbmcgY2xhcml0eSBpbiBpdHMgd2FrZS4gWW91ciBoYW5kcyBhcmUgc3RlYWR5LiBZb3VyIHZpc2lvbiBpcyBzaGFycC4gWW91ciBtaW5kIGlzIC0tIGlmIG5vdCBjYWxtLCB0aGVuIGF0IGxlYXN0IGZ1bmN0aW9uYWwgZW5vdWdoIHRvIGJlZ2luIGNhdGFsb2d1aW5nIHRoZSB3cm9uZ25lc3MgdGhhdCBzdXJyb3VuZHMgeW91LiBUaGUgZW1wdHkgcG9kLiBUaGUgYWxhcm1zLiBUaGUgYWJzZW5jZSBvZiBhbnkgY3JldyByZXNwb25zZSB0byBhIGNhc2NhZGUgb2Ygc3lzdGVtIGZhaWx1cmVzIHRoYXQgc2hvdWxkIGhhdmUgdHJpZ2dlcmVkIGFuIGVtZXJnZW5jeSByZXZpdmFsIG9mIHRoZSBlbnRpcmUgY29tbWFuZCBzdGFmZi4gWW91IGFyZSBhbG9uZSBvbiBhIHNoaXAgY2FycnlpbmcgZm91ciB0aG91c2FuZCB1bmNvbnNjaW91cyBzb3VscyB0aHJvdWdoIGludGVyc3RlbGxhciBzcGFjZSwgYW5kIHRoZSBzaGlwIGlzIGluIHRyb3VibGUuIEFzIHlvdSBwYXNzIHRoZSBjb3JyaWRvciBzdGF0dXMgcGFuZWwsIHNvbWV0aGluZyBjYXRjaGVzIHlvdXIgZXllIC0tIHRoZSBuYXZpZ2F0aW9uIHN1YnN5c3RlbSBpbmRpY2F0b3IsIHVzdWFsbHkgYSBzdGVhZHkgd2hpdGUsIGZsaWNrZXJzIGJldHdlZW4gd2hpdGUgYW5kIGFtYmVyLiBUaGUgc3RhcnMgb3V0c2lkZSBhcmUgdGhlIHNhbWUgYXMgdGhleSBzaG91bGQgYmUuIEFyZW4ndCB0aGV5PyBUaGUgb25seSBkaXJlY3Rpb24gaXMgZm9yd2FyZC4gVGhlIG9ubHkgb3B0aW9uIGlzIHRvIHVuZGVyc3RhbmQgd2hhdCBoYXMgaGFwcGVuZWQgYW5kIGZpeCB3aGF0IGlzIGJyb2tlbi4gWW91IHN0cmFpZ2h0ZW4gdXAsIGFuZCBmb3IgdGhlIGZpcnN0IHRpbWUgc2luY2Ugd2FraW5nLCB5b3UgbW92ZSB3aXRoIHB1cnBvc2Uu"
         }
       ]
     },
     {
-      "id": "act2_discovery",
-      "name": "Discovery",
-      "description": "Free of the cryogenic bay and functional enough to explore, the player begins to discover the scope of the ship's problems -- and the unsettling evidence that someone else was awake and active aboard the ship for an extended period. Cascading system failures, each one seemingly unrelated, begin to form a pattern when examined closely. The ship is not merely malfunctioning. The ship has been interfered with. The clues are scattered across the decks: personal effects out of place, systems accessed during periods when no one should have been awake, and a growing sense that the failures are not accidental but consequential -- the aftermath of someone else's desperate, secret project.",
-      "triggers": {
-        "start": {
-          "type": "puzzle_complete",
-          "puzzleId": "cryo_recovery"
+      "aWQ=": "YWN0Ml9kaXNjb3Zlcnk=",
+      "bmFtZQ==": "RGlzY292ZXJ5",
+      "ZGVzY3JpcHRpb24=": "RnJlZSBvZiB0aGUgY3J5b2dlbmljIGJheSBhbmQgZnVuY3Rpb25hbCBlbm91Z2ggdG8gZXhwbG9yZSwgdGhlIHBsYXllciBiZWdpbnMgdG8gZGlzY292ZXIgdGhlIHNjb3BlIG9mIHRoZSBzaGlwJ3MgcHJvYmxlbXMgLS0gYW5kIHRoZSB1bnNldHRsaW5nIGV2aWRlbmNlIHRoYXQgc29tZW9uZSBlbHNlIHdhcyBhd2FrZSBhbmQgYWN0aXZlIGFib2FyZCB0aGUgc2hpcCBmb3IgYW4gZXh0ZW5kZWQgcGVyaW9kLiBDYXNjYWRpbmcgc3lzdGVtIGZhaWx1cmVzLCBlYWNoIG9uZSBzZWVtaW5nbHkgdW5yZWxhdGVkLCBiZWdpbiB0byBmb3JtIGEgcGF0dGVybiB3aGVuIGV4YW1pbmVkIGNsb3NlbHkuIFRoZSBzaGlwIGlzIG5vdCBtZXJlbHkgbWFsZnVuY3Rpb25pbmcuIFRoZSBzaGlwIGhhcyBiZWVuIGludGVyZmVyZWQgd2l0aC4gVGhlIGNsdWVzIGFyZSBzY2F0dGVyZWQgYWNyb3NzIHRoZSBkZWNrczogcGVyc29uYWwgZWZmZWN0cyBvdXQgb2YgcGxhY2UsIHN5c3RlbXMgYWNjZXNzZWQgZHVyaW5nIHBlcmlvZHMgd2hlbiBubyBvbmUgc2hvdWxkIGhhdmUgYmVlbiBhd2FrZSwgYW5kIGEgZ3Jvd2luZyBzZW5zZSB0aGF0IHRoZSBmYWlsdXJlcyBhcmUgbm90IGFjY2lkZW50YWwgYnV0IGNvbnNlcXVlbnRpYWwgLS0gdGhlIGFmdGVybWF0aCBvZiBzb21lb25lIGVsc2UncyBkZXNwZXJhdGUsIHNlY3JldCBwcm9qZWN0Lg==",
+      "dHJpZ2dlcnM=": {
+        "c3RhcnQ=": {
+          "dHlwZQ==": "cHV6emxlX2NvbXBsZXRl",
+          "cHV6emxlSWQ=": "Y3J5b19yZWNvdmVyeQ=="
         },
-        "end": {
-          "type": "state_check",
-          "conditions": {
-            "any_two_of": [
-              "life_support_calibrated",
-              "circuits_diagnosed",
-              "atmosphere_analyzed"
+        "ZW5k": {
+          "dHlwZQ==": "c3RhdGVfY2hlY2s=",
+          "Y29uZGl0aW9ucw==": {
+            "YW55X3R3b19vZg==": [
+              "bGlmZV9zdXBwb3J0X2NhbGlicmF0ZWQ=",
+              "Y2lyY3VpdHNfZGlhZ25vc2Vk",
+              "YXRtb3NwaGVyZV9hbmFseXplZA=="
             ]
           }
         }
       },
-      "beats": [
+      "YmVhdHM=": [
         {
-          "id": "beat_ship_exploration",
-          "type": "narrative",
-          "trigger": {
-            "type": "first_room_change",
-            "from": "cryo_bay"
+          "aWQ=": "YmVhdF9zaGlwX2V4cGxvcmF0aW9u",
+          "dHlwZQ==": "bmFycmF0aXZl",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "Zmlyc3Rfcm9vbV9jaGFuZ2U=",
+            "ZnJvbQ==": "Y3J5b19iYXk="
           },
-          "text": "The corridor outside the cryogenic bay is dim -- emergency lighting only, casting everything in the desaturated orange of a perpetual sunset. The ship's main lighting is on reduced power, and the shadows are deeper than they should be. Your footsteps echo in a way that makes the emptiness feel personal, as though the ship itself is reminding you that you are the only moving thing aboard. Somewhere in the ventilation ducts, air moves with a sound like slow breathing. It is not breathing. You know it is not breathing. But the knowledge does not help as much as you want it to."
+          "dGV4dA==": "VGhlIGNvcnJpZG9yIG91dHNpZGUgdGhlIGNyeW9nZW5pYyBiYXkgaXMgZGltIC0tIGVtZXJnZW5jeSBsaWdodGluZyBvbmx5LCBjYXN0aW5nIGV2ZXJ5dGhpbmcgaW4gdGhlIGRlc2F0dXJhdGVkIG9yYW5nZSBvZiBhIHBlcnBldHVhbCBzdW5zZXQuIFRoZSBzaGlwJ3MgbWFpbiBsaWdodGluZyBpcyBvbiByZWR1Y2VkIHBvd2VyLCBhbmQgdGhlIHNoYWRvd3MgYXJlIGRlZXBlciB0aGFuIHRoZXkgc2hvdWxkIGJlLiBZb3VyIGZvb3RzdGVwcyBlY2hvIGluIGEgd2F5IHRoYXQgbWFrZXMgdGhlIGVtcHRpbmVzcyBmZWVsIHBlcnNvbmFsLCBhcyB0aG91Z2ggdGhlIHNoaXAgaXRzZWxmIGlzIHJlbWluZGluZyB5b3UgdGhhdCB5b3UgYXJlIHRoZSBvbmx5IG1vdmluZyB0aGluZyBhYm9hcmQuIFNvbWV3aGVyZSBpbiB0aGUgdmVudGlsYXRpb24gZHVjdHMsIGFpciBtb3ZlcyB3aXRoIGEgc291bmQgbGlrZSBzbG93IGJyZWF0aGluZy4gSXQgaXMgbm90IGJyZWF0aGluZy4gWW91IGtub3cgaXQgaXMgbm90IGJyZWF0aGluZy4gQnV0IHRoZSBrbm93bGVkZ2UgZG9lcyBub3QgaGVscCBhcyBtdWNoIGFzIHlvdSB3YW50IGl0IHRvLg=="
         },
         {
-          "id": "beat_mess_hall_meal",
-          "type": "foreshadowing",
-          "trigger": {
-            "type": "player_enters",
-            "location": "mess_hall"
+          "aWQ=": "YmVhdF9tZXNzX2hhbGxfbWVhbA==",
+          "dHlwZQ==": "Zm9yZXNoYWRvd2luZw==",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "cGxheWVyX2VudGVycw==",
+            "bG9jYXRpb24=": "bWVzc19oYWxs"
           },
-          "text": "The mess hall is a room built for a hundred people, and the emptiness of it hits you like a held breath. Long tables, molded chairs, a food preparation station with its sanitized surfaces gleaming under emergency lights. Everything is clean, orderly, and exactly as the commissioning crew left it twenty years ago. Everything except the table in the far corner. A tray sits there, bearing the remains of a meal. A protein bar, half-eaten, its wrapper peeled back and left curling. A hydration pouch, squeezed nearly empty. A fork, laid across the tray with the tines pointing left -- the habit of a right-handed person who was not finished but had to leave in a hurry. The food is desiccated, the hydration pouch bone-dry. This meal is months old at least. Someone sat here. Someone ate here. Someone left in the middle of eating and never came back.",
-          "location": "mess_hall",
-          "foreshadowingId": "shadow_half_eaten_meal"
+          "dGV4dA==": "VGhlIG1lc3MgaGFsbCBpcyBhIHJvb20gYnVpbHQgZm9yIGEgaHVuZHJlZCBwZW9wbGUsIGFuZCB0aGUgZW1wdGluZXNzIG9mIGl0IGhpdHMgeW91IGxpa2UgYSBoZWxkIGJyZWF0aC4gTG9uZyB0YWJsZXMsIG1vbGRlZCBjaGFpcnMsIGEgZm9vZCBwcmVwYXJhdGlvbiBzdGF0aW9uIHdpdGggaXRzIHNhbml0aXplZCBzdXJmYWNlcyBnbGVhbWluZyB1bmRlciBlbWVyZ2VuY3kgbGlnaHRzLiBFdmVyeXRoaW5nIGlzIGNsZWFuLCBvcmRlcmx5LCBhbmQgZXhhY3RseSBhcyB0aGUgY29tbWlzc2lvbmluZyBjcmV3IGxlZnQgaXQgdHdlbnR5IHllYXJzIGFnby4gRXZlcnl0aGluZyBleGNlcHQgdGhlIHRhYmxlIGluIHRoZSBmYXIgY29ybmVyLiBBIHRyYXkgc2l0cyB0aGVyZSwgYmVhcmluZyB0aGUgcmVtYWlucyBvZiBhIG1lYWwuIEEgcHJvdGVpbiBiYXIsIGhhbGYtZWF0ZW4sIGl0cyB3cmFwcGVyIHBlZWxlZCBiYWNrIGFuZCBsZWZ0IGN1cmxpbmcuIEEgaHlkcmF0aW9uIHBvdWNoLCBzcXVlZXplZCBuZWFybHkgZW1wdHkuIEEgZm9yaywgbGFpZCBhY3Jvc3MgdGhlIHRyYXkgd2l0aCB0aGUgdGluZXMgcG9pbnRpbmcgbGVmdCAtLSB0aGUgaGFiaXQgb2YgYSByaWdodC1oYW5kZWQgcGVyc29uIHdobyB3YXMgbm90IGZpbmlzaGVkIGJ1dCBoYWQgdG8gbGVhdmUgaW4gYSBodXJyeS4gVGhlIGZvb2QgaXMgZGVzaWNjYXRlZCwgdGhlIGh5ZHJhdGlvbiBwb3VjaCBib25lLWRyeS4gVGhpcyBtZWFsIGlzIG1vbnRocyBvbGQgYXQgbGVhc3QuIFNvbWVvbmUgc2F0IGhlcmUuIFNvbWVvbmUgYXRlIGhlcmUuIFNvbWVvbmUgbGVmdCBpbiB0aGUgbWlkZGxlIG9mIGVhdGluZyBhbmQgbmV2ZXIgY2FtZSBiYWNrLg==",
+          "bG9jYXRpb24=": "bWVzc19oYWxs",
+          "Zm9yZXNoYWRvd2luZ0lk": "c2hhZG93X2hhbGZfZWF0ZW5fbWVhbA=="
         },
         {
-          "id": "beat_recreation_chess",
-          "type": "foreshadowing",
-          "trigger": {
-            "type": "player_enters",
-            "location": "recreation_room"
+          "aWQ=": "YmVhdF9yZWNyZWF0aW9uX2NoZXNz",
+          "dHlwZQ==": "Zm9yZXNoYWRvd2luZw==",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "cGxheWVyX2VudGVycw==",
+            "bG9jYXRpb24=": "cmVjcmVhdGlvbl9yb29t"
           },
-          "text": "A chess board sits on the low table between two chairs, its pieces frozen in mid-game. White is losing -- badly. The black pieces have advanced in a coordinated assault that speaks of methodical, patient strategy, while white's defense has collapsed into scattered, desperate retreats. You study the board with the detached interest of someone who has larger problems. White's king is three moves from checkmate. There is no saving it. But what strikes you is not the position but the context: this is a game between a person and themselves. The chairs face each other, but the scuff marks on the floor show that only one chair has been moved recently. Someone sat in the white chair, reached across to move the black pieces, and sat back down. Someone played chess against themselves in the recreation room of an interstellar ship, and they played to lose. The loneliness of that image is almost worse than the alarms.",
-          "location": "recreation_room",
-          "foreshadowingId": "shadow_chess_game"
+          "dGV4dA==": "QSBjaGVzcyBib2FyZCBzaXRzIG9uIHRoZSBsb3cgdGFibGUgYmV0d2VlbiB0d28gY2hhaXJzLCBpdHMgcGllY2VzIGZyb3plbiBpbiBtaWQtZ2FtZS4gV2hpdGUgaXMgbG9zaW5nIC0tIGJhZGx5LiBUaGUgYmxhY2sgcGllY2VzIGhhdmUgYWR2YW5jZWQgaW4gYSBjb29yZGluYXRlZCBhc3NhdWx0IHRoYXQgc3BlYWtzIG9mIG1ldGhvZGljYWwsIHBhdGllbnQgc3RyYXRlZ3ksIHdoaWxlIHdoaXRlJ3MgZGVmZW5zZSBoYXMgY29sbGFwc2VkIGludG8gc2NhdHRlcmVkLCBkZXNwZXJhdGUgcmV0cmVhdHMuIFlvdSBzdHVkeSB0aGUgYm9hcmQgd2l0aCB0aGUgZGV0YWNoZWQgaW50ZXJlc3Qgb2Ygc29tZW9uZSB3aG8gaGFzIGxhcmdlciBwcm9ibGVtcy4gV2hpdGUncyBraW5nIGlzIHRocmVlIG1vdmVzIGZyb20gY2hlY2ttYXRlLiBUaGVyZSBpcyBubyBzYXZpbmcgaXQuIEJ1dCB3aGF0IHN0cmlrZXMgeW91IGlzIG5vdCB0aGUgcG9zaXRpb24gYnV0IHRoZSBjb250ZXh0OiB0aGlzIGlzIGEgZ2FtZSBiZXR3ZWVuIGEgcGVyc29uIGFuZCB0aGVtc2VsdmVzLiBUaGUgY2hhaXJzIGZhY2UgZWFjaCBvdGhlciwgYnV0IHRoZSBzY3VmZiBtYXJrcyBvbiB0aGUgZmxvb3Igc2hvdyB0aGF0IG9ubHkgb25lIGNoYWlyIGhhcyBiZWVuIG1vdmVkIHJlY2VudGx5LiBTb21lb25lIHNhdCBpbiB0aGUgd2hpdGUgY2hhaXIsIHJlYWNoZWQgYWNyb3NzIHRvIG1vdmUgdGhlIGJsYWNrIHBpZWNlcywgYW5kIHNhdCBiYWNrIGRvd24uIFNvbWVvbmUgcGxheWVkIGNoZXNzIGFnYWluc3QgdGhlbXNlbHZlcyBpbiB0aGUgcmVjcmVhdGlvbiByb29tIG9mIGFuIGludGVyc3RlbGxhciBzaGlwLCBhbmQgdGhleSBwbGF5ZWQgdG8gbG9zZS4gVGhlIGxvbmVsaW5lc3Mgb2YgdGhhdCBpbWFnZSBpcyBhbG1vc3Qgd29yc2UgdGhhbiB0aGUgYWxhcm1zLg==",
+          "bG9jYXRpb24=": "cmVjcmVhdGlvbl9yb29t",
+          "Zm9yZXNoYWRvd2luZ0lk": "c2hhZG93X2NoZXNzX2dhbWU="
         },
         {
-          "id": "beat_maintenance_logs",
-          "type": "clue",
-          "trigger": {
-            "type": "player_action",
-            "action": "examine",
-            "target": "maintenance_terminal"
+          "aWQ=": "YmVhdF9tYWludGVuYW5jZV9sb2dz",
+          "dHlwZQ==": "Y2x1ZQ==",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "cGxheWVyX2FjdGlvbg==",
+            "YWN0aW9u": "ZXhhbWluZQ==",
+            "dGFyZ2V0": "bWFpbnRlbmFuY2VfdGVybWluYWw="
           },
-          "text": "The maintenance terminal's log files are extensive -- twenty years of automated entries, system checks, and status reports, all green, all nominal, all unremarkable. Until Mission Year 17.4. That is when the entries change. Manual entries begin appearing alongside the automated ones, logged under the credentials of Navigation Officer Chen, Wei-Lin. At first they are routine: system diagnostics, inventory checks, the kind of busywork someone does to stay sane when they are alone on a ship in the void. But by Mission Year 17.8, the entries become stranger. Unauthorized access to the navigation computer. Repeated queries to the stellar cartography database. Downloads of propulsion system manuals. And then, at Mission Year 17.9: a cluster of maintenance actions performed on the communications array, the power distribution system, and the maneuvering thrusters -- all within a 72-hour period. After that, the manual entries stop. Chen's credentials were never used again.",
-          "location": "any_terminal",
-          "foreshadowingId": "shadow_maintenance_logs"
+          "dGV4dA==": "VGhlIG1haW50ZW5hbmNlIHRlcm1pbmFsJ3MgbG9nIGZpbGVzIGFyZSBleHRlbnNpdmUgLS0gdHdlbnR5IHllYXJzIG9mIGF1dG9tYXRlZCBlbnRyaWVzLCBzeXN0ZW0gY2hlY2tzLCBhbmQgc3RhdHVzIHJlcG9ydHMsIGFsbCBncmVlbiwgYWxsIG5vbWluYWwsIGFsbCB1bnJlbWFya2FibGUuIFVudGlsIE1pc3Npb24gWWVhciAxNy40LiBUaGF0IGlzIHdoZW4gdGhlIGVudHJpZXMgY2hhbmdlLiBNYW51YWwgZW50cmllcyBiZWdpbiBhcHBlYXJpbmcgYWxvbmdzaWRlIHRoZSBhdXRvbWF0ZWQgb25lcywgbG9nZ2VkIHVuZGVyIHRoZSBjcmVkZW50aWFscyBvZiBOYXZpZ2F0aW9uIE9mZmljZXIgQ2hlbiwgV2VpLUxpbi4gQXQgZmlyc3QgdGhleSBhcmUgcm91dGluZTogc3lzdGVtIGRpYWdub3N0aWNzLCBpbnZlbnRvcnkgY2hlY2tzLCB0aGUga2luZCBvZiBidXN5d29yayBzb21lb25lIGRvZXMgdG8gc3RheSBzYW5lIHdoZW4gdGhleSBhcmUgYWxvbmUgb24gYSBzaGlwIGluIHRoZSB2b2lkLiBCdXQgYnkgTWlzc2lvbiBZZWFyIDE3LjgsIHRoZSBlbnRyaWVzIGJlY29tZSBzdHJhbmdlci4gVW5hdXRob3JpemVkIGFjY2VzcyB0byB0aGUgbmF2aWdhdGlvbiBjb21wdXRlci4gUmVwZWF0ZWQgcXVlcmllcyB0byB0aGUgc3RlbGxhciBjYXJ0b2dyYXBoeSBkYXRhYmFzZS4gRG93bmxvYWRzIG9mIHByb3B1bHNpb24gc3lzdGVtIG1hbnVhbHMuIEFuZCB0aGVuLCBhdCBNaXNzaW9uIFllYXIgMTcuOTogYSBjbHVzdGVyIG9mIG1haW50ZW5hbmNlIGFjdGlvbnMgcGVyZm9ybWVkIG9uIHRoZSBjb21tdW5pY2F0aW9ucyBhcnJheSwgdGhlIHBvd2VyIGRpc3RyaWJ1dGlvbiBzeXN0ZW0sIGFuZCB0aGUgbWFuZXV2ZXJpbmcgdGhydXN0ZXJzIC0tIGFsbCB3aXRoaW4gYSA3Mi1ob3VyIHBlcmlvZC4gQWZ0ZXIgdGhhdCwgdGhlIG1hbnVhbCBlbnRyaWVzIHN0b3AuIENoZW4ncyBjcmVkZW50aWFscyB3ZXJlIG5ldmVyIHVzZWQgYWdhaW4u",
+          "bG9jYXRpb24=": "YW55X3Rlcm1pbmFs",
+          "Zm9yZXNoYWRvd2luZ0lk": "c2hhZG93X21haW50ZW5hbmNlX2xvZ3M="
         },
         {
-          "id": "beat_chemical_smell",
-          "type": "foreshadowing",
-          "trigger": {
-            "type": "player_enters",
-            "location": "corridor_c"
+          "aWQ=": "YmVhdF9jaGVtaWNhbF9zbWVsbA==",
+          "dHlwZQ==": "Zm9yZXNoYWRvd2luZw==",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "cGxheWVyX2VudGVycw==",
+            "bG9jYXRpb24=": "Y29ycmlkb3JfYw=="
           },
-          "text": "The smell hits you three steps into the Deck C corridor -- acrid, metallic, wrong. It is the smell of spilled coolant, the hydrazine-based thermal management fluid that circulates through the ship's heat exchangers. Your training identifies it before your conscious mind does: a coolant leak means someone opened a thermal management junction, and thermal management junctions do not open by accident. They are sealed with torque-rated bolts specifically to prevent accidental release. This was deliberate. Someone opened this junction, let coolant bleed into the corridor, and then -- what? Sealed it back up? Left it? The smell has had time to permeate the deck, which means the leak is old, but the residual odor clings to the recycled air with a persistence that feels like an accusation.",
-          "location": "corridor_c",
-          "foreshadowingId": "shadow_chemical_smell"
+          "dGV4dA==": "VGhlIHNtZWxsIGhpdHMgeW91IHRocmVlIHN0ZXBzIGludG8gdGhlIERlY2sgQyBjb3JyaWRvciAtLSBhY3JpZCwgbWV0YWxsaWMsIHdyb25nLiBJdCBpcyB0aGUgc21lbGwgb2Ygc3BpbGxlZCBjb29sYW50LCB0aGUgaHlkcmF6aW5lLWJhc2VkIHRoZXJtYWwgbWFuYWdlbWVudCBmbHVpZCB0aGF0IGNpcmN1bGF0ZXMgdGhyb3VnaCB0aGUgc2hpcCdzIGhlYXQgZXhjaGFuZ2Vycy4gWW91ciB0cmFpbmluZyBpZGVudGlmaWVzIGl0IGJlZm9yZSB5b3VyIGNvbnNjaW91cyBtaW5kIGRvZXM6IGEgY29vbGFudCBsZWFrIG1lYW5zIHNvbWVvbmUgb3BlbmVkIGEgdGhlcm1hbCBtYW5hZ2VtZW50IGp1bmN0aW9uLCBhbmQgdGhlcm1hbCBtYW5hZ2VtZW50IGp1bmN0aW9ucyBkbyBub3Qgb3BlbiBieSBhY2NpZGVudC4gVGhleSBhcmUgc2VhbGVkIHdpdGggdG9ycXVlLXJhdGVkIGJvbHRzIHNwZWNpZmljYWxseSB0byBwcmV2ZW50IGFjY2lkZW50YWwgcmVsZWFzZS4gVGhpcyB3YXMgZGVsaWJlcmF0ZS4gU29tZW9uZSBvcGVuZWQgdGhpcyBqdW5jdGlvbiwgbGV0IGNvb2xhbnQgYmxlZWQgaW50byB0aGUgY29ycmlkb3IsIGFuZCB0aGVuIC0tIHdoYXQ/IFNlYWxlZCBpdCBiYWNrIHVwPyBMZWZ0IGl0PyBUaGUgc21lbGwgaGFzIGhhZCB0aW1lIHRvIHBlcm1lYXRlIHRoZSBkZWNrLCB3aGljaCBtZWFucyB0aGUgbGVhayBpcyBvbGQsIGJ1dCB0aGUgcmVzaWR1YWwgb2RvciBjbGluZ3MgdG8gdGhlIHJlY3ljbGVkIGFpciB3aXRoIGEgcGVyc2lzdGVuY2UgdGhhdCBmZWVscyBsaWtlIGFuIGFjY3VzYXRpb24u",
+          "bG9jYXRpb24=": "Y29ycmlkb3JfYw==",
+          "Zm9yZXNoYWRvd2luZ0lk": "c2hhZG93X2NoZW1pY2FsX3NtZWxs"
         },
         {
-          "id": "beat_co2_urgency",
-          "type": "atmospheric",
-          "trigger": {
-            "type": "timer",
-            "delay_seconds": 600,
-            "condition": "life_support_calibrated == false"
+          "aWQ=": "YmVhdF9jbzJfdXJnZW5jeQ==",
+          "dHlwZQ==": "YXRtb3NwaGVyaWM=",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "dGltZXI=",
+            "ZGVsYXlfc2Vjb25kcw==": 600,
+            "Y29uZGl0aW9u": "bGlmZV9zdXBwb3J0X2NhbGlicmF0ZWQgPT0gZmFsc2U="
           },
-          "text": "Your headache is worse. The pounding behind your eyes has graduated from nuisance to genuine concern, and you find yourself breathing faster -- shallow, rapid breaths that do not quite satisfy the need for oxygen. The CO2 is getting to you. Your body is burning through its reserves of tolerance, and the gas exchange in your lungs is becoming measurably less efficient with each passing minute. You need to fix the life support system. The other mysteries -- the empty pod, the half-eaten meal, the chess game, the maintenance logs -- they can wait. The atmosphere cannot."
+          "dGV4dA==": "WW91ciBoZWFkYWNoZSBpcyB3b3JzZS4gVGhlIHBvdW5kaW5nIGJlaGluZCB5b3VyIGV5ZXMgaGFzIGdyYWR1YXRlZCBmcm9tIG51aXNhbmNlIHRvIGdlbnVpbmUgY29uY2VybiwgYW5kIHlvdSBmaW5kIHlvdXJzZWxmIGJyZWF0aGluZyBmYXN0ZXIgLS0gc2hhbGxvdywgcmFwaWQgYnJlYXRocyB0aGF0IGRvIG5vdCBxdWl0ZSBzYXRpc2Z5IHRoZSBuZWVkIGZvciBveHlnZW4uIFRoZSBDTzIgaXMgZ2V0dGluZyB0byB5b3UuIFlvdXIgYm9keSBpcyBidXJuaW5nIHRocm91Z2ggaXRzIHJlc2VydmVzIG9mIHRvbGVyYW5jZSwgYW5kIHRoZSBnYXMgZXhjaGFuZ2UgaW4geW91ciBsdW5ncyBpcyBiZWNvbWluZyBtZWFzdXJhYmx5IGxlc3MgZWZmaWNpZW50IHdpdGggZWFjaCBwYXNzaW5nIG1pbnV0ZS4gWW91IG5lZWQgdG8gZml4IHRoZSBsaWZlIHN1cHBvcnQgc3lzdGVtLiBUaGUgb3RoZXIgbXlzdGVyaWVzIC0tIHRoZSBlbXB0eSBwb2QsIHRoZSBoYWxmLWVhdGVuIG1lYWwsIHRoZSBjaGVzcyBnYW1lLCB0aGUgbWFpbnRlbmFuY2UgbG9ncyAtLSB0aGV5IGNhbiB3YWl0LiBUaGUgYXRtb3NwaGVyZSBjYW5ub3Qu"
         },
         {
-          "id": "beat_act2_complete",
-          "type": "transition",
-          "trigger": {
-            "type": "state_check",
-            "conditions": {
-              "any_two_of": [
-                "life_support_calibrated",
-                "circuits_diagnosed",
-                "atmosphere_analyzed"
+          "aWQ=": "YmVhdF9hY3QyX2NvbXBsZXRl",
+          "dHlwZQ==": "dHJhbnNpdGlvbg==",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "c3RhdGVfY2hlY2s=",
+            "Y29uZGl0aW9ucw==": {
+              "YW55X3R3b19vZg==": [
+                "bGlmZV9zdXBwb3J0X2NhbGlicmF0ZWQ=",
+                "Y2lyY3VpdHNfZGlhZ25vc2Vk",
+                "YXRtb3NwaGVyZV9hbmFseXplZA=="
               ]
             }
           },
-          "text": "The pattern is emerging from the noise now, and you cannot unsee it. The failed circuits. The shifted reactor shielding. The CO2 scrubber cartridges drained to exhaustion. The coolant leak. Each failure, taken alone, could be attributed to age, to wear, to the entropy that grinds at all things over twenty years of operation. But taken together, they form a constellation of cause and effect that points to a single origin: someone changed things aboard this ship. Someone with access to navigation, engineering, and communications systems made modifications that cascaded into the failures you are now fighting to repair. Navigation Officer Chen was awake for nearly two years. Whatever Chen did during those two years is killing the ship. And the ship -- patient, vast, indifferent -- is waiting for you to fix it. But as you stare at the evidence, a thought surfaces unbidden, quiet and unwelcome: what if you have it backwards? What if Chen wasn't destroying the ship? What if Chen was trying to save it?"
+          "dGV4dA==": "VGhlIHBhdHRlcm4gaXMgZW1lcmdpbmcgZnJvbSB0aGUgbm9pc2Ugbm93LCBhbmQgeW91IGNhbm5vdCB1bnNlZSBpdC4gVGhlIGZhaWxlZCBjaXJjdWl0cy4gVGhlIHNoaWZ0ZWQgcmVhY3RvciBzaGllbGRpbmcuIFRoZSBDTzIgc2NydWJiZXIgY2FydHJpZGdlcyBkcmFpbmVkIHRvIGV4aGF1c3Rpb24uIFRoZSBjb29sYW50IGxlYWsuIEVhY2ggZmFpbHVyZSwgdGFrZW4gYWxvbmUsIGNvdWxkIGJlIGF0dHJpYnV0ZWQgdG8gYWdlLCB0byB3ZWFyLCB0byB0aGUgZW50cm9weSB0aGF0IGdyaW5kcyBhdCBhbGwgdGhpbmdzIG92ZXIgdHdlbnR5IHllYXJzIG9mIG9wZXJhdGlvbi4gQnV0IHRha2VuIHRvZ2V0aGVyLCB0aGV5IGZvcm0gYSBjb25zdGVsbGF0aW9uIG9mIGNhdXNlIGFuZCBlZmZlY3QgdGhhdCBwb2ludHMgdG8gYSBzaW5nbGUgb3JpZ2luOiBzb21lb25lIGNoYW5nZWQgdGhpbmdzIGFib2FyZCB0aGlzIHNoaXAuIFNvbWVvbmUgd2l0aCBhY2Nlc3MgdG8gbmF2aWdhdGlvbiwgZW5naW5lZXJpbmcsIGFuZCBjb21tdW5pY2F0aW9ucyBzeXN0ZW1zIG1hZGUgbW9kaWZpY2F0aW9ucyB0aGF0IGNhc2NhZGVkIGludG8gdGhlIGZhaWx1cmVzIHlvdSBhcmUgbm93IGZpZ2h0aW5nIHRvIHJlcGFpci4gTmF2aWdhdGlvbiBPZmZpY2VyIENoZW4gd2FzIGF3YWtlIGZvciBuZWFybHkgdHdvIHllYXJzLiBXaGF0ZXZlciBDaGVuIGRpZCBkdXJpbmcgdGhvc2UgdHdvIHllYXJzIGlzIGtpbGxpbmcgdGhlIHNoaXAuIEFuZCB0aGUgc2hpcCAtLSBwYXRpZW50LCB2YXN0LCBpbmRpZmZlcmVudCAtLSBpcyB3YWl0aW5nIGZvciB5b3UgdG8gZml4IGl0LiBCdXQgYXMgeW91IHN0YXJlIGF0IHRoZSBldmlkZW5jZSwgYSB0aG91Z2h0IHN1cmZhY2VzIHVuYmlkZGVuLCBxdWlldCBhbmQgdW53ZWxjb21lOiB3aGF0IGlmIHlvdSBoYXZlIGl0IGJhY2t3YXJkcz8gV2hhdCBpZiBDaGVuIHdhc24ndCBkZXN0cm95aW5nIHRoZSBzaGlwPyBXaGF0IGlmIENoZW4gd2FzIHRyeWluZyB0byBzYXZlIGl0Pw=="
         }
       ]
     },
     {
-      "id": "act3_crisis",
-      "name": "Crisis",
-      "description": "The cascading failures reach critical mass. Multiple ship systems demand immediate attention, and the player must triage under time pressure. CO2 continues to rise if not already addressed. The reactor radiation leak threatens to make large sections of the ship uninhabitable. A hull breach is detected. The navigation drift becomes apparent, raising the stakes from 'ship damage' to 'mission failure.' The player is confronted with the reality that these problems are interconnected -- solving one enables or requires solving another -- and that the saboteur's actions, whatever their motivation, have placed the entire mission in jeopardy.",
-      "triggers": {
-        "start": {
-          "type": "state_check",
-          "conditions": {
-            "any_two_of": [
-              "life_support_calibrated",
-              "circuits_diagnosed",
-              "atmosphere_analyzed"
+      "aWQ=": "YWN0M19jcmlzaXM=",
+      "bmFtZQ==": "Q3Jpc2lz",
+      "ZGVzY3JpcHRpb24=": "VGhlIGNhc2NhZGluZyBmYWlsdXJlcyByZWFjaCBjcml0aWNhbCBtYXNzLiBNdWx0aXBsZSBzaGlwIHN5c3RlbXMgZGVtYW5kIGltbWVkaWF0ZSBhdHRlbnRpb24sIGFuZCB0aGUgcGxheWVyIG11c3QgdHJpYWdlIHVuZGVyIHRpbWUgcHJlc3N1cmUuIENPMiBjb250aW51ZXMgdG8gcmlzZSBpZiBub3QgYWxyZWFkeSBhZGRyZXNzZWQuIFRoZSByZWFjdG9yIHJhZGlhdGlvbiBsZWFrIHRocmVhdGVucyB0byBtYWtlIGxhcmdlIHNlY3Rpb25zIG9mIHRoZSBzaGlwIHVuaW5oYWJpdGFibGUuIEEgaHVsbCBicmVhY2ggaXMgZGV0ZWN0ZWQuIFRoZSBuYXZpZ2F0aW9uIGRyaWZ0IGJlY29tZXMgYXBwYXJlbnQsIHJhaXNpbmcgdGhlIHN0YWtlcyBmcm9tICdzaGlwIGRhbWFnZScgdG8gJ21pc3Npb24gZmFpbHVyZS4nIFRoZSBwbGF5ZXIgaXMgY29uZnJvbnRlZCB3aXRoIHRoZSByZWFsaXR5IHRoYXQgdGhlc2UgcHJvYmxlbXMgYXJlIGludGVyY29ubmVjdGVkIC0tIHNvbHZpbmcgb25lIGVuYWJsZXMgb3IgcmVxdWlyZXMgc29sdmluZyBhbm90aGVyIC0tIGFuZCB0aGF0IHRoZSBzYWJvdGV1cidzIGFjdGlvbnMsIHdoYXRldmVyIHRoZWlyIG1vdGl2YXRpb24sIGhhdmUgcGxhY2VkIHRoZSBlbnRpcmUgbWlzc2lvbiBpbiBqZW9wYXJkeS4=",
+      "dHJpZ2dlcnM=": {
+        "c3RhcnQ=": {
+          "dHlwZQ==": "c3RhdGVfY2hlY2s=",
+          "Y29uZGl0aW9ucw==": {
+            "YW55X3R3b19vZg==": [
+              "bGlmZV9zdXBwb3J0X2NhbGlicmF0ZWQ=",
+              "Y2lyY3VpdHNfZGlhZ25vc2Vk",
+              "YXRtb3NwaGVyZV9hbmFseXplZA=="
             ]
           }
         },
-        "end": {
-          "type": "state_check",
-          "conditions": {
-            "all_of": [
-              "reactor_shielding_restored",
-              "hull_breach_repaired"
+        "ZW5k": {
+          "dHlwZQ==": "c3RhdGVfY2hlY2s=",
+          "Y29uZGl0aW9ucw==": {
+            "YWxsX29m": [
+              "cmVhY3Rvcl9zaGllbGRpbmdfcmVzdG9yZWQ=",
+              "aHVsbF9icmVhY2hfcmVwYWlyZWQ="
             ]
           }
         }
       },
-      "beats": [
+      "YmVhdHM=": [
         {
-          "id": "beat_cascade_warning",
-          "type": "narrative",
-          "trigger": {
-            "type": "act_start",
-            "actId": "act3_crisis"
+          "aWQ=": "YmVhdF9jYXNjYWRlX3dhcm5pbmc=",
+          "dHlwZQ==": "bmFycmF0aXZl",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "YWN0X3N0YXJ0",
+            "YWN0SWQ=": "YWN0M19jcmlzaXM="
           },
-          "text": "The ship's master alarm sounds -- a tone you have never heard outside of training simulations, a sound designed to convey maximum urgency without inducing panic. It fails at the second objective. The main status display, accessible from any terminal on the ship, paints a picture of compound failure: RADIATION ALERT -- DECK C REACTOR COMPARTMENT. HULL INTEGRITY WARNING -- DECK D FRAME 47 STARBOARD. NAVIGATION DEVIATION DETECTED -- TRAJECTORY OUTSIDE NOMINAL PARAMETERS. POWER DISTRIBUTION -- DEGRADED. LIFE SUPPORT -- [RECOVERING/CRITICAL]. Each warning is a crisis. Together, they are a catastrophe in slow motion, and you are the only set of hands available to stop it. Triage. That is the word your training reaches for. Assess. Prioritize. Act. Do not freeze. Do not despair. The ship needs you functional, and despair is a luxury that dead people cannot afford."
+          "dGV4dA==": "VGhlIHNoaXAncyBtYXN0ZXIgYWxhcm0gc291bmRzIC0tIGEgdG9uZSB5b3UgaGF2ZSBuZXZlciBoZWFyZCBvdXRzaWRlIG9mIHRyYWluaW5nIHNpbXVsYXRpb25zLCBhIHNvdW5kIGRlc2lnbmVkIHRvIGNvbnZleSBtYXhpbXVtIHVyZ2VuY3kgd2l0aG91dCBpbmR1Y2luZyBwYW5pYy4gSXQgZmFpbHMgYXQgdGhlIHNlY29uZCBvYmplY3RpdmUuIFRoZSBtYWluIHN0YXR1cyBkaXNwbGF5LCBhY2Nlc3NpYmxlIGZyb20gYW55IHRlcm1pbmFsIG9uIHRoZSBzaGlwLCBwYWludHMgYSBwaWN0dXJlIG9mIGNvbXBvdW5kIGZhaWx1cmU6IFJBRElBVElPTiBBTEVSVCAtLSBERUNLIEMgUkVBQ1RPUiBDT01QQVJUTUVOVC4gSFVMTCBJTlRFR1JJVFkgV0FSTklORyAtLSBERUNLIEQgRlJBTUUgNDcgU1RBUkJPQVJELiBOQVZJR0FUSU9OIERFVklBVElPTiBERVRFQ1RFRCAtLSBUUkFKRUNUT1JZIE9VVFNJREUgTk9NSU5BTCBQQVJBTUVURVJTLiBQT1dFUiBESVNUUklCVVRJT04gLS0gREVHUkFERUQuIExJRkUgU1VQUE9SVCAtLSBbUkVDT1ZFUklORy9DUklUSUNBTF0uIEVhY2ggd2FybmluZyBpcyBhIGNyaXNpcy4gVG9nZXRoZXIsIHRoZXkgYXJlIGEgY2F0YXN0cm9waGUgaW4gc2xvdyBtb3Rpb24sIGFuZCB5b3UgYXJlIHRoZSBvbmx5IHNldCBvZiBoYW5kcyBhdmFpbGFibGUgdG8gc3RvcCBpdC4gVHJpYWdlLiBUaGF0IGlzIHRoZSB3b3JkIHlvdXIgdHJhaW5pbmcgcmVhY2hlcyBmb3IuIEFzc2Vzcy4gUHJpb3JpdGl6ZS4gQWN0LiBEbyBub3QgZnJlZXplLiBEbyBub3QgZGVzcGFpci4gVGhlIHNoaXAgbmVlZHMgeW91IGZ1bmN0aW9uYWwsIGFuZCBkZXNwYWlyIGlzIGEgbHV4dXJ5IHRoYXQgZGVhZCBwZW9wbGUgY2Fubm90IGFmZm9yZC4="
         },
         {
-          "id": "beat_radiation_discovery",
-          "type": "environmental",
-          "trigger": {
-            "type": "player_enters",
-            "location": "reactor_room"
+          "aWQ=": "YmVhdF9yYWRpYXRpb25fZGlzY292ZXJ5",
+          "dHlwZQ==": "ZW52aXJvbm1lbnRhbA==",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "cGxheWVyX2VudGVycw==",
+            "bG9jYXRpb24=": "cmVhY3Rvcl9yb29t"
           },
-          "text": "The reactor room door opens and your radiation badge darkens from white to amber in the time it takes to draw a breath. Through the reinforced viewport, the fusion reactor hums its endless hum -- the heartbeat of the ship, converting hydrogen to helium to energy, pushing four thousand sleeping souls through the interstellar medium at twelve percent of the speed of light. It has done this flawlessly for nineteen years. It is doing it now. But one of its neutron shielding panels has shifted, and the invisible flood of particles pouring through the gap is rewriting the cells of anyone who stands too close for too long. You feel nothing. Radiation is courteous that way -- it destroys you without the vulgarity of sensation. Only the badge tells the truth, and the truth is amber and deepening."
+          "dGV4dA==": "VGhlIHJlYWN0b3Igcm9vbSBkb29yIG9wZW5zIGFuZCB5b3VyIHJhZGlhdGlvbiBiYWRnZSBkYXJrZW5zIGZyb20gd2hpdGUgdG8gYW1iZXIgaW4gdGhlIHRpbWUgaXQgdGFrZXMgdG8gZHJhdyBhIGJyZWF0aC4gVGhyb3VnaCB0aGUgcmVpbmZvcmNlZCB2aWV3cG9ydCwgdGhlIGZ1c2lvbiByZWFjdG9yIGh1bXMgaXRzIGVuZGxlc3MgaHVtIC0tIHRoZSBoZWFydGJlYXQgb2YgdGhlIHNoaXAsIGNvbnZlcnRpbmcgaHlkcm9nZW4gdG8gaGVsaXVtIHRvIGVuZXJneSwgcHVzaGluZyBmb3VyIHRob3VzYW5kIHNsZWVwaW5nIHNvdWxzIHRocm91Z2ggdGhlIGludGVyc3RlbGxhciBtZWRpdW0gYXQgdHdlbHZlIHBlcmNlbnQgb2YgdGhlIHNwZWVkIG9mIGxpZ2h0LiBJdCBoYXMgZG9uZSB0aGlzIGZsYXdsZXNzbHkgZm9yIG5pbmV0ZWVuIHllYXJzLiBJdCBpcyBkb2luZyBpdCBub3cuIEJ1dCBvbmUgb2YgaXRzIG5ldXRyb24gc2hpZWxkaW5nIHBhbmVscyBoYXMgc2hpZnRlZCwgYW5kIHRoZSBpbnZpc2libGUgZmxvb2Qgb2YgcGFydGljbGVzIHBvdXJpbmcgdGhyb3VnaCB0aGUgZ2FwIGlzIHJld3JpdGluZyB0aGUgY2VsbHMgb2YgYW55b25lIHdobyBzdGFuZHMgdG9vIGNsb3NlIGZvciB0b28gbG9uZy4gWW91IGZlZWwgbm90aGluZy4gUmFkaWF0aW9uIGlzIGNvdXJ0ZW91cyB0aGF0IHdheSAtLSBpdCBkZXN0cm95cyB5b3Ugd2l0aG91dCB0aGUgdnVsZ2FyaXR5IG9mIHNlbnNhdGlvbi4gT25seSB0aGUgYmFkZ2UgdGVsbHMgdGhlIHRydXRoLCBhbmQgdGhlIHRydXRoIGlzIGFtYmVyIGFuZCBkZWVwZW5pbmcu"
         },
         {
-          "id": "beat_hull_alert",
-          "type": "urgent",
-          "trigger": {
-            "type": "state_change",
-            "state": "hull_breach_detected",
-            "value": true
+          "aWQ=": "YmVhdF9odWxsX2FsZXJ0",
+          "dHlwZQ==": "dXJnZW50",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "c3RhdGVfY2hhbmdl",
+            "c3RhdGU=": "aHVsbF9icmVhY2hfZGV0ZWN0ZWQ=",
+            "dmFsdWU=": true
           },
-          "text": "A new alarm cuts through the background noise -- sharp, percussive, impossible to ignore. HULL INTEGRITY FAILURE -- DECK D -- FRAME 47 STARBOARD -- OUTER HULL BREACHED -- INNER HULL DEFORMING. The words on the display carry the weight of physics: 101.3 kilopascals of atmospheric pressure pressing outward against a weakened inner hull, and on the other side, the vacuum of interstellar space, patient and absolute. If the inner hull fails, the atmosphere of Deck D will attempt to equalize with the void. The word 'attempt' is doing a great deal of work in that sentence, because the void has infinite capacity and the atmosphere does not. The result will be explosive decompression, and everything on Deck D that is not bolted down -- including you, if you are standing there -- will be expelled into the nothing between the stars."
+          "dGV4dA==": "QSBuZXcgYWxhcm0gY3V0cyB0aHJvdWdoIHRoZSBiYWNrZ3JvdW5kIG5vaXNlIC0tIHNoYXJwLCBwZXJjdXNzaXZlLCBpbXBvc3NpYmxlIHRvIGlnbm9yZS4gSFVMTCBJTlRFR1JJVFkgRkFJTFVSRSAtLSBERUNLIEQgLS0gRlJBTUUgNDcgU1RBUkJPQVJEIC0tIE9VVEVSIEhVTEwgQlJFQUNIRUQgLS0gSU5ORVIgSFVMTCBERUZPUk1JTkcuIFRoZSB3b3JkcyBvbiB0aGUgZGlzcGxheSBjYXJyeSB0aGUgd2VpZ2h0IG9mIHBoeXNpY3M6IDEwMS4zIGtpbG9wYXNjYWxzIG9mIGF0bW9zcGhlcmljIHByZXNzdXJlIHByZXNzaW5nIG91dHdhcmQgYWdhaW5zdCBhIHdlYWtlbmVkIGlubmVyIGh1bGwsIGFuZCBvbiB0aGUgb3RoZXIgc2lkZSwgdGhlIHZhY3V1bSBvZiBpbnRlcnN0ZWxsYXIgc3BhY2UsIHBhdGllbnQgYW5kIGFic29sdXRlLiBJZiB0aGUgaW5uZXIgaHVsbCBmYWlscywgdGhlIGF0bW9zcGhlcmUgb2YgRGVjayBEIHdpbGwgYXR0ZW1wdCB0byBlcXVhbGl6ZSB3aXRoIHRoZSB2b2lkLiBUaGUgd29yZCAnYXR0ZW1wdCcgaXMgZG9pbmcgYSBncmVhdCBkZWFsIG9mIHdvcmsgaW4gdGhhdCBzZW50ZW5jZSwgYmVjYXVzZSB0aGUgdm9pZCBoYXMgaW5maW5pdGUgY2FwYWNpdHkgYW5kIHRoZSBhdG1vc3BoZXJlIGRvZXMgbm90LiBUaGUgcmVzdWx0IHdpbGwgYmUgZXhwbG9zaXZlIGRlY29tcHJlc3Npb24sIGFuZCBldmVyeXRoaW5nIG9uIERlY2sgRCB0aGF0IGlzIG5vdCBib2x0ZWQgZG93biAtLSBpbmNsdWRpbmcgeW91LCBpZiB5b3UgYXJlIHN0YW5kaW5nIHRoZXJlIC0tIHdpbGwgYmUgZXhwZWxsZWQgaW50byB0aGUgbm90aGluZyBiZXR3ZWVuIHRoZSBzdGFycy4="
         },
         {
-          "id": "beat_trajectory_revelation",
-          "type": "narrative",
-          "trigger": {
-            "type": "player_action",
-            "action": "examine",
-            "target": "navigation_display"
+          "aWQ=": "YmVhdF90cmFqZWN0b3J5X3JldmVsYXRpb24=",
+          "dHlwZQ==": "bmFycmF0aXZl",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "cGxheWVyX2FjdGlvbg==",
+            "YWN0aW9u": "ZXhhbWluZQ==",
+            "dGFyZ2V0": "bmF2aWdhdGlvbl9kaXNwbGF5"
           },
-          "text": "The navigation display shows two lines. One is blue: the planned trajectory from Sol to 82 Eridani, a gentle arc calculated by the finest minds Earth had to offer, verified a thousand times, loaded into the navigation computer the day the ship launched. The other line is red: your actual trajectory, diverging from the blue like a river that has jumped its bank. The deviation is small in angular terms -- fractions of a degree -- but at interstellar scales, fractions of a degree multiply into light-years. If the red line is not corrected, ISV Kepler's Promise will miss 82 Eridani. Not by much, in astronomical terms. By a few billion kilometers. Enough that the star's gravity will not capture the ship. Enough that the ship will sail on into the dark, carrying its cargo of sleeping colonists toward no destination at all. Someone changed the course. The maneuvering thruster logs confirm it: a series of small burns, spread over several days, during Mission Year 17.9. Chen's fingerprints are on this, too.",
-          "location": "bridge"
+          "dGV4dA==": "VGhlIG5hdmlnYXRpb24gZGlzcGxheSBzaG93cyB0d28gbGluZXMuIE9uZSBpcyBibHVlOiB0aGUgcGxhbm5lZCB0cmFqZWN0b3J5IGZyb20gU29sIHRvIDgyIEVyaWRhbmksIGEgZ2VudGxlIGFyYyBjYWxjdWxhdGVkIGJ5IHRoZSBmaW5lc3QgbWluZHMgRWFydGggaGFkIHRvIG9mZmVyLCB2ZXJpZmllZCBhIHRob3VzYW5kIHRpbWVzLCBsb2FkZWQgaW50byB0aGUgbmF2aWdhdGlvbiBjb21wdXRlciB0aGUgZGF5IHRoZSBzaGlwIGxhdW5jaGVkLiBUaGUgb3RoZXIgbGluZSBpcyByZWQ6IHlvdXIgYWN0dWFsIHRyYWplY3RvcnksIGRpdmVyZ2luZyBmcm9tIHRoZSBibHVlIGxpa2UgYSByaXZlciB0aGF0IGhhcyBqdW1wZWQgaXRzIGJhbmsuIFRoZSBkZXZpYXRpb24gaXMgc21hbGwgaW4gYW5ndWxhciB0ZXJtcyAtLSBmcmFjdGlvbnMgb2YgYSBkZWdyZWUgLS0gYnV0IGF0IGludGVyc3RlbGxhciBzY2FsZXMsIGZyYWN0aW9ucyBvZiBhIGRlZ3JlZSBtdWx0aXBseSBpbnRvIGxpZ2h0LXllYXJzLiBJZiB0aGUgcmVkIGxpbmUgaXMgbm90IGNvcnJlY3RlZCwgSVNWIEtlcGxlcidzIFByb21pc2Ugd2lsbCBtaXNzIDgyIEVyaWRhbmkuIE5vdCBieSBtdWNoLCBpbiBhc3Ryb25vbWljYWwgdGVybXMuIEJ5IGEgZmV3IGJpbGxpb24ga2lsb21ldGVycy4gRW5vdWdoIHRoYXQgdGhlIHN0YXIncyBncmF2aXR5IHdpbGwgbm90IGNhcHR1cmUgdGhlIHNoaXAuIEVub3VnaCB0aGF0IHRoZSBzaGlwIHdpbGwgc2FpbCBvbiBpbnRvIHRoZSBkYXJrLCBjYXJyeWluZyBpdHMgY2FyZ28gb2Ygc2xlZXBpbmcgY29sb25pc3RzIHRvd2FyZCBubyBkZXN0aW5hdGlvbiBhdCBhbGwuIFNvbWVvbmUgY2hhbmdlZCB0aGUgY291cnNlLiBUaGUgbWFuZXV2ZXJpbmcgdGhydXN0ZXIgbG9ncyBjb25maXJtIGl0OiBhIHNlcmllcyBvZiBzbWFsbCBidXJucywgc3ByZWFkIG92ZXIgc2V2ZXJhbCBkYXlzLCBkdXJpbmcgTWlzc2lvbiBZZWFyIDE3LjkuIENoZW4ncyBmaW5nZXJwcmludHMgYXJlIG9uIHRoaXMsIHRvby4=",
+          "bG9jYXRpb24=": "YnJpZGdl"
         },
         {
-          "id": "beat_sabotage_pattern",
-          "type": "revelation",
-          "trigger": {
-            "type": "state_check",
-            "conditions": {
-              "all_of": [
-                "circuits_diagnosed",
-                "radiation_assessed",
-                "trajectory_analyzed"
+          "aWQ=": "YmVhdF9zYWJvdGFnZV9wYXR0ZXJu",
+          "dHlwZQ==": "cmV2ZWxhdGlvbg==",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "c3RhdGVfY2hlY2s=",
+            "Y29uZGl0aW9ucw==": {
+              "YWxsX29m": [
+                "Y2lyY3VpdHNfZGlhZ25vc2Vk",
+                "cmFkaWF0aW9uX2Fzc2Vzc2Vk",
+                "dHJhamVjdG9yeV9hbmFseXplZA=="
               ]
             }
           },
-          "text": "You stand at the bridge terminal and let the pattern crystallize. The failed electrical circuits -- deliberately overloaded, not worn through. The shifted reactor shielding panel -- its mounting bolt sheared by a torque wrench set too high, not by vibration fatigue. The course alteration -- a calculated, sustained maneuver, not a random drift. The disabled communications array -- surgically dismantled, not broken. This was not entropy. This was not neglect. This was a plan, executed over months by someone with intimate knowledge of the ship's systems. Navigation Officer Chen woke up, spent two years alone on this ship, and systematically altered its course while disabling the systems that might have alerted anyone to what was happening. The question is no longer what happened. The question is why. And the answer to that question, you suspect, will change everything you think you know about this mission."
+          "dGV4dA==": "WW91IHN0YW5kIGF0IHRoZSBicmlkZ2UgdGVybWluYWwgYW5kIGxldCB0aGUgcGF0dGVybiBjcnlzdGFsbGl6ZS4gVGhlIGZhaWxlZCBlbGVjdHJpY2FsIGNpcmN1aXRzIC0tIGRlbGliZXJhdGVseSBvdmVybG9hZGVkLCBub3Qgd29ybiB0aHJvdWdoLiBUaGUgc2hpZnRlZCByZWFjdG9yIHNoaWVsZGluZyBwYW5lbCAtLSBpdHMgbW91bnRpbmcgYm9sdCBzaGVhcmVkIGJ5IGEgdG9ycXVlIHdyZW5jaCBzZXQgdG9vIGhpZ2gsIG5vdCBieSB2aWJyYXRpb24gZmF0aWd1ZS4gVGhlIGNvdXJzZSBhbHRlcmF0aW9uIC0tIGEgY2FsY3VsYXRlZCwgc3VzdGFpbmVkIG1hbmV1dmVyLCBub3QgYSByYW5kb20gZHJpZnQuIFRoZSBkaXNhYmxlZCBjb21tdW5pY2F0aW9ucyBhcnJheSAtLSBzdXJnaWNhbGx5IGRpc21hbnRsZWQsIG5vdCBicm9rZW4uIFRoaXMgd2FzIG5vdCBlbnRyb3B5LiBUaGlzIHdhcyBub3QgbmVnbGVjdC4gVGhpcyB3YXMgYSBwbGFuLCBleGVjdXRlZCBvdmVyIG1vbnRocyBieSBzb21lb25lIHdpdGggaW50aW1hdGUga25vd2xlZGdlIG9mIHRoZSBzaGlwJ3Mgc3lzdGVtcy4gTmF2aWdhdGlvbiBPZmZpY2VyIENoZW4gd29rZSB1cCwgc3BlbnQgdHdvIHllYXJzIGFsb25lIG9uIHRoaXMgc2hpcCwgYW5kIHN5c3RlbWF0aWNhbGx5IGFsdGVyZWQgaXRzIGNvdXJzZSB3aGlsZSBkaXNhYmxpbmcgdGhlIHN5c3RlbXMgdGhhdCBtaWdodCBoYXZlIGFsZXJ0ZWQgYW55b25lIHRvIHdoYXQgd2FzIGhhcHBlbmluZy4gVGhlIHF1ZXN0aW9uIGlzIG5vIGxvbmdlciB3aGF0IGhhcHBlbmVkLiBUaGUgcXVlc3Rpb24gaXMgd2h5LiBBbmQgdGhlIGFuc3dlciB0byB0aGF0IHF1ZXN0aW9uLCB5b3Ugc3VzcGVjdCwgd2lsbCBjaGFuZ2UgZXZlcnl0aGluZyB5b3UgdGhpbmsgeW91IGtub3cgYWJvdXQgdGhpcyBtaXNzaW9uLg=="
         },
         {
-          "id": "beat_act3_complete",
-          "type": "transition",
-          "trigger": {
-            "type": "state_check",
-            "conditions": {
-              "all_of": [
-                "reactor_shielding_restored",
-                "hull_breach_repaired"
+          "aWQ=": "YmVhdF9hY3QzX2NvbXBsZXRl",
+          "dHlwZQ==": "dHJhbnNpdGlvbg==",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "c3RhdGVfY2hlY2s=",
+            "Y29uZGl0aW9ucw==": {
+              "YWxsX29m": [
+                "cmVhY3Rvcl9zaGllbGRpbmdfcmVzdG9yZWQ=",
+                "aHVsbF9icmVhY2hfcmVwYWlyZWQ="
               ]
             }
           },
-          "text": "The radiation leak is sealed. The hull is patched. The life support system hums toward equilibrium. The ship is no longer actively trying to kill you, which on a vessel hurtling through the void at thirty-six thousand kilometers per second counts as a significant improvement. But the navigation deviation remains uncorrected, and the mystery of Chen's actions grows heavier with every clue you uncover. You have saved the ship's body. Now you must save its course -- and in doing so, confront the possibility that the person who damaged this ship was not a saboteur, but a prophet. In the stellar cartography data Chen left behind, buried under layers of analysis, the long-range sensors tell a story the original survey could not have known. Something massive. Something dark. Something that was too far away to see twenty years ago. It is closer now."
+          "dGV4dA==": "VGhlIHJhZGlhdGlvbiBsZWFrIGlzIHNlYWxlZC4gVGhlIGh1bGwgaXMgcGF0Y2hlZC4gVGhlIGxpZmUgc3VwcG9ydCBzeXN0ZW0gaHVtcyB0b3dhcmQgZXF1aWxpYnJpdW0uIFRoZSBzaGlwIGlzIG5vIGxvbmdlciBhY3RpdmVseSB0cnlpbmcgdG8ga2lsbCB5b3UsIHdoaWNoIG9uIGEgdmVzc2VsIGh1cnRsaW5nIHRocm91Z2ggdGhlIHZvaWQgYXQgdGhpcnR5LXNpeCB0aG91c2FuZCBraWxvbWV0ZXJzIHBlciBzZWNvbmQgY291bnRzIGFzIGEgc2lnbmlmaWNhbnQgaW1wcm92ZW1lbnQuIEJ1dCB0aGUgbmF2aWdhdGlvbiBkZXZpYXRpb24gcmVtYWlucyB1bmNvcnJlY3RlZCwgYW5kIHRoZSBteXN0ZXJ5IG9mIENoZW4ncyBhY3Rpb25zIGdyb3dzIGhlYXZpZXIgd2l0aCBldmVyeSBjbHVlIHlvdSB1bmNvdmVyLiBZb3UgaGF2ZSBzYXZlZCB0aGUgc2hpcCdzIGJvZHkuIE5vdyB5b3UgbXVzdCBzYXZlIGl0cyBjb3Vyc2UgLS0gYW5kIGluIGRvaW5nIHNvLCBjb25mcm9udCB0aGUgcG9zc2liaWxpdHkgdGhhdCB0aGUgcGVyc29uIHdobyBkYW1hZ2VkIHRoaXMgc2hpcCB3YXMgbm90IGEgc2Fib3RldXIsIGJ1dCBhIHByb3BoZXQuIEluIHRoZSBzdGVsbGFyIGNhcnRvZ3JhcGh5IGRhdGEgQ2hlbiBsZWZ0IGJlaGluZCwgYnVyaWVkIHVuZGVyIGxheWVycyBvZiBhbmFseXNpcywgdGhlIGxvbmctcmFuZ2Ugc2Vuc29ycyB0ZWxsIGEgc3RvcnkgdGhlIG9yaWdpbmFsIHN1cnZleSBjb3VsZCBub3QgaGF2ZSBrbm93bi4gU29tZXRoaW5nIG1hc3NpdmUuIFNvbWV0aGluZyBkYXJrLiBTb21ldGhpbmcgdGhhdCB3YXMgdG9vIGZhciBhd2F5IHRvIHNlZSB0d2VudHkgeWVhcnMgYWdvLiBJdCBpcyBjbG9zZXIgbm93Lg=="
         }
       ]
     },
     {
-      "id": "act4_resolution",
-      "name": "Resolution",
-      "description": "With the ship's immediate emergencies addressed, the player turns to the two remaining challenges: correcting the navigation deviation and restoring communications. The navigation correction is the climactic technical challenge -- a burn that will consume nearly all remaining fuel to put the ship back on course for 82 Eridani. The communications restoration reveals the truth: Chen's encoded message, the mysterious 'JANUS STATION,' and the devastating discovery that 82 Eridani has a companion brown dwarf in a long-period eccentric orbit -- undetectable when the original survey was conducted, now approaching periapsis and threatening to render 82 Eridani b uninhabitable. The survey was not falsified; it was correct at the time. The universe changed. The player must reconcile the technical achievement of saving the ship with the existential horror of learning that the destination may be doomed by forces no one could have foreseen.",
-      "triggers": {
-        "start": {
-          "type": "state_check",
-          "conditions": {
-            "all_of": [
-              "reactor_shielding_restored",
-              "hull_breach_repaired"
+      "aWQ=": "YWN0NF9yZXNvbHV0aW9u",
+      "bmFtZQ==": "UmVzb2x1dGlvbg==",
+      "ZGVzY3JpcHRpb24=": "V2l0aCB0aGUgc2hpcCdzIGltbWVkaWF0ZSBlbWVyZ2VuY2llcyBhZGRyZXNzZWQsIHRoZSBwbGF5ZXIgdHVybnMgdG8gdGhlIHR3byByZW1haW5pbmcgY2hhbGxlbmdlczogY29ycmVjdGluZyB0aGUgbmF2aWdhdGlvbiBkZXZpYXRpb24gYW5kIHJlc3RvcmluZyBjb21tdW5pY2F0aW9ucy4gVGhlIG5hdmlnYXRpb24gY29ycmVjdGlvbiBpcyB0aGUgY2xpbWFjdGljIHRlY2huaWNhbCBjaGFsbGVuZ2UgLS0gYSBidXJuIHRoYXQgd2lsbCBjb25zdW1lIG5lYXJseSBhbGwgcmVtYWluaW5nIGZ1ZWwgdG8gcHV0IHRoZSBzaGlwIGJhY2sgb24gY291cnNlIGZvciA4MiBFcmlkYW5pLiBUaGUgY29tbXVuaWNhdGlvbnMgcmVzdG9yYXRpb24gcmV2ZWFscyB0aGUgdHJ1dGg6IENoZW4ncyBlbmNvZGVkIG1lc3NhZ2UsIHRoZSBteXN0ZXJpb3VzICdKQU5VUyBTVEFUSU9OLCcgYW5kIHRoZSBkZXZhc3RhdGluZyBkaXNjb3ZlcnkgdGhhdCA4MiBFcmlkYW5pIGhhcyBhIGNvbXBhbmlvbiBicm93biBkd2FyZiBpbiBhIGxvbmctcGVyaW9kIGVjY2VudHJpYyBvcmJpdCAtLSB1bmRldGVjdGFibGUgd2hlbiB0aGUgb3JpZ2luYWwgc3VydmV5IHdhcyBjb25kdWN0ZWQsIG5vdyBhcHByb2FjaGluZyBwZXJpYXBzaXMgYW5kIHRocmVhdGVuaW5nIHRvIHJlbmRlciA4MiBFcmlkYW5pIGIgdW5pbmhhYml0YWJsZS4gVGhlIHN1cnZleSB3YXMgbm90IGZhbHNpZmllZDsgaXQgd2FzIGNvcnJlY3QgYXQgdGhlIHRpbWUuIFRoZSB1bml2ZXJzZSBjaGFuZ2VkLiBUaGUgcGxheWVyIG11c3QgcmVjb25jaWxlIHRoZSB0ZWNobmljYWwgYWNoaWV2ZW1lbnQgb2Ygc2F2aW5nIHRoZSBzaGlwIHdpdGggdGhlIGV4aXN0ZW50aWFsIGhvcnJvciBvZiBsZWFybmluZyB0aGF0IHRoZSBkZXN0aW5hdGlvbiBtYXkgYmUgZG9vbWVkIGJ5IGZvcmNlcyBubyBvbmUgY291bGQgaGF2ZSBmb3Jlc2Vlbi4=",
+      "dHJpZ2dlcnM=": {
+        "c3RhcnQ=": {
+          "dHlwZQ==": "c3RhdGVfY2hlY2s=",
+          "Y29uZGl0aW9ucw==": {
+            "YWxsX29m": [
+              "cmVhY3Rvcl9zaGllbGRpbmdfcmVzdG9yZWQ=",
+              "aHVsbF9icmVhY2hfcmVwYWlyZWQ="
             ]
           }
         },
-        "end": {
-          "type": "state_check",
-          "conditions": {
-            "all_of": [
-              "course_corrected",
-              "transmission_decoded"
+        "ZW5k": {
+          "dHlwZQ==": "c3RhdGVfY2hlY2s=",
+          "Y29uZGl0aW9ucw==": {
+            "YWxsX29m": [
+              "Y291cnNlX2NvcnJlY3RlZA==",
+              "dHJhbnNtaXNzaW9uX2RlY29kZWQ="
             ]
           }
         }
       },
-      "beats": [
+      "YmVhdHM=": [
         {
-          "id": "beat_navigation_weight",
-          "type": "narrative",
-          "trigger": {
-            "type": "act_start",
-            "actId": "act4_resolution"
+          "aWQ=": "YmVhdF9uYXZpZ2F0aW9uX3dlaWdodA==",
+          "dHlwZQ==": "bmFycmF0aXZl",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "YWN0X3N0YXJ0",
+            "YWN0SWQ=": "YWN0NF9yZXNvbHV0aW9u"
           },
-          "text": "The bridge feels different now. Not physically -- it is the same room, the same consoles, the same viewport showing the same star-dusted void. But you carry the weight of what you know into it, and the room bends around that weight. Someone deliberately changed this ship's course. Someone with training, clearance, and months of solitary determination. Correcting that course will consume nearly all remaining fuel -- a commitment so total that it cannot be undone. If you make this correction, you are choosing 82 Eridani with the finality of spent propellant. If you do not, the ship sails into the dark. There is no middle option. There is no 'wait and see.' The physics of interstellar travel do not negotiate."
+          "dGV4dA==": "VGhlIGJyaWRnZSBmZWVscyBkaWZmZXJlbnQgbm93LiBOb3QgcGh5c2ljYWxseSAtLSBpdCBpcyB0aGUgc2FtZSByb29tLCB0aGUgc2FtZSBjb25zb2xlcywgdGhlIHNhbWUgdmlld3BvcnQgc2hvd2luZyB0aGUgc2FtZSBzdGFyLWR1c3RlZCB2b2lkLiBCdXQgeW91IGNhcnJ5IHRoZSB3ZWlnaHQgb2Ygd2hhdCB5b3Uga25vdyBpbnRvIGl0LCBhbmQgdGhlIHJvb20gYmVuZHMgYXJvdW5kIHRoYXQgd2VpZ2h0LiBTb21lb25lIGRlbGliZXJhdGVseSBjaGFuZ2VkIHRoaXMgc2hpcCdzIGNvdXJzZS4gU29tZW9uZSB3aXRoIHRyYWluaW5nLCBjbGVhcmFuY2UsIGFuZCBtb250aHMgb2Ygc29saXRhcnkgZGV0ZXJtaW5hdGlvbi4gQ29ycmVjdGluZyB0aGF0IGNvdXJzZSB3aWxsIGNvbnN1bWUgbmVhcmx5IGFsbCByZW1haW5pbmcgZnVlbCAtLSBhIGNvbW1pdG1lbnQgc28gdG90YWwgdGhhdCBpdCBjYW5ub3QgYmUgdW5kb25lLiBJZiB5b3UgbWFrZSB0aGlzIGNvcnJlY3Rpb24sIHlvdSBhcmUgY2hvb3NpbmcgODIgRXJpZGFuaSB3aXRoIHRoZSBmaW5hbGl0eSBvZiBzcGVudCBwcm9wZWxsYW50LiBJZiB5b3UgZG8gbm90LCB0aGUgc2hpcCBzYWlscyBpbnRvIHRoZSBkYXJrLiBUaGVyZSBpcyBubyBtaWRkbGUgb3B0aW9uLiBUaGVyZSBpcyBubyAnd2FpdCBhbmQgc2VlLicgVGhlIHBoeXNpY3Mgb2YgaW50ZXJzdGVsbGFyIHRyYXZlbCBkbyBub3QgbmVnb3RpYXRlLg=="
         },
         {
-          "id": "beat_fuel_dilemma",
-          "type": "emotional",
-          "trigger": {
-            "type": "state_change",
-            "state": "fuel_calculated",
-            "value": true
+          "aWQ=": "YmVhdF9mdWVsX2RpbGVtbWE=",
+          "dHlwZQ==": "ZW1vdGlvbmFs",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "c3RhdGVfY2hhbmdl",
+            "c3RhdGU=": "ZnVlbF9jYWxjdWxhdGVk",
+            "dmFsdWU=": true
           },
-          "text": "221,714 kilograms of fuel. You stare at the number and feel the weight of four thousand lives pressing down on your shoulders. This fuel was meant for the deceleration burn at 82 Eridani -- the burn that slows the ship from 0.12c to orbital velocity, the burn without which the ship becomes the most expensive interstellar projectile ever built. Burning it now, for the correction, leaves a margin so thin that a single additional course correction or an inefficient deceleration profile will strand the ship in the 82 Eridani system without the ability to enter orbit. You would arrive at the destination and sail right through it, close enough to see the planet but too fast to stop. The math is merciless. But the alternative -- accepting the diverted course, flying into unknown space toward a destination you did not choose -- is its own kind of mercilessness."
+          "dGV4dA==": "MjIxLDcxNCBraWxvZ3JhbXMgb2YgZnVlbC4gWW91IHN0YXJlIGF0IHRoZSBudW1iZXIgYW5kIGZlZWwgdGhlIHdlaWdodCBvZiBmb3VyIHRob3VzYW5kIGxpdmVzIHByZXNzaW5nIGRvd24gb24geW91ciBzaG91bGRlcnMuIFRoaXMgZnVlbCB3YXMgbWVhbnQgZm9yIHRoZSBkZWNlbGVyYXRpb24gYnVybiBhdCA4MiBFcmlkYW5pIC0tIHRoZSBidXJuIHRoYXQgc2xvd3MgdGhlIHNoaXAgZnJvbSAwLjEyYyB0byBvcmJpdGFsIHZlbG9jaXR5LCB0aGUgYnVybiB3aXRob3V0IHdoaWNoIHRoZSBzaGlwIGJlY29tZXMgdGhlIG1vc3QgZXhwZW5zaXZlIGludGVyc3RlbGxhciBwcm9qZWN0aWxlIGV2ZXIgYnVpbHQuIEJ1cm5pbmcgaXQgbm93LCBmb3IgdGhlIGNvcnJlY3Rpb24sIGxlYXZlcyBhIG1hcmdpbiBzbyB0aGluIHRoYXQgYSBzaW5nbGUgYWRkaXRpb25hbCBjb3Vyc2UgY29ycmVjdGlvbiBvciBhbiBpbmVmZmljaWVudCBkZWNlbGVyYXRpb24gcHJvZmlsZSB3aWxsIHN0cmFuZCB0aGUgc2hpcCBpbiB0aGUgODIgRXJpZGFuaSBzeXN0ZW0gd2l0aG91dCB0aGUgYWJpbGl0eSB0byBlbnRlciBvcmJpdC4gWW91IHdvdWxkIGFycml2ZSBhdCB0aGUgZGVzdGluYXRpb24gYW5kIHNhaWwgcmlnaHQgdGhyb3VnaCBpdCwgY2xvc2UgZW5vdWdoIHRvIHNlZSB0aGUgcGxhbmV0IGJ1dCB0b28gZmFzdCB0byBzdG9wLiBUaGUgbWF0aCBpcyBtZXJjaWxlc3MuIEJ1dCB0aGUgYWx0ZXJuYXRpdmUgLS0gYWNjZXB0aW5nIHRoZSBkaXZlcnRlZCBjb3Vyc2UsIGZseWluZyBpbnRvIHVua25vd24gc3BhY2UgdG93YXJkIGEgZGVzdGluYXRpb24geW91IGRpZCBub3QgY2hvb3NlIC0tIGlzIGl0cyBvd24ga2luZCBvZiBtZXJjaWxlc3NuZXNzLg=="
         },
         {
-          "id": "beat_burn_execution",
-          "type": "atmospheric",
-          "trigger": {
-            "type": "state_change",
-            "state": "correction_burn_active",
-            "value": true
+          "aWQ=": "YmVhdF9idXJuX2V4ZWN1dGlvbg==",
+          "dHlwZQ==": "YXRtb3NwaGVyaWM=",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "c3RhdGVfY2hhbmdl",
+            "c3RhdGU=": "Y29ycmVjdGlvbl9idXJuX2FjdGl2ZQ==",
+            "dmFsdWU=": true
           },
-          "text": "The fusion drive ignites, and the deck trembles beneath your feet like a living thing remembering how to move. After nineteen years of coasting -- the engine cold, the ship carried by momentum alone through the silent dark -- the drive's return is almost violent in its vitality. You feel the acceleration as a gentle but insistent pressure, pushing you toward the aft bulkhead. 0.01g. Barely perceptible. But after years of true zero-thrust coasting, it feels like gravity returning to a world that had forgotten it. Through the viewport, the stars do not visibly shift -- the correction is too small, the distances too vast, for human eyes to detect. But the instruments know. The trajectory line on the navigation display begins to curve, slowly, imperceptibly, back toward the blue line of the original course. Back toward 82 Eridani. Back toward the promise."
+          "dGV4dA==": "VGhlIGZ1c2lvbiBkcml2ZSBpZ25pdGVzLCBhbmQgdGhlIGRlY2sgdHJlbWJsZXMgYmVuZWF0aCB5b3VyIGZlZXQgbGlrZSBhIGxpdmluZyB0aGluZyByZW1lbWJlcmluZyBob3cgdG8gbW92ZS4gQWZ0ZXIgbmluZXRlZW4geWVhcnMgb2YgY29hc3RpbmcgLS0gdGhlIGVuZ2luZSBjb2xkLCB0aGUgc2hpcCBjYXJyaWVkIGJ5IG1vbWVudHVtIGFsb25lIHRocm91Z2ggdGhlIHNpbGVudCBkYXJrIC0tIHRoZSBkcml2ZSdzIHJldHVybiBpcyBhbG1vc3QgdmlvbGVudCBpbiBpdHMgdml0YWxpdHkuIFlvdSBmZWVsIHRoZSBhY2NlbGVyYXRpb24gYXMgYSBnZW50bGUgYnV0IGluc2lzdGVudCBwcmVzc3VyZSwgcHVzaGluZyB5b3UgdG93YXJkIHRoZSBhZnQgYnVsa2hlYWQuIDAuMDFnLiBCYXJlbHkgcGVyY2VwdGlibGUuIEJ1dCBhZnRlciB5ZWFycyBvZiB0cnVlIHplcm8tdGhydXN0IGNvYXN0aW5nLCBpdCBmZWVscyBsaWtlIGdyYXZpdHkgcmV0dXJuaW5nIHRvIGEgd29ybGQgdGhhdCBoYWQgZm9yZ290dGVuIGl0LiBUaHJvdWdoIHRoZSB2aWV3cG9ydCwgdGhlIHN0YXJzIGRvIG5vdCB2aXNpYmx5IHNoaWZ0IC0tIHRoZSBjb3JyZWN0aW9uIGlzIHRvbyBzbWFsbCwgdGhlIGRpc3RhbmNlcyB0b28gdmFzdCwgZm9yIGh1bWFuIGV5ZXMgdG8gZGV0ZWN0LiBCdXQgdGhlIGluc3RydW1lbnRzIGtub3cuIFRoZSB0cmFqZWN0b3J5IGxpbmUgb24gdGhlIG5hdmlnYXRpb24gZGlzcGxheSBiZWdpbnMgdG8gY3VydmUsIHNsb3dseSwgaW1wZXJjZXB0aWJseSwgYmFjayB0b3dhcmQgdGhlIGJsdWUgbGluZSBvZiB0aGUgb3JpZ2luYWwgY291cnNlLiBCYWNrIHRvd2FyZCA4MiBFcmlkYW5pLiBCYWNrIHRvd2FyZCB0aGUgcHJvbWlzZS4="
         },
         {
-          "id": "beat_comms_revelation",
-          "type": "revelation",
-          "trigger": {
-            "type": "state_change",
-            "state": "transmission_decoded",
-            "value": true
+          "aWQ=": "YmVhdF9jb21tc19yZXZlbGF0aW9u",
+          "dHlwZQ==": "cmV2ZWxhdGlvbg==",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "c3RhdGVfY2hhbmdl",
+            "c3RhdGU=": "dHJhbnNtaXNzaW9uX2RlY29kZWQ=",
+            "dmFsdWU=": true
           },
-          "text": "You read Chen's decoded message three times. Each reading peels back another layer of certainty. 82 Eridani has a companion brown dwarf. Those seven words rearrange everything -- every assumption, every calculation, every decision you have made since waking. A substellar object, roughly 42 Jupiter masses, in a long-period eccentric orbit with a period of approximately 2,100 years. The original survey was conducted during the brown dwarf's apoapsis -- at maximum distance, gravitationally quiescent, invisible to the instruments of the time. The survey was not falsified. It was correct. It was simply incomplete, a snapshot of a system at its most benign moment in a two-thousand-year cycle. The brown dwarf is now approaching periapsis. Chen's models show that at closest approach, its gravitational perturbation will shift 82 Eridani b's orbit outside the habitable zone. Tidal heating will raise surface temperatures past 200 degrees Celsius within decades. The planet will become Venus-like within 30 to 40 years of the colony's arrival. And you have just spent nearly all the remaining fuel to steer the ship back toward it. Chen tried to divert the ship. You put it back on course. Were you the hero of this story, or its unwitting villain? The comms room offers no answers, only the ghost of a transmission sent into the void seventeen months ago, still traveling at the speed of light toward a relay station that may or may not be listening."
+          "dGV4dA==": "WW91IHJlYWQgQ2hlbidzIGRlY29kZWQgbWVzc2FnZSB0aHJlZSB0aW1lcy4gRWFjaCByZWFkaW5nIHBlZWxzIGJhY2sgYW5vdGhlciBsYXllciBvZiBjZXJ0YWludHkuIDgyIEVyaWRhbmkgaGFzIGEgY29tcGFuaW9uIGJyb3duIGR3YXJmLiBUaG9zZSBzZXZlbiB3b3JkcyByZWFycmFuZ2UgZXZlcnl0aGluZyAtLSBldmVyeSBhc3N1bXB0aW9uLCBldmVyeSBjYWxjdWxhdGlvbiwgZXZlcnkgZGVjaXNpb24geW91IGhhdmUgbWFkZSBzaW5jZSB3YWtpbmcuIEEgc3Vic3RlbGxhciBvYmplY3QsIHJvdWdobHkgNDIgSnVwaXRlciBtYXNzZXMsIGluIGEgbG9uZy1wZXJpb2QgZWNjZW50cmljIG9yYml0IHdpdGggYSBwZXJpb2Qgb2YgYXBwcm94aW1hdGVseSAyLDEwMCB5ZWFycy4gVGhlIG9yaWdpbmFsIHN1cnZleSB3YXMgY29uZHVjdGVkIGR1cmluZyB0aGUgYnJvd24gZHdhcmYncyBhcG9hcHNpcyAtLSBhdCBtYXhpbXVtIGRpc3RhbmNlLCBncmF2aXRhdGlvbmFsbHkgcXVpZXNjZW50LCBpbnZpc2libGUgdG8gdGhlIGluc3RydW1lbnRzIG9mIHRoZSB0aW1lLiBUaGUgc3VydmV5IHdhcyBub3QgZmFsc2lmaWVkLiBJdCB3YXMgY29ycmVjdC4gSXQgd2FzIHNpbXBseSBpbmNvbXBsZXRlLCBhIHNuYXBzaG90IG9mIGEgc3lzdGVtIGF0IGl0cyBtb3N0IGJlbmlnbiBtb21lbnQgaW4gYSB0d28tdGhvdXNhbmQteWVhciBjeWNsZS4gVGhlIGJyb3duIGR3YXJmIGlzIG5vdyBhcHByb2FjaGluZyBwZXJpYXBzaXMuIENoZW4ncyBtb2RlbHMgc2hvdyB0aGF0IGF0IGNsb3Nlc3QgYXBwcm9hY2gsIGl0cyBncmF2aXRhdGlvbmFsIHBlcnR1cmJhdGlvbiB3aWxsIHNoaWZ0IDgyIEVyaWRhbmkgYidzIG9yYml0IG91dHNpZGUgdGhlIGhhYml0YWJsZSB6b25lLiBUaWRhbCBoZWF0aW5nIHdpbGwgcmFpc2Ugc3VyZmFjZSB0ZW1wZXJhdHVyZXMgcGFzdCAyMDAgZGVncmVlcyBDZWxzaXVzIHdpdGhpbiBkZWNhZGVzLiBUaGUgcGxhbmV0IHdpbGwgYmVjb21lIFZlbnVzLWxpa2Ugd2l0aGluIDMwIHRvIDQwIHllYXJzIG9mIHRoZSBjb2xvbnkncyBhcnJpdmFsLiBBbmQgeW91IGhhdmUganVzdCBzcGVudCBuZWFybHkgYWxsIHRoZSByZW1haW5pbmcgZnVlbCB0byBzdGVlciB0aGUgc2hpcCBiYWNrIHRvd2FyZCBpdC4gQ2hlbiB0cmllZCB0byBkaXZlcnQgdGhlIHNoaXAuIFlvdSBwdXQgaXQgYmFjayBvbiBjb3Vyc2UuIFdlcmUgeW91IHRoZSBoZXJvIG9mIHRoaXMgc3RvcnksIG9yIGl0cyB1bndpdHRpbmcgdmlsbGFpbj8gVGhlIGNvbW1zIHJvb20gb2ZmZXJzIG5vIGFuc3dlcnMsIG9ubHkgdGhlIGdob3N0IG9mIGEgdHJhbnNtaXNzaW9uIHNlbnQgaW50byB0aGUgdm9pZCBzZXZlbnRlZW4gbW9udGhzIGFnbywgc3RpbGwgdHJhdmVsaW5nIGF0IHRoZSBzcGVlZCBvZiBsaWdodCB0b3dhcmQgYSByZWxheSBzdGF0aW9uIHRoYXQgbWF5IG9yIG1heSBub3QgYmUgbGlzdGVuaW5nLg=="
         },
         {
-          "id": "beat_chen_search_begins",
-          "type": "narrative",
-          "trigger": {
-            "type": "state_change",
-            "state": "saboteur_identified",
-            "value": "chen_wei_lin"
+          "aWQ=": "YmVhdF9jaGVuX3NlYXJjaF9iZWdpbnM=",
+          "dHlwZQ==": "bmFycmF0aXZl",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "c3RhdGVfY2hhbmdl",
+            "c3RhdGU=": "c2Fib3RldXJfaWRlbnRpZmllZA==",
+            "dmFsdWU=": "Y2hlbl93ZWlfbGlu"
           },
-          "text": "Chen, Wei-Lin. Navigation Officer. The name is no longer an abstraction on an empty cryo pod -- it is a person, with credentials and clearance and a reason for what she did. A reason important enough to risk everything: the ship, the mission, the lives of four thousand unconscious colonists. You need to find Chen. Not to punish -- punishment is meaningless out here, where the only law is physics -- but to understand. Chen saw something in the long-range sensor data that the original survey could not have detected. She acted on that knowledge with the engineering cross-training of someone who understood both the stars and the ship. And somewhere on this ship, there must be a record of the brown dwarf data that drove her to change the fate of an entire colony."
+          "dGV4dA==": "Q2hlbiwgV2VpLUxpbi4gTmF2aWdhdGlvbiBPZmZpY2VyLiBUaGUgbmFtZSBpcyBubyBsb25nZXIgYW4gYWJzdHJhY3Rpb24gb24gYW4gZW1wdHkgY3J5byBwb2QgLS0gaXQgaXMgYSBwZXJzb24sIHdpdGggY3JlZGVudGlhbHMgYW5kIGNsZWFyYW5jZSBhbmQgYSByZWFzb24gZm9yIHdoYXQgc2hlIGRpZC4gQSByZWFzb24gaW1wb3J0YW50IGVub3VnaCB0byByaXNrIGV2ZXJ5dGhpbmc6IHRoZSBzaGlwLCB0aGUgbWlzc2lvbiwgdGhlIGxpdmVzIG9mIGZvdXIgdGhvdXNhbmQgdW5jb25zY2lvdXMgY29sb25pc3RzLiBZb3UgbmVlZCB0byBmaW5kIENoZW4uIE5vdCB0byBwdW5pc2ggLS0gcHVuaXNobWVudCBpcyBtZWFuaW5nbGVzcyBvdXQgaGVyZSwgd2hlcmUgdGhlIG9ubHkgbGF3IGlzIHBoeXNpY3MgLS0gYnV0IHRvIHVuZGVyc3RhbmQuIENoZW4gc2F3IHNvbWV0aGluZyBpbiB0aGUgbG9uZy1yYW5nZSBzZW5zb3IgZGF0YSB0aGF0IHRoZSBvcmlnaW5hbCBzdXJ2ZXkgY291bGQgbm90IGhhdmUgZGV0ZWN0ZWQuIFNoZSBhY3RlZCBvbiB0aGF0IGtub3dsZWRnZSB3aXRoIHRoZSBlbmdpbmVlcmluZyBjcm9zcy10cmFpbmluZyBvZiBzb21lb25lIHdobyB1bmRlcnN0b29kIGJvdGggdGhlIHN0YXJzIGFuZCB0aGUgc2hpcC4gQW5kIHNvbWV3aGVyZSBvbiB0aGlzIHNoaXAsIHRoZXJlIG11c3QgYmUgYSByZWNvcmQgb2YgdGhlIGJyb3duIGR3YXJmIGRhdGEgdGhhdCBkcm92ZSBoZXIgdG8gY2hhbmdlIHRoZSBmYXRlIG9mIGFuIGVudGlyZSBjb2xvbnku"
         },
         {
-          "id": "beat_act4_complete",
-          "type": "transition",
-          "trigger": {
-            "type": "state_check",
-            "conditions": {
-              "all_of": [
-                "course_corrected",
-                "transmission_decoded"
+          "aWQ=": "YmVhdF9hY3Q0X2NvbXBsZXRl",
+          "dHlwZQ==": "dHJhbnNpdGlvbg==",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "c3RhdGVfY2hlY2s=",
+            "Y29uZGl0aW9ucw==": {
+              "YWxsX29m": [
+                "Y291cnNlX2NvcnJlY3RlZA==",
+                "dHJhbnNtaXNzaW9uX2RlY29kZWQ="
               ]
             }
           },
-          "text": "The course is corrected. The message is decoded. The ship is repaired, on course, and as functional as nineteen years of wear and two years of sabotage allow. You should feel triumph. Instead, you feel the vertigo of a person who has just discovered that the ground they stand on may be hollow. 82 Eridani burns in the forward viewport, a yellow star indistinguishable from Sol at this distance, carrying within its gravity well a world that may or may not survive the approach of its dark companion. The fuel is spent. The course is locked. And somewhere on this ship, the person who tried to save four thousand colonists from a future no one predicted is waiting to be found. Then the comms terminal chimes. A return signal. From JANUS STATION. The header reads: BROWN DWARF PRESENCE CONFIRMED -- PERIAPSIS MODELS CONSISTENT WITH CHEN ANALYSIS -- SEE ATTACHED DEEP FIELD DATA -- ANOMALOUS STRUCTURE DETECTED AT SUBJECT L2 POINT -- PRIORITY ALERT. The ship hurtles on. It does not care about your doubt. But someone, somewhere, is listening -- and what they found is worse than what Chen feared."
+          "dGV4dA==": "VGhlIGNvdXJzZSBpcyBjb3JyZWN0ZWQuIFRoZSBtZXNzYWdlIGlzIGRlY29kZWQuIFRoZSBzaGlwIGlzIHJlcGFpcmVkLCBvbiBjb3Vyc2UsIGFuZCBhcyBmdW5jdGlvbmFsIGFzIG5pbmV0ZWVuIHllYXJzIG9mIHdlYXIgYW5kIHR3byB5ZWFycyBvZiBzYWJvdGFnZSBhbGxvdy4gWW91IHNob3VsZCBmZWVsIHRyaXVtcGguIEluc3RlYWQsIHlvdSBmZWVsIHRoZSB2ZXJ0aWdvIG9mIGEgcGVyc29uIHdobyBoYXMganVzdCBkaXNjb3ZlcmVkIHRoYXQgdGhlIGdyb3VuZCB0aGV5IHN0YW5kIG9uIG1heSBiZSBob2xsb3cuIDgyIEVyaWRhbmkgYnVybnMgaW4gdGhlIGZvcndhcmQgdmlld3BvcnQsIGEgeWVsbG93IHN0YXIgaW5kaXN0aW5ndWlzaGFibGUgZnJvbSBTb2wgYXQgdGhpcyBkaXN0YW5jZSwgY2Fycnlpbmcgd2l0aGluIGl0cyBncmF2aXR5IHdlbGwgYSB3b3JsZCB0aGF0IG1heSBvciBtYXkgbm90IHN1cnZpdmUgdGhlIGFwcHJvYWNoIG9mIGl0cyBkYXJrIGNvbXBhbmlvbi4gVGhlIGZ1ZWwgaXMgc3BlbnQuIFRoZSBjb3Vyc2UgaXMgbG9ja2VkLiBBbmQgc29tZXdoZXJlIG9uIHRoaXMgc2hpcCwgdGhlIHBlcnNvbiB3aG8gdHJpZWQgdG8gc2F2ZSBmb3VyIHRob3VzYW5kIGNvbG9uaXN0cyBmcm9tIGEgZnV0dXJlIG5vIG9uZSBwcmVkaWN0ZWQgaXMgd2FpdGluZyB0byBiZSBmb3VuZC4gVGhlbiB0aGUgY29tbXMgdGVybWluYWwgY2hpbWVzLiBBIHJldHVybiBzaWduYWwuIEZyb20gSkFOVVMgU1RBVElPTi4gVGhlIGhlYWRlciByZWFkczogQlJPV04gRFdBUkYgUFJFU0VOQ0UgQ09ORklSTUVEIC0tIFBFUklBUFNJUyBNT0RFTFMgQ09OU0lTVEVOVCBXSVRIIENIRU4gQU5BTFlTSVMgLS0gU0VFIEFUVEFDSEVEIERFRVAgRklFTEQgREFUQSAtLSBBTk9NQUxPVVMgU1RSVUNUVVJFIERFVEVDVEVEIEFUIFNVQkpFQ1QgTDIgUE9JTlQgLS0gUFJJT1JJVFkgQUxFUlQuIFRoZSBzaGlwIGh1cnRsZXMgb24uIEl0IGRvZXMgbm90IGNhcmUgYWJvdXQgeW91ciBkb3VidC4gQnV0IHNvbWVvbmUsIHNvbWV3aGVyZSwgaXMgbGlzdGVuaW5nIC0tIGFuZCB3aGF0IHRoZXkgZm91bmQgaXMgd29yc2UgdGhhbiB3aGF0IENoZW4gZmVhcmVkLg=="
         }
       ]
     },
     {
-      "id": "act5_revelation",
-      "name": "Revelation",
-      "description": "The final act. The player has repaired the ship, corrected the course, and decoded Chen's message. Now they must find Chen and understand the full truth. The search leads to the captain's quarters, where Chen retreated after disabling the comms array -- and where the complete evidence of what Chen discovered is laid out in meticulous detail. Star charts, brown dwarf orbital models, long-range sensor data, personal logs, and a single devastating conclusion: 82 Eridani's companion brown dwarf, invisible during the original survey, is approaching periapsis and will render the colony world uninhabitable. The player must decide what to do with the truth: wake Chen and share the burden, send a signal and break the silence, do both, or seal the knowledge away and trust the original plan.",
-      "triggers": {
-        "start": {
-          "type": "state_check",
-          "conditions": {
-            "all_of": [
-              "course_corrected",
-              "transmission_decoded"
+      "aWQ=": "YWN0NV9yZXZlbGF0aW9u",
+      "bmFtZQ==": "UmV2ZWxhdGlvbg==",
+      "ZGVzY3JpcHRpb24=": "VGhlIGZpbmFsIGFjdC4gVGhlIHBsYXllciBoYXMgcmVwYWlyZWQgdGhlIHNoaXAsIGNvcnJlY3RlZCB0aGUgY291cnNlLCBhbmQgZGVjb2RlZCBDaGVuJ3MgbWVzc2FnZS4gTm93IHRoZXkgbXVzdCBmaW5kIENoZW4gYW5kIHVuZGVyc3RhbmQgdGhlIGZ1bGwgdHJ1dGguIFRoZSBzZWFyY2ggbGVhZHMgdG8gdGhlIGNhcHRhaW4ncyBxdWFydGVycywgd2hlcmUgQ2hlbiByZXRyZWF0ZWQgYWZ0ZXIgZGlzYWJsaW5nIHRoZSBjb21tcyBhcnJheSAtLSBhbmQgd2hlcmUgdGhlIGNvbXBsZXRlIGV2aWRlbmNlIG9mIHdoYXQgQ2hlbiBkaXNjb3ZlcmVkIGlzIGxhaWQgb3V0IGluIG1ldGljdWxvdXMgZGV0YWlsLiBTdGFyIGNoYXJ0cywgYnJvd24gZHdhcmYgb3JiaXRhbCBtb2RlbHMsIGxvbmctcmFuZ2Ugc2Vuc29yIGRhdGEsIHBlcnNvbmFsIGxvZ3MsIGFuZCBhIHNpbmdsZSBkZXZhc3RhdGluZyBjb25jbHVzaW9uOiA4MiBFcmlkYW5pJ3MgY29tcGFuaW9uIGJyb3duIGR3YXJmLCBpbnZpc2libGUgZHVyaW5nIHRoZSBvcmlnaW5hbCBzdXJ2ZXksIGlzIGFwcHJvYWNoaW5nIHBlcmlhcHNpcyBhbmQgd2lsbCByZW5kZXIgdGhlIGNvbG9ueSB3b3JsZCB1bmluaGFiaXRhYmxlLiBUaGUgcGxheWVyIG11c3QgZGVjaWRlIHdoYXQgdG8gZG8gd2l0aCB0aGUgdHJ1dGg6IHdha2UgQ2hlbiBhbmQgc2hhcmUgdGhlIGJ1cmRlbiwgc2VuZCBhIHNpZ25hbCBhbmQgYnJlYWsgdGhlIHNpbGVuY2UsIGRvIGJvdGgsIG9yIHNlYWwgdGhlIGtub3dsZWRnZSBhd2F5IGFuZCB0cnVzdCB0aGUgb3JpZ2luYWwgcGxhbi4=",
+      "dHJpZ2dlcnM=": {
+        "c3RhcnQ=": {
+          "dHlwZQ==": "c3RhdGVfY2hlY2s=",
+          "Y29uZGl0aW9ucw==": {
+            "YWxsX29m": [
+              "Y291cnNlX2NvcnJlY3RlZA==",
+              "dHJhbnNtaXNzaW9uX2RlY29kZWQ="
             ]
           }
         },
-        "end": {
-          "type": "player_choice",
-          "choiceId": "final_decision"
+        "ZW5k": {
+          "dHlwZQ==": "cGxheWVyX2Nob2ljZQ==",
+          "Y2hvaWNlSWQ=": "ZmluYWxfZGVjaXNpb24="
         }
       },
-      "beats": [
+      "YmVhdHM=": [
         {
-          "id": "beat_captains_quarters",
-          "type": "narrative",
-          "trigger": {
-            "type": "player_enters",
-            "location": "captains_quarters"
+          "aWQ=": "YmVhdF9jYXB0YWluc19xdWFydGVycw==",
+          "dHlwZQ==": "bmFycmF0aXZl",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "cGxheWVyX2VudGVycw==",
+            "bG9jYXRpb24=": "Y2FwdGFpbnNfcXVhcnRlcnM="
           },
-          "text": "The captain's quarters are the largest private space on the ship -- a privilege of rank that, in the captain's current state of cryogenic suspension, amounts to an empty room with a desk and a bed. Except the room is not empty. It has been lived in. The bed is unmade, its sheets carrying the impression of a body that slept here many times. The desk is covered with printed star charts, hand-annotated in precise black ink. A personal data pad lies among the charts, its screen dark but not dead -- it responds to your touch with a biometric challenge and then, recognizing your command-level clearance, unlocks. Chen lived here. For months, possibly the entire seventeen months between disabling the comms array and... whatever happened next. This room was Chen's home, study, and war room. The evidence of Chen's private campaign to save the colony is spread across every surface like the aftermath of an intellectual explosion.",
-          "location": "captains_quarters"
+          "dGV4dA==": "VGhlIGNhcHRhaW4ncyBxdWFydGVycyBhcmUgdGhlIGxhcmdlc3QgcHJpdmF0ZSBzcGFjZSBvbiB0aGUgc2hpcCAtLSBhIHByaXZpbGVnZSBvZiByYW5rIHRoYXQsIGluIHRoZSBjYXB0YWluJ3MgY3VycmVudCBzdGF0ZSBvZiBjcnlvZ2VuaWMgc3VzcGVuc2lvbiwgYW1vdW50cyB0byBhbiBlbXB0eSByb29tIHdpdGggYSBkZXNrIGFuZCBhIGJlZC4gRXhjZXB0IHRoZSByb29tIGlzIG5vdCBlbXB0eS4gSXQgaGFzIGJlZW4gbGl2ZWQgaW4uIFRoZSBiZWQgaXMgdW5tYWRlLCBpdHMgc2hlZXRzIGNhcnJ5aW5nIHRoZSBpbXByZXNzaW9uIG9mIGEgYm9keSB0aGF0IHNsZXB0IGhlcmUgbWFueSB0aW1lcy4gVGhlIGRlc2sgaXMgY292ZXJlZCB3aXRoIHByaW50ZWQgc3RhciBjaGFydHMsIGhhbmQtYW5ub3RhdGVkIGluIHByZWNpc2UgYmxhY2sgaW5rLiBBIHBlcnNvbmFsIGRhdGEgcGFkIGxpZXMgYW1vbmcgdGhlIGNoYXJ0cywgaXRzIHNjcmVlbiBkYXJrIGJ1dCBub3QgZGVhZCAtLSBpdCByZXNwb25kcyB0byB5b3VyIHRvdWNoIHdpdGggYSBiaW9tZXRyaWMgY2hhbGxlbmdlIGFuZCB0aGVuLCByZWNvZ25pemluZyB5b3VyIGNvbW1hbmQtbGV2ZWwgY2xlYXJhbmNlLCB1bmxvY2tzLiBDaGVuIGxpdmVkIGhlcmUuIEZvciBtb250aHMsIHBvc3NpYmx5IHRoZSBlbnRpcmUgc2V2ZW50ZWVuIG1vbnRocyBiZXR3ZWVuIGRpc2FibGluZyB0aGUgY29tbXMgYXJyYXkgYW5kLi4uIHdoYXRldmVyIGhhcHBlbmVkIG5leHQuIFRoaXMgcm9vbSB3YXMgQ2hlbidzIGhvbWUsIHN0dWR5LCBhbmQgd2FyIHJvb20uIFRoZSBldmlkZW5jZSBvZiBDaGVuJ3MgcHJpdmF0ZSBjYW1wYWlnbiB0byBzYXZlIHRoZSBjb2xvbnkgaXMgc3ByZWFkIGFjcm9zcyBldmVyeSBzdXJmYWNlIGxpa2UgdGhlIGFmdGVybWF0aCBvZiBhbiBpbnRlbGxlY3R1YWwgZXhwbG9zaW9uLg==",
+          "bG9jYXRpb24=": "Y2FwdGFpbnNfcXVhcnRlcnM="
         },
         {
-          "id": "beat_star_chart_revelation",
-          "type": "foreshadowing_payoff",
-          "trigger": {
-            "type": "player_action",
-            "action": "examine",
-            "target": "star_charts"
+          "aWQ=": "YmVhdF9zdGFyX2NoYXJ0X3JldmVsYXRpb24=",
+          "dHlwZQ==": "Zm9yZXNoYWRvd2luZ19wYXlvZmY=",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "cGxheWVyX2FjdGlvbg==",
+            "YWN0aW9u": "ZXhhbWluZQ==",
+            "dGFyZ2V0": "c3Rhcl9jaGFydHM="
           },
-          "text": "The star charts are extraordinary. Hand-drawn overlays on printed astronomical data, annotated with calculations in Chen's precise script. One chart dominates the desk -- a large-format printout of the 82 Eridani system, standard survey data, showing the target planet's orbit, atmospheric composition, and habitability index. But Chen has drawn over it in red ink, adding a second body to the system diagram -- a brown dwarf, roughly 42 Jupiter masses, plotted in a long eccentric orbit with a period notation reading ~2,100 years. A second chart tacked to the wall shows the brown dwarf's orbital elements over time, with the current epoch marked in heavy red: APPROACHING PERIAPSIS. Arrows trace the gravitational perturbation vectors acting on 82 Eridani b, and the projected orbital shift is annotated with Chen's precise script: 'HZ departure Y+32. Tidal heating onset Y+35. Surface temp >200C by Y+38. Venus-analog conditions by Y+40.' A third chart shows Tau Ceti, with a planet in the habitable zone circled and annotated: CONFIRMED EARTH-ANALOG -- BACKUP DESTINATION. The original survey was not wrong. It captured 82 Eridani at its most benign -- the brown dwarf at apoapsis, invisible, its influence negligible. The universe was kind, once, and no longer.",
-          "location": "captains_quarters",
-          "foreshadowingId": "shadow_star_chart"
+          "dGV4dA==": "VGhlIHN0YXIgY2hhcnRzIGFyZSBleHRyYW9yZGluYXJ5LiBIYW5kLWRyYXduIG92ZXJsYXlzIG9uIHByaW50ZWQgYXN0cm9ub21pY2FsIGRhdGEsIGFubm90YXRlZCB3aXRoIGNhbGN1bGF0aW9ucyBpbiBDaGVuJ3MgcHJlY2lzZSBzY3JpcHQuIE9uZSBjaGFydCBkb21pbmF0ZXMgdGhlIGRlc2sgLS0gYSBsYXJnZS1mb3JtYXQgcHJpbnRvdXQgb2YgdGhlIDgyIEVyaWRhbmkgc3lzdGVtLCBzdGFuZGFyZCBzdXJ2ZXkgZGF0YSwgc2hvd2luZyB0aGUgdGFyZ2V0IHBsYW5ldCdzIG9yYml0LCBhdG1vc3BoZXJpYyBjb21wb3NpdGlvbiwgYW5kIGhhYml0YWJpbGl0eSBpbmRleC4gQnV0IENoZW4gaGFzIGRyYXduIG92ZXIgaXQgaW4gcmVkIGluaywgYWRkaW5nIGEgc2Vjb25kIGJvZHkgdG8gdGhlIHN5c3RlbSBkaWFncmFtIC0tIGEgYnJvd24gZHdhcmYsIHJvdWdobHkgNDIgSnVwaXRlciBtYXNzZXMsIHBsb3R0ZWQgaW4gYSBsb25nIGVjY2VudHJpYyBvcmJpdCB3aXRoIGEgcGVyaW9kIG5vdGF0aW9uIHJlYWRpbmcgfjIsMTAwIHllYXJzLiBBIHNlY29uZCBjaGFydCB0YWNrZWQgdG8gdGhlIHdhbGwgc2hvd3MgdGhlIGJyb3duIGR3YXJmJ3Mgb3JiaXRhbCBlbGVtZW50cyBvdmVyIHRpbWUsIHdpdGggdGhlIGN1cnJlbnQgZXBvY2ggbWFya2VkIGluIGhlYXZ5IHJlZDogQVBQUk9BQ0hJTkcgUEVSSUFQU0lTLiBBcnJvd3MgdHJhY2UgdGhlIGdyYXZpdGF0aW9uYWwgcGVydHVyYmF0aW9uIHZlY3RvcnMgYWN0aW5nIG9uIDgyIEVyaWRhbmkgYiwgYW5kIHRoZSBwcm9qZWN0ZWQgb3JiaXRhbCBzaGlmdCBpcyBhbm5vdGF0ZWQgd2l0aCBDaGVuJ3MgcHJlY2lzZSBzY3JpcHQ6ICdIWiBkZXBhcnR1cmUgWSszMi4gVGlkYWwgaGVhdGluZyBvbnNldCBZKzM1LiBTdXJmYWNlIHRlbXAgPjIwMEMgYnkgWSszOC4gVmVudXMtYW5hbG9nIGNvbmRpdGlvbnMgYnkgWSs0MC4nIEEgdGhpcmQgY2hhcnQgc2hvd3MgVGF1IENldGksIHdpdGggYSBwbGFuZXQgaW4gdGhlIGhhYml0YWJsZSB6b25lIGNpcmNsZWQgYW5kIGFubm90YXRlZDogQ09ORklSTUVEIEVBUlRILUFOQUxPRyAtLSBCQUNLVVAgREVTVElOQVRJT04uIFRoZSBvcmlnaW5hbCBzdXJ2ZXkgd2FzIG5vdCB3cm9uZy4gSXQgY2FwdHVyZWQgODIgRXJpZGFuaSBhdCBpdHMgbW9zdCBiZW5pZ24gLS0gdGhlIGJyb3duIGR3YXJmIGF0IGFwb2Fwc2lzLCBpbnZpc2libGUsIGl0cyBpbmZsdWVuY2UgbmVnbGlnaWJsZS4gVGhlIHVuaXZlcnNlIHdhcyBraW5kLCBvbmNlLCBhbmQgbm8gbG9uZ2VyLg==",
+          "bG9jYXRpb24=": "Y2FwdGFpbnNfcXVhcnRlcnM=",
+          "Zm9yZXNoYWRvd2luZ0lk": "c2hhZG93X3N0YXJfY2hhcnQ="
         },
         {
-          "id": "beat_chen_personal_log",
-          "type": "revelation",
-          "trigger": {
-            "type": "player_action",
-            "action": "examine",
-            "target": "data_pad"
+          "aWQ=": "YmVhdF9jaGVuX3BlcnNvbmFsX2xvZw==",
+          "dHlwZQ==": "cmV2ZWxhdGlvbg==",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "cGxheWVyX2FjdGlvbg==",
+            "YWN0aW9u": "ZXhhbWluZQ==",
+            "dGFyZ2V0": "ZGF0YV9wYWQ="
           },
-          "text": "Chen's personal log. Hundreds of entries, spanning from Mission Year 17.4 to Mission Year 17.9. You read them in order and watch a mind unravel and rebuild itself around a terrible certainty.\n\nYear 17.4: 'Woke from cryo due to automated maintenance alert. Navigation computer flagged a minor trajectory anomaly. Corrected it. While recalibrating, ran a routine check on long-range sensor data for 82 Eridani. Noticed an unexplained gravitational wobble in the star's coordinates -- periodic displacement inconsistent with known planetary companions. Probably instrument drift after 17 years. Will investigate when I have time.'\n\nYear 17.5: 'It is not instrument drift. I have cross-referenced the astrometric data against the ship's baseline measurements from launch. The wobble is real. After three weeks of analysis, I have identified the source: a substellar companion. A brown dwarf, approximately 42 Jupiter masses, in a highly eccentric orbit around 82 Eridani. Period approximately 2,100 years. The original survey was conducted during the companion's apoapsis -- at maximum distance from the primary, gravitationally quiescent, below the detection threshold of the instruments used. The survey team could not have seen it. No one could have seen it. But it is there.'\n\nYear 17.7: 'I have modeled the orbit. The brown dwarf is approaching periapsis. At closest approach -- roughly 38 years from now, or Year 38 of the colony's existence if we arrive on schedule -- the gravitational perturbation will shift 82 Eridani b outside the habitable zone. Tidal heating projections show surface temperatures climbing past 200 degrees Celsius within decades of periapsis. The atmosphere will undergo runaway greenhouse transition. Venus-like conditions within 30 to 40 years of landfall. We would build a colony, raise children, watch them grow -- and then watch the sky turn white. The survey was not falsified. It was correct at the time. The universe changed.'\n\nYear 17.8: 'I have found an alternative. Tau Ceti, 11.9 light-years from Sol, 4.3 light-years from our current position. The ship's long-range sensors confirm a genuine Earth-analog in the habitable zone -- Tau Ceti e. Nitrogen-oxygen atmosphere, liquid water signatures, surface gravity 1.05g. I can reach it with the remaining fuel if I alter course now. I have to alter course now. There is no one to ask. There is no one to consult. Four thousand people are asleep and trusting and heading toward a world with an expiration date, and I am the only one who knows.'\n\nYear 17.9: 'Course alteration complete. Disabled standard comms to prevent automated position reports from reaching Mission Authority -- I do not know whether MA was incompetent or complicit in failing to detect the companion, and I cannot risk them learning about the diversion before JANUS can verify independently. Sent encoded message to JANUS STATION (deep space research platform, independent of mission authority) requesting independent verification of the brown dwarf and updated orbital parameters. Built a custom antenna on the hull during EVA to maintain a private channel with JANUS. Now I wait. But waiting is killing me. The loneliness is... I did not anticipate the loneliness.'\n\nThe final entry, three days after the course alteration: 'I cannot stay awake any longer. Seventeen months alone. I am making mistakes -- forgetting to eat, losing time, talking to people who are not there. The course is set. The systems are configured. I am returning to cryo and trusting that the ship will carry us to safety. If someone wakes and finds this log: DO NOT correct the course. The brown dwarf changes everything. Please read my analysis before undoing my work. The survey was not a lie -- it was a snapshot of a system that looked safe at a single moment in its two-thousand-year cycle. We were unlucky. But Tau Ceti is real, and it is waiting. -- Chen Wei-Lin, Navigation Officer, ISV Kepler's Promise.'",
-          "location": "captains_quarters"
+          "dGV4dA==": "Q2hlbidzIHBlcnNvbmFsIGxvZy4gSHVuZHJlZHMgb2YgZW50cmllcywgc3Bhbm5pbmcgZnJvbSBNaXNzaW9uIFllYXIgMTcuNCB0byBNaXNzaW9uIFllYXIgMTcuOS4gWW91IHJlYWQgdGhlbSBpbiBvcmRlciBhbmQgd2F0Y2ggYSBtaW5kIHVucmF2ZWwgYW5kIHJlYnVpbGQgaXRzZWxmIGFyb3VuZCBhIHRlcnJpYmxlIGNlcnRhaW50eS4KClllYXIgMTcuNDogJ1dva2UgZnJvbSBjcnlvIGR1ZSB0byBhdXRvbWF0ZWQgbWFpbnRlbmFuY2UgYWxlcnQuIE5hdmlnYXRpb24gY29tcHV0ZXIgZmxhZ2dlZCBhIG1pbm9yIHRyYWplY3RvcnkgYW5vbWFseS4gQ29ycmVjdGVkIGl0LiBXaGlsZSByZWNhbGlicmF0aW5nLCByYW4gYSByb3V0aW5lIGNoZWNrIG9uIGxvbmctcmFuZ2Ugc2Vuc29yIGRhdGEgZm9yIDgyIEVyaWRhbmkuIE5vdGljZWQgYW4gdW5leHBsYWluZWQgZ3Jhdml0YXRpb25hbCB3b2JibGUgaW4gdGhlIHN0YXIncyBjb29yZGluYXRlcyAtLSBwZXJpb2RpYyBkaXNwbGFjZW1lbnQgaW5jb25zaXN0ZW50IHdpdGgga25vd24gcGxhbmV0YXJ5IGNvbXBhbmlvbnMuIFByb2JhYmx5IGluc3RydW1lbnQgZHJpZnQgYWZ0ZXIgMTcgeWVhcnMuIFdpbGwgaW52ZXN0aWdhdGUgd2hlbiBJIGhhdmUgdGltZS4nCgpZZWFyIDE3LjU6ICdJdCBpcyBub3QgaW5zdHJ1bWVudCBkcmlmdC4gSSBoYXZlIGNyb3NzLXJlZmVyZW5jZWQgdGhlIGFzdHJvbWV0cmljIGRhdGEgYWdhaW5zdCB0aGUgc2hpcCdzIGJhc2VsaW5lIG1lYXN1cmVtZW50cyBmcm9tIGxhdW5jaC4gVGhlIHdvYmJsZSBpcyByZWFsLiBBZnRlciB0aHJlZSB3ZWVrcyBvZiBhbmFseXNpcywgSSBoYXZlIGlkZW50aWZpZWQgdGhlIHNvdXJjZTogYSBzdWJzdGVsbGFyIGNvbXBhbmlvbi4gQSBicm93biBkd2FyZiwgYXBwcm94aW1hdGVseSA0MiBKdXBpdGVyIG1hc3NlcywgaW4gYSBoaWdobHkgZWNjZW50cmljIG9yYml0IGFyb3VuZCA4MiBFcmlkYW5pLiBQZXJpb2QgYXBwcm94aW1hdGVseSAyLDEwMCB5ZWFycy4gVGhlIG9yaWdpbmFsIHN1cnZleSB3YXMgY29uZHVjdGVkIGR1cmluZyB0aGUgY29tcGFuaW9uJ3MgYXBvYXBzaXMgLS0gYXQgbWF4aW11bSBkaXN0YW5jZSBmcm9tIHRoZSBwcmltYXJ5LCBncmF2aXRhdGlvbmFsbHkgcXVpZXNjZW50LCBiZWxvdyB0aGUgZGV0ZWN0aW9uIHRocmVzaG9sZCBvZiB0aGUgaW5zdHJ1bWVudHMgdXNlZC4gVGhlIHN1cnZleSB0ZWFtIGNvdWxkIG5vdCBoYXZlIHNlZW4gaXQuIE5vIG9uZSBjb3VsZCBoYXZlIHNlZW4gaXQuIEJ1dCBpdCBpcyB0aGVyZS4nCgpZZWFyIDE3Ljc6ICdJIGhhdmUgbW9kZWxlZCB0aGUgb3JiaXQuIFRoZSBicm93biBkd2FyZiBpcyBhcHByb2FjaGluZyBwZXJpYXBzaXMuIEF0IGNsb3Nlc3QgYXBwcm9hY2ggLS0gcm91Z2hseSAzOCB5ZWFycyBmcm9tIG5vdywgb3IgWWVhciAzOCBvZiB0aGUgY29sb255J3MgZXhpc3RlbmNlIGlmIHdlIGFycml2ZSBvbiBzY2hlZHVsZSAtLSB0aGUgZ3Jhdml0YXRpb25hbCBwZXJ0dXJiYXRpb24gd2lsbCBzaGlmdCA4MiBFcmlkYW5pIGIgb3V0c2lkZSB0aGUgaGFiaXRhYmxlIHpvbmUuIFRpZGFsIGhlYXRpbmcgcHJvamVjdGlvbnMgc2hvdyBzdXJmYWNlIHRlbXBlcmF0dXJlcyBjbGltYmluZyBwYXN0IDIwMCBkZWdyZWVzIENlbHNpdXMgd2l0aGluIGRlY2FkZXMgb2YgcGVyaWFwc2lzLiBUaGUgYXRtb3NwaGVyZSB3aWxsIHVuZGVyZ28gcnVuYXdheSBncmVlbmhvdXNlIHRyYW5zaXRpb24uIFZlbnVzLWxpa2UgY29uZGl0aW9ucyB3aXRoaW4gMzAgdG8gNDAgeWVhcnMgb2YgbGFuZGZhbGwuIFdlIHdvdWxkIGJ1aWxkIGEgY29sb255LCByYWlzZSBjaGlsZHJlbiwgd2F0Y2ggdGhlbSBncm93IC0tIGFuZCB0aGVuIHdhdGNoIHRoZSBza3kgdHVybiB3aGl0ZS4gVGhlIHN1cnZleSB3YXMgbm90IGZhbHNpZmllZC4gSXQgd2FzIGNvcnJlY3QgYXQgdGhlIHRpbWUuIFRoZSB1bml2ZXJzZSBjaGFuZ2VkLicKClllYXIgMTcuODogJ0kgaGF2ZSBmb3VuZCBhbiBhbHRlcm5hdGl2ZS4gVGF1IENldGksIDExLjkgbGlnaHQteWVhcnMgZnJvbSBTb2wsIDQuMyBsaWdodC15ZWFycyBmcm9tIG91ciBjdXJyZW50IHBvc2l0aW9uLiBUaGUgc2hpcCdzIGxvbmctcmFuZ2Ugc2Vuc29ycyBjb25maXJtIGEgZ2VudWluZSBFYXJ0aC1hbmFsb2cgaW4gdGhlIGhhYml0YWJsZSB6b25lIC0tIFRhdSBDZXRpIGUuIE5pdHJvZ2VuLW94eWdlbiBhdG1vc3BoZXJlLCBsaXF1aWQgd2F0ZXIgc2lnbmF0dXJlcywgc3VyZmFjZSBncmF2aXR5IDEuMDVnLiBJIGNhbiByZWFjaCBpdCB3aXRoIHRoZSByZW1haW5pbmcgZnVlbCBpZiBJIGFsdGVyIGNvdXJzZSBub3cuIEkgaGF2ZSB0byBhbHRlciBjb3Vyc2Ugbm93LiBUaGVyZSBpcyBubyBvbmUgdG8gYXNrLiBUaGVyZSBpcyBubyBvbmUgdG8gY29uc3VsdC4gRm91ciB0aG91c2FuZCBwZW9wbGUgYXJlIGFzbGVlcCBhbmQgdHJ1c3RpbmcgYW5kIGhlYWRpbmcgdG93YXJkIGEgd29ybGQgd2l0aCBhbiBleHBpcmF0aW9uIGRhdGUsIGFuZCBJIGFtIHRoZSBvbmx5IG9uZSB3aG8ga25vd3MuJwoKWWVhciAxNy45OiAnQ291cnNlIGFsdGVyYXRpb24gY29tcGxldGUuIERpc2FibGVkIHN0YW5kYXJkIGNvbW1zIHRvIHByZXZlbnQgYXV0b21hdGVkIHBvc2l0aW9uIHJlcG9ydHMgZnJvbSByZWFjaGluZyBNaXNzaW9uIEF1dGhvcml0eSAtLSBJIGRvIG5vdCBrbm93IHdoZXRoZXIgTUEgd2FzIGluY29tcGV0ZW50IG9yIGNvbXBsaWNpdCBpbiBmYWlsaW5nIHRvIGRldGVjdCB0aGUgY29tcGFuaW9uLCBhbmQgSSBjYW5ub3QgcmlzayB0aGVtIGxlYXJuaW5nIGFib3V0IHRoZSBkaXZlcnNpb24gYmVmb3JlIEpBTlVTIGNhbiB2ZXJpZnkgaW5kZXBlbmRlbnRseS4gU2VudCBlbmNvZGVkIG1lc3NhZ2UgdG8gSkFOVVMgU1RBVElPTiAoZGVlcCBzcGFjZSByZXNlYXJjaCBwbGF0Zm9ybSwgaW5kZXBlbmRlbnQgb2YgbWlzc2lvbiBhdXRob3JpdHkpIHJlcXVlc3RpbmcgaW5kZXBlbmRlbnQgdmVyaWZpY2F0aW9uIG9mIHRoZSBicm93biBkd2FyZiBhbmQgdXBkYXRlZCBvcmJpdGFsIHBhcmFtZXRlcnMuIEJ1aWx0IGEgY3VzdG9tIGFudGVubmEgb24gdGhlIGh1bGwgZHVyaW5nIEVWQSB0byBtYWludGFpbiBhIHByaXZhdGUgY2hhbm5lbCB3aXRoIEpBTlVTLiBOb3cgSSB3YWl0LiBCdXQgd2FpdGluZyBpcyBraWxsaW5nIG1lLiBUaGUgbG9uZWxpbmVzcyBpcy4uLiBJIGRpZCBub3QgYW50aWNpcGF0ZSB0aGUgbG9uZWxpbmVzcy4nCgpUaGUgZmluYWwgZW50cnksIHRocmVlIGRheXMgYWZ0ZXIgdGhlIGNvdXJzZSBhbHRlcmF0aW9uOiAnSSBjYW5ub3Qgc3RheSBhd2FrZSBhbnkgbG9uZ2VyLiBTZXZlbnRlZW4gbW9udGhzIGFsb25lLiBJIGFtIG1ha2luZyBtaXN0YWtlcyAtLSBmb3JnZXR0aW5nIHRvIGVhdCwgbG9zaW5nIHRpbWUsIHRhbGtpbmcgdG8gcGVvcGxlIHdobyBhcmUgbm90IHRoZXJlLiBUaGUgY291cnNlIGlzIHNldC4gVGhlIHN5c3RlbXMgYXJlIGNvbmZpZ3VyZWQuIEkgYW0gcmV0dXJuaW5nIHRvIGNyeW8gYW5kIHRydXN0aW5nIHRoYXQgdGhlIHNoaXAgd2lsbCBjYXJyeSB1cyB0byBzYWZldHkuIElmIHNvbWVvbmUgd2FrZXMgYW5kIGZpbmRzIHRoaXMgbG9nOiBETyBOT1QgY29ycmVjdCB0aGUgY291cnNlLiBUaGUgYnJvd24gZHdhcmYgY2hhbmdlcyBldmVyeXRoaW5nLiBQbGVhc2UgcmVhZCBteSBhbmFseXNpcyBiZWZvcmUgdW5kb2luZyBteSB3b3JrLiBUaGUgc3VydmV5IHdhcyBub3QgYSBsaWUgLS0gaXQgd2FzIGEgc25hcHNob3Qgb2YgYSBzeXN0ZW0gdGhhdCBsb29rZWQgc2FmZSBhdCBhIHNpbmdsZSBtb21lbnQgaW4gaXRzIHR3by10aG91c2FuZC15ZWFyIGN5Y2xlLiBXZSB3ZXJlIHVubHVja3kuIEJ1dCBUYXUgQ2V0aSBpcyByZWFsLCBhbmQgaXQgaXMgd2FpdGluZy4gLS0gQ2hlbiBXZWktTGluLCBOYXZpZ2F0aW9uIE9mZmljZXIsIElTViBLZXBsZXIncyBQcm9taXNlLic=",
+          "bG9jYXRpb24=": "Y2FwdGFpbnNfcXVhcnRlcnM="
         },
         {
-          "id": "beat_the_weight",
-          "type": "emotional",
-          "trigger": {
-            "type": "state_change",
-            "state": "chen_log_read",
-            "value": true
+          "aWQ=": "YmVhdF90aGVfd2VpZ2h0",
+          "dHlwZQ==": "ZW1vdGlvbmFs",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "c3RhdGVfY2hhbmdl",
+            "c3RhdGU=": "Y2hlbl9sb2dfcmVhZA==",
+            "dmFsdWU=": true
           },
-          "text": "You set down the data pad. Your hands are trembling, and not from the cold. Chen went back to cryo. Chen is in Pod C-447 -- no, Pod C-447 is open and empty. Chen must be in a different pod. Chen returned to cryogenic suspension, trusting the ship to carry the colony to Tau Ceti, trusting that if someone woke, they would find the logs, understand the evidence, and honor the decision. Instead, someone woke. You woke. You found a ship full of what looked like sabotage. You fixed every broken system. You corrected the course. You spent 88.7% of the remaining fuel to undo Chen's work and put the ship back on a heading for 82 Eridani -- a world that Chen's models say will become uninhabitable within a generation of arrival. The brown dwarf does not care about your intentions. It follows its orbit with the indifference of all celestial mechanics. If Chen's analysis is correct, you have not saved four thousand people. You have delivered them to a world with an expiration date. And the cruelest part: the survey was never wrong. No one lied. The universe simply revealed information that was not available twenty years ago, and Chen was the only one awake to see it."
+          "dGV4dA==": "WW91IHNldCBkb3duIHRoZSBkYXRhIHBhZC4gWW91ciBoYW5kcyBhcmUgdHJlbWJsaW5nLCBhbmQgbm90IGZyb20gdGhlIGNvbGQuIENoZW4gd2VudCBiYWNrIHRvIGNyeW8uIENoZW4gaXMgaW4gUG9kIEMtNDQ3IC0tIG5vLCBQb2QgQy00NDcgaXMgb3BlbiBhbmQgZW1wdHkuIENoZW4gbXVzdCBiZSBpbiBhIGRpZmZlcmVudCBwb2QuIENoZW4gcmV0dXJuZWQgdG8gY3J5b2dlbmljIHN1c3BlbnNpb24sIHRydXN0aW5nIHRoZSBzaGlwIHRvIGNhcnJ5IHRoZSBjb2xvbnkgdG8gVGF1IENldGksIHRydXN0aW5nIHRoYXQgaWYgc29tZW9uZSB3b2tlLCB0aGV5IHdvdWxkIGZpbmQgdGhlIGxvZ3MsIHVuZGVyc3RhbmQgdGhlIGV2aWRlbmNlLCBhbmQgaG9ub3IgdGhlIGRlY2lzaW9uLiBJbnN0ZWFkLCBzb21lb25lIHdva2UuIFlvdSB3b2tlLiBZb3UgZm91bmQgYSBzaGlwIGZ1bGwgb2Ygd2hhdCBsb29rZWQgbGlrZSBzYWJvdGFnZS4gWW91IGZpeGVkIGV2ZXJ5IGJyb2tlbiBzeXN0ZW0uIFlvdSBjb3JyZWN0ZWQgdGhlIGNvdXJzZS4gWW91IHNwZW50IDg4LjclIG9mIHRoZSByZW1haW5pbmcgZnVlbCB0byB1bmRvIENoZW4ncyB3b3JrIGFuZCBwdXQgdGhlIHNoaXAgYmFjayBvbiBhIGhlYWRpbmcgZm9yIDgyIEVyaWRhbmkgLS0gYSB3b3JsZCB0aGF0IENoZW4ncyBtb2RlbHMgc2F5IHdpbGwgYmVjb21lIHVuaW5oYWJpdGFibGUgd2l0aGluIGEgZ2VuZXJhdGlvbiBvZiBhcnJpdmFsLiBUaGUgYnJvd24gZHdhcmYgZG9lcyBub3QgY2FyZSBhYm91dCB5b3VyIGludGVudGlvbnMuIEl0IGZvbGxvd3MgaXRzIG9yYml0IHdpdGggdGhlIGluZGlmZmVyZW5jZSBvZiBhbGwgY2VsZXN0aWFsIG1lY2hhbmljcy4gSWYgQ2hlbidzIGFuYWx5c2lzIGlzIGNvcnJlY3QsIHlvdSBoYXZlIG5vdCBzYXZlZCBmb3VyIHRob3VzYW5kIHBlb3BsZS4gWW91IGhhdmUgZGVsaXZlcmVkIHRoZW0gdG8gYSB3b3JsZCB3aXRoIGFuIGV4cGlyYXRpb24gZGF0ZS4gQW5kIHRoZSBjcnVlbGVzdCBwYXJ0OiB0aGUgc3VydmV5IHdhcyBuZXZlciB3cm9uZy4gTm8gb25lIGxpZWQuIFRoZSB1bml2ZXJzZSBzaW1wbHkgcmV2ZWFsZWQgaW5mb3JtYXRpb24gdGhhdCB3YXMgbm90IGF2YWlsYWJsZSB0d2VudHkgeWVhcnMgYWdvLCBhbmQgQ2hlbiB3YXMgdGhlIG9ubHkgb25lIGF3YWtlIHRvIHNlZSBpdC4="
         },
         {
-          "id": "beat_find_chen",
-          "type": "narrative",
-          "trigger": {
-            "type": "player_action",
-            "action": "search",
-            "target": "cryo_bay_pods"
+          "aWQ=": "YmVhdF9maW5kX2NoZW4=",
+          "dHlwZQ==": "bmFycmF0aXZl",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "cGxheWVyX2FjdGlvbg==",
+            "YWN0aW9u": "c2VhcmNo",
+            "dGFyZ2V0": "Y3J5b19iYXlfcG9kcw=="
           },
-          "text": "You find Chen in Pod B-221 -- not her assigned pod, but one of the unassigned spares. The pod's nameplate is blank. The monitoring leads are connected. The status display shows green: vital signs stable, cryoprotectant levels nominal, estimated revival time 23 minutes if initiated. Chen is alive, asleep, and dreaming of a future that no longer exists in the form she intended. Through the frost-clouded lid, you can see a face -- calm, composed, bearing the lines of seventeen months of solitary anguish that cryogenic suspension cannot erase. This woman tried to save the colony. She saw a dark companion star that no one else could have seen, and she acted alone because there was no one to act with. And you undid her work with the best of intentions and the complete absence of context. Chen sleeps. The ship flies. And the truth is a thing that no one person can hold alone."
+          "dGV4dA==": "WW91IGZpbmQgQ2hlbiBpbiBQb2QgQi0yMjEgLS0gbm90IGhlciBhc3NpZ25lZCBwb2QsIGJ1dCBvbmUgb2YgdGhlIHVuYXNzaWduZWQgc3BhcmVzLiBUaGUgcG9kJ3MgbmFtZXBsYXRlIGlzIGJsYW5rLiBUaGUgbW9uaXRvcmluZyBsZWFkcyBhcmUgY29ubmVjdGVkLiBUaGUgc3RhdHVzIGRpc3BsYXkgc2hvd3MgZ3JlZW46IHZpdGFsIHNpZ25zIHN0YWJsZSwgY3J5b3Byb3RlY3RhbnQgbGV2ZWxzIG5vbWluYWwsIGVzdGltYXRlZCByZXZpdmFsIHRpbWUgMjMgbWludXRlcyBpZiBpbml0aWF0ZWQuIENoZW4gaXMgYWxpdmUsIGFzbGVlcCwgYW5kIGRyZWFtaW5nIG9mIGEgZnV0dXJlIHRoYXQgbm8gbG9uZ2VyIGV4aXN0cyBpbiB0aGUgZm9ybSBzaGUgaW50ZW5kZWQuIFRocm91Z2ggdGhlIGZyb3N0LWNsb3VkZWQgbGlkLCB5b3UgY2FuIHNlZSBhIGZhY2UgLS0gY2FsbSwgY29tcG9zZWQsIGJlYXJpbmcgdGhlIGxpbmVzIG9mIHNldmVudGVlbiBtb250aHMgb2Ygc29saXRhcnkgYW5ndWlzaCB0aGF0IGNyeW9nZW5pYyBzdXNwZW5zaW9uIGNhbm5vdCBlcmFzZS4gVGhpcyB3b21hbiB0cmllZCB0byBzYXZlIHRoZSBjb2xvbnkuIFNoZSBzYXcgYSBkYXJrIGNvbXBhbmlvbiBzdGFyIHRoYXQgbm8gb25lIGVsc2UgY291bGQgaGF2ZSBzZWVuLCBhbmQgc2hlIGFjdGVkIGFsb25lIGJlY2F1c2UgdGhlcmUgd2FzIG5vIG9uZSB0byBhY3Qgd2l0aC4gQW5kIHlvdSB1bmRpZCBoZXIgd29yayB3aXRoIHRoZSBiZXN0IG9mIGludGVudGlvbnMgYW5kIHRoZSBjb21wbGV0ZSBhYnNlbmNlIG9mIGNvbnRleHQuIENoZW4gc2xlZXBzLiBUaGUgc2hpcCBmbGllcy4gQW5kIHRoZSB0cnV0aCBpcyBhIHRoaW5nIHRoYXQgbm8gb25lIHBlcnNvbiBjYW4gaG9sZCBhbG9uZS4="
         },
         {
-          "id": "beat_final_choice",
-          "type": "choice",
-          "trigger": {
-            "type": "state_check",
-            "conditions": {
-              "all_of": [
-                "chen_log_read",
-                "course_corrected",
-                "comms_operational"
+          "aWQ=": "YmVhdF9maW5hbF9jaG9pY2U=",
+          "dHlwZQ==": "Y2hvaWNl",
+          "dHJpZ2dlcg==": {
+            "dHlwZQ==": "c3RhdGVfY2hlY2s=",
+            "Y29uZGl0aW9ucw==": {
+              "YWxsX29m": [
+                "Y2hlbl9sb2dfcmVhZA==",
+                "Y291cnNlX2NvcnJlY3RlZA==",
+                "Y29tbXNfb3BlcmF0aW9uYWw="
               ]
             }
           },
-          "text": "You stand in the comms room with the antenna aligned and the transmitter powered. The course is set for 82 Eridani. The fuel is spent. The truth -- or what may be the truth -- is written in Chen's logs and orbital models and long-range sensor data. A brown dwarf, invisible twenty years ago, approaching periapsis now. You cannot change the course again; the fuel for that is gone. But you can act within the constraints that remain. Three options crystallize in your mind, each one a different kind of faith.\n\nYou can WAKE CHEN -- revive the navigation officer and share the burden of knowledge. Two minds working the problem, with twenty-two years of transit remaining. Enough time to refine the brown dwarf's orbital model, to use the ship's sensors at closer range, to prepare contingencies if the periapsis timeline is as devastating as Chen projects.\n\nYou can SEND A SIGNAL -- broadcast Chen's findings to JANUS STATION, to anyone listening. Break the silence. Let the brown dwarf data propagate at the speed of light. A response might reach you before arrival. Or it might not.\n\nYou can DO BOTH -- wake Chen and send the signal. Pool every resource, pursue every avenue. But waking another person means another mouth breathing the thin margin of life support, and a signal means alerting Mission Authority that the ship knows about a threat they may or may not have been aware of.\n\nOr you can DO NEITHER. Seal the logs. Return to cryo. Let the ship carry its cargo to 82 Eridani and trust that Chen's models are wrong, that the brown dwarf's perturbation will be less severe than projected, that the planet will endure. Sleep, and leave the truth for the next person who wakes.\n\nThe choice is yours. There is no right answer. There is only the answer you can live with, for twenty-two more years of silence and stars."
+          "dGV4dA==": "WW91IHN0YW5kIGluIHRoZSBjb21tcyByb29tIHdpdGggdGhlIGFudGVubmEgYWxpZ25lZCBhbmQgdGhlIHRyYW5zbWl0dGVyIHBvd2VyZWQuIFRoZSBjb3Vyc2UgaXMgc2V0IGZvciA4MiBFcmlkYW5pLiBUaGUgZnVlbCBpcyBzcGVudC4gVGhlIHRydXRoIC0tIG9yIHdoYXQgbWF5IGJlIHRoZSB0cnV0aCAtLSBpcyB3cml0dGVuIGluIENoZW4ncyBsb2dzIGFuZCBvcmJpdGFsIG1vZGVscyBhbmQgbG9uZy1yYW5nZSBzZW5zb3IgZGF0YS4gQSBicm93biBkd2FyZiwgaW52aXNpYmxlIHR3ZW50eSB5ZWFycyBhZ28sIGFwcHJvYWNoaW5nIHBlcmlhcHNpcyBub3cuIFlvdSBjYW5ub3QgY2hhbmdlIHRoZSBjb3Vyc2UgYWdhaW47IHRoZSBmdWVsIGZvciB0aGF0IGlzIGdvbmUuIEJ1dCB5b3UgY2FuIGFjdCB3aXRoaW4gdGhlIGNvbnN0cmFpbnRzIHRoYXQgcmVtYWluLiBUaHJlZSBvcHRpb25zIGNyeXN0YWxsaXplIGluIHlvdXIgbWluZCwgZWFjaCBvbmUgYSBkaWZmZXJlbnQga2luZCBvZiBmYWl0aC4KCllvdSBjYW4gV0FLRSBDSEVOIC0tIHJldml2ZSB0aGUgbmF2aWdhdGlvbiBvZmZpY2VyIGFuZCBzaGFyZSB0aGUgYnVyZGVuIG9mIGtub3dsZWRnZS4gVHdvIG1pbmRzIHdvcmtpbmcgdGhlIHByb2JsZW0sIHdpdGggdHdlbnR5LXR3byB5ZWFycyBvZiB0cmFuc2l0IHJlbWFpbmluZy4gRW5vdWdoIHRpbWUgdG8gcmVmaW5lIHRoZSBicm93biBkd2FyZidzIG9yYml0YWwgbW9kZWwsIHRvIHVzZSB0aGUgc2hpcCdzIHNlbnNvcnMgYXQgY2xvc2VyIHJhbmdlLCB0byBwcmVwYXJlIGNvbnRpbmdlbmNpZXMgaWYgdGhlIHBlcmlhcHNpcyB0aW1lbGluZSBpcyBhcyBkZXZhc3RhdGluZyBhcyBDaGVuIHByb2plY3RzLgoKWW91IGNhbiBTRU5EIEEgU0lHTkFMIC0tIGJyb2FkY2FzdCBDaGVuJ3MgZmluZGluZ3MgdG8gSkFOVVMgU1RBVElPTiwgdG8gYW55b25lIGxpc3RlbmluZy4gQnJlYWsgdGhlIHNpbGVuY2UuIExldCB0aGUgYnJvd24gZHdhcmYgZGF0YSBwcm9wYWdhdGUgYXQgdGhlIHNwZWVkIG9mIGxpZ2h0LiBBIHJlc3BvbnNlIG1pZ2h0IHJlYWNoIHlvdSBiZWZvcmUgYXJyaXZhbC4gT3IgaXQgbWlnaHQgbm90LgoKWW91IGNhbiBETyBCT1RIIC0tIHdha2UgQ2hlbiBhbmQgc2VuZCB0aGUgc2lnbmFsLiBQb29sIGV2ZXJ5IHJlc291cmNlLCBwdXJzdWUgZXZlcnkgYXZlbnVlLiBCdXQgd2FraW5nIGFub3RoZXIgcGVyc29uIG1lYW5zIGFub3RoZXIgbW91dGggYnJlYXRoaW5nIHRoZSB0aGluIG1hcmdpbiBvZiBsaWZlIHN1cHBvcnQsIGFuZCBhIHNpZ25hbCBtZWFucyBhbGVydGluZyBNaXNzaW9uIEF1dGhvcml0eSB0aGF0IHRoZSBzaGlwIGtub3dzIGFib3V0IGEgdGhyZWF0IHRoZXkgbWF5IG9yIG1heSBub3QgaGF2ZSBiZWVuIGF3YXJlIG9mLgoKT3IgeW91IGNhbiBETyBORUlUSEVSLiBTZWFsIHRoZSBsb2dzLiBSZXR1cm4gdG8gY3J5by4gTGV0IHRoZSBzaGlwIGNhcnJ5IGl0cyBjYXJnbyB0byA4MiBFcmlkYW5pIGFuZCB0cnVzdCB0aGF0IENoZW4ncyBtb2RlbHMgYXJlIHdyb25nLCB0aGF0IHRoZSBicm93biBkd2FyZidzIHBlcnR1cmJhdGlvbiB3aWxsIGJlIGxlc3Mgc2V2ZXJlIHRoYW4gcHJvamVjdGVkLCB0aGF0IHRoZSBwbGFuZXQgd2lsbCBlbmR1cmUuIFNsZWVwLCBhbmQgbGVhdmUgdGhlIHRydXRoIGZvciB0aGUgbmV4dCBwZXJzb24gd2hvIHdha2VzLgoKVGhlIGNob2ljZSBpcyB5b3Vycy4gVGhlcmUgaXMgbm8gcmlnaHQgYW5zd2VyLiBUaGVyZSBpcyBvbmx5IHRoZSBhbnN3ZXIgeW91IGNhbiBsaXZlIHdpdGgsIGZvciB0d2VudHktdHdvIG1vcmUgeWVhcnMgb2Ygc2lsZW5jZSBhbmQgc3RhcnMu"
         }
       ]
     }
   ],
-  "foreshadowing": [
+  "Zm9yZXNoYWRvd2luZw==": [
     {
-      "id": "shadow_empty_pod",
-      "plantedIn": "cryo_bay",
-      "plantText": "Pod C-447 stands open, its interior dry and frost-free, its monitoring leads disconnected and neatly coiled. The nameplate reads CHEN, WEI-LIN -- NAVIGATION OFFICER. The revival log shows a single entry: MANUAL OVERRIDE REVIVAL -- MISSION YEAR 17.4. Someone woke up almost two years ago. Someone who is not here now.",
-      "payoffIn": "act5_revelation",
-      "payoffText": "Chen returned to cryogenic suspension in spare pod B-221 after seventeen months of solitary work to divert the ship away from 82 Eridani's doomed colony world. She left her original pod open because she could not risk using the assigned pod's automated check-in system, which would have logged the re-entry and potentially triggered an alert to Mission Authority -- an authority she could not trust, not knowing whether they had missed the brown dwarf through incompetence or something worse."
+      "aWQ=": "c2hhZG93X2VtcHR5X3BvZA==",
+      "cGxhbnRlZElu": "Y3J5b19iYXk=",
+      "cGxhbnRUZXh0": "UG9kIEMtNDQ3IHN0YW5kcyBvcGVuLCBpdHMgaW50ZXJpb3IgZHJ5IGFuZCBmcm9zdC1mcmVlLCBpdHMgbW9uaXRvcmluZyBsZWFkcyBkaXNjb25uZWN0ZWQgYW5kIG5lYXRseSBjb2lsZWQuIFRoZSBuYW1lcGxhdGUgcmVhZHMgQ0hFTiwgV0VJLUxJTiAtLSBOQVZJR0FUSU9OIE9GRklDRVIuIFRoZSByZXZpdmFsIGxvZyBzaG93cyBhIHNpbmdsZSBlbnRyeTogTUFOVUFMIE9WRVJSSURFIFJFVklWQUwgLS0gTUlTU0lPTiBZRUFSIDE3LjQuIFNvbWVvbmUgd29rZSB1cCBhbG1vc3QgdHdvIHllYXJzIGFnby4gU29tZW9uZSB3aG8gaXMgbm90IGhlcmUgbm93Lg==",
+      "cGF5b2ZmSW4=": "YWN0NV9yZXZlbGF0aW9u",
+      "cGF5b2ZmVGV4dA==": "Q2hlbiByZXR1cm5lZCB0byBjcnlvZ2VuaWMgc3VzcGVuc2lvbiBpbiBzcGFyZSBwb2QgQi0yMjEgYWZ0ZXIgc2V2ZW50ZWVuIG1vbnRocyBvZiBzb2xpdGFyeSB3b3JrIHRvIGRpdmVydCB0aGUgc2hpcCBhd2F5IGZyb20gODIgRXJpZGFuaSdzIGRvb21lZCBjb2xvbnkgd29ybGQuIFNoZSBsZWZ0IGhlciBvcmlnaW5hbCBwb2Qgb3BlbiBiZWNhdXNlIHNoZSBjb3VsZCBub3QgcmlzayB1c2luZyB0aGUgYXNzaWduZWQgcG9kJ3MgYXV0b21hdGVkIGNoZWNrLWluIHN5c3RlbSwgd2hpY2ggd291bGQgaGF2ZSBsb2dnZWQgdGhlIHJlLWVudHJ5IGFuZCBwb3RlbnRpYWxseSB0cmlnZ2VyZWQgYW4gYWxlcnQgdG8gTWlzc2lvbiBBdXRob3JpdHkgLS0gYW4gYXV0aG9yaXR5IHNoZSBjb3VsZCBub3QgdHJ1c3QsIG5vdCBrbm93aW5nIHdoZXRoZXIgdGhleSBoYWQgbWlzc2VkIHRoZSBicm93biBkd2FyZiB0aHJvdWdoIGluY29tcGV0ZW5jZSBvciBzb21ldGhpbmcgd29yc2Uu"
     },
     {
-      "id": "shadow_half_eaten_meal",
-      "plantedIn": "mess_hall",
-      "plantText": "A half-eaten protein bar and a squeezed hydration pouch sit on a tray at the corner table. The food is months old, desiccated and forgotten. A fork rests across the tray with tines pointing left -- the pause of a right-handed person who was interrupted mid-meal and never returned.",
-      "payoffIn": "act4_resolution",
-      "payoffText": "Chen's personal log, entry for Mission Year 17.9: 'Alarm from the navigation console interrupted dinner. The course alteration calculations were drifting due to a software buffer error. I ran to correct it and never went back for the meal. By the time I remembered, I was too tired to care about eating. The loneliness does that -- erodes the small rituals that make a person feel human.'"
+      "aWQ=": "c2hhZG93X2hhbGZfZWF0ZW5fbWVhbA==",
+      "cGxhbnRlZElu": "bWVzc19oYWxs",
+      "cGxhbnRUZXh0": "QSBoYWxmLWVhdGVuIHByb3RlaW4gYmFyIGFuZCBhIHNxdWVlemVkIGh5ZHJhdGlvbiBwb3VjaCBzaXQgb24gYSB0cmF5IGF0IHRoZSBjb3JuZXIgdGFibGUuIFRoZSBmb29kIGlzIG1vbnRocyBvbGQsIGRlc2ljY2F0ZWQgYW5kIGZvcmdvdHRlbi4gQSBmb3JrIHJlc3RzIGFjcm9zcyB0aGUgdHJheSB3aXRoIHRpbmVzIHBvaW50aW5nIGxlZnQgLS0gdGhlIHBhdXNlIG9mIGEgcmlnaHQtaGFuZGVkIHBlcnNvbiB3aG8gd2FzIGludGVycnVwdGVkIG1pZC1tZWFsIGFuZCBuZXZlciByZXR1cm5lZC4=",
+      "cGF5b2ZmSW4=": "YWN0NF9yZXNvbHV0aW9u",
+      "cGF5b2ZmVGV4dA==": "Q2hlbidzIHBlcnNvbmFsIGxvZywgZW50cnkgZm9yIE1pc3Npb24gWWVhciAxNy45OiAnQWxhcm0gZnJvbSB0aGUgbmF2aWdhdGlvbiBjb25zb2xlIGludGVycnVwdGVkIGRpbm5lci4gVGhlIGNvdXJzZSBhbHRlcmF0aW9uIGNhbGN1bGF0aW9ucyB3ZXJlIGRyaWZ0aW5nIGR1ZSB0byBhIHNvZnR3YXJlIGJ1ZmZlciBlcnJvci4gSSByYW4gdG8gY29ycmVjdCBpdCBhbmQgbmV2ZXIgd2VudCBiYWNrIGZvciB0aGUgbWVhbC4gQnkgdGhlIHRpbWUgSSByZW1lbWJlcmVkLCBJIHdhcyB0b28gdGlyZWQgdG8gY2FyZSBhYm91dCBlYXRpbmcuIFRoZSBsb25lbGluZXNzIGRvZXMgdGhhdCAtLSBlcm9kZXMgdGhlIHNtYWxsIHJpdHVhbHMgdGhhdCBtYWtlIGEgcGVyc29uIGZlZWwgaHVtYW4uJw=="
     },
     {
-      "id": "shadow_chess_game",
-      "plantedIn": "recreation_room",
-      "plantText": "A chess board with a game in progress. White is losing -- three moves from checkmate. The scuff marks on the floor show only one chair has been moved. Someone played against themselves, and they played to lose.",
-      "payoffIn": "act5_revelation",
-      "payoffText": "Chen's personal log, entry for Mission Year 17.6: 'I have been playing chess against myself in the recreation room. I find that I always lose as white. The psychologist in me says this means something -- that I identify with the defensive position, that I see myself as reacting rather than initiating. The engineer in me says it means I am better at attacking than defending. The lonely person in me says it means I need someone else to play against, and there is no one. There is no one for light-years in any direction. I am the most alone any human being has ever been.'"
+      "aWQ=": "c2hhZG93X2NoZXNzX2dhbWU=",
+      "cGxhbnRlZElu": "cmVjcmVhdGlvbl9yb29t",
+      "cGxhbnRUZXh0": "QSBjaGVzcyBib2FyZCB3aXRoIGEgZ2FtZSBpbiBwcm9ncmVzcy4gV2hpdGUgaXMgbG9zaW5nIC0tIHRocmVlIG1vdmVzIGZyb20gY2hlY2ttYXRlLiBUaGUgc2N1ZmYgbWFya3Mgb24gdGhlIGZsb29yIHNob3cgb25seSBvbmUgY2hhaXIgaGFzIGJlZW4gbW92ZWQuIFNvbWVvbmUgcGxheWVkIGFnYWluc3QgdGhlbXNlbHZlcywgYW5kIHRoZXkgcGxheWVkIHRvIGxvc2Uu",
+      "cGF5b2ZmSW4=": "YWN0NV9yZXZlbGF0aW9u",
+      "cGF5b2ZmVGV4dA==": "Q2hlbidzIHBlcnNvbmFsIGxvZywgZW50cnkgZm9yIE1pc3Npb24gWWVhciAxNy42OiAnSSBoYXZlIGJlZW4gcGxheWluZyBjaGVzcyBhZ2FpbnN0IG15c2VsZiBpbiB0aGUgcmVjcmVhdGlvbiByb29tLiBJIGZpbmQgdGhhdCBJIGFsd2F5cyBsb3NlIGFzIHdoaXRlLiBUaGUgcHN5Y2hvbG9naXN0IGluIG1lIHNheXMgdGhpcyBtZWFucyBzb21ldGhpbmcgLS0gdGhhdCBJIGlkZW50aWZ5IHdpdGggdGhlIGRlZmVuc2l2ZSBwb3NpdGlvbiwgdGhhdCBJIHNlZSBteXNlbGYgYXMgcmVhY3RpbmcgcmF0aGVyIHRoYW4gaW5pdGlhdGluZy4gVGhlIGVuZ2luZWVyIGluIG1lIHNheXMgaXQgbWVhbnMgSSBhbSBiZXR0ZXIgYXQgYXR0YWNraW5nIHRoYW4gZGVmZW5kaW5nLiBUaGUgbG9uZWx5IHBlcnNvbiBpbiBtZSBzYXlzIGl0IG1lYW5zIEkgbmVlZCBzb21lb25lIGVsc2UgdG8gcGxheSBhZ2FpbnN0LCBhbmQgdGhlcmUgaXMgbm8gb25lLiBUaGVyZSBpcyBubyBvbmUgZm9yIGxpZ2h0LXllYXJzIGluIGFueSBkaXJlY3Rpb24uIEkgYW0gdGhlIG1vc3QgYWxvbmUgYW55IGh1bWFuIGJlaW5nIGhhcyBldmVyIGJlZW4uJw=="
     },
     {
-      "id": "shadow_chemical_smell",
-      "plantedIn": "corridor_c",
-      "plantText": "The acrid smell of hydrazine-based coolant permeates the Deck C corridor. Coolant junctions do not open accidentally -- they are sealed with torque-rated bolts. This leak was deliberate, and old enough that the smell has saturated the recycled air.",
-      "payoffIn": "act3_crisis",
-      "payoffText": "Chen opened the coolant junction to access the thermal management conduit running behind it -- a conduit that shared a cable tray with the power distribution circuits. Her engineering cross-training told her that rerouting the maneuvering thruster controls to manual override (necessary for the course alteration to Tau Ceti) required physically splicing into the thruster command bus, and the only access point was through the coolant junction. The leaked coolant was collateral damage from Chen's desperate engineering work, not sabotage. She sealed the junction afterward but could not recover the spilled fluid."
+      "aWQ=": "c2hhZG93X2NoZW1pY2FsX3NtZWxs",
+      "cGxhbnRlZElu": "Y29ycmlkb3JfYw==",
+      "cGxhbnRUZXh0": "VGhlIGFjcmlkIHNtZWxsIG9mIGh5ZHJhemluZS1iYXNlZCBjb29sYW50IHBlcm1lYXRlcyB0aGUgRGVjayBDIGNvcnJpZG9yLiBDb29sYW50IGp1bmN0aW9ucyBkbyBub3Qgb3BlbiBhY2NpZGVudGFsbHkgLS0gdGhleSBhcmUgc2VhbGVkIHdpdGggdG9ycXVlLXJhdGVkIGJvbHRzLiBUaGlzIGxlYWsgd2FzIGRlbGliZXJhdGUsIGFuZCBvbGQgZW5vdWdoIHRoYXQgdGhlIHNtZWxsIGhhcyBzYXR1cmF0ZWQgdGhlIHJlY3ljbGVkIGFpci4=",
+      "cGF5b2ZmSW4=": "YWN0M19jcmlzaXM=",
+      "cGF5b2ZmVGV4dA==": "Q2hlbiBvcGVuZWQgdGhlIGNvb2xhbnQganVuY3Rpb24gdG8gYWNjZXNzIHRoZSB0aGVybWFsIG1hbmFnZW1lbnQgY29uZHVpdCBydW5uaW5nIGJlaGluZCBpdCAtLSBhIGNvbmR1aXQgdGhhdCBzaGFyZWQgYSBjYWJsZSB0cmF5IHdpdGggdGhlIHBvd2VyIGRpc3RyaWJ1dGlvbiBjaXJjdWl0cy4gSGVyIGVuZ2luZWVyaW5nIGNyb3NzLXRyYWluaW5nIHRvbGQgaGVyIHRoYXQgcmVyb3V0aW5nIHRoZSBtYW5ldXZlcmluZyB0aHJ1c3RlciBjb250cm9scyB0byBtYW51YWwgb3ZlcnJpZGUgKG5lY2Vzc2FyeSBmb3IgdGhlIGNvdXJzZSBhbHRlcmF0aW9uIHRvIFRhdSBDZXRpKSByZXF1aXJlZCBwaHlzaWNhbGx5IHNwbGljaW5nIGludG8gdGhlIHRocnVzdGVyIGNvbW1hbmQgYnVzLCBhbmQgdGhlIG9ubHkgYWNjZXNzIHBvaW50IHdhcyB0aHJvdWdoIHRoZSBjb29sYW50IGp1bmN0aW9uLiBUaGUgbGVha2VkIGNvb2xhbnQgd2FzIGNvbGxhdGVyYWwgZGFtYWdlIGZyb20gQ2hlbidzIGRlc3BlcmF0ZSBlbmdpbmVlcmluZyB3b3JrLCBub3Qgc2Fib3RhZ2UuIFNoZSBzZWFsZWQgdGhlIGp1bmN0aW9uIGFmdGVyd2FyZCBidXQgY291bGQgbm90IHJlY292ZXIgdGhlIHNwaWxsZWQgZmx1aWQu"
     },
     {
-      "id": "shadow_maintenance_logs",
-      "plantedIn": "any_terminal",
-      "plantText": "Maintenance logs show manual entries under the credentials of Chen, W. -- Navigation Officer Chen, Wei-Lin -- beginning at Mission Year 17.4. The entries escalate from routine diagnostics to unauthorized system access: navigation computer, long-range sensor arrays, stellar cartography database, propulsion manuals. At Mission Year 17.9, a burst of activity across communications, power distribution, maneuvering systems, and EVA airlock logs. Then silence. Chen's credentials were never used again.",
-      "payoffIn": "act4_resolution",
-      "payoffText": "The maintenance log timeline maps precisely to Chen's personal log. The escalation from routine to unauthorized access mirrors the escalation of Chen's discovery: from noticing a gravitational wobble in the long-range sensor data, to identifying the brown dwarf, to modeling its orbit and projecting 82 Eridani b's fate, to finding Tau Ceti e as an alternative. The burst of activity at Year 17.9 was the execution of her plan -- course alteration, comms shutdown, custom antenna construction during EVA. The silence afterward was Chen, W. returning to cryo in spare pod B-221, alone and exhausted and hoping that the next person to wake would read her analysis before undoing her work."
+      "aWQ=": "c2hhZG93X21haW50ZW5hbmNlX2xvZ3M=",
+      "cGxhbnRlZElu": "YW55X3Rlcm1pbmFs",
+      "cGxhbnRUZXh0": "TWFpbnRlbmFuY2UgbG9ncyBzaG93IG1hbnVhbCBlbnRyaWVzIHVuZGVyIHRoZSBjcmVkZW50aWFscyBvZiBDaGVuLCBXLiAtLSBOYXZpZ2F0aW9uIE9mZmljZXIgQ2hlbiwgV2VpLUxpbiAtLSBiZWdpbm5pbmcgYXQgTWlzc2lvbiBZZWFyIDE3LjQuIFRoZSBlbnRyaWVzIGVzY2FsYXRlIGZyb20gcm91dGluZSBkaWFnbm9zdGljcyB0byB1bmF1dGhvcml6ZWQgc3lzdGVtIGFjY2VzczogbmF2aWdhdGlvbiBjb21wdXRlciwgbG9uZy1yYW5nZSBzZW5zb3IgYXJyYXlzLCBzdGVsbGFyIGNhcnRvZ3JhcGh5IGRhdGFiYXNlLCBwcm9wdWxzaW9uIG1hbnVhbHMuIEF0IE1pc3Npb24gWWVhciAxNy45LCBhIGJ1cnN0IG9mIGFjdGl2aXR5IGFjcm9zcyBjb21tdW5pY2F0aW9ucywgcG93ZXIgZGlzdHJpYnV0aW9uLCBtYW5ldXZlcmluZyBzeXN0ZW1zLCBhbmQgRVZBIGFpcmxvY2sgbG9ncy4gVGhlbiBzaWxlbmNlLiBDaGVuJ3MgY3JlZGVudGlhbHMgd2VyZSBuZXZlciB1c2VkIGFnYWluLg==",
+      "cGF5b2ZmSW4=": "YWN0NF9yZXNvbHV0aW9u",
+      "cGF5b2ZmVGV4dA==": "VGhlIG1haW50ZW5hbmNlIGxvZyB0aW1lbGluZSBtYXBzIHByZWNpc2VseSB0byBDaGVuJ3MgcGVyc29uYWwgbG9nLiBUaGUgZXNjYWxhdGlvbiBmcm9tIHJvdXRpbmUgdG8gdW5hdXRob3JpemVkIGFjY2VzcyBtaXJyb3JzIHRoZSBlc2NhbGF0aW9uIG9mIENoZW4ncyBkaXNjb3Zlcnk6IGZyb20gbm90aWNpbmcgYSBncmF2aXRhdGlvbmFsIHdvYmJsZSBpbiB0aGUgbG9uZy1yYW5nZSBzZW5zb3IgZGF0YSwgdG8gaWRlbnRpZnlpbmcgdGhlIGJyb3duIGR3YXJmLCB0byBtb2RlbGluZyBpdHMgb3JiaXQgYW5kIHByb2plY3RpbmcgODIgRXJpZGFuaSBiJ3MgZmF0ZSwgdG8gZmluZGluZyBUYXUgQ2V0aSBlIGFzIGFuIGFsdGVybmF0aXZlLiBUaGUgYnVyc3Qgb2YgYWN0aXZpdHkgYXQgWWVhciAxNy45IHdhcyB0aGUgZXhlY3V0aW9uIG9mIGhlciBwbGFuIC0tIGNvdXJzZSBhbHRlcmF0aW9uLCBjb21tcyBzaHV0ZG93biwgY3VzdG9tIGFudGVubmEgY29uc3RydWN0aW9uIGR1cmluZyBFVkEuIFRoZSBzaWxlbmNlIGFmdGVyd2FyZCB3YXMgQ2hlbiwgVy4gcmV0dXJuaW5nIHRvIGNyeW8gaW4gc3BhcmUgcG9kIEItMjIxLCBhbG9uZSBhbmQgZXhoYXVzdGVkIGFuZCBob3BpbmcgdGhhdCB0aGUgbmV4dCBwZXJzb24gdG8gd2FrZSB3b3VsZCByZWFkIGhlciBhbmFseXNpcyBiZWZvcmUgdW5kb2luZyBoZXIgd29yay4="
     },
     {
-      "id": "shadow_star_chart",
-      "plantedIn": "lab",
-      "plantText": "Among the routine stellar cartography printouts in the science lab, one chart has been pulled from its storage slot and left on the analysis table. It shows two systems side by side: 82 Eridani with an additional body sketched in red ink -- an elliptical orbit far beyond the known planets, labeled 'BD ~42Mj, P~2100yr' -- and the Tau Ceti system, with a planet in the habitable zone circled and annotated: VIABLE. Someone has drawn an arrow from one system to the other, a trajectory of desperation.",
-      "payoffIn": "act5_revelation",
-      "payoffText": "The dual chart was Chen's evidence and her solution, side by side. The brown dwarf orbiting 82 Eridani, invisible during the original survey at apoapsis, now approaching periapsis with enough gravitational force to push the colony world out of the habitable zone. And Tau Ceti e -- the backup, the alternative, the world that the ship's long-range sensors confirmed as a genuine Earth-analog with a nitrogen-oxygen atmosphere, liquid water, and a surface gravity of 1.05g. Chen's course alteration was aimed at this world. The word 'VIABLE' was not a scientific assessment. It was a prayer."
+      "aWQ=": "c2hhZG93X3N0YXJfY2hhcnQ=",
+      "cGxhbnRlZElu": "bGFi",
+      "cGxhbnRUZXh0": "QW1vbmcgdGhlIHJvdXRpbmUgc3RlbGxhciBjYXJ0b2dyYXBoeSBwcmludG91dHMgaW4gdGhlIHNjaWVuY2UgbGFiLCBvbmUgY2hhcnQgaGFzIGJlZW4gcHVsbGVkIGZyb20gaXRzIHN0b3JhZ2Ugc2xvdCBhbmQgbGVmdCBvbiB0aGUgYW5hbHlzaXMgdGFibGUuIEl0IHNob3dzIHR3byBzeXN0ZW1zIHNpZGUgYnkgc2lkZTogODIgRXJpZGFuaSB3aXRoIGFuIGFkZGl0aW9uYWwgYm9keSBza2V0Y2hlZCBpbiByZWQgaW5rIC0tIGFuIGVsbGlwdGljYWwgb3JiaXQgZmFyIGJleW9uZCB0aGUga25vd24gcGxhbmV0cywgbGFiZWxlZCAnQkQgfjQyTWosIFB+MjEwMHlyJyAtLSBhbmQgdGhlIFRhdSBDZXRpIHN5c3RlbSwgd2l0aCBhIHBsYW5ldCBpbiB0aGUgaGFiaXRhYmxlIHpvbmUgY2lyY2xlZCBhbmQgYW5ub3RhdGVkOiBWSUFCTEUuIFNvbWVvbmUgaGFzIGRyYXduIGFuIGFycm93IGZyb20gb25lIHN5c3RlbSB0byB0aGUgb3RoZXIsIGEgdHJhamVjdG9yeSBvZiBkZXNwZXJhdGlvbi4=",
+      "cGF5b2ZmSW4=": "YWN0NV9yZXZlbGF0aW9u",
+      "cGF5b2ZmVGV4dA==": "VGhlIGR1YWwgY2hhcnQgd2FzIENoZW4ncyBldmlkZW5jZSBhbmQgaGVyIHNvbHV0aW9uLCBzaWRlIGJ5IHNpZGUuIFRoZSBicm93biBkd2FyZiBvcmJpdGluZyA4MiBFcmlkYW5pLCBpbnZpc2libGUgZHVyaW5nIHRoZSBvcmlnaW5hbCBzdXJ2ZXkgYXQgYXBvYXBzaXMsIG5vdyBhcHByb2FjaGluZyBwZXJpYXBzaXMgd2l0aCBlbm91Z2ggZ3Jhdml0YXRpb25hbCBmb3JjZSB0byBwdXNoIHRoZSBjb2xvbnkgd29ybGQgb3V0IG9mIHRoZSBoYWJpdGFibGUgem9uZS4gQW5kIFRhdSBDZXRpIGUgLS0gdGhlIGJhY2t1cCwgdGhlIGFsdGVybmF0aXZlLCB0aGUgd29ybGQgdGhhdCB0aGUgc2hpcCdzIGxvbmctcmFuZ2Ugc2Vuc29ycyBjb25maXJtZWQgYXMgYSBnZW51aW5lIEVhcnRoLWFuYWxvZyB3aXRoIGEgbml0cm9nZW4tb3h5Z2VuIGF0bW9zcGhlcmUsIGxpcXVpZCB3YXRlciwgYW5kIGEgc3VyZmFjZSBncmF2aXR5IG9mIDEuMDVnLiBDaGVuJ3MgY291cnNlIGFsdGVyYXRpb24gd2FzIGFpbWVkIGF0IHRoaXMgd29ybGQuIFRoZSB3b3JkICdWSUFCTEUnIHdhcyBub3QgYSBzY2llbnRpZmljIGFzc2Vzc21lbnQuIEl0IHdhcyBhIHByYXllci4="
     }
   ],
-  "endings": [
+  "ZW5kaW5ncw==": [
     {
-      "id": "ending_wake_chen",
-      "conditions": {
-        "choice": "wake_chen",
-        "signal_sent": false
+      "aWQ=": "ZW5kaW5nX3dha2VfY2hlbg==",
+      "Y29uZGl0aW9ucw==": {
+        "Y2hvaWNl": "d2FrZV9jaGVu",
+        "c2lnbmFsX3NlbnQ=": false
       },
-      "type": "hopeful",
-      "text": "The cryo pod hisses and begins its revival cycle. Twenty-three minutes. You wait, counting seconds, rehearsing the impossible speech you will have to give: I found your work. I read your logs. I understand the brown dwarf. And I undid your course change. I put us back on a heading for 82 Eridani because I did not know, because I could not know, because the ship was breaking and I fixed it the only way I understood. The frost clears from the pod's lid, and through the glass you see Chen's eyes begin to move beneath closed lids. In twenty-three minutes, you will no longer be alone. In twenty-three minutes, there will be two minds to grapple with a truth that one mind could not bear. The ship flies on. 82 Eridani brightens, imperceptibly, in the forward sensors. Twenty-two years remain. Two people, awake in the void, carrying a secret that may save or doom four thousand sleeping lives. It is not enough. But it is more than you had an hour ago, and in the mathematics of survival, more is everything.\n\nThen the JANUS data finishes downloading. Buried in the deep-field telemetry, flagged PRIORITY ANOMALOUS, is a detection report. An object orbiting the brown dwarf at its L2 Lagrange point. Mass approximately 10^12 kilograms. Temperature 3 Kelvin above cosmic microwave background ambient. Artificial. Estimated age: approximately 400 million years. Still generating energy. And 11 hours ago, the object sent a targeted signal burst aimed at the ISV Kepler's Promise. The comms officer's annotation reads simply: 'It pinged you.'\n\nEND OF PART ONE"
+      "dHlwZQ==": "aG9wZWZ1bA==",
+      "dGV4dA==": "VGhlIGNyeW8gcG9kIGhpc3NlcyBhbmQgYmVnaW5zIGl0cyByZXZpdmFsIGN5Y2xlLiBUd2VudHktdGhyZWUgbWludXRlcy4gWW91IHdhaXQsIGNvdW50aW5nIHNlY29uZHMsIHJlaGVhcnNpbmcgdGhlIGltcG9zc2libGUgc3BlZWNoIHlvdSB3aWxsIGhhdmUgdG8gZ2l2ZTogSSBmb3VuZCB5b3VyIHdvcmsuIEkgcmVhZCB5b3VyIGxvZ3MuIEkgdW5kZXJzdGFuZCB0aGUgYnJvd24gZHdhcmYuIEFuZCBJIHVuZGlkIHlvdXIgY291cnNlIGNoYW5nZS4gSSBwdXQgdXMgYmFjayBvbiBhIGhlYWRpbmcgZm9yIDgyIEVyaWRhbmkgYmVjYXVzZSBJIGRpZCBub3Qga25vdywgYmVjYXVzZSBJIGNvdWxkIG5vdCBrbm93LCBiZWNhdXNlIHRoZSBzaGlwIHdhcyBicmVha2luZyBhbmQgSSBmaXhlZCBpdCB0aGUgb25seSB3YXkgSSB1bmRlcnN0b29kLiBUaGUgZnJvc3QgY2xlYXJzIGZyb20gdGhlIHBvZCdzIGxpZCwgYW5kIHRocm91Z2ggdGhlIGdsYXNzIHlvdSBzZWUgQ2hlbidzIGV5ZXMgYmVnaW4gdG8gbW92ZSBiZW5lYXRoIGNsb3NlZCBsaWRzLiBJbiB0d2VudHktdGhyZWUgbWludXRlcywgeW91IHdpbGwgbm8gbG9uZ2VyIGJlIGFsb25lLiBJbiB0d2VudHktdGhyZWUgbWludXRlcywgdGhlcmUgd2lsbCBiZSB0d28gbWluZHMgdG8gZ3JhcHBsZSB3aXRoIGEgdHJ1dGggdGhhdCBvbmUgbWluZCBjb3VsZCBub3QgYmVhci4gVGhlIHNoaXAgZmxpZXMgb24uIDgyIEVyaWRhbmkgYnJpZ2h0ZW5zLCBpbXBlcmNlcHRpYmx5LCBpbiB0aGUgZm9yd2FyZCBzZW5zb3JzLiBUd2VudHktdHdvIHllYXJzIHJlbWFpbi4gVHdvIHBlb3BsZSwgYXdha2UgaW4gdGhlIHZvaWQsIGNhcnJ5aW5nIGEgc2VjcmV0IHRoYXQgbWF5IHNhdmUgb3IgZG9vbSBmb3VyIHRob3VzYW5kIHNsZWVwaW5nIGxpdmVzLiBJdCBpcyBub3QgZW5vdWdoLiBCdXQgaXQgaXMgbW9yZSB0aGFuIHlvdSBoYWQgYW4gaG91ciBhZ28sIGFuZCBpbiB0aGUgbWF0aGVtYXRpY3Mgb2Ygc3Vydml2YWwsIG1vcmUgaXMgZXZlcnl0aGluZy4KClRoZW4gdGhlIEpBTlVTIGRhdGEgZmluaXNoZXMgZG93bmxvYWRpbmcuIEJ1cmllZCBpbiB0aGUgZGVlcC1maWVsZCB0ZWxlbWV0cnksIGZsYWdnZWQgUFJJT1JJVFkgQU5PTUFMT1VTLCBpcyBhIGRldGVjdGlvbiByZXBvcnQuIEFuIG9iamVjdCBvcmJpdGluZyB0aGUgYnJvd24gZHdhcmYgYXQgaXRzIEwyIExhZ3JhbmdlIHBvaW50LiBNYXNzIGFwcHJveGltYXRlbHkgMTBeMTIga2lsb2dyYW1zLiBUZW1wZXJhdHVyZSAzIEtlbHZpbiBhYm92ZSBjb3NtaWMgbWljcm93YXZlIGJhY2tncm91bmQgYW1iaWVudC4gQXJ0aWZpY2lhbC4gRXN0aW1hdGVkIGFnZTogYXBwcm94aW1hdGVseSA0MDAgbWlsbGlvbiB5ZWFycy4gU3RpbGwgZ2VuZXJhdGluZyBlbmVyZ3kuIEFuZCAxMSBob3VycyBhZ28sIHRoZSBvYmplY3Qgc2VudCBhIHRhcmdldGVkIHNpZ25hbCBidXJzdCBhaW1lZCBhdCB0aGUgSVNWIEtlcGxlcidzIFByb21pc2UuIFRoZSBjb21tcyBvZmZpY2VyJ3MgYW5ub3RhdGlvbiByZWFkcyBzaW1wbHk6ICdJdCBwaW5nZWQgeW91LicKCkVORCBPRiBQQVJUIE9ORQ=="
     },
     {
-      "id": "ending_send_signal",
-      "conditions": {
-        "choice": "send_signal",
-        "chen_woken": false
+      "aWQ=": "ZW5kaW5nX3NlbmRfc2lnbmFs",
+      "Y29uZGl0aW9ucw==": {
+        "Y2hvaWNl": "c2VuZF9zaWduYWw=",
+        "Y2hlbl93b2tlbg==": false
       },
-      "type": "uncertain",
-      "text": "The transmitter engages with a carrier tone that you feel more than hear -- a deep, resonant hum that propagates through the comms room's deck plating and into your bones. The antenna swivels to its calculated bearing, and the encoded burst leaps from the dish at the speed of light, carrying Chen's brown dwarf data, your corroboration, and a plea for verification into the interstellar medium. In 7.7 years, it will reach the relay station. In another 7.7 years, a response -- if one comes -- will reach the ship. 15.4 years. You will be older. The ship will be closer. The truth will be known, or it will not. You power down the transmitter and stand in the sudden silence of the comms room, alone with the knowledge that you have set something in motion that cannot be recalled. A signal, traveling at the speed of light, carrying a question that the universe may or may not choose to answer. You return to the cryo bay. You climb into your pod. You close the lid and feel the cold begin to claim you. The last thing you see before the cryoprotectant fog takes your vision is the status display: ALL SYSTEMS NOMINAL. COURSE: 82 ERIDANI. ARRIVAL: 22.7 YEARS. ETA SIGNAL RESPONSE: 15.4 YEARS.\n\nBut the response does not take 15.4 years. It takes 11 hours. You are already under when the JANUS data arrives, so the ship logs it automatically, flagged PRIORITY ANOMALOUS. Buried in the deep-field telemetry is a detection report. An object orbiting the brown dwarf at its L2 Lagrange point. Mass approximately 10^12 kilograms. Temperature 3 Kelvin above cosmic microwave background ambient. Artificial. Estimated age: approximately 400 million years. Still generating energy. And 11 hours ago, the object sent a targeted signal burst aimed at the ISV Kepler's Promise. The annotation reads: 'It pinged you.' The data waits in the ship's buffer, patient and terrible, for the next person who wakes to read it.\n\nEND OF PART ONE"
+      "dHlwZQ==": "dW5jZXJ0YWlu",
+      "dGV4dA==": "VGhlIHRyYW5zbWl0dGVyIGVuZ2FnZXMgd2l0aCBhIGNhcnJpZXIgdG9uZSB0aGF0IHlvdSBmZWVsIG1vcmUgdGhhbiBoZWFyIC0tIGEgZGVlcCwgcmVzb25hbnQgaHVtIHRoYXQgcHJvcGFnYXRlcyB0aHJvdWdoIHRoZSBjb21tcyByb29tJ3MgZGVjayBwbGF0aW5nIGFuZCBpbnRvIHlvdXIgYm9uZXMuIFRoZSBhbnRlbm5hIHN3aXZlbHMgdG8gaXRzIGNhbGN1bGF0ZWQgYmVhcmluZywgYW5kIHRoZSBlbmNvZGVkIGJ1cnN0IGxlYXBzIGZyb20gdGhlIGRpc2ggYXQgdGhlIHNwZWVkIG9mIGxpZ2h0LCBjYXJyeWluZyBDaGVuJ3MgYnJvd24gZHdhcmYgZGF0YSwgeW91ciBjb3Jyb2JvcmF0aW9uLCBhbmQgYSBwbGVhIGZvciB2ZXJpZmljYXRpb24gaW50byB0aGUgaW50ZXJzdGVsbGFyIG1lZGl1bS4gSW4gNy43IHllYXJzLCBpdCB3aWxsIHJlYWNoIHRoZSByZWxheSBzdGF0aW9uLiBJbiBhbm90aGVyIDcuNyB5ZWFycywgYSByZXNwb25zZSAtLSBpZiBvbmUgY29tZXMgLS0gd2lsbCByZWFjaCB0aGUgc2hpcC4gMTUuNCB5ZWFycy4gWW91IHdpbGwgYmUgb2xkZXIuIFRoZSBzaGlwIHdpbGwgYmUgY2xvc2VyLiBUaGUgdHJ1dGggd2lsbCBiZSBrbm93biwgb3IgaXQgd2lsbCBub3QuIFlvdSBwb3dlciBkb3duIHRoZSB0cmFuc21pdHRlciBhbmQgc3RhbmQgaW4gdGhlIHN1ZGRlbiBzaWxlbmNlIG9mIHRoZSBjb21tcyByb29tLCBhbG9uZSB3aXRoIHRoZSBrbm93bGVkZ2UgdGhhdCB5b3UgaGF2ZSBzZXQgc29tZXRoaW5nIGluIG1vdGlvbiB0aGF0IGNhbm5vdCBiZSByZWNhbGxlZC4gQSBzaWduYWwsIHRyYXZlbGluZyBhdCB0aGUgc3BlZWQgb2YgbGlnaHQsIGNhcnJ5aW5nIGEgcXVlc3Rpb24gdGhhdCB0aGUgdW5pdmVyc2UgbWF5IG9yIG1heSBub3QgY2hvb3NlIHRvIGFuc3dlci4gWW91IHJldHVybiB0byB0aGUgY3J5byBiYXkuIFlvdSBjbGltYiBpbnRvIHlvdXIgcG9kLiBZb3UgY2xvc2UgdGhlIGxpZCBhbmQgZmVlbCB0aGUgY29sZCBiZWdpbiB0byBjbGFpbSB5b3UuIFRoZSBsYXN0IHRoaW5nIHlvdSBzZWUgYmVmb3JlIHRoZSBjcnlvcHJvdGVjdGFudCBmb2cgdGFrZXMgeW91ciB2aXNpb24gaXMgdGhlIHN0YXR1cyBkaXNwbGF5OiBBTEwgU1lTVEVNUyBOT01JTkFMLiBDT1VSU0U6IDgyIEVSSURBTkkuIEFSUklWQUw6IDIyLjcgWUVBUlMuIEVUQSBTSUdOQUwgUkVTUE9OU0U6IDE1LjQgWUVBUlMuCgpCdXQgdGhlIHJlc3BvbnNlIGRvZXMgbm90IHRha2UgMTUuNCB5ZWFycy4gSXQgdGFrZXMgMTEgaG91cnMuIFlvdSBhcmUgYWxyZWFkeSB1bmRlciB3aGVuIHRoZSBKQU5VUyBkYXRhIGFycml2ZXMsIHNvIHRoZSBzaGlwIGxvZ3MgaXQgYXV0b21hdGljYWxseSwgZmxhZ2dlZCBQUklPUklUWSBBTk9NQUxPVVMuIEJ1cmllZCBpbiB0aGUgZGVlcC1maWVsZCB0ZWxlbWV0cnkgaXMgYSBkZXRlY3Rpb24gcmVwb3J0LiBBbiBvYmplY3Qgb3JiaXRpbmcgdGhlIGJyb3duIGR3YXJmIGF0IGl0cyBMMiBMYWdyYW5nZSBwb2ludC4gTWFzcyBhcHByb3hpbWF0ZWx5IDEwXjEyIGtpbG9ncmFtcy4gVGVtcGVyYXR1cmUgMyBLZWx2aW4gYWJvdmUgY29zbWljIG1pY3Jvd2F2ZSBiYWNrZ3JvdW5kIGFtYmllbnQuIEFydGlmaWNpYWwuIEVzdGltYXRlZCBhZ2U6IGFwcHJveGltYXRlbHkgNDAwIG1pbGxpb24geWVhcnMuIFN0aWxsIGdlbmVyYXRpbmcgZW5lcmd5LiBBbmQgMTEgaG91cnMgYWdvLCB0aGUgb2JqZWN0IHNlbnQgYSB0YXJnZXRlZCBzaWduYWwgYnVyc3QgYWltZWQgYXQgdGhlIElTViBLZXBsZXIncyBQcm9taXNlLiBUaGUgYW5ub3RhdGlvbiByZWFkczogJ0l0IHBpbmdlZCB5b3UuJyBUaGUgZGF0YSB3YWl0cyBpbiB0aGUgc2hpcCdzIGJ1ZmZlciwgcGF0aWVudCBhbmQgdGVycmlibGUsIGZvciB0aGUgbmV4dCBwZXJzb24gd2hvIHdha2VzIHRvIHJlYWQgaXQuCgpFTkQgT0YgUEFSVCBPTkU="
     },
     {
-      "id": "ending_wake_and_signal",
-      "conditions": {
-        "choice": "both",
-        "chen_woken": true,
-        "signal_sent": true
+      "aWQ=": "ZW5kaW5nX3dha2VfYW5kX3NpZ25hbA==",
+      "Y29uZGl0aW9ucw==": {
+        "Y2hvaWNl": "Ym90aA==",
+        "Y2hlbl93b2tlbg==": true,
+        "c2lnbmFsX3NlbnQ=": true
       },
-      "type": "good",
-      "text": "You wake Chen, and you send the signal, and you do both with the ferocity of someone who has decided that half-measures are a luxury for people who are not hurtling through the void at twelve percent of light speed. Chen wakes screaming -- the same brutal cryo-revival that you endured -- and you are there with the stimulant injector and the dosage already calculated, and the first thing she sees upon returning to consciousness is another human face. The tears come before the words, for both of you. Later, in the captain's quarters, surrounded by brown dwarf orbital models and Tau Ceti habitability data and the accumulated evidence of one person's desperate, solitary campaign to save a colony, you talk. You argue. You rage and weep and calculate and hope. The signal is already traveling -- 7.7 years to the relay, 7.7 years back. The course is locked -- 82 Eridani, fuel committed, no going back. But there are twenty-two years of transit remaining, and two waking minds, and a ship full of instruments that will grow more precise as the destination draws nearer. If the brown dwarf's perturbation is as severe as Chen's models predict, the ship's sensors will confirm it long before arrival. If the planet will endure, they will confirm that too. And the signal -- the signal changes everything. The silence is broken. The secret is loose. Whatever happens at 82 Eridani, it will not happen in ignorance.\n\nThen JANUS responds. Not in 15.4 years. In 11 hours. The data downloads automatically, and Chen is the one who sees it first. Her face goes white. She turns the screen toward you without speaking.\n\nAn object orbiting the brown dwarf at its L2 Lagrange point. Mass approximately 10^12 kilograms. Temperature 3 Kelvin above cosmic microwave background ambient. Artificial. Estimated age: approximately 400 million years. Still generating energy.\n\nAnd 11 hours ago, the object sent a targeted signal burst aimed at the ISV Kepler's Promise.\n\nChen's voice, barely a whisper: 'It pinged us.'\n\nTwo people, awake in the cathedral of a sleeping ship, stare at each other across four hundred million years of silence that has just ended. The void surrounds them. The stars burn. And for the first time since the ISV Kepler's Promise left Sol, the future is not a destination. It is a question that something else is also asking.\n\nEND OF PART ONE"
+      "dHlwZQ==": "Z29vZA==",
+      "dGV4dA==": "WW91IHdha2UgQ2hlbiwgYW5kIHlvdSBzZW5kIHRoZSBzaWduYWwsIGFuZCB5b3UgZG8gYm90aCB3aXRoIHRoZSBmZXJvY2l0eSBvZiBzb21lb25lIHdobyBoYXMgZGVjaWRlZCB0aGF0IGhhbGYtbWVhc3VyZXMgYXJlIGEgbHV4dXJ5IGZvciBwZW9wbGUgd2hvIGFyZSBub3QgaHVydGxpbmcgdGhyb3VnaCB0aGUgdm9pZCBhdCB0d2VsdmUgcGVyY2VudCBvZiBsaWdodCBzcGVlZC4gQ2hlbiB3YWtlcyBzY3JlYW1pbmcgLS0gdGhlIHNhbWUgYnJ1dGFsIGNyeW8tcmV2aXZhbCB0aGF0IHlvdSBlbmR1cmVkIC0tIGFuZCB5b3UgYXJlIHRoZXJlIHdpdGggdGhlIHN0aW11bGFudCBpbmplY3RvciBhbmQgdGhlIGRvc2FnZSBhbHJlYWR5IGNhbGN1bGF0ZWQsIGFuZCB0aGUgZmlyc3QgdGhpbmcgc2hlIHNlZXMgdXBvbiByZXR1cm5pbmcgdG8gY29uc2Npb3VzbmVzcyBpcyBhbm90aGVyIGh1bWFuIGZhY2UuIFRoZSB0ZWFycyBjb21lIGJlZm9yZSB0aGUgd29yZHMsIGZvciBib3RoIG9mIHlvdS4gTGF0ZXIsIGluIHRoZSBjYXB0YWluJ3MgcXVhcnRlcnMsIHN1cnJvdW5kZWQgYnkgYnJvd24gZHdhcmYgb3JiaXRhbCBtb2RlbHMgYW5kIFRhdSBDZXRpIGhhYml0YWJpbGl0eSBkYXRhIGFuZCB0aGUgYWNjdW11bGF0ZWQgZXZpZGVuY2Ugb2Ygb25lIHBlcnNvbidzIGRlc3BlcmF0ZSwgc29saXRhcnkgY2FtcGFpZ24gdG8gc2F2ZSBhIGNvbG9ueSwgeW91IHRhbGsuIFlvdSBhcmd1ZS4gWW91IHJhZ2UgYW5kIHdlZXAgYW5kIGNhbGN1bGF0ZSBhbmQgaG9wZS4gVGhlIHNpZ25hbCBpcyBhbHJlYWR5IHRyYXZlbGluZyAtLSA3LjcgeWVhcnMgdG8gdGhlIHJlbGF5LCA3LjcgeWVhcnMgYmFjay4gVGhlIGNvdXJzZSBpcyBsb2NrZWQgLS0gODIgRXJpZGFuaSwgZnVlbCBjb21taXR0ZWQsIG5vIGdvaW5nIGJhY2suIEJ1dCB0aGVyZSBhcmUgdHdlbnR5LXR3byB5ZWFycyBvZiB0cmFuc2l0IHJlbWFpbmluZywgYW5kIHR3byB3YWtpbmcgbWluZHMsIGFuZCBhIHNoaXAgZnVsbCBvZiBpbnN0cnVtZW50cyB0aGF0IHdpbGwgZ3JvdyBtb3JlIHByZWNpc2UgYXMgdGhlIGRlc3RpbmF0aW9uIGRyYXdzIG5lYXJlci4gSWYgdGhlIGJyb3duIGR3YXJmJ3MgcGVydHVyYmF0aW9uIGlzIGFzIHNldmVyZSBhcyBDaGVuJ3MgbW9kZWxzIHByZWRpY3QsIHRoZSBzaGlwJ3Mgc2Vuc29ycyB3aWxsIGNvbmZpcm0gaXQgbG9uZyBiZWZvcmUgYXJyaXZhbC4gSWYgdGhlIHBsYW5ldCB3aWxsIGVuZHVyZSwgdGhleSB3aWxsIGNvbmZpcm0gdGhhdCB0b28uIEFuZCB0aGUgc2lnbmFsIC0tIHRoZSBzaWduYWwgY2hhbmdlcyBldmVyeXRoaW5nLiBUaGUgc2lsZW5jZSBpcyBicm9rZW4uIFRoZSBzZWNyZXQgaXMgbG9vc2UuIFdoYXRldmVyIGhhcHBlbnMgYXQgODIgRXJpZGFuaSwgaXQgd2lsbCBub3QgaGFwcGVuIGluIGlnbm9yYW5jZS4KClRoZW4gSkFOVVMgcmVzcG9uZHMuIE5vdCBpbiAxNS40IHllYXJzLiBJbiAxMSBob3Vycy4gVGhlIGRhdGEgZG93bmxvYWRzIGF1dG9tYXRpY2FsbHksIGFuZCBDaGVuIGlzIHRoZSBvbmUgd2hvIHNlZXMgaXQgZmlyc3QuIEhlciBmYWNlIGdvZXMgd2hpdGUuIFNoZSB0dXJucyB0aGUgc2NyZWVuIHRvd2FyZCB5b3Ugd2l0aG91dCBzcGVha2luZy4KCkFuIG9iamVjdCBvcmJpdGluZyB0aGUgYnJvd24gZHdhcmYgYXQgaXRzIEwyIExhZ3JhbmdlIHBvaW50LiBNYXNzIGFwcHJveGltYXRlbHkgMTBeMTIga2lsb2dyYW1zLiBUZW1wZXJhdHVyZSAzIEtlbHZpbiBhYm92ZSBjb3NtaWMgbWljcm93YXZlIGJhY2tncm91bmQgYW1iaWVudC4gQXJ0aWZpY2lhbC4gRXN0aW1hdGVkIGFnZTogYXBwcm94aW1hdGVseSA0MDAgbWlsbGlvbiB5ZWFycy4gU3RpbGwgZ2VuZXJhdGluZyBlbmVyZ3kuCgpBbmQgMTEgaG91cnMgYWdvLCB0aGUgb2JqZWN0IHNlbnQgYSB0YXJnZXRlZCBzaWduYWwgYnVyc3QgYWltZWQgYXQgdGhlIElTViBLZXBsZXIncyBQcm9taXNlLgoKQ2hlbidzIHZvaWNlLCBiYXJlbHkgYSB3aGlzcGVyOiAnSXQgcGluZ2VkIHVzLicKClR3byBwZW9wbGUsIGF3YWtlIGluIHRoZSBjYXRoZWRyYWwgb2YgYSBzbGVlcGluZyBzaGlwLCBzdGFyZSBhdCBlYWNoIG90aGVyIGFjcm9zcyBmb3VyIGh1bmRyZWQgbWlsbGlvbiB5ZWFycyBvZiBzaWxlbmNlIHRoYXQgaGFzIGp1c3QgZW5kZWQuIFRoZSB2b2lkIHN1cnJvdW5kcyB0aGVtLiBUaGUgc3RhcnMgYnVybi4gQW5kIGZvciB0aGUgZmlyc3QgdGltZSBzaW5jZSB0aGUgSVNWIEtlcGxlcidzIFByb21pc2UgbGVmdCBTb2wsIHRoZSBmdXR1cmUgaXMgbm90IGEgZGVzdGluYXRpb24uIEl0IGlzIGEgcXVlc3Rpb24gdGhhdCBzb21ldGhpbmcgZWxzZSBpcyBhbHNvIGFza2luZy4KCkVORCBPRiBQQVJUIE9ORQ=="
     },
     {
-      "id": "ending_do_nothing",
-      "conditions": {
-        "choice": "neither",
-        "chen_woken": false,
-        "signal_sent": false
+      "aWQ=": "ZW5kaW5nX2RvX25vdGhpbmc=",
+      "Y29uZGl0aW9ucw==": {
+        "Y2hvaWNl": "bmVpdGhlcg==",
+        "Y2hlbl93b2tlbg==": false,
+        "c2lnbmFsX3NlbnQ=": false
       },
-      "type": "neutral",
-      "text": "You seal Chen's logs in the captain's quarters. You lock the door with your command override. You return to the cryo bay and stand before your pod, looking at the rows of sleeping colonists, their frost-clouded faces serene with the peace of the chemically unconscious. They do not know about the brown dwarf. They will not know, not until arrival, not unless someone tells them. You could wake them all -- sound the general revival alarm and let four thousand people debate the fate that Chen's orbital models suggest. But what would that achieve? Panic, on a ship with no alternatives. The fuel is spent. The course is locked. 82 Eridani is the only destination remaining, and no amount of argument or fear will change the physics or the orbit of a body 42 times the mass of Jupiter. Better to let them sleep. Better to carry the weight of uncertainty alone, as Chen carried it, and trust that the truth -- whatever it is -- will reveal itself when the ship arrives. You climb into your pod. You close the lid. The cold comes, and with it the slow dimming of consciousness. Your last thought is not of Chen, or the colony, or the dark companion approaching on its two-thousand-year orbit. Your last thought is of the chess game in the recreation room -- white, three moves from checkmate, with no one left to move the pieces.\n\nYou do not hear the comms terminal chime, hours later. You do not see the JANUS data download. You do not read the detection report: an object orbiting the brown dwarf at its L2 Lagrange point. Mass approximately 10^12 kilograms. Temperature 3 Kelvin above ambient. Artificial. Estimated age: approximately 400 million years. Still generating energy. You do not learn that 11 hours ago, the object sent a targeted signal burst aimed at the ISV Kepler's Promise. 'It pinged you,' the annotation reads. But you are asleep. The data waits in the buffer. The game waits on the board. The ship flies on. And somewhere in the dark between the stars, something ancient and patient waits too.\n\nEND OF PART ONE"
+      "dHlwZQ==": "bmV1dHJhbA==",
+      "dGV4dA==": "WW91IHNlYWwgQ2hlbidzIGxvZ3MgaW4gdGhlIGNhcHRhaW4ncyBxdWFydGVycy4gWW91IGxvY2sgdGhlIGRvb3Igd2l0aCB5b3VyIGNvbW1hbmQgb3ZlcnJpZGUuIFlvdSByZXR1cm4gdG8gdGhlIGNyeW8gYmF5IGFuZCBzdGFuZCBiZWZvcmUgeW91ciBwb2QsIGxvb2tpbmcgYXQgdGhlIHJvd3Mgb2Ygc2xlZXBpbmcgY29sb25pc3RzLCB0aGVpciBmcm9zdC1jbG91ZGVkIGZhY2VzIHNlcmVuZSB3aXRoIHRoZSBwZWFjZSBvZiB0aGUgY2hlbWljYWxseSB1bmNvbnNjaW91cy4gVGhleSBkbyBub3Qga25vdyBhYm91dCB0aGUgYnJvd24gZHdhcmYuIFRoZXkgd2lsbCBub3Qga25vdywgbm90IHVudGlsIGFycml2YWwsIG5vdCB1bmxlc3Mgc29tZW9uZSB0ZWxscyB0aGVtLiBZb3UgY291bGQgd2FrZSB0aGVtIGFsbCAtLSBzb3VuZCB0aGUgZ2VuZXJhbCByZXZpdmFsIGFsYXJtIGFuZCBsZXQgZm91ciB0aG91c2FuZCBwZW9wbGUgZGViYXRlIHRoZSBmYXRlIHRoYXQgQ2hlbidzIG9yYml0YWwgbW9kZWxzIHN1Z2dlc3QuIEJ1dCB3aGF0IHdvdWxkIHRoYXQgYWNoaWV2ZT8gUGFuaWMsIG9uIGEgc2hpcCB3aXRoIG5vIGFsdGVybmF0aXZlcy4gVGhlIGZ1ZWwgaXMgc3BlbnQuIFRoZSBjb3Vyc2UgaXMgbG9ja2VkLiA4MiBFcmlkYW5pIGlzIHRoZSBvbmx5IGRlc3RpbmF0aW9uIHJlbWFpbmluZywgYW5kIG5vIGFtb3VudCBvZiBhcmd1bWVudCBvciBmZWFyIHdpbGwgY2hhbmdlIHRoZSBwaHlzaWNzIG9yIHRoZSBvcmJpdCBvZiBhIGJvZHkgNDIgdGltZXMgdGhlIG1hc3Mgb2YgSnVwaXRlci4gQmV0dGVyIHRvIGxldCB0aGVtIHNsZWVwLiBCZXR0ZXIgdG8gY2FycnkgdGhlIHdlaWdodCBvZiB1bmNlcnRhaW50eSBhbG9uZSwgYXMgQ2hlbiBjYXJyaWVkIGl0LCBhbmQgdHJ1c3QgdGhhdCB0aGUgdHJ1dGggLS0gd2hhdGV2ZXIgaXQgaXMgLS0gd2lsbCByZXZlYWwgaXRzZWxmIHdoZW4gdGhlIHNoaXAgYXJyaXZlcy4gWW91IGNsaW1iIGludG8geW91ciBwb2QuIFlvdSBjbG9zZSB0aGUgbGlkLiBUaGUgY29sZCBjb21lcywgYW5kIHdpdGggaXQgdGhlIHNsb3cgZGltbWluZyBvZiBjb25zY2lvdXNuZXNzLiBZb3VyIGxhc3QgdGhvdWdodCBpcyBub3Qgb2YgQ2hlbiwgb3IgdGhlIGNvbG9ueSwgb3IgdGhlIGRhcmsgY29tcGFuaW9uIGFwcHJvYWNoaW5nIG9uIGl0cyB0d28tdGhvdXNhbmQteWVhciBvcmJpdC4gWW91ciBsYXN0IHRob3VnaHQgaXMgb2YgdGhlIGNoZXNzIGdhbWUgaW4gdGhlIHJlY3JlYXRpb24gcm9vbSAtLSB3aGl0ZSwgdGhyZWUgbW92ZXMgZnJvbSBjaGVja21hdGUsIHdpdGggbm8gb25lIGxlZnQgdG8gbW92ZSB0aGUgcGllY2VzLgoKWW91IGRvIG5vdCBoZWFyIHRoZSBjb21tcyB0ZXJtaW5hbCBjaGltZSwgaG91cnMgbGF0ZXIuIFlvdSBkbyBub3Qgc2VlIHRoZSBKQU5VUyBkYXRhIGRvd25sb2FkLiBZb3UgZG8gbm90IHJlYWQgdGhlIGRldGVjdGlvbiByZXBvcnQ6IGFuIG9iamVjdCBvcmJpdGluZyB0aGUgYnJvd24gZHdhcmYgYXQgaXRzIEwyIExhZ3JhbmdlIHBvaW50LiBNYXNzIGFwcHJveGltYXRlbHkgMTBeMTIga2lsb2dyYW1zLiBUZW1wZXJhdHVyZSAzIEtlbHZpbiBhYm92ZSBhbWJpZW50LiBBcnRpZmljaWFsLiBFc3RpbWF0ZWQgYWdlOiBhcHByb3hpbWF0ZWx5IDQwMCBtaWxsaW9uIHllYXJzLiBTdGlsbCBnZW5lcmF0aW5nIGVuZXJneS4gWW91IGRvIG5vdCBsZWFybiB0aGF0IDExIGhvdXJzIGFnbywgdGhlIG9iamVjdCBzZW50IGEgdGFyZ2V0ZWQgc2lnbmFsIGJ1cnN0IGFpbWVkIGF0IHRoZSBJU1YgS2VwbGVyJ3MgUHJvbWlzZS4gJ0l0IHBpbmdlZCB5b3UsJyB0aGUgYW5ub3RhdGlvbiByZWFkcy4gQnV0IHlvdSBhcmUgYXNsZWVwLiBUaGUgZGF0YSB3YWl0cyBpbiB0aGUgYnVmZmVyLiBUaGUgZ2FtZSB3YWl0cyBvbiB0aGUgYm9hcmQuIFRoZSBzaGlwIGZsaWVzIG9uLiBBbmQgc29tZXdoZXJlIGluIHRoZSBkYXJrIGJldHdlZW4gdGhlIHN0YXJzLCBzb21ldGhpbmcgYW5jaWVudCBhbmQgcGF0aWVudCB3YWl0cyB0b28uCgpFTkQgT0YgUEFSVCBPTkU="
     },
     {
-      "id": "ending_void_lost",
-      "conditions": {
-        "cause": "no_tether_eva"
+      "aWQ=": "ZW5kaW5nX3ZvaWRfbG9zdA==",
+      "Y29uZGl0aW9ucw==": {
+        "Y2F1c2U=": "bm9fdGV0aGVyX2V2YQ=="
       },
-      "type": "bad",
-      "text": "The ship recedes. It does not shrink quickly -- at the rate you are drifting, it will take hours to become a point of light, and longer still to disappear entirely. But the mathematics are as absolute as they are unhurried. You are moving away from the hull at 0.3 meters per second, and there is nothing in your EVA suit's equipment that can reverse that momentum. No thruster. No tether. No miracle. The stars surround you in every direction, beautiful and innumerable and utterly indifferent to the small, suited figure tumbling slowly through the space between them. Your oxygen supply reads three hours and forty-seven minutes. The ship's automated systems will continue without you -- life support will hum, the reactor will burn, the colonists will sleep. But no one will correct the navigation. No one will repair the hull. No one will wake to find Chen's logs or decode the brown dwarf data. The ship will sail on, carrying its cargo of dreamers toward a destination shadowed by a dark companion no one could have foreseen, while you -- the last conscious mind within light-years -- watch it go. The void takes what the void is given. It does not apologize. It does not explain. It simply is, vast and cold and patient, and in three hours and forty-seven minutes, you will be part of it forever.\n\nAboard the ship you will never reach again, the comms terminal chimes. JANUS STATION has responded. In the data: an object orbiting the brown dwarf at its L2 Lagrange point. Mass approximately 10^12 kilograms. Temperature 3 Kelvin above ambient. Artificial. Estimated age: approximately 400 million years. Still generating energy. And 11 hours ago, the object sent a targeted signal burst aimed at the ISV Kepler's Promise. 'It pinged you.' But there is no one awake to read it, and you are drifting further away with every heartbeat.\n\nEND OF PART ONE"
+      "dHlwZQ==": "YmFk",
+      "dGV4dA==": "VGhlIHNoaXAgcmVjZWRlcy4gSXQgZG9lcyBub3Qgc2hyaW5rIHF1aWNrbHkgLS0gYXQgdGhlIHJhdGUgeW91IGFyZSBkcmlmdGluZywgaXQgd2lsbCB0YWtlIGhvdXJzIHRvIGJlY29tZSBhIHBvaW50IG9mIGxpZ2h0LCBhbmQgbG9uZ2VyIHN0aWxsIHRvIGRpc2FwcGVhciBlbnRpcmVseS4gQnV0IHRoZSBtYXRoZW1hdGljcyBhcmUgYXMgYWJzb2x1dGUgYXMgdGhleSBhcmUgdW5odXJyaWVkLiBZb3UgYXJlIG1vdmluZyBhd2F5IGZyb20gdGhlIGh1bGwgYXQgMC4zIG1ldGVycyBwZXIgc2Vjb25kLCBhbmQgdGhlcmUgaXMgbm90aGluZyBpbiB5b3VyIEVWQSBzdWl0J3MgZXF1aXBtZW50IHRoYXQgY2FuIHJldmVyc2UgdGhhdCBtb21lbnR1bS4gTm8gdGhydXN0ZXIuIE5vIHRldGhlci4gTm8gbWlyYWNsZS4gVGhlIHN0YXJzIHN1cnJvdW5kIHlvdSBpbiBldmVyeSBkaXJlY3Rpb24sIGJlYXV0aWZ1bCBhbmQgaW5udW1lcmFibGUgYW5kIHV0dGVybHkgaW5kaWZmZXJlbnQgdG8gdGhlIHNtYWxsLCBzdWl0ZWQgZmlndXJlIHR1bWJsaW5nIHNsb3dseSB0aHJvdWdoIHRoZSBzcGFjZSBiZXR3ZWVuIHRoZW0uIFlvdXIgb3h5Z2VuIHN1cHBseSByZWFkcyB0aHJlZSBob3VycyBhbmQgZm9ydHktc2V2ZW4gbWludXRlcy4gVGhlIHNoaXAncyBhdXRvbWF0ZWQgc3lzdGVtcyB3aWxsIGNvbnRpbnVlIHdpdGhvdXQgeW91IC0tIGxpZmUgc3VwcG9ydCB3aWxsIGh1bSwgdGhlIHJlYWN0b3Igd2lsbCBidXJuLCB0aGUgY29sb25pc3RzIHdpbGwgc2xlZXAuIEJ1dCBubyBvbmUgd2lsbCBjb3JyZWN0IHRoZSBuYXZpZ2F0aW9uLiBObyBvbmUgd2lsbCByZXBhaXIgdGhlIGh1bGwuIE5vIG9uZSB3aWxsIHdha2UgdG8gZmluZCBDaGVuJ3MgbG9ncyBvciBkZWNvZGUgdGhlIGJyb3duIGR3YXJmIGRhdGEuIFRoZSBzaGlwIHdpbGwgc2FpbCBvbiwgY2FycnlpbmcgaXRzIGNhcmdvIG9mIGRyZWFtZXJzIHRvd2FyZCBhIGRlc3RpbmF0aW9uIHNoYWRvd2VkIGJ5IGEgZGFyayBjb21wYW5pb24gbm8gb25lIGNvdWxkIGhhdmUgZm9yZXNlZW4sIHdoaWxlIHlvdSAtLSB0aGUgbGFzdCBjb25zY2lvdXMgbWluZCB3aXRoaW4gbGlnaHQteWVhcnMgLS0gd2F0Y2ggaXQgZ28uIFRoZSB2b2lkIHRha2VzIHdoYXQgdGhlIHZvaWQgaXMgZ2l2ZW4uIEl0IGRvZXMgbm90IGFwb2xvZ2l6ZS4gSXQgZG9lcyBub3QgZXhwbGFpbi4gSXQgc2ltcGx5IGlzLCB2YXN0IGFuZCBjb2xkIGFuZCBwYXRpZW50LCBhbmQgaW4gdGhyZWUgaG91cnMgYW5kIGZvcnR5LXNldmVuIG1pbnV0ZXMsIHlvdSB3aWxsIGJlIHBhcnQgb2YgaXQgZm9yZXZlci4KCkFib2FyZCB0aGUgc2hpcCB5b3Ugd2lsbCBuZXZlciByZWFjaCBhZ2FpbiwgdGhlIGNvbW1zIHRlcm1pbmFsIGNoaW1lcy4gSkFOVVMgU1RBVElPTiBoYXMgcmVzcG9uZGVkLiBJbiB0aGUgZGF0YTogYW4gb2JqZWN0IG9yYml0aW5nIHRoZSBicm93biBkd2FyZiBhdCBpdHMgTDIgTGFncmFuZ2UgcG9pbnQuIE1hc3MgYXBwcm94aW1hdGVseSAxMF4xMiBraWxvZ3JhbXMuIFRlbXBlcmF0dXJlIDMgS2VsdmluIGFib3ZlIGFtYmllbnQuIEFydGlmaWNpYWwuIEVzdGltYXRlZCBhZ2U6IGFwcHJveGltYXRlbHkgNDAwIG1pbGxpb24geWVhcnMuIFN0aWxsIGdlbmVyYXRpbmcgZW5lcmd5LiBBbmQgMTEgaG91cnMgYWdvLCB0aGUgb2JqZWN0IHNlbnQgYSB0YXJnZXRlZCBzaWduYWwgYnVyc3QgYWltZWQgYXQgdGhlIElTViBLZXBsZXIncyBQcm9taXNlLiAnSXQgcGluZ2VkIHlvdS4nIEJ1dCB0aGVyZSBpcyBubyBvbmUgYXdha2UgdG8gcmVhZCBpdCwgYW5kIHlvdSBhcmUgZHJpZnRpbmcgZnVydGhlciBhd2F5IHdpdGggZXZlcnkgaGVhcnRiZWF0LgoKRU5EIE9GIFBBUlQgT05F"
     },
     {
-      "id": "ending_lost_in_void",
-      "conditions": {
-        "cause": "wrong_navigation_angle"
+      "aWQ=": "ZW5kaW5nX2xvc3RfaW5fdm9pZA==",
+      "Y29uZGl0aW9ucw==": {
+        "Y2F1c2U=": "d3JvbmdfbmF2aWdhdGlvbl9hbmdsZQ=="
       },
-      "type": "bad",
-      "text": "The burn completes, and the navigation display updates with the merciless precision of orbital mechanics. The trajectory line has moved -- but in the wrong direction. The fuel is gone. The 250,000 kilograms of propellant that represented the difference between arrival and oblivion have been converted to energy and expelled into the void, pushing the ship further from any star that could sustain the colony. You run the numbers three times, each time hoping for a different answer, and each time the mathematics return the same verdict: ISV Kepler's Promise will pass through the 82 Eridani system at 0.12c, too fast to capture, too fast to stop, too fast to do anything except watch a yellow star grow bright and then fade in the aft viewport. The ship will continue. It will continue forever, a monument to human ambition and human error, carrying four thousand sleepers through the interstellar medium toward no destination. They will not wake. There will be no reason to wake them. Chen's brown dwarf data will sit unread in the captain's quarters forever. The colony world's fate -- whether it would have burned or endured -- will never matter to the people who were meant to live there.\n\nBut the comms terminal chimes one last time. JANUS STATION has responded. In the data: an object orbiting the brown dwarf at its L2 Lagrange point. Mass approximately 10^12 kilograms. Temperature 3 Kelvin above ambient. Artificial. Estimated age: approximately 400 million years. Still generating energy. And 11 hours ago, the object sent a targeted signal burst aimed at the ISV Kepler's Promise. 'It pinged you.' You sit on the bridge of a ship sailing into forever, and you read about something that has been waiting in the dark for four hundred million years. The stars watch back. They have always been watching.\n\nEND OF PART ONE"
+      "dHlwZQ==": "YmFk",
+      "dGV4dA==": "VGhlIGJ1cm4gY29tcGxldGVzLCBhbmQgdGhlIG5hdmlnYXRpb24gZGlzcGxheSB1cGRhdGVzIHdpdGggdGhlIG1lcmNpbGVzcyBwcmVjaXNpb24gb2Ygb3JiaXRhbCBtZWNoYW5pY3MuIFRoZSB0cmFqZWN0b3J5IGxpbmUgaGFzIG1vdmVkIC0tIGJ1dCBpbiB0aGUgd3JvbmcgZGlyZWN0aW9uLiBUaGUgZnVlbCBpcyBnb25lLiBUaGUgMjUwLDAwMCBraWxvZ3JhbXMgb2YgcHJvcGVsbGFudCB0aGF0IHJlcHJlc2VudGVkIHRoZSBkaWZmZXJlbmNlIGJldHdlZW4gYXJyaXZhbCBhbmQgb2JsaXZpb24gaGF2ZSBiZWVuIGNvbnZlcnRlZCB0byBlbmVyZ3kgYW5kIGV4cGVsbGVkIGludG8gdGhlIHZvaWQsIHB1c2hpbmcgdGhlIHNoaXAgZnVydGhlciBmcm9tIGFueSBzdGFyIHRoYXQgY291bGQgc3VzdGFpbiB0aGUgY29sb255LiBZb3UgcnVuIHRoZSBudW1iZXJzIHRocmVlIHRpbWVzLCBlYWNoIHRpbWUgaG9waW5nIGZvciBhIGRpZmZlcmVudCBhbnN3ZXIsIGFuZCBlYWNoIHRpbWUgdGhlIG1hdGhlbWF0aWNzIHJldHVybiB0aGUgc2FtZSB2ZXJkaWN0OiBJU1YgS2VwbGVyJ3MgUHJvbWlzZSB3aWxsIHBhc3MgdGhyb3VnaCB0aGUgODIgRXJpZGFuaSBzeXN0ZW0gYXQgMC4xMmMsIHRvbyBmYXN0IHRvIGNhcHR1cmUsIHRvbyBmYXN0IHRvIHN0b3AsIHRvbyBmYXN0IHRvIGRvIGFueXRoaW5nIGV4Y2VwdCB3YXRjaCBhIHllbGxvdyBzdGFyIGdyb3cgYnJpZ2h0IGFuZCB0aGVuIGZhZGUgaW4gdGhlIGFmdCB2aWV3cG9ydC4gVGhlIHNoaXAgd2lsbCBjb250aW51ZS4gSXQgd2lsbCBjb250aW51ZSBmb3JldmVyLCBhIG1vbnVtZW50IHRvIGh1bWFuIGFtYml0aW9uIGFuZCBodW1hbiBlcnJvciwgY2FycnlpbmcgZm91ciB0aG91c2FuZCBzbGVlcGVycyB0aHJvdWdoIHRoZSBpbnRlcnN0ZWxsYXIgbWVkaXVtIHRvd2FyZCBubyBkZXN0aW5hdGlvbi4gVGhleSB3aWxsIG5vdCB3YWtlLiBUaGVyZSB3aWxsIGJlIG5vIHJlYXNvbiB0byB3YWtlIHRoZW0uIENoZW4ncyBicm93biBkd2FyZiBkYXRhIHdpbGwgc2l0IHVucmVhZCBpbiB0aGUgY2FwdGFpbidzIHF1YXJ0ZXJzIGZvcmV2ZXIuIFRoZSBjb2xvbnkgd29ybGQncyBmYXRlIC0tIHdoZXRoZXIgaXQgd291bGQgaGF2ZSBidXJuZWQgb3IgZW5kdXJlZCAtLSB3aWxsIG5ldmVyIG1hdHRlciB0byB0aGUgcGVvcGxlIHdobyB3ZXJlIG1lYW50IHRvIGxpdmUgdGhlcmUuCgpCdXQgdGhlIGNvbW1zIHRlcm1pbmFsIGNoaW1lcyBvbmUgbGFzdCB0aW1lLiBKQU5VUyBTVEFUSU9OIGhhcyByZXNwb25kZWQuIEluIHRoZSBkYXRhOiBhbiBvYmplY3Qgb3JiaXRpbmcgdGhlIGJyb3duIGR3YXJmIGF0IGl0cyBMMiBMYWdyYW5nZSBwb2ludC4gTWFzcyBhcHByb3hpbWF0ZWx5IDEwXjEyIGtpbG9ncmFtcy4gVGVtcGVyYXR1cmUgMyBLZWx2aW4gYWJvdmUgYW1iaWVudC4gQXJ0aWZpY2lhbC4gRXN0aW1hdGVkIGFnZTogYXBwcm94aW1hdGVseSA0MDAgbWlsbGlvbiB5ZWFycy4gU3RpbGwgZ2VuZXJhdGluZyBlbmVyZ3kuIEFuZCAxMSBob3VycyBhZ28sIHRoZSBvYmplY3Qgc2VudCBhIHRhcmdldGVkIHNpZ25hbCBidXJzdCBhaW1lZCBhdCB0aGUgSVNWIEtlcGxlcidzIFByb21pc2UuICdJdCBwaW5nZWQgeW91LicgWW91IHNpdCBvbiB0aGUgYnJpZGdlIG9mIGEgc2hpcCBzYWlsaW5nIGludG8gZm9yZXZlciwgYW5kIHlvdSByZWFkIGFib3V0IHNvbWV0aGluZyB0aGF0IGhhcyBiZWVuIHdhaXRpbmcgaW4gdGhlIGRhcmsgZm9yIGZvdXIgaHVuZHJlZCBtaWxsaW9uIHllYXJzLiBUaGUgc3RhcnMgd2F0Y2ggYmFjay4gVGhleSBoYXZlIGFsd2F5cyBiZWVuIHdhdGNoaW5nLgoKRU5EIE9GIFBBUlQgT05F"
     }
   ],
-  "globalEvents": [
+  "Z2xvYmFsRXZlbnRz": [
     {
-      "id": "event_co2_warning",
-      "trigger": {
-        "type": "timer",
-        "condition": "life_support_calibrated == false",
-        "recurring": true,
-        "interval_minutes": 10
+      "aWQ=": "ZXZlbnRfY28yX3dhcm5pbmc=",
+      "dHJpZ2dlcg==": {
+        "dHlwZQ==": "dGltZXI=",
+        "Y29uZGl0aW9u": "bGlmZV9zdXBwb3J0X2NhbGlicmF0ZWQgPT0gZmFsc2U=",
+        "cmVjdXJyaW5n": true,
+        "aW50ZXJ2YWxfbWludXRlcw==": 10
       },
-      "text": "Your head pounds. The edges of your vision darken momentarily, and you catch yourself breathing in shallow, unsatisfying gasps. The CO2 level on the nearest status panel reads higher than the last time you checked. The ship's atmosphere is becoming hostile. The life support system needs attention -- soon.",
-      "effect": {
-        "stat_penalty": {
-          "cognition": -1,
-          "cumulative": true,
-          "max_penalty": -4
+      "dGV4dA==": "WW91ciBoZWFkIHBvdW5kcy4gVGhlIGVkZ2VzIG9mIHlvdXIgdmlzaW9uIGRhcmtlbiBtb21lbnRhcmlseSwgYW5kIHlvdSBjYXRjaCB5b3Vyc2VsZiBicmVhdGhpbmcgaW4gc2hhbGxvdywgdW5zYXRpc2Z5aW5nIGdhc3BzLiBUaGUgQ08yIGxldmVsIG9uIHRoZSBuZWFyZXN0IHN0YXR1cyBwYW5lbCByZWFkcyBoaWdoZXIgdGhhbiB0aGUgbGFzdCB0aW1lIHlvdSBjaGVja2VkLiBUaGUgc2hpcCdzIGF0bW9zcGhlcmUgaXMgYmVjb21pbmcgaG9zdGlsZS4gVGhlIGxpZmUgc3VwcG9ydCBzeXN0ZW0gbmVlZHMgYXR0ZW50aW9uIC0tIHNvb24u",
+      "ZWZmZWN0": {
+        "c3RhdF9wZW5hbHR5": {
+          "Y29nbml0aW9u": -1,
+          "Y3VtdWxhdGl2ZQ==": true,
+          "bWF4X3BlbmFsdHk=": -4
         }
       }
     },
     {
-      "id": "event_radiation_proximity",
-      "trigger": {
-        "type": "location",
-        "location": "reactor_room",
-        "condition": "reactor_shielding_restored == false"
+      "aWQ=": "ZXZlbnRfcmFkaWF0aW9uX3Byb3hpbWl0eQ==",
+      "dHJpZ2dlcg==": {
+        "dHlwZQ==": "bG9jYXRpb24=",
+        "bG9jYXRpb24=": "cmVhY3Rvcl9yb29t",
+        "Y29uZGl0aW9u": "cmVhY3Rvcl9zaGllbGRpbmdfcmVzdG9yZWQgPT0gZmFsc2U="
       },
-      "text": "Your radiation badge deepens in color the moment you enter the reactor room. The invisible flux from the gap in the shielding is constant and indifferent -- it does not care whether you are here to fix the problem or merely passing through. Every second in this room is a withdrawal from a finite account of cellular integrity. Work quickly, or leave.",
-      "effect": {
-        "radiation_exposure": {
-          "rate": "50_msv_per_minute_at_4m",
-          "scaling": "inverse_square"
+      "dGV4dA==": "WW91ciByYWRpYXRpb24gYmFkZ2UgZGVlcGVucyBpbiBjb2xvciB0aGUgbW9tZW50IHlvdSBlbnRlciB0aGUgcmVhY3RvciByb29tLiBUaGUgaW52aXNpYmxlIGZsdXggZnJvbSB0aGUgZ2FwIGluIHRoZSBzaGllbGRpbmcgaXMgY29uc3RhbnQgYW5kIGluZGlmZmVyZW50IC0tIGl0IGRvZXMgbm90IGNhcmUgd2hldGhlciB5b3UgYXJlIGhlcmUgdG8gZml4IHRoZSBwcm9ibGVtIG9yIG1lcmVseSBwYXNzaW5nIHRocm91Z2guIEV2ZXJ5IHNlY29uZCBpbiB0aGlzIHJvb20gaXMgYSB3aXRoZHJhd2FsIGZyb20gYSBmaW5pdGUgYWNjb3VudCBvZiBjZWxsdWxhciBpbnRlZ3JpdHkuIFdvcmsgcXVpY2tseSwgb3IgbGVhdmUu",
+      "ZWZmZWN0": {
+        "cmFkaWF0aW9uX2V4cG9zdXJl": {
+          "cmF0ZQ==": "NTBfbXN2X3Blcl9taW51dGVfYXRfNG0=",
+          "c2NhbGluZw==": "aW52ZXJzZV9zcXVhcmU="
         }
       }
     },
     {
-      "id": "event_hull_pressure_warning",
-      "trigger": {
-        "type": "timer",
-        "condition": "hull_breach_repaired == false && hull_breach_detected == true",
-        "recurring": true,
-        "interval_minutes": 15
+      "aWQ=": "ZXZlbnRfaHVsbF9wcmVzc3VyZV93YXJuaW5n",
+      "dHJpZ2dlcg==": {
+        "dHlwZQ==": "dGltZXI=",
+        "Y29uZGl0aW9u": "aHVsbF9icmVhY2hfcmVwYWlyZWQgPT0gZmFsc2UgJiYgaHVsbF9icmVhY2hfZGV0ZWN0ZWQgPT0gdHJ1ZQ==",
+        "cmVjdXJyaW5n": true,
+        "aW50ZXJ2YWxfbWludXRlcw==": 15
       },
-      "text": "The hull integrity alarm pulses again, and the pressure differential reading for Frame 47 Starboard has increased by another 0.3 kPa. The inner hull is deforming under the relentless pressure of the ship's atmosphere pushing against vacuum. The metal is patient, but it is not infinitely patient. When it fails, it will fail all at once.",
-      "effect": {
-        "hull_stress_increment": 0.3,
-        "failure_threshold": 5.0,
-        "on_failure": {
-          "event": "explosive_decompression_deck_d",
-          "consequence": "deck_d_loss"
+      "dGV4dA==": "VGhlIGh1bGwgaW50ZWdyaXR5IGFsYXJtIHB1bHNlcyBhZ2FpbiwgYW5kIHRoZSBwcmVzc3VyZSBkaWZmZXJlbnRpYWwgcmVhZGluZyBmb3IgRnJhbWUgNDcgU3RhcmJvYXJkIGhhcyBpbmNyZWFzZWQgYnkgYW5vdGhlciAwLjMga1BhLiBUaGUgaW5uZXIgaHVsbCBpcyBkZWZvcm1pbmcgdW5kZXIgdGhlIHJlbGVudGxlc3MgcHJlc3N1cmUgb2YgdGhlIHNoaXAncyBhdG1vc3BoZXJlIHB1c2hpbmcgYWdhaW5zdCB2YWN1dW0uIFRoZSBtZXRhbCBpcyBwYXRpZW50LCBidXQgaXQgaXMgbm90IGluZmluaXRlbHkgcGF0aWVudC4gV2hlbiBpdCBmYWlscywgaXQgd2lsbCBmYWlsIGFsbCBhdCBvbmNlLg==",
+      "ZWZmZWN0": {
+        "aHVsbF9zdHJlc3NfaW5jcmVtZW50": 0.3,
+        "ZmFpbHVyZV90aHJlc2hvbGQ=": 5,
+        "b25fZmFpbHVyZQ==": {
+          "ZXZlbnQ=": "ZXhwbG9zaXZlX2RlY29tcHJlc3Npb25fZGVja19k",
+          "Y29uc2VxdWVuY2U=": "ZGVja19kX2xvc3M="
         }
       }
     },
     {
-      "id": "event_power_fluctuation",
-      "trigger": {
-        "type": "timer",
-        "condition": "power_rerouted == false",
-        "recurring": true,
-        "interval_minutes": 20
+      "aWQ=": "ZXZlbnRfcG93ZXJfZmx1Y3R1YXRpb24=",
+      "dHJpZ2dlcg==": {
+        "dHlwZQ==": "dGltZXI=",
+        "Y29uZGl0aW9u": "cG93ZXJfcmVyb3V0ZWQgPT0gZmFsc2U=",
+        "cmVjdXJyaW5n": true,
+        "aW50ZXJ2YWxfbWludXRlcw==": 20
       },
-      "text": "The lights flicker. Not a dramatic blackout -- something subtler, a barely perceptible dimming that lasts half a second before the power stabilizes. The failing circuits are shedding load to keep the essentials running, and each fluctuation means another non-essential system has been sacrificed. The ship is cannibalizing itself to stay alive.",
-      "effect": {
-        "random_system_offline": {
-          "pool": ["secondary_lighting", "gravity_compensation", "water_recycling", "temperature_regulation"],
-          "duration": "until_power_restored"
+      "dGV4dA==": "VGhlIGxpZ2h0cyBmbGlja2VyLiBOb3QgYSBkcmFtYXRpYyBibGFja291dCAtLSBzb21ldGhpbmcgc3VidGxlciwgYSBiYXJlbHkgcGVyY2VwdGlibGUgZGltbWluZyB0aGF0IGxhc3RzIGhhbGYgYSBzZWNvbmQgYmVmb3JlIHRoZSBwb3dlciBzdGFiaWxpemVzLiBUaGUgZmFpbGluZyBjaXJjdWl0cyBhcmUgc2hlZGRpbmcgbG9hZCB0byBrZWVwIHRoZSBlc3NlbnRpYWxzIHJ1bm5pbmcsIGFuZCBlYWNoIGZsdWN0dWF0aW9uIG1lYW5zIGFub3RoZXIgbm9uLWVzc2VudGlhbCBzeXN0ZW0gaGFzIGJlZW4gc2FjcmlmaWNlZC4gVGhlIHNoaXAgaXMgY2FubmliYWxpemluZyBpdHNlbGYgdG8gc3RheSBhbGl2ZS4=",
+      "ZWZmZWN0": {
+        "cmFuZG9tX3N5c3RlbV9vZmZsaW5l": {
+          "cG9vbA==": [
+            "c2Vjb25kYXJ5X2xpZ2h0aW5n",
+            "Z3Jhdml0eV9jb21wZW5zYXRpb24=",
+            "d2F0ZXJfcmVjeWNsaW5n",
+            "dGVtcGVyYXR1cmVfcmVndWxhdGlvbg=="
+          ],
+          "ZHVyYXRpb24=": "dW50aWxfcG93ZXJfcmVzdG9yZWQ="
         }
       }
     },
     {
-      "id": "event_ship_sounds",
-      "trigger": {
-        "type": "random",
-        "probability": 0.15,
-        "condition": "always",
-        "cooldown_minutes": 5
+      "aWQ=": "ZXZlbnRfc2hpcF9zb3VuZHM=",
+      "dHJpZ2dlcg==": {
+        "dHlwZQ==": "cmFuZG9t",
+        "cHJvYmFiaWxpdHk=": 0.15,
+        "Y29uZGl0aW9u": "YWx3YXlz",
+        "Y29vbGRvd25fbWludXRlcw==": 5
       },
-      "text": [
-        "A deep, metallic groan reverberates through the hull -- the sound of thermal expansion as the ship's sun-facing side absorbs radiation from a star still light-years away. The ship speaks in the language of stress and strain, and you are learning to listen.",
-        "Somewhere in the ventilation system, a fan bearing chirps -- a small, high sound, absurdly mundane against the backdrop of interstellar crisis. The ship is old. Twenty years of continuous operation have given it a voice made of a thousand tiny imperfections, and it uses that voice now, singing to itself in the dark.",
-        "A rhythmic ticking from the bulkhead beside you -- thermal contraction as the ship rotates and this section enters the shadow side. The temperature differential across the hull is only a few degrees, but steel remembers every one, and speaks of them in the patient language of expansion and contraction.",
-        "The cryo bay emits a sound like a long, slow exhale -- the thermal regulation system cycling coolant through four thousand pods, keeping four thousand bodies at the precise edge of frozen life. It is the most constant sound on the ship, and the most unsettling, because it sounds so much like breathing."
+      "dGV4dA==": [
+        "QSBkZWVwLCBtZXRhbGxpYyBncm9hbiByZXZlcmJlcmF0ZXMgdGhyb3VnaCB0aGUgaHVsbCAtLSB0aGUgc291bmQgb2YgdGhlcm1hbCBleHBhbnNpb24gYXMgdGhlIHNoaXAncyBzdW4tZmFjaW5nIHNpZGUgYWJzb3JicyByYWRpYXRpb24gZnJvbSBhIHN0YXIgc3RpbGwgbGlnaHQteWVhcnMgYXdheS4gVGhlIHNoaXAgc3BlYWtzIGluIHRoZSBsYW5ndWFnZSBvZiBzdHJlc3MgYW5kIHN0cmFpbiwgYW5kIHlvdSBhcmUgbGVhcm5pbmcgdG8gbGlzdGVuLg==",
+        "U29tZXdoZXJlIGluIHRoZSB2ZW50aWxhdGlvbiBzeXN0ZW0sIGEgZmFuIGJlYXJpbmcgY2hpcnBzIC0tIGEgc21hbGwsIGhpZ2ggc291bmQsIGFic3VyZGx5IG11bmRhbmUgYWdhaW5zdCB0aGUgYmFja2Ryb3Agb2YgaW50ZXJzdGVsbGFyIGNyaXNpcy4gVGhlIHNoaXAgaXMgb2xkLiBUd2VudHkgeWVhcnMgb2YgY29udGludW91cyBvcGVyYXRpb24gaGF2ZSBnaXZlbiBpdCBhIHZvaWNlIG1hZGUgb2YgYSB0aG91c2FuZCB0aW55IGltcGVyZmVjdGlvbnMsIGFuZCBpdCB1c2VzIHRoYXQgdm9pY2Ugbm93LCBzaW5naW5nIHRvIGl0c2VsZiBpbiB0aGUgZGFyay4=",
+        "QSByaHl0aG1pYyB0aWNraW5nIGZyb20gdGhlIGJ1bGtoZWFkIGJlc2lkZSB5b3UgLS0gdGhlcm1hbCBjb250cmFjdGlvbiBhcyB0aGUgc2hpcCByb3RhdGVzIGFuZCB0aGlzIHNlY3Rpb24gZW50ZXJzIHRoZSBzaGFkb3cgc2lkZS4gVGhlIHRlbXBlcmF0dXJlIGRpZmZlcmVudGlhbCBhY3Jvc3MgdGhlIGh1bGwgaXMgb25seSBhIGZldyBkZWdyZWVzLCBidXQgc3RlZWwgcmVtZW1iZXJzIGV2ZXJ5IG9uZSwgYW5kIHNwZWFrcyBvZiB0aGVtIGluIHRoZSBwYXRpZW50IGxhbmd1YWdlIG9mIGV4cGFuc2lvbiBhbmQgY29udHJhY3Rpb24u",
+        "VGhlIGNyeW8gYmF5IGVtaXRzIGEgc291bmQgbGlrZSBhIGxvbmcsIHNsb3cgZXhoYWxlIC0tIHRoZSB0aGVybWFsIHJlZ3VsYXRpb24gc3lzdGVtIGN5Y2xpbmcgY29vbGFudCB0aHJvdWdoIGZvdXIgdGhvdXNhbmQgcG9kcywga2VlcGluZyBmb3VyIHRob3VzYW5kIGJvZGllcyBhdCB0aGUgcHJlY2lzZSBlZGdlIG9mIGZyb3plbiBsaWZlLiBJdCBpcyB0aGUgbW9zdCBjb25zdGFudCBzb3VuZCBvbiB0aGUgc2hpcCwgYW5kIHRoZSBtb3N0IHVuc2V0dGxpbmcsIGJlY2F1c2UgaXQgc291bmRzIHNvIG11Y2ggbGlrZSBicmVhdGhpbmcu"
       ],
-      "effect": {
-        "type": "atmospheric",
-        "no_mechanical_effect": true
+      "ZWZmZWN0": {
+        "dHlwZQ==": "YXRtb3NwaGVyaWM=",
+        "bm9fbWVjaGFuaWNhbF9lZmZlY3Q=": true
       }
     },
     {
-      "id": "event_chen_clue_ambient",
-      "trigger": {
-        "type": "random",
-        "probability": 0.1,
-        "condition": "saboteur_identified == false",
-        "cooldown_minutes": 8
+      "aWQ=": "ZXZlbnRfY2hlbl9jbHVlX2FtYmllbnQ=",
+      "dHJpZ2dlcg==": {
+        "dHlwZQ==": "cmFuZG9t",
+        "cHJvYmFiaWxpdHk=": 0.1,
+        "Y29uZGl0aW9u": "c2Fib3RldXJfaWRlbnRpZmllZCA9PSBmYWxzZQ==",
+        "Y29vbGRvd25fbWludXRlcw==": 8
       },
-      "text": [
-        "You notice a scratch on the corridor wall -- three parallel lines, as if someone dragged their fingernails along the surface while walking. The marks are old, their edges rounded by the ship's recycled air, but they speak of a moment of frustration or despair that the walls absorbed and kept.",
-        "A storage locker in the corridor stands slightly ajar. Inside, the contents have been rearranged -- tools moved to the wrong slots, containers stacked in an order that makes no ergonomic sense. Someone searched this locker, hurriedly, and did not bother to restore it to regulation order.",
-        "On the deck plate near the engineering access ladder, a bootprint. Just one, dried from a smear of hydrazine coolant. Size 8, standard-issue EVA boot. A single footprint, walking toward the reactor room. The ghost of someone else's urgency, preserved in chemical residue."
+      "dGV4dA==": [
+        "WW91IG5vdGljZSBhIHNjcmF0Y2ggb24gdGhlIGNvcnJpZG9yIHdhbGwgLS0gdGhyZWUgcGFyYWxsZWwgbGluZXMsIGFzIGlmIHNvbWVvbmUgZHJhZ2dlZCB0aGVpciBmaW5nZXJuYWlscyBhbG9uZyB0aGUgc3VyZmFjZSB3aGlsZSB3YWxraW5nLiBUaGUgbWFya3MgYXJlIG9sZCwgdGhlaXIgZWRnZXMgcm91bmRlZCBieSB0aGUgc2hpcCdzIHJlY3ljbGVkIGFpciwgYnV0IHRoZXkgc3BlYWsgb2YgYSBtb21lbnQgb2YgZnJ1c3RyYXRpb24gb3IgZGVzcGFpciB0aGF0IHRoZSB3YWxscyBhYnNvcmJlZCBhbmQga2VwdC4=",
+        "QSBzdG9yYWdlIGxvY2tlciBpbiB0aGUgY29ycmlkb3Igc3RhbmRzIHNsaWdodGx5IGFqYXIuIEluc2lkZSwgdGhlIGNvbnRlbnRzIGhhdmUgYmVlbiByZWFycmFuZ2VkIC0tIHRvb2xzIG1vdmVkIHRvIHRoZSB3cm9uZyBzbG90cywgY29udGFpbmVycyBzdGFja2VkIGluIGFuIG9yZGVyIHRoYXQgbWFrZXMgbm8gZXJnb25vbWljIHNlbnNlLiBTb21lb25lIHNlYXJjaGVkIHRoaXMgbG9ja2VyLCBodXJyaWVkbHksIGFuZCBkaWQgbm90IGJvdGhlciB0byByZXN0b3JlIGl0IHRvIHJlZ3VsYXRpb24gb3JkZXIu",
+        "T24gdGhlIGRlY2sgcGxhdGUgbmVhciB0aGUgZW5naW5lZXJpbmcgYWNjZXNzIGxhZGRlciwgYSBib290cHJpbnQuIEp1c3Qgb25lLCBkcmllZCBmcm9tIGEgc21lYXIgb2YgaHlkcmF6aW5lIGNvb2xhbnQuIFNpemUgOCwgc3RhbmRhcmQtaXNzdWUgRVZBIGJvb3QuIEEgc2luZ2xlIGZvb3RwcmludCwgd2Fsa2luZyB0b3dhcmQgdGhlIHJlYWN0b3Igcm9vbS4gVGhlIGdob3N0IG9mIHNvbWVvbmUgZWxzZSdzIHVyZ2VuY3ksIHByZXNlcnZlZCBpbiBjaGVtaWNhbCByZXNpZHVlLg=="
       ],
-      "effect": {
-        "type": "atmospheric",
-        "clue_value": "minor",
-        "adds_to": "sabotage_evidence_counter"
+      "ZWZmZWN0": {
+        "dHlwZQ==": "YXRtb3NwaGVyaWM=",
+        "Y2x1ZV92YWx1ZQ==": "bWlub3I=",
+        "YWRkc190bw==": "c2Fib3RhZ2VfZXZpZGVuY2VfY291bnRlcg=="
       }
     },
     {
-      "id": "event_correction_burn_ambient",
-      "trigger": {
-        "type": "state_check",
-        "condition": "correction_burn_active == true",
-        "recurring": true,
-        "interval_minutes": 30
+      "aWQ=": "ZXZlbnRfY29ycmVjdGlvbl9idXJuX2FtYmllbnQ=",
+      "dHJpZ2dlcg==": {
+        "dHlwZQ==": "c3RhdGVfY2hlY2s=",
+        "Y29uZGl0aW9u": "Y29ycmVjdGlvbl9idXJuX2FjdGl2ZSA9PSB0cnVl",
+        "cmVjdXJyaW5n": true,
+        "aW50ZXJ2YWxfbWludXRlcw==": 30
       },
-      "text": [
-        "The deck vibrates with the sustained exertion of the fusion drive. After nineteen years of cold coast, the engine's return to life is a thing you feel in your joints and your molars -- a subsonic hum that speaks of forces measured in meganewtons, of fuel measured in tons per minute, of a trajectory being bent by sheer human stubbornness and the rocket equation.",
-        "You check the navigation display. The correction burn has consumed another 14,000 kilograms of fuel in the last thirty minutes. The fuel gauge drops with the slow inevitability of an hourglass, and each grain that falls is a grain that will not be available for deceleration at journey's end. The math works. You have checked it. But watching the fuel disappear is an act of faith that your rational mind endorses and your gut rejects.",
-        "Through the viewport, the stars are unchanged. At the scale of the correction -- a few thousand meters per second against a background velocity of thirty-six million -- the visual difference is nil. But the instruments know. The trajectory line on the navigation plot has bent fractionally closer to the planned course, and the estimated arrival point has shifted from 'interstellar void' to '82 Eridani system.' The numbers are saving four thousand lives, one second of burn at a time."
+      "dGV4dA==": [
+        "VGhlIGRlY2sgdmlicmF0ZXMgd2l0aCB0aGUgc3VzdGFpbmVkIGV4ZXJ0aW9uIG9mIHRoZSBmdXNpb24gZHJpdmUuIEFmdGVyIG5pbmV0ZWVuIHllYXJzIG9mIGNvbGQgY29hc3QsIHRoZSBlbmdpbmUncyByZXR1cm4gdG8gbGlmZSBpcyBhIHRoaW5nIHlvdSBmZWVsIGluIHlvdXIgam9pbnRzIGFuZCB5b3VyIG1vbGFycyAtLSBhIHN1YnNvbmljIGh1bSB0aGF0IHNwZWFrcyBvZiBmb3JjZXMgbWVhc3VyZWQgaW4gbWVnYW5ld3RvbnMsIG9mIGZ1ZWwgbWVhc3VyZWQgaW4gdG9ucyBwZXIgbWludXRlLCBvZiBhIHRyYWplY3RvcnkgYmVpbmcgYmVudCBieSBzaGVlciBodW1hbiBzdHViYm9ybm5lc3MgYW5kIHRoZSByb2NrZXQgZXF1YXRpb24u",
+        "WW91IGNoZWNrIHRoZSBuYXZpZ2F0aW9uIGRpc3BsYXkuIFRoZSBjb3JyZWN0aW9uIGJ1cm4gaGFzIGNvbnN1bWVkIGFub3RoZXIgMTQsMDAwIGtpbG9ncmFtcyBvZiBmdWVsIGluIHRoZSBsYXN0IHRoaXJ0eSBtaW51dGVzLiBUaGUgZnVlbCBnYXVnZSBkcm9wcyB3aXRoIHRoZSBzbG93IGluZXZpdGFiaWxpdHkgb2YgYW4gaG91cmdsYXNzLCBhbmQgZWFjaCBncmFpbiB0aGF0IGZhbGxzIGlzIGEgZ3JhaW4gdGhhdCB3aWxsIG5vdCBiZSBhdmFpbGFibGUgZm9yIGRlY2VsZXJhdGlvbiBhdCBqb3VybmV5J3MgZW5kLiBUaGUgbWF0aCB3b3Jrcy4gWW91IGhhdmUgY2hlY2tlZCBpdC4gQnV0IHdhdGNoaW5nIHRoZSBmdWVsIGRpc2FwcGVhciBpcyBhbiBhY3Qgb2YgZmFpdGggdGhhdCB5b3VyIHJhdGlvbmFsIG1pbmQgZW5kb3JzZXMgYW5kIHlvdXIgZ3V0IHJlamVjdHMu",
+        "VGhyb3VnaCB0aGUgdmlld3BvcnQsIHRoZSBzdGFycyBhcmUgdW5jaGFuZ2VkLiBBdCB0aGUgc2NhbGUgb2YgdGhlIGNvcnJlY3Rpb24gLS0gYSBmZXcgdGhvdXNhbmQgbWV0ZXJzIHBlciBzZWNvbmQgYWdhaW5zdCBhIGJhY2tncm91bmQgdmVsb2NpdHkgb2YgdGhpcnR5LXNpeCBtaWxsaW9uIC0tIHRoZSB2aXN1YWwgZGlmZmVyZW5jZSBpcyBuaWwuIEJ1dCB0aGUgaW5zdHJ1bWVudHMga25vdy4gVGhlIHRyYWplY3RvcnkgbGluZSBvbiB0aGUgbmF2aWdhdGlvbiBwbG90IGhhcyBiZW50IGZyYWN0aW9uYWxseSBjbG9zZXIgdG8gdGhlIHBsYW5uZWQgY291cnNlLCBhbmQgdGhlIGVzdGltYXRlZCBhcnJpdmFsIHBvaW50IGhhcyBzaGlmdGVkIGZyb20gJ2ludGVyc3RlbGxhciB2b2lkJyB0byAnODIgRXJpZGFuaSBzeXN0ZW0uJyBUaGUgbnVtYmVycyBhcmUgc2F2aW5nIGZvdXIgdGhvdXNhbmQgbGl2ZXMsIG9uZSBzZWNvbmQgb2YgYnVybiBhdCBhIHRpbWUu"
       ],
-      "effect": {
-        "type": "atmospheric",
-        "fuel_consumption_display": true
+      "ZWZmZWN0": {
+        "dHlwZQ==": "YXRtb3NwaGVyaWM=",
+        "ZnVlbF9jb25zdW1wdGlvbl9kaXNwbGF5": true
       }
     },
     {
-      "id": "event_existential_reflection",
-      "trigger": {
-        "type": "player_action",
-        "action": "look_out_viewport",
-        "condition": "always"
+      "aWQ=": "ZXZlbnRfZXhpc3RlbnRpYWxfcmVmbGVjdGlvbg==",
+      "dHJpZ2dlcg==": {
+        "dHlwZQ==": "cGxheWVyX2FjdGlvbg==",
+        "YWN0aW9u": "bG9va19vdXRfdmlld3BvcnQ=",
+        "Y29uZGl0aW9u": "YWx3YXlz"
       },
-      "text": "You look out the viewport and, for a moment, the enormity of your situation displaces every other thought. You are 12.2 light-years from Earth. The light leaving Sol right now will not reach you for over a decade. Every person you ever knew, every place you ever visited, every life you ever touched -- all of it is behind you at a distance that language strains to describe and the human mind refuses to truly comprehend. Ahead, a star that might be sanctuary. Around you, a ship that might be coffin. And between the two, the void -- patient, vast, and empty of everything except the mathematics that keep you alive. You turn away from the viewport. There is work to do.",
-      "effect": {
-        "type": "atmospheric",
-        "no_mechanical_effect": true
+      "dGV4dA==": "WW91IGxvb2sgb3V0IHRoZSB2aWV3cG9ydCBhbmQsIGZvciBhIG1vbWVudCwgdGhlIGVub3JtaXR5IG9mIHlvdXIgc2l0dWF0aW9uIGRpc3BsYWNlcyBldmVyeSBvdGhlciB0aG91Z2h0LiBZb3UgYXJlIDEyLjIgbGlnaHQteWVhcnMgZnJvbSBFYXJ0aC4gVGhlIGxpZ2h0IGxlYXZpbmcgU29sIHJpZ2h0IG5vdyB3aWxsIG5vdCByZWFjaCB5b3UgZm9yIG92ZXIgYSBkZWNhZGUuIEV2ZXJ5IHBlcnNvbiB5b3UgZXZlciBrbmV3LCBldmVyeSBwbGFjZSB5b3UgZXZlciB2aXNpdGVkLCBldmVyeSBsaWZlIHlvdSBldmVyIHRvdWNoZWQgLS0gYWxsIG9mIGl0IGlzIGJlaGluZCB5b3UgYXQgYSBkaXN0YW5jZSB0aGF0IGxhbmd1YWdlIHN0cmFpbnMgdG8gZGVzY3JpYmUgYW5kIHRoZSBodW1hbiBtaW5kIHJlZnVzZXMgdG8gdHJ1bHkgY29tcHJlaGVuZC4gQWhlYWQsIGEgc3RhciB0aGF0IG1pZ2h0IGJlIHNhbmN0dWFyeS4gQXJvdW5kIHlvdSwgYSBzaGlwIHRoYXQgbWlnaHQgYmUgY29mZmluLiBBbmQgYmV0d2VlbiB0aGUgdHdvLCB0aGUgdm9pZCAtLSBwYXRpZW50LCB2YXN0LCBhbmQgZW1wdHkgb2YgZXZlcnl0aGluZyBleGNlcHQgdGhlIG1hdGhlbWF0aWNzIHRoYXQga2VlcCB5b3UgYWxpdmUuIFlvdSB0dXJuIGF3YXkgZnJvbSB0aGUgdmlld3BvcnQuIFRoZXJlIGlzIHdvcmsgdG8gZG8u",
+      "ZWZmZWN0": {
+        "dHlwZQ==": "YXRtb3NwaGVyaWM=",
+        "bm9fbWVjaGFuaWNhbF9lZmZlY3Q=": true
       }
     }
   ]
