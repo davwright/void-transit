@@ -98,7 +98,15 @@ class InteractionLogger {
       type: 'interaction',
       timestamp: new Date().toISOString(),
       ...entry,
+      sessionId: encodeString(entry.sessionId),
+      room: encodeString(entry.room),
+      rawInput: encodeString(entry.rawInput),
       resultMessage: entry.resultMessage ? encodeString(entry.resultMessage) : undefined,
+      storyContext: entry.storyContext ? {
+        actId: encodeString(entry.storyContext.actId),
+        actName: encodeString(entry.storyContext.actName),
+        tension: entry.storyContext.tension,
+      } : undefined,
     });
   }
 
@@ -118,7 +126,15 @@ class InteractionLogger {
     const raw = this.readLogDir<InteractionLogEntry>('interactions-');
     return raw.map(e => ({
       ...e,
+      sessionId: decodeString(e.sessionId),
+      room: decodeString(e.room),
+      rawInput: decodeString(e.rawInput),
       resultMessage: e.resultMessage ? decodeString(e.resultMessage) : undefined,
+      storyContext: e.storyContext ? {
+        actId: decodeString(e.storyContext.actId),
+        actName: decodeString(e.storyContext.actName),
+        tension: e.storyContext.tension,
+      } : undefined,
     }));
   }
 

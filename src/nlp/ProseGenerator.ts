@@ -553,7 +553,19 @@ function centerPad(str: string, width: number): string {
 
 export function buildFallbackProse(actionResult: ActionResult): string {
   switch (actionResult.type) {
-    case 'move_success':
+    case 'move_success': {
+      let text = `**${actionResult.roomName || 'Unknown'}**`;
+      if (actionResult.isFirstVisit) {
+        text += `\n\n${actionResult.description || 'You look around.'}`;
+      }
+      if (actionResult.items?.length) {
+        text += '\n\nYou can see: ' + actionResult.items.map(i => i.name).join(', ') + '.';
+      }
+      if (actionResult.exits?.length) {
+        text += '\n\nExits: ' + actionResult.exits.map(e => e.direction).join(', ') + '.';
+      }
+      return text;
+    }
     case 'look': {
       let text = `**${actionResult.roomName || 'Unknown'}**\n\n`;
       text += actionResult.description || 'You look around.';
