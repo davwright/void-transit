@@ -156,9 +156,9 @@ describe('Parser', () => {
       expect(parse('tell me about the panel')).toMatchObject({ action: 'examine', target: 'panel' });
     });
 
-    it('parses "where is the wrench" as examine', () => {
+    it('parses "where is the wrench" as search', () => {
       const result = parse('where is the wrench');
-      expect(result.action).toBe('examine');
+      expect(result.action).toBe('search');
     });
 
     it('parses "how does the reactor work" as examine', () => {

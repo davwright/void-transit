@@ -3,6 +3,7 @@ import NavigationManager from './NavigationManager';
 import InventoryManager from './InventoryManager';
 import PuzzleEngine from './PuzzleEngine';
 import StoryManager from './StoryManager';
+import { levenshtein } from '../nlp/StatisticalTagger';
 
 class CommandProcessor {
   nav: NavigationManager;
@@ -386,6 +387,28 @@ class CommandProcessor {
       return { type: 'search_nothing', message: "You search thoroughly but find nothing new." };
     }
 
+    // "where X" — check if it's in inventory, current room, or a visited room
+    const itemId = this._resolveItemId(target, gameState);
+    if (itemId) {
+      // In inventory?
+      if (gameState.inventory.includes(itemId)) {
+        const item = this.inv.getItemDef(itemId);
+        return { type: 'search_success', message: `You have the ${item?.name || target} in your inventory.` };
+      }
+      // In current room?
+      const loc = gameState.itemLocations[itemId];
+      if (loc === gameState.currentRoom) {
+        const item = this.inv.getItemDef(itemId);
+        return { type: 'search_success', message: `The ${item?.name || target} is here.` };
+      }
+      // In a visited room?
+      if (loc && gameState.visitedRooms.has(loc)) {
+        const item = this.inv.getItemDef(itemId);
+        const room = this.nav.getRoom(loc);
+        return { type: 'search_success', message: `You left the ${item?.name || target} in the ${room?.name || loc}.` };
+      }
+    }
+
     return this._handleExamine(target, gameState, rawInput);
   }
 
@@ -487,6 +510,27 @@ Commands can be abbreviated: "exa" for examine, "inv" for inventory, etc.`
     if (this.inv.getItemDef(normalized)) return normalized;
     const underscored = normalized.replace(/ /g, '_');
     if (this.inv.getItemDef(underscored)) return underscored;
+
+    // Spelling correction: check all items in inventory + current room for close matches
+    if (normalized.length >= 3) {
+      let bestId: string | null = null;
+      let bestDist = 3; // max distance 2
+      const candidates = [...gameState.inventory, ...roomItems.map(i => i.id)];
+      for (const id of candidates) {
+        const def = this.inv.getItemDef(id);
+        if (!def) continue;
+        // Check against id, name, and aliases
+        const names = [def.id, def.name.toLowerCase(), ...(def.aliases || []).map(a => a.toLowerCase())];
+        for (const n of names) {
+          const dist = levenshtein(normalized, n);
+          if (dist > 0 && dist < bestDist) {
+            bestDist = dist;
+            bestId = id;
+          }
+        }
+      }
+      if (bestId) return bestId;
+    }
 
     return null;
   }
