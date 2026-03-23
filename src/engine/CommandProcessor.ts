@@ -470,15 +470,22 @@ class CommandProcessor {
       type: 'help',
       message: `Available commands:
 MOVEMENT: fore/f, aft/a, port/p, starboard/sb, up/u, down/d, in, out
-ACTIONS:  look, examine [target], take [item], drop [item]
-          use [item] on [target], open [target], search
-          turn on/off [item], activate/deactivate [item]
-ITEMS:    inventory/i, combine [item] with [item]
-          equip [item], remove [item]
-INFO:     status, systems, map, hint, read [item]
+LOOK:     look, examine [thing], read [document], search
+ITEMS:    take [item], drop [item], inventory/i, equip [item]
+USE:      use [item] on [target], combine [item] with [item]
+          open [thing], turn on/off [thing]
+INFO:     status, date, systems, map/m, hint
 GAME:     save [name], load [name], saves, help, wait
+AUDIO:    audio (toggle), volume [0-100]
 
-Commands can be abbreviated: "exa" for examine, "inv" for inventory, etc.`
+Tips:
+  Examine everything — descriptions contain clues.
+  Items can be combined together or used on things in the room.
+  Search rooms carefully — not everything is visible at first.
+  Some problems need the right tool. Check your inventory.
+  If something looks broken, you might have what you need to fix it.
+  Commands can be abbreviated: exa, inv, sta, sys, etc.
+  You can ask questions: "where wrench", "what is this"`
     };
   }
 
