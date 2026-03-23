@@ -109,6 +109,26 @@
     historyIndex = -1;
     input.value = '';
 
+    // Client-side commands (audio, etc.)
+    const lower = text.toLowerCase().trim();
+    if (lower === 'audio' || lower === 'mute' || lower === 'sound') {
+      if (window.voidAudio) {
+        const on = window.voidAudio.toggle();
+        appendMeta(on ? 'Audio enabled.' : 'Audio muted.');
+      } else {
+        appendMeta('Audio not available.');
+      }
+      return;
+    }
+    if (lower.startsWith('volume ')) {
+      const v = parseFloat(lower.substring(7));
+      if (!isNaN(v) && window.voidAudio) {
+        window.voidAudio.setVolume(v / 100);
+        appendMeta(`Volume: ${Math.round(v)}%`);
+      }
+      return;
+    }
+
     busy = true;
     input.disabled = true;
     input.placeholder = 'Processing...';
@@ -173,6 +193,30 @@
       scrollToBottom();
     }
 
+    // Audio triggers
+    if (window.voidAudio) {
+      // Room change — crossfade to new theme
+      if (data.roomId && data.type === 'move_success') {
+        window.voidAudio.setRoom(data.roomId);
+        window.voidAudio.sfx('door_open');
+      }
+      // Item pickup
+      if (data.type === 'take_success') {
+        window.voidAudio.sfx('item_take');
+      }
+      // System warnings
+      if (data.prose && data.prose.includes('[WARNING]')) {
+        window.voidAudio.sfx('warning');
+      }
+      if (data.prose && (data.prose.includes('[CRITICAL]') || data.prose.includes('[FATAL]'))) {
+        window.voidAudio.sfx('critical');
+      }
+      // Story beats (discovery moments)
+      if (data.storyContext && data.storyContext.tension > 6) {
+        window.voidAudio.sfx('heartbeat');
+      }
+    }
+
     updateStatus({
       roomId: data.roomId,
       roomName: data.roomName,
@@ -219,6 +263,11 @@
         health: 65,
         turnCount: 0
       });
+
+      // Start audio on first room
+      if (window.voidAudio && data.roomId) {
+        window.voidAudio.setRoom(data.roomId);
+      }
 
     } catch (err) {
       appendError('Failed to start new game. Is the server running?');

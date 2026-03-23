@@ -9,6 +9,7 @@ import { generateProse, buildFallbackProse } from './nlp/ProseGenerator';
 import { setupDebugRoutes } from './debug';
 import { Intent, ActionResult, StoryContext } from './types';
 import { logger } from './engine/InteractionLogger';
+import { configureOpenRouter, isConfigured as isORConfigured, complete as orComplete, getAutopilotCommand } from './nlp/OpenRouterAdapter';
 
 const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf-8'));
 const VERSION = pkg.version;
@@ -113,6 +114,76 @@ export function createApp() {
 
     const roomId = result.currentRoom || state.currentRoom;
     return res.send(`${prose}\n\n[Room: ${roomId} | Turn: ${result.turnCount || state.turnCount} | HP: ${state.playerHealth}%]`);
+  });
+
+  // === OpenRouter LLM endpoints ===
+
+  app.post('/api/llm/configure', (req: Request, res: Response) => {
+    const { apiKey, model } = req.body;
+    if (!apiKey) return res.status(400).json({ error: 'Missing apiKey' });
+    configureOpenRouter({
+      apiKey,
+      model: model || 'openrouter/auto',
+      referer: 'void-transit',
+    });
+    res.json({ success: true, model: model || 'openrouter/auto' });
+  });
+
+  app.post('/api/llm/complete', async (req: Request, res: Response) => {
+    if (!isORConfigured()) return res.status(400).json({ error: 'OpenRouter not configured. POST /api/llm/configure first.' });
+    const { prompt, systemPrompt } = req.body;
+    if (!prompt) return res.status(400).json({ error: 'Missing prompt' });
+    try {
+      const result = await orComplete(prompt, systemPrompt);
+      res.json(result);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      res.status(500).json({ error: msg });
+    }
+  });
+
+  // Autopilot: LLM decides the next command, server executes it
+  app.post('/api/llm/autopilot', async (req: Request, res: Response) => {
+    const { sessionId } = req.body;
+    if (!sessionId) return res.status(400).json({ error: 'Missing sessionId' });
+    if (!isORConfigured()) return res.status(400).json({ error: 'OpenRouter not configured.' });
+
+    const state = engine.getState(sessionId);
+    if (!state) return res.status(404).json({ error: 'No active game session.' });
+
+    try {
+      // Get current room view for context
+      const lookResult = engine.processCommand(sessionId, parse('look'));
+      const lookProse = buildFallbackProse(lookResult);
+      const recentHistory = state.conversationHistory.slice(-6).map(h =>
+        `> ${h.intent.raw} → ${h.resultType}`
+      );
+
+      // Ask LLM what to do
+      const command = await getAutopilotCommand(
+        lookProse,
+        recentHistory,
+        state.inventory,
+        state.currentRoom,
+      );
+
+      // Execute the command
+      let intent: Intent = parse(command);
+      const result = engine.processCommand(sessionId, intent);
+      const prose = buildFallbackProse(result);
+
+      res.json({
+        command,
+        type: result.type,
+        prose,
+        roomId: result.currentRoom || state.currentRoom,
+        turnCount: result.turnCount || state.turnCount,
+        health: state.playerHealth,
+      });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      res.status(500).json({ error: msg });
+    }
   });
 
   app.post('/api/new', (req: Request, res: Response) => {
