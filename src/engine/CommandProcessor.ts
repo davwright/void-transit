@@ -505,20 +505,43 @@ Commands can be abbreviated: "exa" for examine, "inv" for inventory, etc.`
     if (!name) return null;
     const normalized = name.toLowerCase().replace(/[^a-z0-9 ]/g, '').trim();
 
+    // Score inventory matches to find the best one
+    let bestInvMatch: { id: string; score: number } | null = null;
     for (const id of gameState.inventory) {
       const def = this.inv.getItemDef(id);
-      if (def && this._nameMatches(normalized, def)) return id;
+      if (!def) continue;
+      const score = this._nameMatchScore(normalized, def);
+      if (score > 0 && (!bestInvMatch || score > bestInvMatch.score)) {
+        bestInvMatch = { id, score };
+      }
     }
 
     // Check all room items — hidden items are findable by name (described in room text)
     // but they get auto-revealed when the player explicitly references them
+    // Score matches to pick the best one (more matching words = better)
     const roomItems = this.inv.getItemsInRoom(gameState.currentRoom, gameState);
+    let bestRoomMatch: { id: string; score: number } | null = null;
     for (const item of roomItems) {
-      if (this._nameMatches(normalized, item)) {
-        if (item.hidden) gameState.itemHidden[item.id] = false;
-        return item.id;
+      const score = this._nameMatchScore(normalized, item);
+      if (score > 0 && (!bestRoomMatch || score > bestRoomMatch.score)) {
+        bestRoomMatch = { id: item.id, score };
       }
     }
+    // Return the best match — room wins over inventory if better score
+    if (bestRoomMatch && bestInvMatch) {
+      if (bestRoomMatch.score >= bestInvMatch.score) {
+        const item = roomItems.find(i => i.id === bestRoomMatch!.id)!;
+        if (item.hidden) gameState.itemHidden[item.id] = false;
+        return bestRoomMatch.id;
+      }
+      return bestInvMatch.id;
+    }
+    if (bestRoomMatch) {
+      const item = roomItems.find(i => i.id === bestRoomMatch!.id)!;
+      if (item.hidden) gameState.itemHidden[item.id] = false;
+      return bestRoomMatch.id;
+    }
+    if (bestInvMatch) return bestInvMatch.id;
 
     if (this.inv.getItemDef(normalized)) return normalized;
     const underscored = normalized.replace(/ /g, '_');
@@ -572,27 +595,41 @@ Commands can be abbreviated: "exa" for examine, "inv" for inventory, etc.`
   }
 
   _nameMatches(input: string, itemDef: ItemDef): boolean {
+    return this._nameMatchScore(input, itemDef) > 0;
+  }
+
+  /** Score how well an input matches an item. Higher = better. 0 = no match. */
+  _nameMatchScore(input: string, itemDef: ItemDef): number {
     const id = itemDef.id.toLowerCase();
     const name = itemDef.name.toLowerCase();
     const aliases = (itemDef.aliases || []).map(a => a.toLowerCase());
 
-    // Exact or substring match on id/name
-    if (input === id || input === name) return true;
-    if (id.includes(input) || name.includes(input)) return true;
-    if (aliases.some(a => a === input || a.includes(input))) return true;
-    if (input.replace(/ /g, '_') === id) return true;
+    // Exact match on name or alias — highest score
+    if (input === name) return 100;
+    if (aliases.some(a => a === input)) return 95;
+    if (input === id || input.replace(/ /g, '_') === id) return 90;
 
-    // Word-level matching: if any significant input word (3+ chars) exactly matches
-    // a word in the item name, id, or aliases, count it as a match
+    // Input is a substring of name/alias or vice versa
+    if (name.includes(input)) return 80;
+    if (aliases.some(a => a.includes(input))) return 75;
+    if (id.includes(input)) return 70;
+
+    // Word-level matching: count how many input words match item words
     const inputWords = input.split(/[\s_]+/).filter(w => w.length >= 3);
+    if (inputWords.length === 0) return 0;
+
     const nameWords = name.split(/[\s_]+/).filter(w => w.length >= 3);
     const idWords = id.split(/[\s_]+/).filter(w => w.length >= 3);
     const aliasWords = aliases.flatMap(a => a.split(/[\s_]+/).filter(w => w.length >= 3));
     const allItemWords = new Set([...nameWords, ...idWords, ...aliasWords]);
 
-    if (inputWords.length > 0 && inputWords.some(iw => allItemWords.has(iw))) return true;
+    const matchCount = inputWords.filter(iw => allItemWords.has(iw)).length;
+    if (matchCount === 0) return 0;
 
-    return false;
+    // Score based on proportion of input words that matched
+    // "personal photograph" matching "Personal Photograph" = 2/2 = 50
+    // "personal photograph" matching "Personal Datapad" = 1/2 = 25
+    return Math.round((matchCount / inputWords.length) * 50);
   }
 
   /**

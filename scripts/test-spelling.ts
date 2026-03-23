@@ -1,11 +1,9 @@
+import GameEngine from '../src/engine/GameEngine';
 import { parse } from '../src/nlp/Parser';
 
-const tests = [
-  'where kit', 'test suit', 'drop sppol', 'take sppol',
-  'where wrench', 'locate datapad',
-];
-
-for (const input of tests) {
-  const p = parse(input);
-  process.stdout.write(`"${input}" → action=${p.action} target=${p.target}\n`);
+for (const cmd of ['take personal photograph', 'take photograph', 'take photo', 'take datapad']) {
+  const engine = new GameEngine();
+  engine.newGame('t');
+  const r = engine.processCommand('t', parse(cmd));
+  process.stdout.write(`"${cmd}" → ${r.type}: ${r.itemName || r.message || ''}\n`);
 }
