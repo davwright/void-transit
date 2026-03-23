@@ -11,13 +11,13 @@ const BASE = `http://localhost:${PORT}/api/test`;
 const API_KEY = process.env.OPENROUTER_KEY || '';
 const MAX_TURNS = 60;
 
-// Free/ultra-cheap models to test
+// Free models on OpenRouter (verified working)
 const MODELS = [
-  { id: 'qwen/qwen3-8b:free', name: 'Qwen3-8B' },
-  { id: 'mistralai/mistral-small-3.1-24b-instruct:free', name: 'Mistral-Small' },
-  { id: 'google/gemma-3-4b-it:free', name: 'Gemma-3-4B' },
-  { id: 'meta-llama/llama-4-scout:free', name: 'Llama-4-Scout' },
-  { id: 'deepseek/deepseek-chat-v3-0324:free', name: 'DeepSeek-V3' },
+  { id: 'z-ai/glm-4.5-air:free', name: 'GLM-4.5-Air' },
+  { id: 'stepfun/step-3.5-flash:free', name: 'StepFun-Flash' },
+  { id: 'qwen/qwen3-next-80b-a3b-instruct:free', name: 'Qwen3-Next-80B' },
+  { id: 'arcee-ai/trinity-mini:free', name: 'Trinity-Mini' },
+  { id: 'nvidia/nemotron-nano-9b-v2:free', name: 'Nemotron-9B' },
 ];
 
 interface PlayerStats {
@@ -46,7 +46,7 @@ async function askModel(modelId: string, prompt: string): Promise<string> {
       model: modelId,
       messages: [{ role: 'user', content: prompt }],
       temperature: 0.7,
-      max_tokens: 100,
+      max_tokens: 300,
     }),
   });
 
@@ -55,10 +55,20 @@ async function askModel(modelId: string, prompt: string): Promise<string> {
     throw new Error(`${response.status}: ${err}`);
   }
 
-  const data = await response.json();
-  let text = data.choices?.[0]?.message?.content?.trim() || 'look';
+  const data = await response.json() as any;
+  // Some models put answer in content, others in reasoning
+  let text = data.choices?.[0]?.message?.content?.trim() || '';
+  if (!text) {
+    // Try reasoning field as fallback
+    const reasoning = data.choices?.[0]?.message?.reasoning || '';
+    // Extract the last short line from reasoning as the command
+    const lines = reasoning.split('\n').map((l: string) => l.trim()).filter((l: string) => l.length > 0 && l.length < 40);
+    text = lines[lines.length - 1] || 'look';
+  }
   // Clean up
-  text = text.split('\n')[0].replace(/^["'`>]|["'`]$/g, '').trim();
+  text = text.split('\n')[0].replace(/^["'`>*\-]|["'`]$/g, '').trim();
+  // Remove common prefixes LLMs add
+  text = text.replace(/^(Command|Action|I'll|Let me|My command):\s*/i, '');
   if (text.length > 80) text = text.substring(0, 80);
   return text || 'look';
 }
@@ -84,7 +94,7 @@ async function playSession(model: typeof MODELS[0]): Promise<PlayerStats> {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({}),
   });
-  const newGame = await newGameRes.json();
+  const newGame = await newGameRes.json() as any;
   const sessionId = newGame.sessionId;
   stats.rooms.add(newGame.roomId);
 
@@ -135,7 +145,7 @@ Command:`;
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ sessionId, input: command }),
     });
-    const cmdData = await cmdRes.json();
+    const cmdData = await cmdRes.json() as any;
 
     lastResponse = cmdData.prose || '';
     history.push(`> ${command}`);
@@ -182,7 +192,7 @@ async function tournament() {
       process.stdout.write(`  Errors: ${stats.parseErrors} parse, ${stats.examineLoops} loops\n`);
       process.stdout.write(`  Deaths: ${stats.deaths}\n`);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : String(err);
+      const msg = err instanceof Error ? (err.message + '\n' + (err as any).stack?.split('\n').slice(0,3).join('\n')) : String(err);
       process.stdout.write(`  FAILED: ${msg}\n`);
     }
   }
