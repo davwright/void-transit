@@ -101,6 +101,19 @@ class CommandProcessor {
   }
 
   _handleExamine(target: string | null, gameState: GameState, rawInput?: string): ActionResult {
+    // Check scenery FIRST (exact match) before fuzzy item resolution
+    if (target) {
+      const room = this.nav.getRoom(gameState.currentRoom);
+      const normalizedTarget = target.toLowerCase();
+      if (room?.examineTargets?.[normalizedTarget]) {
+        return {
+          type: 'examine',
+          target,
+          text: room.examineTargets[normalizedTarget]
+        };
+      }
+    }
+
     let itemId = this._resolveItemId(target, gameState);
 
     // If we can't resolve the target, try the last-examined item as context
@@ -511,21 +524,32 @@ Commands can be abbreviated: "exa" for examine, "inv" for inventory, etc.`
     const underscored = normalized.replace(/ /g, '_');
     if (this.inv.getItemDef(underscored)) return underscored;
 
-    // Spelling correction: check all items in inventory + current room for close matches
+    // Spelling correction: check inventory first, then room items.
+    // A better match in the room wins over a poorer match in inventory.
     if (normalized.length >= 3) {
       let bestId: string | null = null;
-      let bestDist = 3; // max distance 2
-      const candidates = [...gameState.inventory, ...roomItems.map(i => i.id)];
-      for (const id of candidates) {
-        const def = this.inv.getItemDef(id);
-        if (!def) continue;
-        // Check against id, name, and aliases
-        const names = [def.id, def.name.toLowerCase(), ...(def.aliases || []).map(a => a.toLowerCase())];
-        for (const n of names) {
-          const dist = levenshtein(normalized, n);
-          if (dist > 0 && dist < bestDist) {
-            bestDist = dist;
-            bestId = id;
+      let bestDist = Infinity;
+
+      // Max allowed distance scales with word length: 1 for short words, 2 for longer
+      const maxDist = normalized.length <= 5 ? 1 : 2;
+
+      // Check inventory first, then room items
+      const invCandidates = gameState.inventory;
+      const roomCandidates = roomItems.map(i => i.id);
+
+      for (const candidateList of [invCandidates, roomCandidates]) {
+        for (const id of candidateList) {
+          const def = this.inv.getItemDef(id);
+          if (!def) continue;
+          const names = [def.id, def.name.toLowerCase(), ...(def.aliases || []).map(a => a.toLowerCase())];
+          for (const n of names) {
+            // Only compare words of similar length (avoid matching "gel" to "medical kit")
+            if (Math.abs(normalized.length - n.length) > maxDist) continue;
+            const dist = levenshtein(normalized, n);
+            if (dist > 0 && dist <= maxDist && dist < bestDist) {
+              bestDist = dist;
+              bestId = id;
+            }
           }
         }
       }

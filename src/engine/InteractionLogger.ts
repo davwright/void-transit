@@ -55,14 +55,16 @@ export interface InteractionLogEntry {
 type LogEntry = HaikuLogEntry | InteractionLogEntry;
 
 class InteractionLogger {
-  private haikuLogPath: string;
-  private interactionLogPath: string;
   private initialized = false;
+  private sessionPaths = new Map<string, string>();
 
-  constructor() {
-    const date = new Date().toISOString().slice(0, 10);
-    this.haikuLogPath = path.join(config.logsDir, `haiku-${date}.jsonl`);
-    this.interactionLogPath = path.join(config.logsDir, `interactions-${date}.jsonl`);
+  private getSessionPath(sessionId: string): string {
+    if (this.sessionPaths.has(sessionId)) return this.sessionPaths.get(sessionId)!;
+    const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+    const shortId = sessionId.replace(/[^a-zA-Z0-9]/g, '').slice(0, 12);
+    const filepath = path.join(config.logsDir, `session-${ts}-${shortId}.jsonl`);
+    this.sessionPaths.set(sessionId, filepath);
+    return filepath;
   }
 
   private ensureDir(): void {
@@ -83,7 +85,7 @@ class InteractionLogger {
   }
 
   logHaikuCall(entry: Omit<HaikuLogEntry, 'type' | 'timestamp'>): void {
-    this.append(this.haikuLogPath, {
+    this.append(this.getSessionPath(entry.sessionId), {
       type: 'haiku_call',
       timestamp: new Date().toISOString(),
       ...entry,
@@ -94,7 +96,7 @@ class InteractionLogger {
   }
 
   logInteraction(entry: Omit<InteractionLogEntry, 'type' | 'timestamp'>): void {
-    this.append(this.interactionLogPath, {
+    this.append(this.getSessionPath(entry.sessionId), {
       type: 'interaction',
       timestamp: new Date().toISOString(),
       ...entry,
@@ -112,8 +114,8 @@ class InteractionLogger {
 
   /** Read all haiku log entries (for analysis/tests), decoding base64 fields */
   readHaikuLogs(): HaikuLogEntry[] {
-    const raw = this.readLogDir<HaikuLogEntry>('haiku-');
-    return raw.map(e => ({
+    const raw = this.readLogDir<HaikuLogEntry>('session-');
+    return raw.filter(e => e.type === 'haiku_call').map(e => ({
       ...e,
       prompt: decodeString(e.prompt),
       response: decodeString(e.response),
@@ -123,8 +125,8 @@ class InteractionLogger {
 
   /** Read all interaction log entries (for analysis/tests), decoding base64 fields */
   readInteractionLogs(): InteractionLogEntry[] {
-    const raw = this.readLogDir<InteractionLogEntry>('interactions-');
-    return raw.map(e => ({
+    const raw = this.readLogDir<InteractionLogEntry>('session-');
+    return raw.filter(e => e.type === 'interaction').map(e => ({
       ...e,
       sessionId: decodeString(e.sessionId),
       room: decodeString(e.room),

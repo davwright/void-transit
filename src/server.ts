@@ -40,6 +40,81 @@ export function createApp() {
     res.json({ version: VERSION });
   });
 
+  // Plain-text GET endpoint for LLM playtesting
+  // GET /api/test         → starts a new game, returns intro text
+  // GET /api/test/look    → sends "look" command, returns plain text
+  let testSessionId: string | null = null;
+
+  app.get('/api/test', async (req: Request, res: Response) => {
+    const prompt = (req.query.cmd as string || '').trim();
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+
+    // No prompt or no session → start new game
+    if (!prompt || !testSessionId || !engine.getState(testSessionId)) {
+      testSessionId = generateSessionId();
+      const result = engine.newGame(testSessionId);
+      if (prompt && prompt.length > 0) {
+        // Session just created, fall through to command processing below
+      } else {
+        const prose = buildFallbackProse({ ...result, type: 'move_success' } as ActionResult);
+        return res.send(`=== VOID TRANSIT v${VERSION} ===\n\n${prose}\n\n[Room: ${result.roomId}]`);
+      }
+    }
+
+    // Process the command - reuse the POST logic but simplified
+    const state = engine.getState(testSessionId)!;
+    const trimmed = prompt.toLowerCase();
+
+    // Handle save/load
+    if (trimmed.startsWith('save')) {
+      const name = prompt.substring(4).trim() || 'quicksave';
+      engine.saveGame(testSessionId, name);
+      return res.send(`Game saved as "${name}".`);
+    }
+    if (trimmed.startsWith('load') || trimmed.startsWith('restore')) {
+      const name = prompt.replace(/^(load|restore)\s*/i, '').trim() || 'quicksave';
+      const result = engine.loadGame(testSessionId, name);
+      if (!result.success) return res.send(`Load failed: ${(result as any).reason}`);
+      const prose = buildFallbackProse({ ...result, type: 'move_success' } as ActionResult);
+      return res.send(`Game loaded.\n\n${prose}`);
+    }
+
+    // Parse and process
+    let intent: Intent = parse(prompt);
+    if (intent.action === 'unknown' && USE_HAIKU && prompt.length > 2) {
+      const gameContext: GameContext = {
+        currentRoom: state.currentRoom,
+        inventory: state.inventory || [],
+        visibleItems: []
+      };
+      intent = await parseWithHaiku(prompt, gameContext);
+    }
+
+    const result = engine.processCommand(testSessionId, intent);
+    let prose: string;
+    const storyContext: StoryContext = result.storyContext || { actId: 'unknown', actName: 'Unknown', tension: 0, solvedPuzzles: [], activePuzzles: [], turnCount: 0, playerHealth: 100, knownClues: [] };
+
+    if (['examine_scenery'].includes(result.type) && USE_HAIKU) {
+      try {
+        prose = await generateProse(result, storyContext, state);
+      } catch {
+        prose = buildFallbackProse(result);
+      }
+    } else {
+      prose = buildFallbackProse(result);
+    }
+
+    if (result.systemEvents?.length) {
+      for (const evt of result.systemEvents) prose += `\n\n[${evt.type.toUpperCase()}] ${evt.message}`;
+    }
+    if (result.storyBeats?.length) {
+      for (const beat of result.storyBeats) prose += `\n\n${beat.text}`;
+    }
+
+    const roomId = result.currentRoom || state.currentRoom;
+    return res.send(`${prose}\n\n[Room: ${roomId} | Turn: ${result.turnCount || state.turnCount} | HP: ${state.playerHealth}%]`);
+  });
+
   app.post('/api/new', (req: Request, res: Response) => {
     const sessionId: string = req.body.sessionId || generateSessionId();
     const result = engine.newGame(sessionId);
@@ -75,7 +150,7 @@ export function createApp() {
           return res.json({ type: 'load_failed', prose: (result as { reason?: string }).reason });
         }
         const loadedState = engine.getState(sessionId)!;
-        const prose = buildFallbackProse({ type: 'move_success', ...result } as ActionResult);
+        const prose = buildFallbackProse({ ...result, type: 'move_success' } as ActionResult);
         return res.json({ type: 'load', prose: `Game loaded.\n\n${prose}`, ...result, turnCount: loadedState.turnCount, health: loadedState.playerHealth });
       }
       if (trimmed === 'saves') {
