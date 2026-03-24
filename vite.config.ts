@@ -4,6 +4,7 @@ import { cpSync } from 'fs';
 
 export default defineConfig({
   root: 'src/browser',
+  base: '/void-transit/',
   publicDir: resolve(__dirname, 'src/browser/public'),
   build: {
     outDir: '../../docs',
@@ -13,6 +14,10 @@ export default defineConfig({
     rollupOptions: {
       input: resolve(__dirname, 'src/browser/index.html'),
     },
+  },
+  define: {
+    'process.env': '{}',
+    '__dirname': '""',
   },
   resolve: {
     alias: {
