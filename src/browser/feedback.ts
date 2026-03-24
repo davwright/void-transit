@@ -23,14 +23,14 @@ function _token(): string {
 
 export function hasConsent(): boolean {
   if (typeof localStorage === 'undefined') return false;
-  consent = localStorage.getItem('vt_telemetry_consent') === 'yes';
+  consent = localStorage.getItem('vt_feedback_consent') === 'yes';
   return consent;
 }
 
 export function setConsent(value: boolean): void {
   consent = value;
   if (typeof localStorage !== 'undefined') {
-    localStorage.setItem('vt_telemetry_consent', value ? 'yes' : 'no');
+    localStorage.setItem('vt_feedback_consent', value ? 'yes' : 'no');
   }
 }
 
