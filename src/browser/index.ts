@@ -362,6 +362,10 @@ Type <strong>accept</strong> to consent, or <strong>decline</strong> to play wit
 }
 
 function startGame() {
+// Set version in tab title
+declare const __APP_VERSION__: string;
+document.title = `VOID TRANSIT v${__APP_VERSION__}`;
+
 const newGame = engine.newGame(sessionId);
 
 // Just the intro — no room name, no description, no items. Blank cursor. Confusion.
