@@ -13,7 +13,7 @@ import { injectPrompts } from '../nlp/ProseGenerator';
 import { buildFallbackProse } from '../nlp/ProseGenerator';
 import BrowserSaveManager from '../engine/BrowserSaveManager';
 import { browserLogger } from '../engine/BrowserLogger';
-import { hasConsent, setConsent, upload, startPeriodicUpload } from './telemetry';
+import { hasConsent, setConsent, upload, startPeriodicUpload } from './feedback';
 
 // Import encoded JSON data (Vite bundles these at build time)
 import roomsRaw from '../data/rooms.json';
@@ -173,16 +173,16 @@ function processCommand(text: string) {
   const lower = trimmed.toLowerCase();
 
   // Client-side commands
-  if (lower === 'telemetry on' || lower === 'telemetry off' || lower === 'telemetry') {
-    if (lower === 'telemetry off') {
+  if (lower === 'feedback on' || lower === 'feedback off' || lower === 'feedback') {
+    if (lower === 'feedback off') {
       setConsent(false);
-      appendMeta('Telemetry disabled. Your gameplay data will not be shared.');
-    } else if (lower === 'telemetry on') {
+      appendMeta('Feedback disabled. Your gameplay data will not be shared.');
+    } else if (lower === 'feedback on') {
       setConsent(true);
       startPeriodicUpload();
-      appendMeta('Telemetry enabled. Gameplay data will be shared to improve the story.');
+      appendMeta('Feedback enabled. Gameplay data will be shared to improve the story.');
     } else {
-      appendMeta(hasConsent() ? 'Telemetry is ON. Type "telemetry off" to disable.' : 'Telemetry is OFF. Type "telemetry on" to enable.');
+      appendMeta(hasConsent() ? 'Feedback is ON. Type "feedback off" to disable.' : 'Feedback is OFF. Type "feedback on" to enable.');
     }
     return;
   }
@@ -318,10 +318,10 @@ input.addEventListener('keydown', (e: KeyboardEvent) => {
       if (l === 'accept' || l === 'yes' || l === 'y') {
         setConsent(true);
         startPeriodicUpload();
-        appendMeta('Telemetry enabled. Thank you.');
+        appendMeta('Feedback enabled. Thank you.');
       } else {
         setConsent(false);
-        appendMeta('Telemetry disabled. You can enable it later with "settings".');
+        appendMeta('Feedback disabled. You can enable it later with "settings".');
       }
       waitingForConsent = false;
       startGame();
@@ -347,14 +347,14 @@ document.addEventListener('click', () => {
 
 // === Privacy consent (first visit only) ===
 let waitingForConsent = false;
-if (localStorage.getItem('vt_telemetry_consent') === null) {
+if (localStorage.getItem('vt_feedback_consent') === null) {
   waitingForConsent = true;
   appendOutput(`<div class="meta-text" style="border: 1px solid var(--border); padding: 8px; margin: 4px 0;">
 <strong>Privacy Notice</strong><br>
 VOID TRANSIT collects gameplay data (commands, rooms visited) to improve the game.
 No personal information is collected. No API keys are transmitted.
 All data is encrypted and used solely for story improvement.<br><br>
-Type <strong>accept</strong> to consent, or <strong>decline</strong> to play without telemetry.
+Type <strong>accept</strong> to consent, or <strong>decline</strong> to play without feedback.
 </div>`);
 } else {
   if (hasConsent()) startPeriodicUpload();

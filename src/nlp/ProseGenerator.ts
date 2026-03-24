@@ -268,311 +268,164 @@ function buildPrompt(actionResult: ActionResult, storyContext: StoryContext, gam
   return prompt;
 }
 
-/**
- * Render a spatial ASCII map from mapRooms data.
- * Directions in room exits: n=fore(up), s=aft(down), w=port(left), e=starboard(right), up/down=deck changes.
- */
+/** Render a clean spatial ASCII map */
 function renderSpatialMap(actionResult: ActionResult): string {
   if (!actionResult.mapRooms || actionResult.mapRooms.length === 0) {
     return '=== Ship Map ===\nNo areas explored yet.';
   }
+  // Delegate to the new clean renderer
+  return renderCleanMap(actionResult);
+}
 
-  const currentRoom = actionResult.currentRoom || '';
-  const visitedSet = new Set(actionResult.mapRooms.map(r => r.id));
+function renderCleanMap(ar: ActionResult): string {
+  const current = ar.currentRoom || '';
+  const mapRooms = ar.mapRooms || [];
+  const visitedIds = new Set(mapRooms.map((r: any) => r.id));
 
-  // Collect all rooms by deck, including unvisited neighbors
-  interface MapNode {
-    id: string;
-    label: string;
-    deck: string;
-    visited: boolean;
-    isCurrent: boolean;
-    exits: Record<string, string>;
+  interface Node { id: string; name: string; deck: string; visited: boolean; isCurrent: boolean; exits: Record<string,string>; hasUp: boolean; hasDown: boolean; }
+  const nodes = new Map<string, Node>();
+
+  for (const r of mapRooms) {
+    const hasUp = Object.keys(r.exits).some(d => d === 'up' || d === 'u');
+    const hasDown = Object.keys(r.exits).some(d => d === 'down' || d === 'd');
+    nodes.set(r.id, { id: r.id, name: shortName(r.name), deck: r.deck, visited: true, isCurrent: r.id === current, exits: r.exits, hasUp, hasDown });
   }
 
-  const allNodes = new Map<string, MapNode>();
-
-  // Add visited rooms
-  for (const r of actionResult.mapRooms) {
-    allNodes.set(r.id, {
-      id: r.id,
-      label: abbreviateRoom(r.name),
-      deck: r.deck,
-      visited: true,
-      isCurrent: r.id === currentRoom,
-      exits: r.exits
-    });
-  }
-
-  // Add unvisited neighbors (shown as [?])
-  for (const r of actionResult.mapRooms) {
-    for (const [dir, targetId] of Object.entries(r.exits)) {
-      if (!allNodes.has(targetId)) {
-        // Infer deck: up/down changes deck, otherwise same deck
-        let neighborDeck = r.deck;
-        if (dir === 'up' || dir === 'u') {
-          neighborDeck = String.fromCharCode(r.deck.charCodeAt(0) - 1);
-        } else if (dir === 'down' || dir === 'd') {
-          neighborDeck = String.fromCharCode(r.deck.charCodeAt(0) + 1);
-        }
-        allNodes.set(targetId, {
-          id: targetId,
-          label: '?',
-          deck: neighborDeck,
-          visited: false,
-          isCurrent: false,
-          exits: {}
-        });
-      }
+  // Add unvisited neighbors
+  for (const r of mapRooms) {
+    for (const [dir, tid] of Object.entries(r.exits)) {
+      if (nodes.has(tid)) continue;
+      let deck = r.deck;
+      if (dir === 'up' || dir === 'u') deck = String.fromCharCode(deck.charCodeAt(0) - 1);
+      else if (dir === 'down' || dir === 'd') deck = String.fromCharCode(deck.charCodeAt(0) + 1);
+      nodes.set(tid, { id: tid, name: '???', deck, visited: false, isCurrent: false, exits: {}, hasUp: false, hasDown: false });
     }
   }
 
   // Group by deck
-  const deckNodes = new Map<string, MapNode[]>();
-  for (const node of allNodes.values()) {
-    if (!deckNodes.has(node.deck)) deckNodes.set(node.deck, []);
-    deckNodes.get(node.deck)!.push(node);
+  const decks = new Map<string, Node[]>();
+  for (const n of nodes.values()) {
+    if (!decks.has(n.deck)) decks.set(n.deck, []);
+    decks.get(n.deck)!.push(n);
   }
 
-  // Sort decks alphabetically
-  const sortedDecks = [...deckNodes.keys()].sort();
-
-  let output = '=== Ship Map ===\n';
-  output += 'FORE (forward)\n';
-
-  for (const deck of sortedDecks) {
-    const nodes = deckNodes.get(deck)!;
-    output += `\n--- Deck ${deck} ---\n`;
-    output += renderDeckGrid(nodes, allNodes, visitedSet);
+  let out = '═══ Ship Map ═══\n';
+  for (const dk of [...decks.keys()].sort()) {
+    out += `\n── Deck ${dk} ──\n`;
+    out += layoutDeck(decks.get(dk)!, nodes);
   }
-
-  output += '\nAFT (aft)\n';
-  output += '\n[*] = You   [ ] = Visited   [?] = Unexplored   \u25B2\u25BC = Up/Down';
-  return output;
+  out += '\n◆ = You  ▲▼ = Deck access  ??? = Unexplored';
+  return out;
 }
 
-/** Abbreviate a room name to fit in map cells */
-function abbreviateRoom(name: string): string {
-  // Strip common suffixes/prefixes for brevity
-  let short = name
-    .replace(/\s*-\s*ISV Kepler's Promise/i, '')
-    .replace(/\s*-\s*Deck [A-D]/i, '')
-    .trim();
-  // Truncate to 12 chars max
-  if (short.length > 12) {
-    // Try to use initials of multi-word names
-    const words = short.split(/\s+/);
-    if (words.length >= 2) {
-      // Use first word abbreviated + key word
-      short = short.substring(0, 12);
-    } else {
-      short = short.substring(0, 12);
-    }
-  }
-  return short;
+function shortName(name: string): string {
+  return name.replace(/\s*-\s*ISV .*/i, '').replace(/\s*-\s*Deck .*/i, '').replace(/Compartment$/i, '').replace(/Systems$/i, '').trim();
 }
 
-/**
- * Render one deck as a 2D grid.
- * Uses BFS from an arbitrary node to assign grid positions based on n/s/e/w exits.
- */
-function renderDeckGrid(
-  nodes: Array<{ id: string; label: string; visited: boolean; isCurrent: boolean; exits: Record<string, string> }>,
-  allNodes: Map<string, { id: string; label: string; deck: string; visited: boolean; isCurrent: boolean; exits: Record<string, string> }>,
-  visitedIds: Set<string>
-): string {
-  if (nodes.length === 0) return '';
+function layoutDeck(deckNodes: any[], allNodes: Map<string, any>): string {
+  if (deckNodes.length === 0) return '';
 
-  // Assign grid positions via BFS using horizontal/vertical exits
-  const positions = new Map<string, { col: number; row: number }>();
-  const dirDeltas: Record<string, { dr: number; dc: number }> = {
-    n: { dr: -1, dc: 0 },
-    s: { dr: 1, dc: 0 },
-    e: { dr: 0, dc: 1 },
-    w: { dr: 0, dc: -1 },
-  };
+  // BFS to assign grid positions
+  const pos = new Map<string, [number, number]>(); // id → [row, col]
+  const deltas: Record<string, [number, number]> = { n: [-1, 0], s: [1, 0], e: [0, 1], w: [0, -1] };
+  const ids = new Set(deckNodes.map((n: any) => n.id));
 
-  const nodeIds = new Set(nodes.map(n => n.id));
-
-  // Start BFS from a visited node if possible, preferring current room
-  const startNode = nodes.find(n => n.isCurrent) || nodes.find(n => n.visited) || nodes[0];
-  positions.set(startNode.id, { col: 0, row: 0 });
-
-  const queue: string[] = [startNode.id];
-  const processed = new Set<string>([startNode.id]);
+  const start = deckNodes.find((n: any) => n.isCurrent) || deckNodes.find((n: any) => n.visited) || deckNodes[0];
+  pos.set(start.id, [0, 0]);
+  const queue = [start.id];
+  const seen = new Set([start.id]);
 
   while (queue.length > 0) {
     const id = queue.shift()!;
-    const pos = positions.get(id)!;
+    const [r, c] = pos.get(id)!;
     const node = allNodes.get(id);
     if (!node) continue;
-
-    for (const [dir, targetId] of Object.entries(node.exits)) {
-      if (!nodeIds.has(targetId)) continue; // skip cross-deck exits
-      if (positions.has(targetId)) continue;
-      const delta = dirDeltas[dir];
-      if (!delta) continue; // skip up/down
-
-      positions.set(targetId, { col: pos.col + delta.dc, row: pos.row + delta.dr });
-      if (!processed.has(targetId)) {
-        processed.add(targetId);
-        queue.push(targetId);
-      }
+    for (const [dir, tid] of Object.entries(node.exits) as [string, string][]) {
+      if (!ids.has(tid) || pos.has(tid) || !deltas[dir]) continue;
+      pos.set(tid, [r + deltas[dir][0], c + deltas[dir][1]]);
+      if (!seen.has(tid)) { seen.add(tid); queue.push(tid); }
     }
   }
 
-  // Handle any disconnected nodes on this deck (place them to the right)
-  let maxCol = 0;
-  for (const p of positions.values()) {
-    if (p.col > maxCol) maxCol = p.col;
-  }
-  for (const node of nodes) {
-    if (!positions.has(node.id)) {
-      maxCol += 2;
-      positions.set(node.id, { col: maxCol, row: 0 });
-    }
+  // Place disconnected nodes
+  let maxC = 0;
+  for (const [, [, c]] of pos) if (c > maxC) maxC = c;
+  for (const n of deckNodes) {
+    if (!pos.has(n.id)) { maxC += 2; pos.set(n.id, [0, maxC]); }
   }
 
-  // Normalize positions to start at 0,0
-  let minRow = Infinity, minCol = Infinity;
-  for (const p of positions.values()) {
-    if (p.row < minRow) minRow = p.row;
-    if (p.col < minCol) minCol = p.col;
-  }
-  for (const p of positions.values()) {
-    p.row -= minRow;
-    p.col -= minCol;
-  }
+  // Normalize
+  let minR = Infinity, minC = Infinity;
+  for (const [, [r, c]] of pos) { if (r < minR) minR = r; if (c < minC) minC = c; }
+  const grid = new Map<string, [number, number]>();
+  for (const [id, [r, c]] of pos) grid.set(id, [r - minR, c - minC]);
 
-  // Find grid bounds
-  let maxRow = 0;
-  maxCol = 0;
-  for (const p of positions.values()) {
-    if (p.row > maxRow) maxRow = p.row;
-    if (p.col > maxCol) maxCol = p.col;
-  }
+  let maxR = 0; maxC = 0;
+  for (const [, [r, c]] of grid) { if (r > maxR) maxR = r; if (c > maxC) maxC = c; }
 
-  // Cell width: label (max 12) + brackets + padding = 16
-  const CELL_W = 16;
-  const CONN_W = 3; // " \u2190\u2192 " connector width between cells
-  // Build the grid lines
+  // Find cell width based on longest name
+  let maxLen = 3;
+  for (const n of deckNodes) if (n.name.length > maxLen) maxLen = n.name.length;
+  const CW = maxLen + 6; // [◆ Name ▲▼]
+
+  const nodeAt = (r: number, c: number) => {
+    for (const [id, [gr, gc]] of grid) { if (gr === r && gc === c) return allNodes.get(id); }
+    return null;
+  };
+  const connected = (a: string, b: string, dir: string) => {
+    const na = allNodes.get(a); return na?.exits?.[dir] === b;
+  };
+  const pad = (s: string, w: number) => {
+    const gap = w - s.length; if (gap <= 0) return s;
+    const left = Math.floor(gap / 2);
+    return ' '.repeat(left) + s + ' '.repeat(gap - left);
+  };
+
   const lines: string[] = [];
-
-  for (let row = 0; row <= maxRow; row++) {
-    // Room row
-    let roomLine = '';
-    for (let col = 0; col <= maxCol; col++) {
-      const nodeAtPos = findNodeAt(row, col, positions, allNodes);
-      if (nodeAtPos) {
-        const bracket = nodeAtPos.isCurrent ? '[*' : nodeAtPos.visited ? '[ ' : '[?';
-        const bracketEnd = nodeAtPos.isCurrent ? '*]' : nodeAtPos.visited ? ' ]' : '?]';
-        const lbl = nodeAtPos.isCurrent
-          ? `*${nodeAtPos.label}*`
-          : nodeAtPos.label;
-        const cellContent = `${bracket} ${lbl} ${bracketEnd}`;
-        roomLine += centerPad(cellContent, CELL_W);
+  for (let row = 0; row <= maxR; row++) {
+    let line = '';
+    for (let col = 0; col <= maxC; col++) {
+      const n = nodeAt(row, col);
+      if (n) {
+        const mark = n.isCurrent ? '◆' : ' ';
+        const ud = (n.hasUp ? '▲' : '') + (n.hasDown ? '▼' : '');
+        const label = n.visited ? n.name : '???';
+        const cell = `[${mark}${label}${ud ? ' ' + ud : ''}]`;
+        line += pad(cell, CW);
       } else {
-        roomLine += ' '.repeat(CELL_W);
+        line += ' '.repeat(CW);
       }
-
-      // Horizontal connector
-      if (col < maxCol) {
-        const nodeHere = findNodeAt(row, col, positions, allNodes);
-        const nodeRight = findNodeAt(row, col + 1, positions, allNodes);
-        if (nodeHere && nodeRight && hasConnection(nodeHere.id, nodeRight.id, 'e', allNodes)) {
-          roomLine += '\u2190\u2192\u2190';
+      if (col < maxC) {
+        const here = nodeAt(row, col);
+        const right = nodeAt(row, col + 1);
+        if (here && right && (connected(here.id, right.id, 'e') || connected(right.id, here.id, 'w'))) {
+          line += '───';
         } else {
-          roomLine += ' '.repeat(CONN_W);
+          line += '   ';
         }
       }
     }
-    lines.push(roomLine.trimEnd());
+    lines.push(line.trimEnd());
 
-    // Vertical connectors + up/down markers
-    if (row < maxRow) {
-      let connLine = '';
-      for (let col = 0; col <= maxCol; col++) {
-        const nodeAbove = findNodeAt(row, col, positions, allNodes);
-        const nodeBelow = findNodeAt(row + 1, col, positions, allNodes);
-        if (nodeAbove && nodeBelow && hasConnection(nodeAbove.id, nodeBelow.id, 's', allNodes)) {
-          connLine += centerPad('\u2191\u2193', CELL_W);
+    if (row < maxR) {
+      let vline = '';
+      for (let col = 0; col <= maxC; col++) {
+        const above = nodeAt(row, col);
+        const below = nodeAt(row + 1, col);
+        if (above && below && (connected(above.id, below.id, 's') || connected(below.id, above.id, 'n'))) {
+          vline += pad('│', CW);
         } else {
-          connLine += ' '.repeat(CELL_W);
+          vline += ' '.repeat(CW);
         }
-        if (col < maxCol) {
-          connLine += ' '.repeat(CONN_W);
-        }
+        if (col < maxC) vline += '   ';
       }
-      lines.push(connLine.trimEnd());
-    }
-
-    // Up/down deck markers on the room row
-    // (We append these as annotations after the room line)
-  }
-
-  // Add up/down annotations
-  const deckAnnotations: string[] = [];
-  for (const node of nodes) {
-    const upTargets: string[] = [];
-    const downTargets: string[] = [];
-    for (const [dir, targetId] of Object.entries(node.exits)) {
-      if (dir === 'up' || dir === 'u') upTargets.push(targetId);
-      if (dir === 'down' || dir === 'd') downTargets.push(targetId);
-    }
-    if (upTargets.length > 0 || downTargets.length > 0) {
-      const markers: string[] = [];
-      if (upTargets.length > 0) markers.push('\u25B2 Up');
-      if (downTargets.length > 0) markers.push('\u25BC Down');
-      deckAnnotations.push(`  ${node.label}: ${markers.join(', ')}`);
+      lines.push(vline.trimEnd());
     }
   }
-
-  let result = lines.join('\n') + '\n';
-  if (deckAnnotations.length > 0) {
-    result += deckAnnotations.join('\n') + '\n';
-  }
-  return result;
+  return lines.join('\n') + '\n';
 }
 
-/** Find a node at a given grid position */
-function findNodeAt(
-  row: number,
-  col: number,
-  positions: Map<string, { col: number; row: number }>,
-  allNodes: Map<string, { id: string; label: string; deck: string; visited: boolean; isCurrent: boolean; exits: Record<string, string> }>
-): { id: string; label: string; visited: boolean; isCurrent: boolean; exits: Record<string, string> } | null {
-  for (const [id, pos] of positions.entries()) {
-    if (pos.row === row && pos.col === col) {
-      const node = allNodes.get(id);
-      if (node) return node;
-    }
-  }
-  return null;
-}
-
-/** Check if two rooms are connected in a given direction */
-function hasConnection(
-  fromId: string,
-  toId: string,
-  dir: string,
-  allNodes: Map<string, { id: string; exits: Record<string, string> }>
-): boolean {
-  const from = allNodes.get(fromId);
-  if (from && from.exits[dir] === toId) return true;
-  // Check reverse direction
-  const reverse: Record<string, string> = { n: 's', s: 'n', e: 'w', w: 'e' };
-  const to = allNodes.get(toId);
-  if (to && reverse[dir] && to.exits[reverse[dir]] === fromId) return true;
-  return false;
-}
-
-/** Center-pad a string to a given width */
-function centerPad(str: string, width: number): string {
-  if (str.length >= width) return str.substring(0, width);
-  const left = Math.floor((width - str.length) / 2);
-  const right = width - str.length - left;
-  return ' '.repeat(left) + str + ' '.repeat(right);
-}
+// --- end map functions ---
 
 export function buildFallbackProse(actionResult: ActionResult): string {
   switch (actionResult.type) {

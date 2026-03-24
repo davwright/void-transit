@@ -508,7 +508,7 @@ USE:      use [item] on [target], combine [item] with [item]
 INFO:     status, date, systems, map/m, hint
 GAME:     save [name], load [name], saves, help, wait
 AUDIO:    audio (toggle), volume [0-100]
-PRIVACY:  telemetry on/off — control gameplay data sharing
+PRIVACY:  feedback on/off — control gameplay data sharing
 
 Tips:
   Examine everything — descriptions contain clues.
