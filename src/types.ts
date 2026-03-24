@@ -24,6 +24,8 @@ export interface Room {
     text: string;
   }>;
   examineTargets?: Record<string, string>;
+  /** Map of scenery target → item IDs to reveal when that target is examined */
+  revealsOnExamine?: Record<string, string[]>;
   cantTake?: Record<string, string>;
   openTargets?: Record<string, {
     message: string;

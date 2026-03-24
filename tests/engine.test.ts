@@ -117,6 +117,7 @@ describe('GameEngine', () => {
     });
 
     it('can examine items in inventory', () => {
+      engine.processCommand(SID, parse('examine pod')); // reveal hidden items
       engine.processCommand(SID, parse('take datapad'));
       const result = engine.processCommand(SID, parse('examine datapad'));
       expect(result.type).toBe('examine');
@@ -128,7 +129,7 @@ describe('GameEngine', () => {
     });
 
     it('resolves follow-up questions about examined items', () => {
-      // "examine datapad" should find the personal datapad in cryo_bay
+      engine.processCommand(SID, parse('examine pod')); // reveal hidden items
       const r1 = engine.processCommand(SID, parse('examine datapad'));
       expect(r1.type).toBe('examine');
       expect(r1.itemId).toBe('datapad');
@@ -139,12 +140,7 @@ describe('GameEngine', () => {
     });
 
     it('word-level matching does not produce false positives', () => {
-      // Navigate to crew_quarters and reveal the photo
-      engine.processCommand(SID, parse('south'));   // corridor_d
-      engine.processCommand(SID, parse('north'));   // corridor_c... need actual path
-      // "examine datapad" in cryo_bay should match datapad, not something else
-      const state = engine.getState(SID)!;
-      state.currentRoom = 'cryo_bay'; // reset for simplicity
+      engine.processCommand(SID, parse('examine pod')); // reveal hidden items
       const result = engine.processCommand(SID, parse('examine personal datapad'));
       expect(result.type).toBe('examine');
       expect(result.itemId).toBe('datapad');

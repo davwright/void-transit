@@ -135,6 +135,15 @@ class CommandProcessor {
       const room = this.nav.getRoom(gameState.currentRoom);
       const normalizedTarget = target.toLowerCase();
       if (room?.examineTargets?.[normalizedTarget]) {
+        // Check if examining this scenery reveals hidden items
+        const reveals = (room as any).revealsOnExamine?.[normalizedTarget] as string[] | undefined;
+        if (reveals) {
+          for (const itemId of reveals) {
+            if (gameState.itemHidden[itemId]) {
+              gameState.itemHidden[itemId] = false;
+            }
+          }
+        }
         return {
           type: 'examine',
           target,
@@ -555,10 +564,8 @@ Tips:
       }
     }
 
-    // Check all room items — hidden items are findable by name (described in room text)
-    // but they get auto-revealed when the player explicitly references them
-    // Score matches to pick the best one (more matching words = better)
-    const roomItems = this.inv.getItemsInRoom(gameState.currentRoom, gameState);
+    // Check VISIBLE room items only — hidden items must be revealed through gameplay
+    const roomItems = this.inv.getVisibleItemsInRoom(gameState.currentRoom, gameState);
     let bestRoomMatch: { id: string; score: number } | null = null;
     for (const item of roomItems) {
       const score = this._nameMatchScore(normalized, item);
@@ -568,18 +575,9 @@ Tips:
     }
     // Return the best match — room wins over inventory if better score
     if (bestRoomMatch && bestInvMatch) {
-      if (bestRoomMatch.score >= bestInvMatch.score) {
-        const item = roomItems.find(i => i.id === bestRoomMatch!.id)!;
-        if (item.hidden) gameState.itemHidden[item.id] = false;
-        return bestRoomMatch.id;
-      }
-      return bestInvMatch.id;
+      return bestRoomMatch.score >= bestInvMatch.score ? bestRoomMatch.id : bestInvMatch.id;
     }
-    if (bestRoomMatch) {
-      const item = roomItems.find(i => i.id === bestRoomMatch!.id)!;
-      if (item.hidden) gameState.itemHidden[item.id] = false;
-      return bestRoomMatch.id;
-    }
+    if (bestRoomMatch) return bestRoomMatch.id;
     if (bestInvMatch) return bestInvMatch.id;
 
     if (this.inv.getItemDef(normalized)) return normalized;

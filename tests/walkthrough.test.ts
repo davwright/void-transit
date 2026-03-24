@@ -47,15 +47,27 @@ describe('Complete Walkthrough', () => {
     it('can pick up starting items', () => {
       cmd('search');  // multitool is hidden until searched
       cmd('take multitool');
+      cmd('examine pod');  // reveals datapad and photo via revealsOnExamine
       cmd('take datapad');
       expect(hasItem('multitool')).toBe(true);
       expect(hasItem('datapad')).toBe(true);
     });
 
     it('can examine the personal photo', () => {
+      cmd('examine pod');  // reveals photo
       const result = cmd('examine personal photo');
       expect(result.type).toBe('examine');
       expect(result.text).toBeTruthy();
+    });
+
+    it('hidden items cannot be taken without revealing them first', () => {
+      // datapad is hidden until pod is examined
+      const r = cmd('take datapad');
+      expect(r.type).toBe('take_failed');
+      // now reveal it
+      cmd('examine pod');
+      const r2 = cmd('take datapad');
+      expect(r2.type).toBe('take_success');
     });
   });
 
@@ -148,6 +160,7 @@ describe('Complete Walkthrough', () => {
       // Get items from cryo_bay
       cmd('search');  // reveal hidden multitool
       cmd('take multitool');
+      cmd('examine pod');  // reveal datapad and photo
       cmd('take datapad');
       expect(hasItem('multitool')).toBe(true);
       expect(hasItem('datapad')).toBe(true);
