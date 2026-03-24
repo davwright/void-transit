@@ -216,6 +216,10 @@ export interface GameState {
   globalEvents: string[];
   worldLore: Record<string, string>;
   lastExaminedItem?: string;
+  /** Last item the player interacted with (take, examine, read, use, drop) — for pronoun resolution */
+  lastReferencedItem?: string;
+  /** Turn number when lastReferencedItem was set — stale after too many turns */
+  lastReferencedTurn?: number;
 }
 
 export interface Intent {

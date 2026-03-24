@@ -20,34 +20,63 @@ class CommandProcessor {
 
   process(intent: Intent, gameState: GameState): ActionResult {
     const action = intent.action;
-    const target = intent.target;
+    let target = intent.target;
     const instrument = intent.instrument;
 
-    switch (action) {
-      case 'move': return this._handleMove(target, gameState);
-      case 'look': return this._handleLook(target, gameState, intent.raw);
-      case 'examine': return this._handleExamine(target, gameState, intent.raw);
-      case 'take': case 'get': case 'pick_up': return this._handleTake(target, gameState);
-      case 'drop': return this._handleDrop(target, gameState);
-      case 'inventory': return this._handleInventory(gameState);
-      case 'use': case 'activate': case 'deactivate': return this._handleUse(target, instrument, gameState);
-      case 'combine': return this._handleCombine(target, instrument, gameState);
-      case 'equip': case 'wear': case 'put_on': return this._handleEquip(target, gameState);
-      case 'unequip': case 'remove': return this._handleUnequip(target, gameState);
-      case 'open': return this._handleOpen(target, gameState);
-      case 'read': return this._handleRead(target, gameState);
-      case 'status': return this._handleStatus(gameState);
-      case 'help': return this._handleHelp();
-      case 'systems': return this._handleSystems(gameState);
-      case 'hint': return this._handleHint(gameState);
-      case 'wait': return this._handleWait(gameState);
-      case 'puzzle_action': return this._handlePuzzleAction(target, intent.value || null, gameState);
-      case 'talk': return this._handleTalk(target, gameState);
-      case 'search': return this._handleSearch(target, gameState, intent.raw);
-      case 'map': return this._handleMap(gameState);
-      case 'rejected': return { type: 'rejected', message: intent.value || 'That won\'t help you here.' };
-      default: return this._handleUnknown(intent, gameState);
+    // Pronoun resolution: "it", "that", or null target → last referenced item
+    const pronouns = new Set(['it', 'that', 'this', 'them']);
+    const needsTarget = new Set(['examine', 'take', 'get', 'pick_up', 'drop', 'read', 'use', 'open', 'equip', 'wear', 'unequip', 'remove']);
+
+    if (needsTarget.has(action) && (!target || pronouns.has(target.toLowerCase()))) {
+      const stale = gameState.lastReferencedTurn !== undefined
+        && (gameState.turnCount - gameState.lastReferencedTurn) > 3;
+      if (gameState.lastReferencedItem && !stale) {
+        const def = this.inv.getItemDef(gameState.lastReferencedItem);
+        if (def) {
+          // Check the item is still accessible (in inventory or current room)
+          const inInv = gameState.inventory.includes(gameState.lastReferencedItem);
+          const inRoom = gameState.itemLocations[gameState.lastReferencedItem] === gameState.currentRoom;
+          if (inInv || inRoom) {
+            target = def.name.toLowerCase();
+          }
+        }
+      }
     }
+
+    let result: ActionResult;
+    switch (action) {
+      case 'move': result = this._handleMove(target, gameState); break;
+      case 'look': result = this._handleLook(target, gameState, intent.raw); break;
+      case 'examine': result = this._handleExamine(target, gameState, intent.raw); break;
+      case 'take': case 'get': case 'pick_up': result = this._handleTake(target, gameState); break;
+      case 'drop': result = this._handleDrop(target, gameState); break;
+      case 'inventory': result = this._handleInventory(gameState); break;
+      case 'use': case 'activate': case 'deactivate': result = this._handleUse(target, instrument, gameState); break;
+      case 'combine': result = this._handleCombine(target, instrument, gameState); break;
+      case 'equip': case 'wear': case 'put_on': result = this._handleEquip(target, gameState); break;
+      case 'unequip': case 'remove': result = this._handleUnequip(target, gameState); break;
+      case 'open': result = this._handleOpen(target, gameState); break;
+      case 'read': result = this._handleRead(target, gameState); break;
+      case 'status': result = this._handleStatus(gameState); break;
+      case 'help': result = this._handleHelp(); break;
+      case 'systems': result = this._handleSystems(gameState); break;
+      case 'hint': result = this._handleHint(gameState); break;
+      case 'wait': result = this._handleWait(gameState); break;
+      case 'puzzle_action': result = this._handlePuzzleAction(target, intent.value || null, gameState); break;
+      case 'talk': result = this._handleTalk(target, gameState); break;
+      case 'search': result = this._handleSearch(target, gameState, intent.raw); break;
+      case 'map': result = this._handleMap(gameState); break;
+      case 'rejected': result = { type: 'rejected', message: intent.value || 'That won\'t help you here.' }; break;
+      default: result = this._handleUnknown(intent, gameState);
+    }
+
+    // Track last referenced item for pronoun resolution (it, that, implicit)
+    if (result.itemId) {
+      gameState.lastReferencedItem = result.itemId;
+      gameState.lastReferencedTurn = gameState.turnCount;
+    }
+
+    return result;
   }
 
   _handleMove(direction: string | null, gameState: GameState): ActionResult {

@@ -1,34 +1,23 @@
-/**
- * Remove cheat-like hints and replace with mechanic hints.
- * Also update the help text to mention combine/use mechanics.
- */
 import { decodeObject, encodeObject } from '../src/encoding';
 import * as fs from 'fs';
 
-// Remove the specific puzzle hints from scenery
-const sceneryFp = 'src/data/scenery.json';
-const sceneryData = decodeObject(JSON.parse(fs.readFileSync(sceneryFp, 'utf-8'))) as any;
-const et = sceneryData.examineTargets;
+const fp = 'src/data/items.json';
+const data = decodeObject(JSON.parse(fs.readFileSync(fp, 'utf-8'))) as any;
+let fixes = 0;
 
-// Delete the cheat hints we added
-const toRemove = [
-  ['life_support', 'scrubber housing'],
-  ['life_support', 'access panel'],
-  ['reactor_room', 'containment bolts'],
-  ['reactor_room', 'shielding'],
-  ['airlock_outer', 'hull'],
-  ['electrical', 'junction'],
-  ['engine_room', 'deceleration profile'],
-];
-
-let removed = 0;
-for (const [room, key] of toRemove) {
-  if (et[room]?.[key]) {
-    delete et[room][key];
-    removed++;
+for (const item of data.items) {
+  if (item.id === 'maintenance_log') {
+    item.readable = true;
+    // Use the examineDetail as readText since it contains the log content
+    if (item.examineDetail && !item.readText) {
+      item.readText = item.examineDetail;
+    }
+    fixes++;
+    process.stdout.write('Fixed maintenance_log: readable=true, readText set\n');
   }
 }
 
-fs.writeFileSync(sceneryFp, JSON.stringify(encodeObject(sceneryData), null, 2) + '\n', 'utf-8');
-process.stdout.write(`Removed ${removed} cheat hints from scenery\n`);
-process.stdout.write('Done.\n');
+if (fixes > 0) {
+  fs.writeFileSync(fp, JSON.stringify(encodeObject(data), null, 2) + '\n', 'utf-8');
+  process.stdout.write('Wrote items.json\n');
+}
