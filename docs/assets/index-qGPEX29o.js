@@ -80,4 +80,4 @@ VOID TRANSIT collects gameplay data (commands, rooms visited) to improve the gam
 No personal information is collected. No API keys are transmitted.
 All data is encrypted and used solely for story improvement.<br><br>
 Type <strong>accept</strong> to consent, or <strong>decline</strong> to play without feedback.
-</div>`)):(lZ()&&dZ(),AZ());function AZ(){document.title="VOID TRANSIT v1.8.15";const d=DG.newGame(OG);d.intro&&UI(d.intro),bZ({health:65,turnCount:0});const G=window;G.voidAudio&&d.roomId&&G.voidAudio.setRoom(d.roomId),EG.focus()}
+</div>`)):(lZ()&&dZ(),AZ());function AZ(){document.title="VOID TRANSIT v1.8.16";const d=DG.newGame(OG);d.intro&&UI(d.intro),bZ({health:65,turnCount:0});const G=window;G.voidAudio&&d.roomId&&G.voidAudio.setRoom(d.roomId),EG.focus()}
