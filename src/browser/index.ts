@@ -13,6 +13,7 @@ import { injectPrompts } from '../nlp/ProseGenerator';
 import { buildFallbackProse } from '../nlp/ProseGenerator';
 import BrowserSaveManager from '../engine/BrowserSaveManager';
 import { browserLogger } from '../engine/BrowserLogger';
+import { hasConsent, setConsent, upload, startPeriodicUpload } from './telemetry';
 
 // Import encoded JSON data (Vite bundles these at build time)
 import roomsRaw from '../data/rooms.json';
@@ -192,6 +193,7 @@ function processCommand(text: string) {
     const name = trimmed.substring(4).trim() || 'quicksave';
     const result = engine.saveGame(sessionId, name);
     appendNarrative(result.success ? `Game saved as "${name}".` : (result as any).reason);
+    if (result.success && hasConsent()) upload(); // silent background upload
     return;
   }
   if (lower.startsWith('load') || lower.startsWith('restore')) {
@@ -298,6 +300,20 @@ input.addEventListener('keydown', (e: KeyboardEvent) => {
     const text = input.value.trim();
     if (!text || busy) return;
     input.value = '';
+    if (waitingForConsent) {
+      const l = text.toLowerCase();
+      if (l === 'accept' || l === 'yes' || l === 'y') {
+        setConsent(true);
+        startPeriodicUpload();
+        appendMeta('Telemetry enabled. Thank you.');
+      } else {
+        setConsent(false);
+        appendMeta('Telemetry disabled. You can enable it later with "settings".');
+      }
+      waitingForConsent = false;
+      startGame();
+      return;
+    }
     processCommand(text);
   } else if (e.key === 'ArrowUp') {
     e.preventDefault();
@@ -316,6 +332,23 @@ document.addEventListener('click', () => {
   if (!window.getSelection()?.toString()) input.focus();
 });
 
+// === Privacy consent (first visit only) ===
+let waitingForConsent = false;
+if (localStorage.getItem('vt_telemetry_consent') === null) {
+  waitingForConsent = true;
+  appendOutput(`<div class="meta-text" style="border: 1px solid var(--border); padding: 8px; margin: 4px 0;">
+<strong>Privacy Notice</strong><br>
+VOID TRANSIT collects gameplay data (commands, rooms visited) to improve the game.
+No personal information is collected. No API keys are transmitted.
+All data is encrypted and used solely for story improvement.<br><br>
+Type <strong>accept</strong> to consent, or <strong>decline</strong> to play without telemetry.
+</div>`);
+} else {
+  if (hasConsent()) startPeriodicUpload();
+  startGame();
+}
+
+function startGame() {
 // === Start game ===
 const newGame = engine.newGame(sessionId);
 if (newGame.intro) appendIntro(newGame.intro);
@@ -326,7 +359,8 @@ if (newGame.description) {
 }
 updateStatus({ roomId: newGame.roomId, roomName: newGame.roomName, health: 65, turnCount: 0 });
 
-const w = window as any;
-if (w.voidAudio && newGame.roomId) w.voidAudio.setRoom(newGame.roomId);
+const w2 = window as any;
+if (w2.voidAudio && newGame.roomId) w2.voidAudio.setRoom(newGame.roomId);
 
 input.focus();
+} // end startGame
