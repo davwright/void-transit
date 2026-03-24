@@ -173,6 +173,19 @@ function processCommand(text: string) {
   const lower = trimmed.toLowerCase();
 
   // Client-side commands
+  if (lower === 'telemetry on' || lower === 'telemetry off' || lower === 'telemetry') {
+    if (lower === 'telemetry off') {
+      setConsent(false);
+      appendMeta('Telemetry disabled. Your gameplay data will not be shared.');
+    } else if (lower === 'telemetry on') {
+      setConsent(true);
+      startPeriodicUpload();
+      appendMeta('Telemetry enabled. Gameplay data will be shared to improve the story.');
+    } else {
+      appendMeta(hasConsent() ? 'Telemetry is ON. Type "telemetry off" to disable.' : 'Telemetry is OFF. Type "telemetry on" to enable.');
+    }
+    return;
+  }
   if (lower === 'audio' || lower === 'mute' || lower === 'sound') {
     const w = window as any;
     if (w.voidAudio) {
@@ -189,7 +202,7 @@ function processCommand(text: string) {
   }
 
   // Save/load
-  if (lower.startsWith('save')) {
+  if (lower === 'save' || lower.startsWith('save ')) {
     const name = trimmed.substring(4).trim() || 'quicksave';
     const result = engine.saveGame(sessionId, name);
     appendNarrative(result.success ? `Game saved as "${name}".` : (result as any).reason);

@@ -67,7 +67,7 @@ export function createApp() {
     const trimmed = prompt.toLowerCase();
 
     // Handle save/load
-    if (trimmed.startsWith('save')) {
+    if (trimmed === 'save' || trimmed.startsWith('save ')) {
       const name = prompt.substring(4).trim() || 'quicksave';
       engine.saveGame(testSessionId, name);
       return res.send(`Game saved as "${name}".`);
@@ -209,7 +209,7 @@ export function createApp() {
 
     try {
       const trimmed = input.trim().toLowerCase();
-      if (trimmed.startsWith('save')) {
+      if (trimmed === 'save' || trimmed.startsWith('save ')) {
         const name = input.trim().substring(4).trim() || 'quicksave';
         const result = engine.saveGame(sessionId, name);
         return res.json({ type: 'save', prose: result.success ? `Game saved as "${name}".` : (result as { reason?: string }).reason });

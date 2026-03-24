@@ -508,6 +508,7 @@ USE:      use [item] on [target], combine [item] with [item]
 INFO:     status, date, systems, map/m, hint
 GAME:     save [name], load [name], saves, help, wait
 AUDIO:    audio (toggle), volume [0-100]
+PRIVACY:  telemetry on/off — control gameplay data sharing
 
 Tips:
   Examine everything — descriptions contain clues.
@@ -516,7 +517,7 @@ Tips:
   Some problems need the right tool. Check your inventory.
   If something looks broken, you might have what you need to fix it.
   Commands can be abbreviated: exa, inv, sta, sys, etc.
-  You can ask questions: "where wrench", "what is this"`
+  You can refer to the last item: "get datapad" then "read it" or just "read".`
     };
   }
 
