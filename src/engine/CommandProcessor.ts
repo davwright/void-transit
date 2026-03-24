@@ -164,7 +164,7 @@ class CommandProcessor {
         }
       }
 
-      return { type: 'examine_failed', message: `You don't see any ${target} here.` };
+      return { type: 'examine_failed', message: target ? `You don't see any ${target} here.` : 'Examine what?' };
     }
 
     const result = this.inv.examine(itemId, gameState);
@@ -203,6 +203,7 @@ class CommandProcessor {
     }
 
     const itemId = this._resolveItemId(target, gameState);
+    if (!target) return { type: 'take_failed', message: 'Take what?' };
     if (!itemId) return { type: 'take_failed', message: `You don't see any ${target} here.` };
 
     const result = this.inv.pickUp(itemId, gameState);
@@ -317,6 +318,7 @@ class CommandProcessor {
 
   _handleRead(target: string | null, gameState: GameState): ActionResult {
     const itemId = this._resolveItemId(target, gameState);
+    if (!target) return { type: 'read_failed', message: 'Read what? Try: read [item name]' };
     if (!itemId) return { type: 'read_failed', message: `You don't see any ${target} to read.` };
 
     const def = this.inv.getItemDef(itemId);

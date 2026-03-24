@@ -59,8 +59,10 @@ export async function upload(): Promise<boolean> {
   if (entries.length <= lastUploadCount) return false;
 
   const newEntries = entries.slice(lastUploadCount);
+  const buildVersion = (document.querySelector('meta[name="version"]') as HTMLMetaElement)?.content || 'unknown';
   const payload = JSON.stringify({
     version: '1.0',
+    buildVersion,
     timestamp: new Date().toISOString(),
     entries: newEntries,
     entryCount: newEntries.length,
