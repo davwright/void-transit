@@ -33,9 +33,10 @@ html, body {
 #terminal {
   max-width: 900px;
   margin: 0 auto;
-  padding: 10px 20px;
+  padding: 10px 20px 0;
   position: relative;
   background: var(--bg);
+  padding-bottom: 40px; /* space for sticky status bar */
 }
 
 /* CRT scanline effect */

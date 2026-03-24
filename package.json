@@ -1,6 +1,6 @@
 {
   "name": "void-transit",
-  "version": "1.8.12",
+  "version": "1.8.13",
   "description": "VOID TRANSIT — A hard science fiction text adventure",
   "main": "dist/server.js",
   "scripts": {
@@ -10,6 +10,7 @@
     "dev": "ts-node src/server.ts",
     "test": "vitest run",
     "test:watch": "vitest",
+    "prebuild:browser": "npm version patch --no-git-tag-version",
     "build:browser": "vite build",
     "preview": "vite preview"
   },

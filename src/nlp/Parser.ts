@@ -300,6 +300,11 @@ export function parse(input: string): Intent {
     if (first.category === 'action') return { action: first.normalized!, target: null, instrument: null, raw };
     if (first.category === 'movement') return { action: 'look', target: null, instrument: null, raw };
 
+    // Check rejected verbs BEFORE abbreviation matching
+    // ("hello" should not match "help" via abbreviation)
+    const rejected = checkRejectedVerb(first.word);
+    if (rejected) return rejected;
+
     // Try abbreviation matching
     const action = matchAction(first.word);
     if (action) return { action, target: null, instrument: null, raw };
@@ -316,10 +321,6 @@ export function parse(input: string): Intent {
         return { action: correction.normalized!, target: null, instrument: null, raw };
       }
     }
-
-    // Check rejected verbs (dance, sing, etc.)
-    const rejected = checkRejectedVerb(first.word);
-    if (rejected) return rejected;
 
     // Single unknown word → examine attempt (only if it's a noun, not a filler word)
     if (first.category === 'noun' && first.word.length >= 2) return { action: 'examine', target: first.word, instrument: null, raw };
