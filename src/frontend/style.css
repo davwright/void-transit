@@ -31,9 +31,6 @@ html, body {
 }
 
 #terminal {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
   max-width: 900px;
   margin: 0 auto;
   padding: 10px 20px;
@@ -86,7 +83,6 @@ html, body {
 }
 
 #output {
-  flex: 1 0 auto;
   padding-bottom: 10px;
 }
 
@@ -237,6 +233,9 @@ html, body {
   border-top: 1px solid var(--border);
   font-size: 0.85em;
   color: var(--fg-dim);
+  position: sticky;
+  bottom: 0;
+  background: var(--bg);
 }
 
 #status-bar span {
