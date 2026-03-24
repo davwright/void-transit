@@ -1,19 +1,24 @@
-import { decodeObject } from '../src/encoding';
+import { decodeObject, encodeObject } from '../src/encoding';
 import * as fs from 'fs';
-const story = decodeObject(JSON.parse(fs.readFileSync('src/data/story.json', 'utf-8'))) as any;
-for (const act of story.acts || []) {
-  for (const beat of act.beats || []) {
-    const text = (beat.text || '').toLowerCase();
-    if (text.includes('wake') || text.includes('detonation') || text.includes('do not wake')) {
-      process.stdout.write('Beat: ' + beat.id + ' (act: ' + act.id + ')\n');
-      process.stdout.write('  trigger: ' + JSON.stringify(beat.trigger) + '\n');
-      process.stdout.write('  text[0:120]: ' + (beat.text || '').substring(0, 120) + '\n\n');
-    }
-  }
+
+// Update cryo_bay scenery — examining "pod" or "my pod" should reveal items
+const sceneryFp = 'src/data/scenery.json';
+const scenery = decodeObject(JSON.parse(fs.readFileSync(sceneryFp, 'utf-8'))) as any;
+const cryo = scenery.examineTargets?.cryo_bay;
+if (cryo) {
+  // Override pod description to hint at the storage compartment
+  cryo['my pod'] = 'Your cryo pod. The lid is open, the interior still wet with cryoprotectant. The monitoring leads dangle from the headrest. At the base, a small storage compartment is ajar — standard issue for personal effects during long transit.';
+  process.stdout.write('Updated "my pod" scenery\n');
 }
-// Also check cryo_bay firstVisit
-const rooms = decodeObject(JSON.parse(fs.readFileSync('src/data/rooms.json', 'utf-8'))) as any;
-const cryo = rooms.rooms?.cryo_bay;
-if (cryo?.firstVisit) {
-  process.stdout.write('cryo_bay firstVisit[0:120]: ' + cryo.firstVisit.substring(0, 120) + '\n');
+fs.writeFileSync(sceneryFp, JSON.stringify(encodeObject(scenery), null, 2) + '\n', 'utf-8');
+
+// Also remove the [Type HELP] line from the intro — let them figure it out
+const msgFp = 'src/data/messages.json';
+const msgs = decodeObject(JSON.parse(fs.readFileSync(msgFp, 'utf-8'))) as any;
+if (msgs.intro && msgs.intro.includes('[Type HELP')) {
+  msgs.intro = msgs.intro.replace(/\n\[Type HELP[^\]]*\]\n/, '\n');
+  fs.writeFileSync(msgFp, JSON.stringify(encodeObject(msgs), null, 2) + '\n', 'utf-8');
+  process.stdout.write('Removed [Type HELP] from intro\n');
 }
+
+process.stdout.write('Done.\n');

@@ -1,30 +1,51 @@
 /**
- * Fix: Remove cryo_bay firstVisit (intro already covers waking up)
- * and change beat_wake trigger so it doesn't fire alongside the intro.
+ * Hide datapad and photo in cryo_bay — revealed by examining the pod.
+ * Also add "hello"/"help" responses for confused players.
  */
 import { decodeObject, encodeObject } from '../src/encoding';
 import * as fs from 'fs';
 
-// Remove cryo_bay firstVisit
-const roomsFp = 'src/data/rooms.json';
-const rooms = decodeObject(JSON.parse(fs.readFileSync(roomsFp, 'utf-8'))) as any;
-if (rooms.rooms?.cryo_bay?.firstVisit) {
-  delete rooms.rooms.cryo_bay.firstVisit;
-  fs.writeFileSync(roomsFp, JSON.stringify(encodeObject(rooms), null, 2) + '\n', 'utf-8');
-  process.stdout.write('Removed cryo_bay firstVisit\n');
-}
-
-// Change beat_wake trigger from game_start to first move out of cryo
-const storyFp = 'src/data/story.json';
-const story = decodeObject(JSON.parse(fs.readFileSync(storyFp, 'utf-8'))) as any;
-for (const act of story.acts || []) {
-  for (const beat of act.beats || []) {
-    if (beat.id === 'beat_wake') {
-      // Trigger on first look in cryo_bay instead of game_start
-      beat.trigger = { type: 'room_visit', room: 'cryo_bay', firstOnly: true };
-      process.stdout.write('Changed beat_wake trigger to room_visit/cryo_bay\n');
-    }
+// Hide datapad and photo
+const itemsFp = 'src/data/items.json';
+const items = decodeObject(JSON.parse(fs.readFileSync(itemsFp, 'utf-8'))) as any;
+for (const item of items.items) {
+  if (item.id === 'datapad' && item.location === 'cryo_bay') {
+    item.hidden = true;
+    process.stdout.write('Hidden: datapad\n');
+  }
+  if (item.id === 'personal_photo' && item.location === 'cryo_bay') {
+    item.hidden = true;
+    process.stdout.write('Hidden: personal_photo\n');
   }
 }
-fs.writeFileSync(storyFp, JSON.stringify(encodeObject(story), null, 2) + '\n', 'utf-8');
+fs.writeFileSync(itemsFp, JSON.stringify(encodeObject(items), null, 2) + '\n', 'utf-8');
+
+// Add pod examine that reveals items
+const roomsFp = 'src/data/rooms.json';
+const rooms = decodeObject(JSON.parse(fs.readFileSync(roomsFp, 'utf-8'))) as any;
+const cryo = rooms.rooms?.cryo_bay;
+if (cryo) {
+  // Add examineTargets that reveal items
+  if (!cryo.examineTargets) cryo.examineTargets = {};
+
+  // Make examining the pod reveal the datapad and photo
+  if (!cryo.openTargets) cryo.openTargets = {};
+  cryo.openTargets['pod'] = {
+    message: 'You lean back into the pod, reaching into the storage compartment at the base. Your fingers find familiar shapes — a datapad and a photograph, stowed before cryo.',
+    revealsItem: 'datapad',
+  };
+}
+fs.writeFileSync(roomsFp, JSON.stringify(encodeObject(rooms), null, 2) + '\n', 'utf-8');
+
+// Add "hello" handling to rejected verbs
+const verbsFp = 'src/data/rejected-verbs.json';
+const verbs = decodeObject(JSON.parse(fs.readFileSync(verbsFp, 'utf-8'))) as any;
+verbs.verbs['hello'] = 'social';
+verbs.verbs['hi'] = 'social';
+verbs.verbs['help me'] = 'social';
+// Add cryo-specific social responses
+verbs.responses.social.push('Your voice comes out as a dry croak. The sound dies in the cold air. No one answers.');
+verbs.responses.social.push('You try to speak. Your throat is raw from cryoprotectant. The word comes out as a rasp that wouldn\'t carry three meters.');
+fs.writeFileSync(verbsFp, JSON.stringify(encodeObject(verbs), null, 2) + '\n', 'utf-8');
+
 process.stdout.write('Done.\n');

@@ -362,15 +362,14 @@ Type <strong>accept</strong> to consent, or <strong>decline</strong> to play wit
 }
 
 function startGame() {
-// === Start game ===
 const newGame = engine.newGame(sessionId);
+
+// Just the intro — no room name, no description, no items. Blank cursor. Confusion.
 if (newGame.intro) appendIntro(newGame.intro);
-if (newGame.description) {
-  let roomText = `**${newGame.roomName}**\n\n${newGame.description}`;
-  if (newGame.items?.length) roomText += '\n\nYou can see: ' + newGame.items.map((i: any) => i.name).join(', ') + '.';
-  appendNarrative(roomText);
-}
-updateStatus({ roomId: newGame.roomId, roomName: newGame.roomName, health: 65, turnCount: 0 });
+
+// Don't show room description, items, or exits. Make them work for it.
+// Status bar stays blank too — they don't know where they are yet.
+updateStatus({ health: 65, turnCount: 0 });
 
 const w2 = window as any;
 if (w2.voidAudio && newGame.roomId) w2.voidAudio.setRoom(newGame.roomId);
