@@ -26,13 +26,14 @@ html, body {
   font-family: 'Fira Code', 'Courier New', monospace;
   font-size: 14px;
   line-height: 1.6;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 #terminal {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   max-width: 900px;
   margin: 0 auto;
   padding: 10px 20px;
@@ -85,11 +86,8 @@ html, body {
 }
 
 #output {
-  flex: 1;
-  overflow-y: auto;
+  flex: 1 0 auto;
   padding-bottom: 10px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--fg-dim) var(--bg);
 }
 
 #output::-webkit-scrollbar {
@@ -203,7 +201,6 @@ html, body {
   display: flex;
   align-items: center;
   padding: 8px 0;
-  border-top: 1px solid var(--border);
 }
 
 #prompt-char {

@@ -49,7 +49,8 @@
 
   function scrollToBottom() {
     requestAnimationFrame(() => {
-      output.scrollTop = output.scrollHeight;
+      var inputArea = document.getElementById('input-area');
+      if (inputArea) inputArea.scrollIntoView({ behavior: 'smooth', block: 'end' });
     });
   }
 

@@ -124,7 +124,11 @@ function appendOutput(html: string, cssClass?: string) {
   block.className = 'output-block ' + (cssClass || '');
   block.innerHTML = html;
   output.appendChild(block);
-  output.scrollTop = output.scrollHeight;
+  // Scroll the page so input stays visible at bottom
+  requestAnimationFrame(() => {
+    const inputArea = document.getElementById('input-area');
+    if (inputArea) inputArea.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  });
 }
 
 function appendNarrative(text: string) {
