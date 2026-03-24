@@ -62,15 +62,25 @@ class GameEngine {
     intro: string;
   };
 
-  constructor() {
-    this.data = this._loadData();
-    this.messages = this._loadMessages();
+  constructor(injectedData?: {
+    gameData: GameData;
+    messages: { systemEvents: Record<string, string>; intro: string };
+    saveManager?: SaveManager;
+  }) {
+    if (injectedData) {
+      this.data = injectedData.gameData;
+      this.messages = injectedData.messages;
+      this.saveManager = injectedData.saveManager || new SaveManager();
+    } else {
+      this.data = this._loadData();
+      this.messages = this._loadMessages();
+      this.saveManager = new SaveManager();
+    }
     this.nav = new NavigationManager(this.data.rooms);
     this.inv = new InventoryManager(this.data.items);
     this.puzzle = new PuzzleEngine(this.data.puzzles);
     this.story = new StoryManager(this.data.story);
     this.cmd = new CommandProcessor(this.nav, this.inv, this.puzzle, this.story);
-    this.saveManager = new SaveManager();
     this.sessions = new Map<string, GameState>();
   }
 

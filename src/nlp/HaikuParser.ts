@@ -21,13 +21,27 @@ export function setLogContext(sessionId: string, room: string, turnCount: number
   _logContext = { sessionId, room, turnCount };
 }
 
-// Parse prompt loaded from data file (encoded at rest)
-const _prompts = decodeObject(
-  JSON.parse(fs.readFileSync(path.join(config.dataDir, 'prompts.json'), 'utf-8'))
-) as Record<string, string>;
-const PARSE_SYSTEM = _prompts.parseSystem;
+// Parse prompt — injectable or lazy-loaded from fs
+let PARSE_SYSTEM = '';
+let _parsePromptLoaded = false;
+
+function _ensureParsePromptLoaded() {
+  if (_parsePromptLoaded) return;
+  _parsePromptLoaded = true;
+  try {
+    const raw = JSON.parse(fs.readFileSync(path.join(config.dataDir, 'prompts.json'), 'utf-8'));
+    PARSE_SYSTEM = (decodeObject(raw) as Record<string, string>).parseSystem;
+  } catch { /* browser — not used without CLI */ }
+}
+
+/** Inject parse prompt (for browser builds) */
+export function injectParsePrompt(prompt: string) {
+  PARSE_SYSTEM = prompt;
+  _parsePromptLoaded = true;
+}
 
 export async function parseWithHaiku(input: string, gameContext?: GameContext): Promise<Intent> {
+  _ensureParsePromptLoaded();
   const contextPrompt = gameContext
     ? `\nCurrent room: ${gameContext.currentRoom}. Inventory: [${gameContext.inventory.join(', ')}]. Visible items: [${(gameContext.visibleItems || []).join(', ')}].`
     : '';

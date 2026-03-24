@@ -140,16 +140,33 @@ const genericVerbs = new Set([
 // Meta words (yes/no, affirmations)
 const metaWords = new Set(['yes', 'no', 'ok', 'okay', 'sure', 'right', 'well']);
 
-// Recognized but rejected verbs — loaded from data file (encoded at rest)
-const _rejectedData = decodeObject(
-  JSON.parse(fs.readFileSync(path.join(config.dataDir, 'rejected-verbs.json'), 'utf-8'))
-) as { verbs: Record<string, string>; responses: Record<string, string[]> };
-const rejectedVerbs: Record<string, string> = _rejectedData.verbs;
-const rejectedResponses: Record<string, string[]> = _rejectedData.responses;
+// Recognized but rejected verbs — injectable or lazy-loaded from fs
+let rejectedVerbs: Record<string, string> = {};
+let rejectedResponses: Record<string, string[]> = {};
+let _rejectedLoaded = false;
+
+function _ensureRejectedLoaded() {
+  if (_rejectedLoaded) return;
+  _rejectedLoaded = true;
+  try {
+    const raw = JSON.parse(fs.readFileSync(path.join(config.dataDir, 'rejected-verbs.json'), 'utf-8'));
+    const data = decodeObject(raw) as { verbs: Record<string, string>; responses: Record<string, string[]> };
+    rejectedVerbs = data.verbs;
+    rejectedResponses = data.responses;
+  } catch { /* browser — data must be injected via injectRejectedVerbs */ }
+}
+
+/** Inject rejected verbs data (for browser builds that can't use fs) */
+export function injectRejectedVerbs(data: { verbs: Record<string, string>; responses: Record<string, string[]> }) {
+  rejectedVerbs = data.verbs;
+  rejectedResponses = data.responses;
+  _rejectedLoaded = true;
+}
 
 /** Check if a word is a recognized-but-rejected verb. Returns a flavor Intent or null. */
 function checkRejectedVerb(word: string): Intent | null {
   if (!word) return null;
+  _ensureRejectedLoaded();
   const category = rejectedVerbs[word.toLowerCase()];
   if (!category) return null;
   const responses = rejectedResponses[category];

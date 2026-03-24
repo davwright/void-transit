@@ -18,15 +18,37 @@ function getCacheKey(actionResult: ActionResult, gameState: GameState): string |
   return `${actionResult.type}:${actionResult.target || ''}:${extra}:${gameState.currentRoom}`;
 }
 
-// Prompts loaded from data file (encoded at rest, decoded at init)
-const _prompts = decodeObject(
-  JSON.parse(fs.readFileSync(path.join(config.dataDir, 'prompts.json'), 'utf-8'))
-) as Record<string, string>;
-const PROSE_SYSTEM = _prompts.proseSystem;
-const SCENERY_PREAMBLE = _prompts.sceneryPreamble;
-const SCENERY_RULES = _prompts.sceneryRules;
-const LORE_PREAMBLE = _prompts.lorePreamble;
-const LORE_CONSISTENCY = _prompts.loreConsistency;
+// Prompts — injectable or lazy-loaded from fs
+let PROSE_SYSTEM = '';
+let SCENERY_PREAMBLE = '';
+let SCENERY_RULES = '';
+let LORE_PREAMBLE = '';
+let LORE_CONSISTENCY = '';
+let _promptsLoaded = false;
+
+function _ensurePromptsLoaded() {
+  if (_promptsLoaded) return;
+  _promptsLoaded = true;
+  try {
+    const raw = JSON.parse(fs.readFileSync(path.join(config.dataDir, 'prompts.json'), 'utf-8'));
+    const p = decodeObject(raw) as Record<string, string>;
+    PROSE_SYSTEM = p.proseSystem;
+    SCENERY_PREAMBLE = p.sceneryPreamble;
+    SCENERY_RULES = p.sceneryRules;
+    LORE_PREAMBLE = p.lorePreamble;
+    LORE_CONSISTENCY = p.loreConsistency;
+  } catch { /* browser — must inject via injectPrompts */ }
+}
+
+/** Inject prompt data (for browser builds) */
+export function injectPrompts(p: Record<string, string>) {
+  PROSE_SYSTEM = p.proseSystem;
+  SCENERY_PREAMBLE = p.sceneryPreamble;
+  SCENERY_RULES = p.sceneryRules;
+  LORE_PREAMBLE = p.lorePreamble;
+  LORE_CONSISTENCY = p.loreConsistency;
+  _promptsLoaded = true;
+}
 
 /** Build a normalized key for the persistent world lore cache */
 function loreCacheKey(room: string, target: string, question: string): string {
@@ -49,6 +71,7 @@ function getRoomLore(worldLore: Record<string, string>, room: string): Array<{ t
 }
 
 export async function generateProse(actionResult: ActionResult, storyContext: StoryContext, gameState: GameState): Promise<string> {
+  _ensurePromptsLoaded();
   // Check volatile cache first
   const cacheKey = getCacheKey(actionResult, gameState);
   if (cacheKey && proseCache.has(cacheKey)) {

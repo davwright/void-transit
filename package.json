@@ -1,6 +1,6 @@
 {
   "name": "void-transit",
-  "version": "1.8.9",
+  "version": "1.8.12",
   "description": "VOID TRANSIT — A hard science fiction text adventure",
   "main": "dist/server.js",
   "scripts": {
@@ -9,7 +9,9 @@
     "start": "npm run build && node dist/server.js",
     "dev": "ts-node src/server.ts",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "build:browser": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [
     "text-adventure",
@@ -29,6 +31,7 @@
     "supertest": "^7.2.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
+    "vite": "^7.3.1",
     "vitest": "^4.0.18"
   }
 }
