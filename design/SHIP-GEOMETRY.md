@@ -114,6 +114,22 @@ The water jacket also provides:
 
 The fuel tanks at the aft end provide additional shielding from the engine direction.
 
+**Cryoprotectant as secondary shielding**
+
+The glycerol-based cryoprotectant circulated through the pod system contains a suspension of gadolinium nanoparticles — a neutron capture agent. Gadolinium has the highest thermal neutron capture cross-section of any stable element (49,000 barns for Gd-157). The cryoprotectant serves triple duty:
+
+1. **Thermal interface**: conducts heat away from the body during freezing
+2. **Physical immobiliser**: viscous gel prevents drift in micro-gravity
+3. **Neutron capture medium**: Gd nanoparticles absorb secondary neutrons that penetrate the water jacket, converting them to low-energy gamma rays absorbed by the surrounding water
+
+The cryoprotectant is continuously circulated through the pod array, filtered, and re-chilled. This circulation means the Gd particles are evenly distributed and any activated isotopes are swept to the filtration system rather than accumulating near sleeping colonists.
+
+**Future story potential** (do not implement in Part 1):
+- The water jacket is stored as ice during transit (cryo temperatures). Cutting ice from the jacket for emergency use (drinking water, coolant, radiation emergency patching).
+- A catastrophic event melts the jacket — zero-g swimming through the spine in 4,477 tonnes of water.
+- Cryoprotectant circulation failure exposes colonists to secondary neutron flux — the Gd particles settle out and stop capturing.
+- The player could repurpose cryoprotectant as emergency radiation shielding during a reactor puzzle (Gd absorbs neutrons from the leaking reactor).
+
 Sources:
 - [NASA TM-4167: Estimates of GCR Shielding](https://ntrs.nasa.gov/api/citations/19900008219/downloads/19900008219.pdf)
 - [NASA TP-3682: GCR Shielding in Deep Space](https://ntrs.nasa.gov/api/citations/19980006777/downloads/19980006777.pdf)
