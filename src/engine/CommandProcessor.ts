@@ -441,7 +441,22 @@ class CommandProcessor {
   }
 
   _handleEquip(target: string | null, gameState: GameState): ActionResult {
-    const itemId = this._resolveInventoryItem(target, gameState);
+    let itemId = this._resolveInventoryItem(target, gameState);
+
+    // If the matched item is already equipped, try to find another match
+    // (e.g. "wear suit" when jumpsuit is worn but EVA suit is in inventory)
+    if (itemId && (gameState.equipped || []).includes(itemId)) {
+      const otherMatch = gameState.inventory
+        .filter(id => id !== itemId && !gameState.equipped.includes(id))
+        .find(id => {
+          const def = this.inv.getItemDef(id);
+          return def && target && this._nameMatches(target.toLowerCase(), def);
+        });
+      if (otherMatch) {
+        itemId = otherMatch;
+      }
+    }
+
     if (!itemId) return { type: 'equip_failed', message: `You're not carrying "${target}".` };
 
     const result = this.inv.equip(itemId, gameState);
