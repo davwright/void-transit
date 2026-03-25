@@ -393,14 +393,24 @@ class CommandProcessor {
   }
 
   _handleUse(target: string | null, instrument: string | null, gameState: GameState): ActionResult {
+    // "type on keyboard" parses as use(null, keyboard) — swap if target is null but instrument exists
+    if (!target && instrument) {
+      target = instrument;
+      instrument = null;
+    }
+
     const itemId = this._resolveInventoryItem(target, gameState);
     if (!itemId) {
-      // Fallback: check room openTargets for scenery interactions (e.g. "pull leads")
+      // Fallback: check room openTargets for scenery interactions
       const room = this.nav.getRoom(gameState.currentRoom);
       if (target && room?.openTargets?.[target]) {
         return this._handleOpen(target, gameState);
       }
-      return { type: 'use_failed', message: `You're not carrying "${target}".` };
+      // Fallback: check examineTargets for scenery you can interact with
+      if (target && room?.examineTargets?.[target.toLowerCase()]) {
+        return { type: 'use_failed', message: `You can't use the ${target} directly.` };
+      }
+      return { type: 'use_failed', message: target ? `You don't see any ${target} here.` : 'Use what?' };
     }
 
     if (instrument) {

@@ -4,31 +4,36 @@
 
 The Kepler's Promise is a **rotating-section interstellar colony vessel**. It has two primary structural elements:
 
-1. **The Spine** — a non-rotating cylindrical hull running the full length of the ship along the thrust axis. ~400m long, ~12m diameter. Contains the fusion drive (aft), fuel tanks, cryo bay, airlock, and the central structural keel. Zero gravity throughout.
+1. **The Spine** — a long, narrow pressurised cylinder running the full length of the ship along the thrust axis. ~400m long, ~8m diameter. The hull IS the spine wall — Deck D is right against the outer hull, with only insulation between the corridor and interstellar vacuum. Contains the fusion drive (aft), fuel tanks (external pods), cryo bay (largest section, banks of pods along the length), airlock, and the structural keel. Zero gravity throughout — the spine is the axis of rotation.
 
-2. **The Ring** — a toroidal habitat section mounted at roughly the 60% mark (fore-of-center) of the spine, connected by four spoke shafts. Rotates at ~2.3 rpm to produce 0.7g at the rim. ~80m outer radius, ~15m torus cross-section. Contains all habitable spaces: bridge, quarters, labs, mess, medical, engineering.
+2. **The Ring** — a toroidal habitat section mounted at roughly the 60% mark (fore-of-center) of the spine, connected by a single spoke shaft. Rotates at ~2.3 rpm to produce 0.7g at the rim. ~80m outer radius, ~15m torus cross-section. Contains all habitable spaces arranged around the torus. Each deck (A, B, C) is a level within the torus cross-section, not a separate ring. One spoke shaft connects the ring to the spine — a pressurised tube with a rotation bearing at the junction.
 
 ```
                     FORE (toward 82 Eridani)
                          │
-                    ┌────┤ Antenna/Sensors
+                    ┌────┤ Antenna/Sensors/Bridge
                     │    │
-                    │  Bridge (A)
-                    │  Corridor A
+                    │  ══╪══ SPINE (8m diameter cylinder, 0g) ══
+                    │    │   Hull is RIGHT HERE — centimetres away
                     │    │
-                    ├────┤ ← Spoke Shaft (×4)
-               ┌────────────────┐
-               │   THE RING     │  ← Rotating habitat torus
-               │  Decks A-C     │     ~0.7g at rim
-               │  (cross-section│     Gravity ⊥ to spin axis
-               │   is circular) │
-               └────────────────┘
-                    ├────┤ ← Spoke Shaft (×4)
+                    │    ├── Spoke Shaft (single, with rotation bearing)
+                    │    │         │
+               ┌────────────────┐ │
+               │   THE RING     │ │  ← Rotating habitat torus
+               │  Decks A-C     │ │     ~0.7g at rim
+               │  (rooms around │ │     Each deck is a level in
+               │   the torus)   │ │     the torus cross-section
+               └────────────────┘ │
+                    │    ├─────────┘
                     │    │
-                    │  Corridor D (Spine)  ← 0g
-                    │  Cryo Bay
+                    │  Cryo Bay (largest spine section)
+                    │    │   Pods in banks along the cylinder
+                    │    │
+                    │  Corridor D (spine passage)
+                    │    │
+                    │  ──┼── Fuel (external pods)
+                    │    │
                     │  Airlock
-                    │  Fuel Storage
                     │    │
                     │  Engine Room
                     │  Fusion Drive Nozzle
@@ -46,7 +51,9 @@ The Kepler's Promise is a **rotating-section interstellar colony vessel**. It ha
 
 - **Engine aft on spine**: Thrust must be along the spin axis or the ship would tumble. The massive drive assembly also acts as a radiation shadow shield — the bulk of the reactor and drive shielding protects the cryo bay and ring from the engine's radiation during burns.
 
-- **Bridge fore on spine**: Needs unobstructed forward view. Sensor arrays and the deep-space antenna are mounted on the fore hull. The bridge is technically in the spine (non-rotating) but is connected to the ring via the upper spoke shafts, so crew can reach it from Deck A.
+- **Single spoke**: One pressurised shaft connects the ring to the spine, with a rotation bearing at the junction. This is a chokepoint — if the spoke is blocked, the ring is cut off from the spine. Gameplay opportunity. The spoke doesn't rotate with the ring; the bearing handles the transition. Entering the spoke from the ring side, you step onto a platform that is stationary relative to the spine while the ring rotates around you.
+
+- **Bridge fore on spine**: Needs unobstructed forward view. Sensor arrays and the deep-space antenna are mounted on the fore hull. The bridge is in the non-rotating spine but accessed via the spoke from Deck A of the ring.
 
 ## 2. Gravity Profile
 
