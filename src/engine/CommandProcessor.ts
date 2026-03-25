@@ -376,6 +376,8 @@ class CommandProcessor {
         for (const id of (openResult as any).revealsItems as string[]) {
           if (gameState.itemHidden[id] !== undefined) {
             gameState.itemHidden[id] = false;
+            // Move item to current room so it's accessible
+            gameState.itemLocations[id] = gameState.currentRoom;
           }
         }
       }
