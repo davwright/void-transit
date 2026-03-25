@@ -1,6 +1,6 @@
 {
   "name": "void-transit",
-  "version": "1.9.8",
+  "version": "1.9.9",
   "description": "VOID TRANSIT — A hard science fiction text adventure",
   "main": "dist/server.js",
   "scripts": {
