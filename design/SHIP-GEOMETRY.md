@@ -4,9 +4,43 @@
 
 The Kepler's Promise is a **rotating-section interstellar colony vessel**. It has two primary structural elements:
 
-1. **The Spine** — a long, narrow pressurised cylinder running the full length of the ship along the thrust axis. ~400m long, ~8m diameter. The hull IS the spine wall — Deck D is right against the outer hull, with only insulation between the corridor and interstellar vacuum. Contains the fusion drive (aft), fuel tanks (external pods), cryo bay (largest section, banks of pods along the length), airlock, and the structural keel. Zero gravity throughout — the spine is the axis of rotation.
+1. **The Spine** — a long, narrow pressurised cylinder running the full length of the ship along the rotation/thrust axis. ~400m long, ~8m diameter. The hull IS the spine wall — Deck D is right against the outer hull, with only insulation between the corridor and interstellar vacuum. Contains the fusion drive (aft), fuel tanks (external pods), cryo bay (largest section, banks of pods along the length), airlock, and the structural keel. Near-zero gravity on the axis — centripetal acceleration is negligible at <4m from the axis.
 
-2. **The Ring** — a toroidal habitat section mounted at roughly the 60% mark (fore-of-center) of the spine, connected by a single spoke shaft. Rotates at ~2.3 rpm to produce 0.7g at the rim. ~80m outer radius, ~15m torus cross-section. Contains all habitable spaces arranged around the torus. Each deck (A, B, C) is a level within the torus cross-section, not a separate ring. One spoke shaft connects the ring to the spine — a pressurised tube with a rotation bearing at the junction.
+2. **The Ring** — a toroidal habitat section mounted at roughly the 60% mark (fore-of-center) of the spine, connected by a single rigid spoke shaft. Outer radius ~120m, ~15m torus cross-section. Contains all habitable spaces arranged around the torus. Each deck (A, B, C) is a level within the torus cross-section.
+
+### Rotation: the whole ship spins
+
+The **entire ship** rotates as a rigid body at ~2.3 rpm. There is no bearing between the ring and spine — they are structurally one piece. This eliminates:
+- Bearing wear over 42 years (catastrophic failure mode avoided)
+- Pressure seals at rotation joints
+- The need to "quickly enter" a spinning spoke
+
+**Centripetal acceleration at the ring rim (derivation):**
+```
+a = ω²r
+ω = 2.3 rpm × 2π/60 = 0.2409 rad/s
+r = 120 m (outer ring radius)
+
+a = (0.2409)² × 120
+a = 0.05803 × 120
+a = 6.96 m/s²
+a = 0.71g ✓
+```
+
+**On the spine (r ≈ 4m from axis):**
+```
+a = (0.2409)² × 4 = 0.232 m/s² = 0.024g
+```
+Effectively weightless — a dropped object drifts very slowly toward the "wall" over several seconds. Not true zero-g, but close enough that you move by pushing off surfaces and drifting.
+
+**Sensors/antenna**: mounted on a small counter-rotating platform at the fore tip of the spine. Only this platform needs a bearing — much smaller, simpler, and replaceable than spinning an entire habitat ring.
+
+**Directions on the rotating ship:**
+- "Up" = toward the ring (away from the spin axis, toward more gravity)
+- "Down" = toward the spine (toward the axis, toward less gravity)
+- "Fore" = toward the bow, antenna, bridge
+- "Aft" = toward the engine
+- Port/Starboard = left/right facing fore (these rotate with the ship)
 
 ```
                     FORE (toward 82 Eridani)
@@ -51,7 +85,7 @@ The Kepler's Promise is a **rotating-section interstellar colony vessel**. It ha
 
 - **Engine aft on spine**: Thrust must be along the spin axis or the ship would tumble. The massive drive assembly also acts as a radiation shadow shield — the bulk of the reactor and drive shielding protects the cryo bay and ring from the engine's radiation during burns.
 
-- **Single spoke**: One pressurised shaft connects the ring to the spine, with a rotation bearing at the junction. This is a chokepoint — if the spoke is blocked, the ring is cut off from the spine. Gameplay opportunity. The spoke doesn't rotate with the ring; the bearing handles the transition. Entering the spoke from the ring side, you step onto a platform that is stationary relative to the spine while the ring rotates around you.
+- **Single spoke**: One rigid pressurised shaft connects the ring to the spine. No bearing — the whole ship rotates together. This is a structural chokepoint: if the spoke is blocked, the ring is cut off from the spine. Gameplay opportunity. As you climb the spoke from the ring toward the spine, gravity fades continuously (you're moving toward the axis). The Coriolis effect increases as you approach the axis — objects thrown "straight" curve more noticeably.
 
 - **Bridge fore on spine**: Needs unobstructed forward view. Sensor arrays and the deep-space antenna are mounted on the fore hull. The bridge is in the non-rotating spine but accessed via the spoke from Deck A of the ring.
 
@@ -61,13 +95,12 @@ Gravity varies continuously across the ship:
 
 | Location | Effective gravity | Why |
 |----------|------------------|-----|
-| Ring rim (Deck B outer) | 0.70g | Centrifugal force at max radius |
-| Ring inner (Deck B hub) | 0.70g | Hub is at rim level in this design — the "decks" are floors within the torus cross-section, not radial layers |
-| Deck A (upper ring) | 0.65g | Slightly closer to spin axis |
-| Deck C (lower ring) | 0.55g | Approaching the spoke transition |
-| Spoke shafts | 0.55g → 0.0g | Gravity fades as you climb toward the axis |
-| Spine (Deck D) | 0.0g | On the spin axis, no centrifugal force |
-| Bridge | 0.0g | Fore spine, non-rotating |
+| Ring rim (Deck B) | 0.70g | r=120m, full centripetal acceleration |
+| Deck A (upper ring) | 0.65g | r≈112m, slightly closer to axis |
+| Deck C (lower ring) | 0.55g | r≈95m, approaching spoke |
+| Spoke shaft | 0.55g → ~0g | Gravity fades continuously as r decreases |
+| Spine (Deck D) | ~0.02g | r≈4m from axis — effectively weightless |
+| Bridge (fore spine) | ~0.02g | On the axis, same as Deck D |
 
 ### Implications for gameplay
 
