@@ -172,8 +172,50 @@ class GameEngine {
     // Check global events
     const globalEvents = this.story.checkGlobalEvents(state);
 
-    // Check ending conditions
-    const ending = this.story.checkEnding(state);
+    // Check ending conditions — health death takes priority
+    let ending = this.story.checkEnding(state);
+    if (!ending && state.playerHealth <= 0) {
+      // Score based on observations and state changes
+      let score = 0;
+      const achievements: string[] = [];
+
+      // Exploration (1 point per room)
+      score += state.visitedRooms.size;
+
+      // Actions and state changes (from flags)
+      const flagScores: Record<string, [number, string]> = {
+        leads_removed: [5, 'Freed yourself from the monitoring leads'],
+        compartment_opened: [5, 'Found the storage compartment'],
+        dried_off: [5, 'Dried off the cryoprotectant'],
+        read_datapad_briefing: [10, 'Read the mission briefing'],
+      };
+      for (const [flag, [pts, desc]] of Object.entries(flagScores)) {
+        if (state.flags[flag]) { score += pts; achievements.push(desc); }
+      }
+
+      // Equipment
+      if ((state.equipped || []).includes('jumpsuit')) { score += 10; achievements.push('Got dressed'); }
+
+      // Items examined (conversation history)
+      const examines = new Set(state.conversationHistory.filter(h => h.resultType === 'examine').map(h => h.intent.target)).size;
+      score += examines * 2;
+
+      // Puzzles (50 points each)
+      const puzzlesSolved = Object.values(state.puzzleStates).filter(s => s === 'solved').length;
+      score += puzzlesSolved * 50;
+      if (puzzlesSolved > 0) achievements.push('Solved ' + puzzlesSolved + ' problem' + (puzzlesSolved > 1 ? 's' : ''));
+
+      // Items collected
+      score += state.inventory.length * 3;
+
+      const scoreText = '\n\nScore: ' + score
+        + (achievements.length > 0 ? '\n  ' + achievements.join('\n  ') : '')
+        + '\n  Explored ' + state.visitedRooms.size + ' location' + (state.visitedRooms.size !== 1 ? 's' : '')
+        + '\n  Examined ' + examines + ' thing' + (examines !== 1 ? 's' : '')
+        + '\n  ' + state.turnCount + ' turns';
+
+      ending = { id: 'ending_death', conditions: {}, text: scoreText, type: 'bad' as const };
+    }
 
     // Autosave periodically
     if (state.turnCount % config.autosaveInterval === 0) {
@@ -374,9 +416,12 @@ class GameEngine {
         }
       }
 
-      // Health damage
-      if (newExposure >= (coldCfg?.damageThreshold ?? 6)) {
-        state.playerHealth -= (isFreezing ? (coldCfg?.freezingDamage ?? 3) : (coldCfg?.coldDamage ?? 1));
+      // Health damage — escalates with exposure
+      const dmgThreshold = coldCfg?.damageThreshold ?? 12;
+      if (newExposure >= dmgThreshold) {
+        const baseDmg = isFreezing ? (coldCfg?.freezingDamage ?? 3) : (coldCfg?.coldDamage ?? 1);
+        const escalation = Math.floor((newExposure - dmgThreshold) / 3) + 1;
+        state.playerHealth = Math.max(0, state.playerHealth - baseDmg * escalation);
       }
     } else if (hasJumpsuit) {
       // Recovery when dressed
@@ -405,6 +450,25 @@ class GameEngine {
     if (state.turnCount >= hungerOnset + (surv?.hungerCriticalDelay ?? 30) && !state.flags.hunger_critical_given) {
       events.push({ type: 'critical', system: 'survival', message: surv?.hungerCritical || 'Severe hunger.' });
       state.flags.hunger_critical_given = true;
+    }
+
+    // Death check — contextual message based on cause
+    if (state.playerHealth <= 0) {
+      const coldExp = (state.flags.cold_exposure as unknown as number) || 0;
+      const hasJumpsuit = (state.equipped || []).includes('jumpsuit');
+      let deathMsg: string;
+
+      if (coldExp >= 10 && !hasJumpsuit) {
+        deathMsg = 'The shivering stopped a while ago. That was the last warning your body could give. The cold takes you quietly — a narrowing, a dimming, and then nothing at all.';
+      } else if (state.radiationExposure > 50) {
+        deathMsg = 'The nausea hasn\'t stopped for hours. Your vision swims. Your body has absorbed more than it can repair. The reactor\'s invisible fire has done its work.';
+      } else if ((this._getSystemValue(state, 'life_support.subsystems.co2_scrubbers.co2_ppm') as number) > 50000) {
+        deathMsg = 'You can\'t think. Can\'t breathe. The air itself has turned against you — too much of what you exhale, not enough of what you need. You sit down. You don\'t get up.';
+      } else {
+        deathMsg = 'Your body has given everything it had. The ship hums on around you, indifferent. 2,847 colonists sleep in their pods, unaware that the one person who could help them is gone.';
+      }
+
+      events.push({ type: 'fatal', system: 'death', message: deathMsg });
     }
 
     return events;
