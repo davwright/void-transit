@@ -10,30 +10,37 @@ The Kepler's Promise is a **rotating-section interstellar colony vessel**. It ha
 
 ### Rotation: the whole ship spins
 
-The **entire ship** rotates as a rigid body at ~2.3 rpm. There is no bearing between the ring and spine — they are structurally one piece. This eliminates:
+The **entire ship** rotates as a rigid body at **2 rpm**. There is no bearing between the ring and spine — they are structurally one piece. This eliminates:
 - Bearing wear over 42 years (catastrophic failure mode avoided)
 - Pressure seals at rotation joints
 - The need to "quickly enter" a spinning spoke
 
+2 rpm is below the Coriolis comfort threshold (research: ≤2 rpm eliminates motion sickness from head movements; up to 6 rpm tolerable with adaptation). The stars wheel past the bridge viewport once every 30 seconds — noticeable, beautiful, not disorienting. Navigation displays compensate.
+
 **Centripetal acceleration at the ring rim (derivation):**
 ```
 a = ω²r
-ω = 2.3 rpm × 2π/60 = 0.2409 rad/s
-r = 120 m (outer ring radius)
 
-a = (0.2409)² × 120
-a = 0.05803 × 120
-a = 6.96 m/s²
-a = 0.71g ✓
+ω = 2.0 rpm × 2π/60 = 0.2094 rad/s
+Target: a = 0.7g = 6.867 m/s²
+
+Solving for r:
+r = a / ω²
+r = 6.867 / (0.2094)²
+r = 6.867 / 0.04385
+r = 156.6 m
+
+Ring outer radius ≈ 157m
+Ring diameter ≈ 314m
 ```
 
 **On the spine (r ≈ 4m from axis):**
 ```
-a = (0.2409)² × 4 = 0.232 m/s² = 0.024g
+a = (0.2094)² × 4 = 0.175 m/s² = 0.018g
 ```
-Effectively weightless — a dropped object drifts very slowly toward the "wall" over several seconds. Not true zero-g, but close enough that you move by pushing off surfaces and drifting.
+Effectively weightless — a dropped object drifts very slowly toward the "wall" over many seconds. Not true zero-g, but close enough that you move by pushing off surfaces and drifting. This micro-gravity is actually beneficial: cryo patients don't float completely free, they settle very gently against the pod wall, reducing the need for restraints.
 
-**Sensors/antenna**: mounted on a small counter-rotating platform at the fore tip of the spine. Only this platform needs a bearing — much smaller, simpler, and replaceable than spinning an entire habitat ring.
+**Sensors/antenna**: mounted on a small counter-rotating platform at the fore tip of the spine. Only this platform needs a bearing — much smaller, simpler, and replaceable than spinning an entire habitat.
 
 **Directions on the rotating ship:**
 - "Up" = toward the ring (away from the spin axis, toward more gravity)
@@ -42,32 +49,67 @@ Effectively weightless — a dropped object drifts very slowly toward the "wall"
 - "Aft" = toward the engine
 - Port/Starboard = left/right facing fore (these rotate with the ship)
 
+### Spoke structure
+
+Multiple spokes (4) connect the ring to the spine for structural rigidity. The ship is a rigid rotating body — any asymmetry or flex would create vibrations that compound over 42 years. Four spokes, evenly spaced at 90° around the spine, provide redundancy and distribute loads. Only one spoke is pressurised (the crew access shaft). The other three are structural members carrying power, data, and coolant lines.
+
+### Mass balance and fuel geometry
+
+The ship must be balanced around its spin axis. Asymmetric mass = wobble = structural fatigue over decades.
+
+**Fuel**: stored in tanks arranged **symmetrically around the engine** at the aft end of the spine. Not to one side — that would unbalance the ship. The fuel storage room accessible to the player is the **fuel monitoring and control station**, located to starboard of corridor_d. The actual fuel tanks are external, wrapped around the aft spine section.
+
+**Mass balance pairs** (items on opposite sides of the spine):
+- Port: Airlock / Starboard: Fuel control station (similar mass)
+- The cryo bay runs along the spine axis — inherently balanced
+- The ring is symmetric by construction (torus)
+
+### Bridge location
+
+The bridge is on **Deck A** (upper ring level), NOT on the spine. It rotates with the ship at 2 rpm. Through the forward viewport, the stars wheel slowly — one rotation every 30 seconds. This is beautiful and slightly eerie but not disorienting at this rate. The navigation computer compensates for rotation in all displays and sensor readings.
+
+The bridge is at the highest point of the ring (closest to fore), giving it the best structural position for forward sensor feeds routed down the fore spoke.
+
+Sources:
+- [NASA Physics of Artificial Gravity](https://ntrs.nasa.gov/api/citations/20070001008/downloads/20070001008.pdf)
+- [Artificial Gravity - Atomic Rockets](https://www.projectrho.com/public_html/rocket/artificialgrav.php)
+- [SpinCalc - Artificial Gravity Calculator](https://www.artificial-gravity.com/sw/SpinCalc/)
+- [PMC: Artificial gravity as countermeasure](https://pmc.ncbi.nlm.nih.gov/articles/PMC4470275/)
+
 ```
                     FORE (toward 82 Eridani)
                          │
-                    ┌────┤ Antenna/Sensors/Bridge
+                    ┌────┤ Counter-rotating sensor platform
+                    │    │   (only bearing on the ship)
                     │    │
-                    │  ══╪══ SPINE (8m diameter cylinder, 0g) ══
-                    │    │   Hull is RIGHT HERE — centimetres away
+                    │  ══╪══ SPINE (8m Ø, ~0.02g) ═══════════
+                    │    │   Hull is RIGHT HERE
                     │    │
-                    │    ├── Spoke Shaft (single, with rotation bearing)
+                    │    ├── Spoke ×4 (1 pressurised, 3 structural)
                     │    │         │
-               ┌────────────────┐ │
-               │   THE RING     │ │  ← Rotating habitat torus
-               │  Decks A-C     │ │     ~0.7g at rim
-               │  (rooms around │ │     Each deck is a level in
-               │   the torus)   │ │     the torus cross-section
-               └────────────────┘ │
-                    │    ├─────────┘
+               ┌─────────────────────────┐
+               │      THE RING           │  ← r=157m, 0.7g at rim
+               │   Deck A (bridge, comms)│     2 rpm, whole ship
+               │   Deck B (hab, med, lab)│     rotates as rigid body
+               │   Deck C (eng, power)   │
+               └─────────────────────────┘
                     │    │
-                    │  Cryo Bay (largest spine section)
+                    │    ├── Spoke junction
+                    │    │
+                    │  Cryo Bay (longest spine section)
                     │    │   Pods in banks along the cylinder
                     │    │
                     │  Corridor D (spine passage)
                     │    │
-                    │  ──┼── Fuel (external pods)
+                    │  ──┼── Port: Airlock
+                    │    │   Starboard: Fuel control station
+                    │    │   (actual fuel tanks wrap around aft
+                    │    │    spine symmetrically)
                     │    │
-                    │  Airlock
+                    │  ╔═╧═══════════╗
+                    │  ║ FUEL TANKS  ║  ← Symmetric around spine
+                    │  ║ (external)  ║
+                    │  ╚═╤═══════════╝
                     │    │
                     │  Engine Room
                     │  Fusion Drive Nozzle
@@ -75,6 +117,8 @@ Effectively weightless — a dropped object drifts very slowly toward the "wall"
                     └────┘
                          │
                     AFT (away from 82 Eridani)
+
+    Entire structure rotates at 2 rpm around the spine axis.
 ```
 
 ### Why this shape?
@@ -95,12 +139,12 @@ Gravity varies continuously across the ship:
 
 | Location | Effective gravity | Why |
 |----------|------------------|-----|
-| Ring rim (Deck B) | 0.70g | r=120m, full centripetal acceleration |
-| Deck A (upper ring) | 0.65g | r≈112m, slightly closer to axis |
-| Deck C (lower ring) | 0.55g | r≈95m, approaching spoke |
+| Ring rim (Deck B) | 0.70g | r=157m, full centripetal acceleration |
+| Deck A (upper ring) | 0.65g | r≈146m, slightly closer to axis |
+| Deck C (lower ring) | 0.55g | r≈125m, approaching spoke junction |
 | Spoke shaft | 0.55g → ~0g | Gravity fades continuously as r decreases |
 | Spine (Deck D) | ~0.02g | r≈4m from axis — effectively weightless |
-| Bridge (fore spine) | ~0.02g | On the axis, same as Deck D |
+| Bridge (Deck A) | 0.65g | In the ring, rotates with everything |
 
 ### Implications for gameplay
 
