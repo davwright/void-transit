@@ -64,7 +64,7 @@ class GameEngine {
     navigation?: { noExit: Record<string, string> };
     posture?: Record<string, string>;
     help?: string;
-    cold?: { dry: Array<{ at: number; type: string; msg: string }>; wet: Array<{ at: number; type: string; msg: string }> };
+    cold?: { dry: Array<{ at: number; type: string; msg: string }>; wet: Array<{ at: number; type: string; msg: string }>; freezingRate?: number; coldRate?: number; damageThreshold?: number; freezingDamage?: number; coldDamage?: number; recoveryRate?: number };
     survival?: { thirstWarning: string; hungerWarning: string; thirstCritical: string; hungerCritical: string; thirstOnsetTurn: number; hungerOnsetTurn: number; thirstCriticalDelay: number; hungerCriticalDelay: number };
   };
 
@@ -354,9 +354,10 @@ class GameEngine {
     const hasJumpsuit = (state.equipped || []).includes('jumpsuit');
     const isDry = !!state.flags.dried_off;
 
+    const coldCfg = this.messages.cold;
     if (isCold && !hasJumpsuit) {
       const exposure = (state.flags.cold_exposure as unknown as number) || 0;
-      const newExposure = exposure + (isFreezing ? 2 : 1);
+      const newExposure = exposure + (isFreezing ? (coldCfg?.freezingRate ?? 2) : (coldCfg?.coldRate ?? 1));
       (state.flags as Record<string, unknown>).cold_exposure = newExposure;
 
       // Escalating cold warnings from messages.json
@@ -373,14 +374,14 @@ class GameEngine {
         }
       }
 
-      // Health damage starts at exposure 6
-      if (newExposure >= 6) {
-        state.playerHealth -= (isFreezing ? 3 : 1);
+      // Health damage
+      if (newExposure >= (coldCfg?.damageThreshold ?? 6)) {
+        state.playerHealth -= (isFreezing ? (coldCfg?.freezingDamage ?? 3) : (coldCfg?.coldDamage ?? 1));
       }
     } else if (hasJumpsuit) {
       // Recovery when dressed
       if ((state.flags.cold_exposure as unknown as number) > 0) {
-        (state.flags as Record<string, unknown>).cold_exposure = Math.max(0, (state.flags.cold_exposure as unknown as number) - 2);
+        (state.flags as Record<string, unknown>).cold_exposure = Math.max(0, (state.flags.cold_exposure as unknown as number) - (coldCfg?.recoveryRate ?? 2));
       }
     }
 
