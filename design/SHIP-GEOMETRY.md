@@ -64,6 +64,61 @@ The ship must be balanced around its spin axis. Asymmetric mass = wobble = struc
 - The cryo bay runs along the spine axis — inherently balanced
 - The ring is symmetric by construction (torus)
 
+### Radiation shielding: water jacket around cryo bay
+
+The cryo bay is the most radiation-sensitive section — 2,847 sleeping humans for 42 years in interstellar space with no planetary magnetic field for protection.
+
+**The threat: Galactic Cosmic Rays (GCR)**
+```
+Unshielded GCR dose in deep space: ~500 mSv/year
+Over 42 years: 21,000 mSv (21 Sv) — lethal many times over
+Target: ≤50 mSv/year (radiation worker annual limit)
+Needed reduction: 90% of incident dose
+```
+
+**The solution: water jacket**
+
+A 1.5m-thick layer of water surrounds the cryo bay section of the spine. Water is an excellent radiation shield — hydrogen-rich, effective at moderating neutrons, and it's cargo the colony needs anyway.
+
+```
+Shielding effectiveness:
+  Water density: 1 g/cm³
+  150 cm of water = 150 g/cm²
+  At 150 g/cm², GCR dose reduction: ~85-90%
+  (diminishing returns above 200 g/cm² due to secondary neutrons)
+
+  Residual dose: 500 × 0.12 ≈ 60 mSv/year
+  Over 42 years: ~2,500 mSv — high but survivable for
+  cryo patients with suppressed cellular metabolism
+```
+
+```
+Water jacket volume:
+  Spine inner radius: 4m
+  Water jacket outer radius: 4 + 1.5 = 5.5m
+  Cryo bay length: ~100m
+
+  V = π(R² - r²) × L
+  V = π(5.5² - 4²) × 100
+  V = π(30.25 - 16) × 100
+  V = π × 14.25 × 100
+  V ≈ 4,477 m³ = 4,477 tonnes of water
+```
+
+**Dual purpose**: This water is the colony's fresh water reserve for establishing the settlement at 82 Eridani. ~2,847 m³ at 1,000 litres per colonist, plus margin. During transit, it shields them. On arrival, it sustains them. The ship consumes its own shielding as it decelerates and the colonists wake.
+
+The water jacket also provides:
+- **Thermal mass**: temperature stability for the cryo system
+- **Neutron moderation**: hydrogen atoms slow secondary neutrons
+- **Structural dampening**: water mass reduces vibration from the engine
+
+The fuel tanks at the aft end provide additional shielding from the engine direction.
+
+Sources:
+- [NASA TM-4167: Estimates of GCR Shielding](https://ntrs.nasa.gov/api/citations/19900008219/downloads/19900008219.pdf)
+- [NASA TP-3682: GCR Shielding in Deep Space](https://ntrs.nasa.gov/api/citations/19980006777/downloads/19980006777.pdf)
+- [Health threat from cosmic rays - Wikipedia](https://en.wikipedia.org/wiki/Health_threat_from_cosmic_rays)
+
 ### Bridge location
 
 The bridge is on **Deck A** (upper ring level), NOT on the spine. It rotates with the ship at 2 rpm. Through the forward viewport, the stars wheel slowly — one rotation every 30 seconds. This is beautiful and slightly eerie but not disorienting at this rate. The navigation computer compensates for rotation in all displays and sensor readings.
