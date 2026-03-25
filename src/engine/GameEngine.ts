@@ -397,11 +397,9 @@ class GameEngine {
     const isDry = !!state.flags.dried_off;
 
     const coldCfg = this.messages.cold;
-    const wetInSuit = hasJumpsuit && !isDry && isCold;
-    if (isCold && (!hasJumpsuit || wetInSuit)) {
+    if (isCold && !hasJumpsuit) {
       const exposure = (state.flags.cold_exposure as unknown as number) || 0;
-      // Wet in suit: slow accumulation (cryoprotectant evaporating inside suit). Naked: full rate.
-      const rate = wetInSuit ? 0.5 : (isFreezing ? (coldCfg?.freezingRate ?? 1) : (coldCfg?.coldRate ?? 1));
+      const rate = isFreezing ? (coldCfg?.freezingRate ?? 1) : (coldCfg?.coldRate ?? 1);
       const newExposure = exposure + rate;
       (state.flags as Record<string, unknown>).cold_exposure = newExposure;
 
@@ -430,6 +428,24 @@ class GameEngine {
       // Recovery when dressed
       if ((state.flags.cold_exposure as unknown as number) > 0) {
         (state.flags as Record<string, unknown>).cold_exposure = Math.max(0, (state.flags.cold_exposure as unknown as number) - (coldCfg?.recoveryRate ?? 2));
+      }
+    }
+
+    // Skin irritation — cryoprotectant residue warming inside the suit
+    if (hasJumpsuit && !isDry) {
+      const irritation = ((state.flags as Record<string, unknown>).skin_irritation as number) || 0;
+      (state.flags as Record<string, unknown>).skin_irritation = irritation + 1;
+      if (irritation === 5 && !state.flags.irritation_warning_given) {
+        events.push({ type: 'warning', system: 'survival', message: 'The cryoprotectant residue inside your suit is warming. Your skin itches where the fabric rubs.' });
+        state.flags.irritation_warning_given = true;
+      }
+      if (irritation === 12 && !state.flags.irritation_critical_given) {
+        events.push({ type: 'warning', system: 'survival', message: 'The chemical itch has become a burn. The cryoprotectant is reacting with your warming skin — red welts forming along your arms and torso where the suit presses.' });
+        state.flags.irritation_critical_given = true;
+      }
+      if (irritation >= 20 && irritation % 5 === 0) {
+        state.playerHealth = Math.max(0, state.playerHealth - 1);
+        events.push({ type: 'critical', system: 'survival', message: 'The chemical burns are getting worse. Your skin is raw under the suit.' });
       }
     }
 

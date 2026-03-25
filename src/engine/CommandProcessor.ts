@@ -443,7 +443,7 @@ class CommandProcessor {
       if (isDry) {
         return { type: 'equip_success', message: 'The jumpsuit slides on over dry skin. Thermal-lined, it seals against the cold immediately. For the first time since waking, you stop shivering.' };
       } else {
-        return { type: 'equip_success', message: 'You pull the jumpsuit on over wet skin. The thermal lining clings to the cryoprotectant residue — cold and clammy, the fabric sticking where it shouldn\'t. But it\'s a layer between you and the freezing air, and that matters more than comfort right now.' };
+        return { type: 'equip_success', message: 'You pull the jumpsuit on over wet skin. The thermal lining seals against the cold immediately, but the cryoprotectant residue trapped inside is warming now — turning slick and chemical-sharp where it rubs against fabric. Every movement smears it further. Your skin is already prickling.' };
       }
     }
 
