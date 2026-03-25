@@ -132,21 +132,30 @@ class CommandProcessor {
       }
     }
 
-    // Gravity transition text
+    // Movement and transition text — only on first visit (novelty fades)
     const prevRoom = this.nav.getRoom(gameState.previousRoom!);
     const newRoom = this.nav.getRoom(result.roomId!);
-    const prevG = prevRoom?.gravity ?? 0.7;
-    const newG = newRoom?.gravity ?? 0.7;
     let transitionText = '';
-    if (prevG === 0 && newG > 0) {
-      transitionText = 'Weight returns as you climb. Gradually at first — a suggestion of direction, a sense of which way is down — and then with increasing insistence until your body remembers what gravity feels like. Your legs take your weight reluctantly.\n\n';
-    } else if (prevG > 0 && newG === 0) {
-      transitionText = 'The weight drains from your body as you descend. Your feet lift from the rungs. The last trace of gravity lets go and you are floating, weightless, every movement a negotiation with momentum.\n\n';
-    } else if (prevG > 0 && newG > 0 && Math.abs(prevG - newG) >= 0.1) {
-      if (newG < prevG) {
-        transitionText = 'The gravity thins as you move. Things feel lighter — your steps longer, your body less certain of where down is.\n\n';
-      } else {
-        transitionText = 'The gravity deepens. Your footsteps land heavier. The floor asserts itself.\n\n';
+
+    if (result.isFirstVisit) {
+      // Room-specific movement text (describes leaving the previous room)
+      if (prevRoom?.moveText) {
+        transitionText = prevRoom.moveText + '\n\n';
+      }
+
+      // Gravity transition text
+      const prevG = prevRoom?.gravity ?? 0.7;
+      const newG = newRoom?.gravity ?? 0.7;
+      if (prevG === 0 && newG > 0) {
+        transitionText += 'Weight returns as you climb. Gradually at first — a suggestion of direction, a sense of which way is down — and then with increasing insistence until your body remembers what gravity feels like. Your legs take your weight reluctantly.\n\n';
+      } else if (prevG > 0 && newG === 0) {
+        transitionText += 'The weight drains from your body as you descend. Your feet lift from the rungs. The last trace of gravity lets go and you are floating, weightless, every movement a negotiation with momentum.\n\n';
+      } else if (prevG > 0 && newG > 0 && Math.abs(prevG - newG) >= 0.1) {
+        if (newG < prevG) {
+          transitionText += 'The gravity thins as you move. Things feel lighter — your steps longer, your body less certain of where down is.\n\n';
+        } else {
+          transitionText += 'The gravity deepens. Your footsteps land heavier. The floor asserts itself.\n\n';
+        }
       }
     }
 

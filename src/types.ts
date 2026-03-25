@@ -16,6 +16,8 @@ export interface Room {
   temperature?: 'freezing' | 'cold' | 'cool' | 'nominal' | 'warm' | 'vacuum';
   lighting?: 'dark' | 'emergency' | 'industrial' | 'warm' | 'nightwatch';
   confinesPosture?: boolean;
+  /** Text shown when leaving this room (describes the physical act of movement) */
+  moveText?: string;
   exits: Record<string, string | RoomExit>;
   items: string[];
   conditions?: {
