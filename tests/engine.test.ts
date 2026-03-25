@@ -191,7 +191,7 @@ describe('GameEngine', () => {
     it('shows pod ceiling when lying in cryo pod', () => {
       const result = engine.processCommand(SID, parse('look'));
       expect(result.type).toBe('look');
-      expect(result.description).toContain('lying');
+      expect(result.description).toContain('on your back');
       expect(result.items).toHaveLength(0);
       expect(result.exits).toHaveLength(0);
     });
