@@ -88,25 +88,25 @@ describe('Complete Walkthrough', () => {
       expect(room()).toBe('cryo_bay');
 
       // Go to corridor_d
-      let result = cmd('south');
+      let result = cmd('aft');
       expect(result.type).toBe('move_success');
       expect(room()).toBe('corridor_d');
 
       // Explore Deck D
-      result = cmd('south');
+      result = cmd('aft');
       expect(result.type).toBe('move_success');
       expect(room()).toBe('engine_room');
-      cmd('north'); // back to corridor_d
+      cmd('fore'); // back to corridor_d
 
-      result = cmd('east');
+      result = cmd('starboard');
       expect(result.type).toBe('move_success');
       expect(room()).toBe('fuel_storage');
-      cmd('west'); // back to corridor_d
+      cmd('port'); // back to corridor_d
 
-      result = cmd('west');
+      result = cmd('port');
       expect(result.type).toBe('move_success');
       expect(room()).toBe('airlock_inner');
-      cmd('east'); // back to corridor_d
+      cmd('starboard'); // back to corridor_d
 
       // Go up to corridor_c (Deck C)
       result = cmd('up');
@@ -114,51 +114,51 @@ describe('Complete Walkthrough', () => {
       expect(room()).toBe('corridor_c');
 
       // Explore Deck C
-      cmd('south'); // machine_shop
+      cmd('aft'); // machine_shop
       expect(room()).toBe('machine_shop');
-      cmd('north'); // back
+      cmd('fore'); // back
 
-      cmd('east'); // life_support
+      cmd('starboard'); // life_support
       expect(room()).toBe('life_support');
-      cmd('west'); // back
+      cmd('port'); // back
 
-      cmd('west'); // electrical
+      cmd('port'); // electrical
       expect(room()).toBe('electrical');
-      cmd('east'); // back
+      cmd('starboard'); // back
 
       // Go up to corridor_b (Deck B)
       cmd('up');
       expect(room()).toBe('corridor_b');
 
       // Explore Deck B
-      cmd('north'); // med_bay
+      cmd('fore'); // med_bay
       expect(room()).toBe('med_bay');
-      cmd('south'); // back
+      cmd('aft'); // back
 
-      cmd('south'); // mess_hall
+      cmd('aft'); // mess_hall
       expect(room()).toBe('mess_hall');
-      cmd('north'); // back
+      cmd('fore'); // back
 
-      cmd('east'); // lab
+      cmd('starboard'); // lab
       expect(room()).toBe('lab');
-      cmd('west'); // back
+      cmd('port'); // back
 
-      cmd('west'); // crew_quarters
+      cmd('port'); // crew_quarters
       expect(room()).toBe('crew_quarters');
-      cmd('east'); // back
+      cmd('starboard'); // back
 
       // Go up to corridor_a (Deck A)
       cmd('up');
       expect(room()).toBe('corridor_a');
 
       // Explore Deck A
-      cmd('north'); // bridge
+      cmd('fore'); // bridge
       expect(room()).toBe('bridge');
-      cmd('south'); // back
+      cmd('aft'); // back
 
-      cmd('west'); // comms_room
+      cmd('port'); // comms_room
       expect(room()).toBe('comms_room');
-      cmd('east'); // back
+      cmd('starboard'); // back
 
       // Verify we visited many rooms
       const visited = state().visitedRooms;
@@ -175,9 +175,9 @@ describe('Complete Walkthrough', () => {
       expect(hasItem('multitool')).toBe(true);
 
       // Navigate to corridor_d -> corridor_c -> machine_shop
-      cmd('south'); // corridor_d
+      cmd('aft'); // corridor_d
       cmd('up');    // corridor_c
-      cmd('south'); // machine_shop
+      cmd('aft'); // machine_shop
 
       // Try to pick up items there
       const result = cmd('look');
@@ -187,21 +187,21 @@ describe('Complete Walkthrough', () => {
     it('cannot pick up items that are too heavy', () => {
       standUp();
       // Navigate to reactor room where radiation_shield_panel is (28kg, too heavy with other items)
-      cmd('south'); // corridor_d
+      cmd('aft'); // corridor_d
       cmd('up');    // corridor_c
 
       // Pick up several items first
-      cmd('south'); // machine_shop
+      cmd('aft'); // machine_shop
       cmd('take welding torch');
       cmd('take torque wrench');
       cmd('take epoxy resin');
-      cmd('north'); // corridor_c
+      cmd('fore'); // corridor_c
 
-      cmd('east');  // life_support
+      cmd('starboard');  // life_support
       cmd('take oxygen tank');
-      cmd('west');  // corridor_c
+      cmd('port');  // corridor_c
 
-      cmd('north'); // reactor_room
+      cmd('fore'); // reactor_room
       // radiation_shield_panel is 28kg - should fail if already carrying stuff
       const result = cmd('take radiation shield panel');
       // Either fails due to weight or it's there — the important thing is it doesn't crash
@@ -215,7 +215,7 @@ describe('Complete Walkthrough', () => {
       // Make progress
       cmd('search');
       cmd('take multitool');
-      cmd('south'); // corridor_d
+      cmd('aft'); // corridor_d
       cmd('up');    // corridor_c
       cmd('look');
 
@@ -283,12 +283,12 @@ describe('Complete Walkthrough', () => {
       // Explore the ship to trigger story beats
       cmd('take multitool');
       cmd('take datapad');
-      cmd('south'); // corridor_d
+      cmd('aft'); // corridor_d
       cmd('up');    // corridor_c
       cmd('up');    // corridor_b
-      cmd('north'); // med_bay
-      cmd('south'); // corridor_b
-      cmd('south'); // mess_hall
+      cmd('fore'); // med_bay
+      cmd('aft'); // corridor_b
+      cmd('aft'); // mess_hall
 
       // After exploring several rooms, some story beats should have fired
       const triggered = state().storyBeatsTriggered;
@@ -324,44 +324,44 @@ describe('Complete Walkthrough', () => {
     it('can explore every reachable room without crashing', () => {
       standUp();
       const roomsToVisit = [
-        'south',   // corridor_d
-        'south',   // engine_room
-        'north',   // corridor_d
-        'east',    // fuel_storage
-        'west',    // corridor_d
-        'west',    // airlock_inner
-        'east',    // corridor_d
-        'north',   // cryo_bay
-        'south',   // corridor_d
+        'aft',   // corridor_d
+        'aft',   // engine_room
+        'fore',   // corridor_d
+        'starboard',    // fuel_storage
+        'port',    // corridor_d
+        'port',    // airlock_inner
+        'starboard',    // corridor_d
+        'fore',   // cryo_bay
+        'aft',   // corridor_d
         'up',      // corridor_c
-        'north',   // reactor_room
-        'south',   // corridor_c
-        'south',   // machine_shop
-        'south',   // cargo_bay (if exists)
-        'north',   // machine_shop
-        'north',   // corridor_c
-        'east',    // life_support
-        'west',    // corridor_c
-        'west',    // electrical
-        'east',    // corridor_c
+        'fore',   // reactor_room
+        'aft',   // corridor_c
+        'aft',   // machine_shop
+        'aft',   // cargo_bay (if exists)
+        'fore',   // machine_shop
+        'fore',   // corridor_c
+        'starboard',    // life_support
+        'port',    // corridor_c
+        'port',    // electrical
+        'starboard',    // corridor_c
         'up',      // corridor_b
-        'north',   // med_bay
-        'south',   // corridor_b
-        'south',   // mess_hall
-        'south',   // hydroponics (if exists)
-        'north',   // mess_hall
-        'north',   // corridor_b
-        'east',    // lab
-        'west',    // corridor_b
-        'west',    // crew_quarters
-        'south',   // rec_room (if exists)
-        'north',   // crew_quarters
-        'east',    // corridor_b
+        'fore',   // med_bay
+        'aft',   // corridor_b
+        'aft',   // mess_hall
+        'aft',   // hydroponics (if exists)
+        'fore',   // mess_hall
+        'fore',   // corridor_b
+        'starboard',    // lab
+        'port',    // corridor_b
+        'port',    // crew_quarters
+        'aft',   // rec_room (if exists)
+        'fore',   // crew_quarters
+        'starboard',    // corridor_b
         'up',      // corridor_a
-        'north',   // bridge
-        'south',   // corridor_a
-        'west',    // comms_room
-        'east',    // corridor_a
+        'fore',   // bridge
+        'aft',   // corridor_a
+        'port',    // comms_room
+        'starboard',    // corridor_a
       ];
 
       let moveCount = 0;

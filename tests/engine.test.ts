@@ -48,25 +48,25 @@ describe('GameEngine', () => {
     });
 
     it('can move south from cryo_bay to corridor_d', () => {
-      const result = engine.processCommand(SID, parse('south'));
+      const result = engine.processCommand(SID, parse('aft'));
       expect(result.type).toBe('move_success');
       expect(result.currentRoom).toBe('corridor_d');
     });
 
     it('cannot move to nonexistent exit', () => {
-      const result = engine.processCommand(SID, parse('north'));
+      const result = engine.processCommand(SID, parse('fore'));
       expect(result.type).toBe('move_failed');
     });
 
     it('tracks visited rooms', () => {
-      engine.processCommand(SID, parse('south'));
+      engine.processCommand(SID, parse('aft'));
       const state = engine.getState(SID)!;
       expect(state.visitedRooms.has('cryo_bay')).toBe(true);
       expect(state.visitedRooms.has('corridor_d')).toBe(true);
     });
 
     it('can navigate through multiple rooms', () => {
-      engine.processCommand(SID, parse('south')); // corridor_d
+      engine.processCommand(SID, parse('aft')); // corridor_d
       engine.processCommand(SID, parse('up')); // corridor_c
       engine.processCommand(SID, parse('up')); // corridor_b
 
@@ -241,7 +241,7 @@ describe('GameEngine', () => {
       engine.processCommand(SID, parse('search'));
       engine.processCommand(SID, parse('take multitool'));
       // Move south to make some progress
-      engine.processCommand(SID, parse('south'));
+      engine.processCommand(SID, parse('aft'));
 
       // Save
       const saveResult = engine.saveGame(SID, 'test_save');
@@ -316,7 +316,7 @@ describe('GameEngine', () => {
   describe('map', () => {
     it('shows visited rooms', () => {
       engine.newGame(SID);
-      engine.processCommand(SID, parse('south'));
+      engine.processCommand(SID, parse('aft'));
       const result = engine.processCommand(SID, parse('map'));
       expect(result.type).toBe('map');
       expect(result.visited).toBeDefined();

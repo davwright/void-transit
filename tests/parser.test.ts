@@ -4,11 +4,18 @@ import { correctSpelling, levenshtein, viterbiTag, viterbiNBest } from '../src/n
 
 describe('Parser', () => {
   describe('directions', () => {
-    it('parses cardinal directions', () => {
-      expect(parse('north').action).toBe('move');
-      expect(parse('north').target).toBe('north');
+    it('rejects cardinal directions with nautical hint', () => {
+      expect(parse('north').action).toBe('rejected');
+      expect(parse('south').action).toBe('rejected');
+      expect(parse('east').action).toBe('rejected');
+      expect(parse('west').action).toBe('rejected');
+    });
+
+    it('parses short direction aliases', () => {
       expect(parse('s').action).toBe('move');
       expect(parse('s').target).toBe('south');
+      expect(parse('n').action).toBe('move');
+      expect(parse('n').target).toBe('north');
       expect(parse('e').target).toBe('east');
       expect(parse('w').target).toBe('west');
     });
@@ -35,9 +42,14 @@ describe('Parser', () => {
       expect(parse('astern')).toMatchObject({ action: 'move', target: 'south' });
     });
 
-    it('parses "go <direction>"', () => {
-      expect(parse('go north')).toMatchObject({ action: 'move', target: 'north' });
-      expect(parse('walk south')).toMatchObject({ action: 'move', target: 'south' });
+    it('rejects "go <cardinal>"', () => {
+      expect(parse('go north').action).toBe('rejected');
+      expect(parse('walk south').action).toBe('rejected');
+    });
+
+    it('parses "go <nautical>"', () => {
+      expect(parse('go fore')).toMatchObject({ action: 'move', target: 'north' });
+      expect(parse('go aft')).toMatchObject({ action: 'move', target: 'south' });
     });
   });
 
@@ -282,8 +294,8 @@ describe('Parser', () => {
       expect(parse('serach cabinet')).toMatchObject({ action: 'search', target: 'cabinet' });
     });
 
-    it('corrects "nroth" to "north"', () => {
-      expect(parse('nroth')).toMatchObject({ action: 'move', target: 'north' });
+    it('corrects "sarboard" to "starboard"', () => {
+      expect(parse('sarboard')).toMatchObject({ action: 'move', target: 'east' });
     });
 
     it('corrects "combnine" to "combine"', () => {
@@ -435,7 +447,7 @@ describe('Parser', () => {
     });
 
     it('deterministic direction has no alternatives', () => {
-      const result = parse('north');
+      const result = parse('fore');
       expect(result.alternatives).toBeUndefined();
     });
   });

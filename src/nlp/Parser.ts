@@ -14,8 +14,8 @@ type WordCategory = 'direction' | 'action' | 'movement' | 'question' | 'modal'
 
 // Directions → normalized direction
 const directions: Record<string, string> = {
-  north: 'north', n: 'north', south: 'south', s: 'south',
-  east: 'east', e: 'east', west: 'west', w: 'west',
+  n: 'north', s: 'south',
+  e: 'east', w: 'west',
   up: 'up', u: 'up', down: 'down', d: 'down',
   in: 'in', enter: 'in', inside: 'in',
   out: 'out', exit: 'out', outside: 'out',
@@ -172,10 +172,21 @@ export function injectRejectedVerbs(data: { verbs: Record<string, string>; respo
   _rejectedLoaded = true;
 }
 
-/** Check if a word is a recognized-but-rejected verb. Returns a flavor Intent or null. */
-function checkRejectedVerb(word: string): Intent | null {
+/** Check if a word or phrase is a recognized-but-rejected verb. Returns a flavor Intent or null. */
+function checkRejectedVerb(word: string, fullInput?: string): Intent | null {
   if (!word) return null;
   _ensureRejectedLoaded();
+  // Check full input first (for multi-word rejections like "go north")
+  if (fullInput) {
+    const category = rejectedVerbs[fullInput.toLowerCase()];
+    if (category) {
+      const responses = rejectedResponses[category];
+      if (responses?.length) {
+        const message = responses[Math.floor(Math.random() * responses.length)];
+        return { action: 'rejected', target: null, instrument: null, raw: fullInput, value: message };
+      }
+    }
+  }
   const category = rejectedVerbs[word.toLowerCase()];
   if (!category) return null;
   const responses = rejectedResponses[category];
@@ -303,6 +314,20 @@ export function parse(input: string): Intent {
 
   if (tokens.length === 0) return { action: 'look', target: null, instrument: null, raw };
 
+  // Check full input against multi-word rejected phrases (e.g. "go north")
+  {
+    _ensureRejectedLoaded();
+    const fullLower = firstClause.toLowerCase();
+    const category = rejectedVerbs[fullLower];
+    if (category) {
+      const responses = rejectedResponses[category];
+      if (responses?.length) {
+        const message = responses[Math.floor(Math.random() * responses.length)];
+        return { action: 'rejected', target: null, instrument: null, raw, value: message };
+      }
+    }
+  }
+
   const first = tokens[0];
 
   // ── Single word ──────────────────────────────────────────────────────
@@ -313,7 +338,7 @@ export function parse(input: string): Intent {
 
     // Check rejected verbs BEFORE abbreviation matching
     // ("hello" should not match "help" via abbreviation)
-    const rejected = checkRejectedVerb(first.word);
+    const rejected = checkRejectedVerb(first.word, raw);
     if (rejected) return rejected;
 
     // Try abbreviation matching
@@ -508,7 +533,7 @@ function statisticalFallback(tokens: Token[], raw: string): Intent {
   const nBestResults = viterbiNBest(words, 4);
 
   if (nBestResults.length === 0) {
-    const rejected = checkRejectedVerb(tokens[0]?.word);
+    const rejected = checkRejectedVerb(tokens[0]?.word, raw);
     return rejected || { action: 'unknown', target: null, instrument: null, raw };
   }
 
@@ -526,7 +551,7 @@ function statisticalFallback(tokens: Token[], raw: string): Intent {
   }
 
   if (candidates.length === 0) {
-    const rejected = checkRejectedVerb(tokens[0]?.word);
+    const rejected = checkRejectedVerb(tokens[0]?.word, raw);
     return rejected || { action: 'unknown', target: null, instrument: null, raw };
   }
 
