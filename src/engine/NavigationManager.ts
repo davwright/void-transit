@@ -8,12 +8,14 @@ interface ExitInfo {
 
 class NavigationManager {
   rooms: Map<string, Room>;
+  private noExitMessages: Record<string, string>;
 
-  constructor(rooms: Room[]) {
+  constructor(rooms: Room[], noExitMessages?: Record<string, string>) {
     this.rooms = new Map<string, Room>();
     for (const room of rooms) {
       this.rooms.set(room.id, room);
     }
+    this.noExitMessages = noExitMessages || {};
   }
 
   getRoom(roomId: string): Room | null {
@@ -165,17 +167,7 @@ class NavigationManager {
 
   _noExitMessage(direction: string): string {
     const display = this._longDir(direction) || direction;
-    const messages: Record<string, string> = {
-      fore: 'Nothing lies fore.',
-      aft: 'Nothing lies aft.',
-      port: 'Nothing lies to port.',
-      starboard: 'Nothing lies to starboard.',
-      up: 'There is nothing above you.',
-      down: 'There is nothing below you.',
-      in: 'There is nothing to enter here.',
-      out: 'There is no way out in that direction.'
-    };
-    return messages[display] || `You can't go ${direction}.`;
+    return this.noExitMessages[display] || this.noExitMessages['default'] || `You can't go ${direction}.`;
   }
 
   // Direction display helpers — room data uses 'n','s','e','w', display uses nautical

@@ -15,13 +15,16 @@ class CommandProcessor {
   stateEngine: StateTransitionEngine | null;
   ruleEngine: RuleEngine | null;
 
-  constructor(navigationManager: NavigationManager, inventoryManager: InventoryManager, puzzleEngine: PuzzleEngine, storyManager: StoryManager, stateEngine?: StateTransitionEngine, ruleEngine?: RuleEngine) {
+  messages?: { help?: string; posture?: Record<string, string> };
+
+  constructor(navigationManager: NavigationManager, inventoryManager: InventoryManager, puzzleEngine: PuzzleEngine, storyManager: StoryManager, stateEngine?: StateTransitionEngine, ruleEngine?: RuleEngine, messages?: { help?: string; posture?: Record<string, string> }) {
     this.nav = navigationManager;
     this.inv = inventoryManager;
     this.puzzle = puzzleEngine;
     this.story = storyManager;
     this.stateEngine = stateEngine || null;
     this.ruleEngine = ruleEngine || null;
+    this.messages = messages;
   }
 
   process(intent: Intent, gameState: GameState): ActionResult {
@@ -499,11 +502,21 @@ class CommandProcessor {
   }
 
   _handleStatus(gameState: GameState): ActionResult {
-    // Only show systems the player has discovered (visited relevant rooms)
+    // Check system visibility via revealRooms/revealFlags from ship-systems data
     const visited = gameState.visitedRooms;
-    const hasVisitedLifeSupport = visited.has('life_support');
-    const hasVisitedPower = visited.has('electrical') || visited.has('reactor_room');
-    const hasVisitedHull = visited.has('airlock_inner') || visited.has('hull_exterior');
+    const systemsData = (gameState.shipSystems as unknown as Record<string, unknown>).systems || gameState.shipSystems;
+
+    const isRevealed = (sys: Record<string, unknown>): boolean => {
+      const revealRooms = sys.revealRooms as string[] | undefined;
+      const revealFlags = sys.revealFlags as string[] | undefined;
+      if (revealRooms?.some(r => visited.has(r))) return true;
+      if (revealFlags?.some(f => gameState.flags[f])) return true;
+      return false;
+    };
+
+    const lifeSys = (systemsData as Record<string, Record<string, unknown>>).life_support;
+    const powerSys = (systemsData as Record<string, Record<string, unknown>>).power;
+    const hullSys = (systemsData as Record<string, Record<string, unknown>>).hull;
 
     // Cold/exposure status — always visible if relevant
     const coldExposure = (gameState.flags.cold_exposure as unknown as number) || 0;
@@ -517,9 +530,9 @@ class CommandProcessor {
       location: gameState.currentRoom,
       act: gameState.currentAct,
       turnCount: gameState.turnCount,
-      co2Level: hasVisitedLifeSupport ? this._getShipValue(gameState, 'life_support.subsystems.co2_scrubbers.co2_ppm') as number | null : null,
-      powerLevel: hasVisitedPower ? this._getShipValue(gameState, 'power.subsystems.battery_backup.charge') as number | null : null,
-      hullIntegrity: hasVisitedHull ? this._getShipValue(gameState, 'hull.primary_hull.status') as string | null : null
+      co2Level: (lifeSys && isRevealed(lifeSys)) ? this._getShipValue(gameState, 'life_support.subsystems.co2_scrubbers.co2_ppm') as number | null : null,
+      powerLevel: (powerSys && isRevealed(powerSys)) ? this._getShipValue(gameState, 'power.subsystems.battery_backup.charge') as number | null : null,
+      hullIntegrity: (hullSys && isRevealed(hullSys)) ? this._getShipValue(gameState, 'hull.primary_hull.status') as string | null : null
     };
 
     // Add body condition to the message
@@ -659,25 +672,7 @@ class CommandProcessor {
   _handleHelp(): ActionResult {
     return {
       type: 'help',
-      message: `Available commands:
-MOVEMENT: fore/f, aft/a, port/p, starboard/sb, up/u, down/d, in, out
-LOOK:     look, examine [thing], read [document], search
-ITEMS:    take [item], drop [item], inventory/i, equip [item]
-USE:      use [item] on [target], combine [item] with [item]
-          open [thing], turn on/off [thing]
-INFO:     status, date, systems, map/m, hint
-GAME:     save [name], load [name], saves, help, wait
-AUDIO:    audio (toggle), volume [0-100]
-PRIVACY:  feedback on/off — control gameplay data sharing
-
-Tips:
-  Examine everything — descriptions contain clues.
-  Items can be combined together or used on things in the room.
-  Search rooms carefully — not everything is visible at first.
-  Some problems need the right tool. Check your inventory.
-  If something looks broken, you might have what you need to fix it.
-  Commands can be abbreviated: exa, inv, sta, sys, etc.
-  You can refer to the last item: "get datapad" then "read it" or just "read".`
+      message: this.messages?.help || 'Type "look" to see your surroundings. "examine [thing]" to inspect. "take [item]" to pick up. "help" for commands.'
     };
   }
 
@@ -935,16 +930,16 @@ Tips:
 
   _handlePosture(intent: Intent, gameState: GameState): ActionResult {
     if (!this.stateEngine) {
-      return { type: 'posture_failed', message: "You can't do that right now." };
+      return { type: 'posture_failed', message: this.messages?.posture?.cantDoThat || "You can't do that right now." };
     }
 
     const transition = this.stateEngine.checkTransition(intent, gameState);
     if (!transition) {
       const posture = gameState.flags.posture;
       if (posture === 'standing' || !posture) {
-        return { type: 'posture_failed', message: 'You are already standing.' };
+        return { type: 'posture_failed', message: this.messages?.posture?.alreadyStanding || 'You are already standing.' };
       }
-      return { type: 'posture_failed', message: "You can't do that right now." };
+      return { type: 'posture_failed', message: this.messages?.posture?.cantDoThat || "You can't do that right now." };
     }
 
     // Apply flag changes

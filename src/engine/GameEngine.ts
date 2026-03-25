@@ -1,4 +1,4 @@
-import { Room, ItemDef, PuzzleDef, GameState, Intent, ActionResult, StoryData, ShipSystems, GameData, StateTransitionData, RulesData } from '../types';
+import { Room, ItemDef, PuzzleDef, GameState, Intent, ActionResult, StoryData, ShipSystems, GameData, GameBootstrap, StateTransitionData, RulesData } from '../types';
 import NavigationManager from './NavigationManager';
 import InventoryManager from './InventoryManager';
 import PuzzleEngine from './PuzzleEngine';
@@ -62,11 +62,16 @@ class GameEngine {
   messages: {
     systemEvents: Record<string, string>;
     intro: string;
+    navigation?: { noExit: Record<string, string> };
+    posture?: Record<string, string>;
+    help?: string;
+    cold?: { dry: Array<{ at: number; type: string; msg: string }>; wet: Array<{ at: number; type: string; msg: string }> };
+    survival?: { thirstWarning: string; hungerWarning: string; thirstCritical: string; hungerCritical: string; thirstOnsetTurn: number; hungerOnsetTurn: number; thirstCriticalDelay: number; hungerCriticalDelay: number };
   };
 
   constructor(injectedData?: {
     gameData: GameData;
-    messages: { systemEvents: Record<string, string>; intro: string };
+    messages: GameEngine['messages'];
     saveManager?: SaveManager;
   }) {
     if (injectedData) {
@@ -78,7 +83,7 @@ class GameEngine {
       this.messages = this._loadMessages();
       this.saveManager = new SaveManager();
     }
-    this.nav = new NavigationManager(this.data.rooms);
+    this.nav = new NavigationManager(this.data.rooms, this.messages.navigation?.noExit);
     this.inv = new InventoryManager(this.data.items, this.data.rooms);
     this.puzzle = new PuzzleEngine(this.data.puzzles);
     this.story = new StoryManager(this.data.story);
@@ -88,7 +93,7 @@ class GameEngine {
     const ruleEngine = this.data.rules
       ? new RuleEngine(this.data.rules, this.nav)
       : undefined;
-    this.cmd = new CommandProcessor(this.nav, this.inv, this.puzzle, this.story, stateEngine, ruleEngine);
+    this.cmd = new CommandProcessor(this.nav, this.inv, this.puzzle, this.story, stateEngine, ruleEngine, { help: this.messages.help, posture: this.messages.posture });
     this.sessions = new Map<string, GameState>();
   }
 
@@ -252,25 +257,27 @@ class GameEngine {
       }
     }
 
+    const boot = this.data.bootstrap;
+
     return {
-      currentRoom: 'cryo_pod',
+      currentRoom: boot?.startRoom || 'cryo_pod',
       previousRoom: null,
       inventory: [],
       equipped: [],
       itemLocations,
       itemHidden,
       itemProperties,
-      flags: { posture: 'lying' },
+      flags: boot?.initialFlags ? { ...boot.initialFlags } : { posture: 'lying' },
       visitedRooms: new Set<string>(),
       puzzleStates: {},
       puzzleProgress: {},
       puzzleAttempts: {},
       shipSystems,
-      currentAct: 'act1_awakening',
+      currentAct: boot?.initialAct || 'act1_awakening',
       storyBeatsTriggered: [],
       turnCount: 0,
-      playerHealth: 65,
-      radiationExposure: 0,
+      playerHealth: boot?.initialHealth ?? 65,
+      radiationExposure: boot?.initialRadiation ?? 0,
       conversationHistory: [],
       globalEvents: [],
       worldLore: {}
@@ -361,22 +368,11 @@ class GameEngine {
       const newExposure = exposure + (isFreezing ? 2 : 1);
       (state.flags as Record<string, unknown>).cold_exposure = newExposure;
 
-      // Escalating cold warnings — every turn gets a message, severity increases
-      const coldMessages = isDry ? [
-        // Dry but naked
-        { at: 2, type: 'warning', msg: 'A shiver runs through you. The air is cold against bare skin.' },
-        { at: 4, type: 'warning', msg: 'The shivering is constant now. Your jaw aches from clenching.' },
-        { at: 6, type: 'critical', msg: 'Your fingers are clumsy and slow. Simple movements take concentration.' },
-        { at: 8, type: 'critical', msg: 'Your hands are shaking. Grip strength failing. Things keep slipping.' },
-        { at: 10, type: 'critical', msg: 'Numbness spreading inward from your fingers and toes. Your thoughts are thickening.' },
-      ] : [
-        // Wet and naked — worse
-        { at: 2, type: 'warning', msg: 'A violent shiver. The cryoprotectant on your skin is evaporating, and each breath of cold air makes it worse.' },
-        { at: 4, type: 'critical', msg: 'Your teeth are chattering. The wet film on your skin pulls heat away faster than your body can replace it.' },
-        { at: 6, type: 'critical', msg: 'Your fingers are white. Fumbling. The fine motor control is going.' },
-        { at: 8, type: 'critical', msg: 'Your vision is narrowing. Thinking is slow, like wading through something thick.' },
-        { at: 10, type: 'critical', msg: 'Peripheral vision gone. The shivering has stopped, which is worse. Your body is giving up.' },
-      ];
+      // Escalating cold warnings from messages.json
+      const coldMsgData = this.messages.cold;
+      const coldMessages = coldMsgData
+        ? (isDry ? coldMsgData.dry : coldMsgData.wet)
+        : [{ at: 2, type: 'warning', msg: 'You are very cold.' }];
 
       // Show the highest applicable message
       for (let i = coldMessages.length - 1; i >= 0; i--) {
@@ -397,32 +393,25 @@ class GameEngine {
       }
     }
 
-    // Hunger/thirst — gradual onset after several turns
-    const hungerOnset = 25;
-    const thirstOnset = 15;
+    // Hunger/thirst — gradual onset after several turns (config from messages.json)
+    const surv = this.messages.survival;
+    const hungerOnset = surv?.hungerOnsetTurn ?? 25;
+    const thirstOnset = surv?.thirstOnsetTurn ?? 15;
 
     if (state.turnCount >= thirstOnset && !state.flags.thirst_warning_given) {
-      events.push({ type: 'warning', system: 'survival',
-        message: 'Your mouth is dry. The cryo revival process leaves you dehydrated — you should find water.'
-      });
+      events.push({ type: 'warning', system: 'survival', message: surv?.thirstWarning || 'You are thirsty.' });
       state.flags.thirst_warning_given = true;
     }
     if (state.turnCount >= hungerOnset && !state.flags.hunger_warning_given) {
-      events.push({ type: 'warning', system: 'survival',
-        message: 'Your stomach clenches. Nineteen years without food — your body is remembering what it needs.'
-      });
+      events.push({ type: 'warning', system: 'survival', message: surv?.hungerWarning || 'You are hungry.' });
       state.flags.hunger_warning_given = true;
     }
-    if (state.turnCount >= thirstOnset + 20 && !state.flags.thirst_critical_given) {
-      events.push({ type: 'critical', system: 'survival',
-        message: 'Your head is pounding. Dehydration is setting in. You need to find the mess hall or medical bay.'
-      });
+    if (state.turnCount >= thirstOnset + (surv?.thirstCriticalDelay ?? 20) && !state.flags.thirst_critical_given) {
+      events.push({ type: 'critical', system: 'survival', message: surv?.thirstCritical || 'Severe dehydration.' });
       state.flags.thirst_critical_given = true;
     }
-    if (state.turnCount >= hungerOnset + 30 && !state.flags.hunger_critical_given) {
-      events.push({ type: 'critical', system: 'survival',
-        message: 'The hunger is a constant ache now. Your hands are unsteady. You need food.'
-      });
+    if (state.turnCount >= hungerOnset + (surv?.hungerCriticalDelay ?? 30) && !state.flags.hunger_critical_given) {
+      events.push({ type: 'critical', system: 'survival', message: surv?.hungerCritical || 'Severe hunger.' });
       state.flags.hunger_critical_given = true;
     }
 
@@ -446,12 +435,25 @@ class GameEngine {
     // Decode base64 immediately on load, before any normalization
     const rawRooms = decodeObject(load('rooms.json')) as Record<string, unknown> | Room[];
     let rooms: Room[];
+    let bootstrap: GameBootstrap | undefined;
     if (Array.isArray(rawRooms)) {
       rooms = rawRooms;
     } else if (rawRooms.rooms && typeof rawRooms.rooms === 'object') {
       rooms = Array.isArray(rawRooms.rooms)
         ? rawRooms.rooms as Room[]
         : Object.values(rawRooms.rooms) as Room[];
+      // Extract bootstrap config from meta
+      const meta = rawRooms.meta as Record<string, unknown> | undefined;
+      if (meta?.bootstrap) {
+        const b = meta.bootstrap as Record<string, unknown>;
+        bootstrap = {
+          startRoom: (meta.start_room as string) || 'cryo_pod',
+          initialFlags: (b.initialFlags as Record<string, boolean | string>) || {},
+          initialHealth: (b.initialHealth as number) || 100,
+          initialAct: (b.initialAct as string) || 'act1_awakening',
+          initialRadiation: (b.initialRadiation as number) || 0,
+        };
+      }
     } else {
       rooms = Object.values(rawRooms) as Room[];
     }
@@ -503,10 +505,10 @@ class GameEngine {
     const rawRules = decodeObject(load('rules.json')) as RulesData | null;
     const rules = rawRules || undefined;
 
-    return { rooms, items, puzzles, story, shipSystems, stateTransitions, rules };
+    return { rooms, items, puzzles, story, shipSystems, stateTransitions, rules, bootstrap };
   }
 
-  _loadMessages(): { systemEvents: Record<string, string>; intro: string } {
+  _loadMessages(): GameEngine['messages'] {
     const filepath = path.join(config.dataDir, 'messages.json');
     if (!fs.existsSync(filepath)) {
       return { systemEvents: {}, intro: '' };

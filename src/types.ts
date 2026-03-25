@@ -393,6 +393,14 @@ export interface RulesData {
   rules: Rule[];
 }
 
+export interface GameBootstrap {
+  startRoom: string;
+  initialFlags: Record<string, boolean | string>;
+  initialHealth: number;
+  initialAct: string;
+  initialRadiation: number;
+}
+
 export interface GameData {
   rooms: Room[];
   items: ItemDef[];
@@ -401,4 +409,5 @@ export interface GameData {
   shipSystems: ShipSystems;
   stateTransitions?: StateTransitionData;
   rules?: RulesData;
+  bootstrap?: GameBootstrap;
 }
