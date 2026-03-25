@@ -11,6 +11,12 @@ describe('GameEngine', () => {
     engine = new GameEngine();
   });
 
+  /** Stand the player up from the cryo pod (lying → sitting → standing) */
+  function standUp() {
+    const state = engine.getState(SID)!;
+    state.flags.posture = 'standing';
+  }
+
   describe('newGame', () => {
     it('creates a new game session', () => {
       const result = engine.newGame(SID);
@@ -36,6 +42,7 @@ describe('GameEngine', () => {
   describe('navigation', () => {
     beforeEach(() => {
       engine.newGame(SID);
+      standUp();
     });
 
     it('can move south from cryo_bay to corridor_d', () => {
@@ -63,6 +70,13 @@ describe('GameEngine', () => {
 
       const state = engine.getState(SID)!;
       expect(state.currentRoom).toBe('corridor_b');
+    });
+
+    it('blocks movement while lying in cryo pod', () => {
+      const state = engine.getState(SID)!;
+      state.flags.posture = 'lying';
+      const result = engine.processCommand(SID, parse('south'));
+      expect(result.type).toBe('move_failed');
     });
   });
 
@@ -153,6 +167,7 @@ describe('GameEngine', () => {
     });
 
     it('returns room description', () => {
+      standUp();
       const result = engine.processCommand(SID, parse('look'));
       expect(result.type).toBe('look');
       expect(result.description).toBeTruthy();
@@ -160,15 +175,34 @@ describe('GameEngine', () => {
     });
 
     it('shows visible items', () => {
+      standUp();
       const result = engine.processCommand(SID, parse('look'));
       expect(result.items).toBeDefined();
       expect(Array.isArray(result.items)).toBe(true);
     });
 
     it('shows exits', () => {
+      standUp();
       const result = engine.processCommand(SID, parse('look'));
       expect(result.exits).toBeDefined();
       expect(result.exits!.length).toBeGreaterThan(0);
+    });
+
+    it('shows pod ceiling when lying in cryo pod', () => {
+      const result = engine.processCommand(SID, parse('look'));
+      expect(result.type).toBe('look');
+      expect(result.description).toContain('lying');
+      expect(result.items).toHaveLength(0);
+      expect(result.exits).toHaveLength(0);
+    });
+
+    it('shows pod interior when sitting', () => {
+      const state = engine.getState(SID)!;
+      state.flags.posture = 'sitting';
+      const result = engine.processCommand(SID, parse('look'));
+      expect(result.type).toBe('look');
+      expect(result.description).toContain('sitting');
+      expect(result.items).toHaveLength(0);
     });
   });
 
@@ -197,6 +231,7 @@ describe('GameEngine', () => {
     });
 
     it('can save and load game', () => {
+      standUp();
       // Search to reveal hidden multitool, then take it
       engine.processCommand(SID, parse('search'));
       engine.processCommand(SID, parse('take multitool'));

@@ -3,6 +3,7 @@ import NavigationManager from './NavigationManager';
 import InventoryManager from './InventoryManager';
 import PuzzleEngine from './PuzzleEngine';
 import StoryManager from './StoryManager';
+import StateTransitionEngine from './StateTransitionEngine';
 import { levenshtein } from '../nlp/StatisticalTagger';
 
 class CommandProcessor {
@@ -10,12 +11,14 @@ class CommandProcessor {
   inv: InventoryManager;
   puzzle: PuzzleEngine;
   story: StoryManager;
+  stateEngine: StateTransitionEngine | null;
 
-  constructor(navigationManager: NavigationManager, inventoryManager: InventoryManager, puzzleEngine: PuzzleEngine, storyManager: StoryManager) {
+  constructor(navigationManager: NavigationManager, inventoryManager: InventoryManager, puzzleEngine: PuzzleEngine, storyManager: StoryManager, stateEngine?: StateTransitionEngine) {
     this.nav = navigationManager;
     this.inv = inventoryManager;
     this.puzzle = puzzleEngine;
     this.story = storyManager;
+    this.stateEngine = stateEngine || null;
   }
 
   process(intent: Intent, gameState: GameState): ActionResult {
@@ -65,6 +68,7 @@ class CommandProcessor {
       case 'puzzle_action': result = this._handlePuzzleAction(target, intent.value || null, gameState); break;
       case 'talk': result = this._handleTalk(target, gameState); break;
       case 'search': result = this._handleSearch(target, gameState, intent.raw); break;
+      case 'posture': result = this._handlePosture(intent, gameState); break;
       case 'map': result = this._handleMap(gameState); break;
       case 'rejected': result = { type: 'rejected', message: intent.value || 'That won\'t help you here.' }; break;
       default: result = this._handleUnknown(intent, gameState);
@@ -112,6 +116,20 @@ class CommandProcessor {
   _handleLook(target: string | null, gameState: GameState, rawInput?: string): ActionResult {
     if (!target || target === 'around' || target === 'room') {
       const room = this.nav.getRoom(gameState.currentRoom);
+
+      // Check for state-based look override (e.g. lying/sitting in cryo pod)
+      const override = this.stateEngine?.getLookOverride(gameState.currentRoom, gameState);
+      if (override) {
+        return {
+          type: 'look',
+          roomId: gameState.currentRoom,
+          roomName: room ? room.name : 'Unknown',
+          description: override,
+          items: [],
+          exits: []
+        };
+      }
+
       const roomDesc = this.nav.getRoomDescription(gameState.currentRoom, gameState);
       const items = this.inv.getVisibleItemsInRoom(gameState.currentRoom, gameState);
       const exits = this.nav.getVisibleExits(gameState.currentRoom, gameState);
@@ -759,6 +777,37 @@ Tips:
     const best = { ...valid[0] };
     best.alternatives = valid.slice(1);
     return best;
+  }
+
+  _handlePosture(intent: Intent, gameState: GameState): ActionResult {
+    if (!this.stateEngine) {
+      return { type: 'posture_failed', message: "You can't do that right now." };
+    }
+
+    const transition = this.stateEngine.checkTransition(intent, gameState);
+    if (!transition) {
+      const posture = gameState.flags.posture;
+      if (posture === 'standing' || !posture) {
+        return { type: 'posture_failed', message: 'You are already standing.' };
+      }
+      return { type: 'posture_failed', message: "You can't do that right now." };
+    }
+
+    // Apply flag changes
+    for (const [key, value] of Object.entries(transition.newFlags)) {
+      gameState.flags[key] = value;
+    }
+
+    // Reveal items
+    if (transition.revealsItems) {
+      for (const itemId of transition.revealsItems) {
+        if (gameState.itemHidden[itemId] !== undefined) {
+          gameState.itemHidden[itemId] = false;
+        }
+      }
+    }
+
+    return { type: 'posture_success', message: transition.message };
   }
 
   _getShipValue(gameState: GameState, path: string): unknown {

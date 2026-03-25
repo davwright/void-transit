@@ -8,7 +8,7 @@ import * as path from 'path';
 import { encodeObject } from '../src/encoding';
 
 const DATA_DIR = path.join(__dirname, '..', 'src', 'data');
-const FILES = ['rooms.json', 'items.json', 'story.json', 'puzzles.json', 'scenery.json', 'ship-systems.json', 'rejected-verbs.json', 'messages.json', 'prompts.json'];
+const FILES = ['rooms.json', 'items.json', 'story.json', 'puzzles.json', 'scenery.json', 'ship-systems.json', 'rejected-verbs.json', 'messages.json', 'prompts.json', 'state-transitions.json'];
 
 const OLD_PREFIX = 'b64:';
 

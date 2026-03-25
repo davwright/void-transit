@@ -25,6 +25,7 @@ import shipSystemsRaw from '../data/ship-systems.json';
 import messagesRaw from '../data/messages.json';
 import promptsRaw from '../data/prompts.json';
 import rejectedVerbsRaw from '../data/rejected-verbs.json';
+import stateTransitionsRaw from '../data/state-transitions.json';
 
 import type { Room, ItemDef, PuzzleDef, StoryData, ShipSystems, GameData, Intent, ActionResult, StoryContext } from '../types';
 import config from '../config';
@@ -39,6 +40,7 @@ const shipSystems = decodeObject(shipSystemsRaw) as any;
 const messages = decodeObject(messagesRaw) as { systemEvents: Record<string, string>; intro: string };
 const prompts = decodeObject(promptsRaw) as Record<string, string>;
 const rejectedVerbs = decodeObject(rejectedVerbsRaw) as { verbs: Record<string, string>; responses: Record<string, string[]> };
+const stateTransitions = decodeObject(stateTransitionsRaw) as any;
 
 // === Normalize room data (same logic as GameEngine._loadData) ===
 let roomsList: Room[];
@@ -91,6 +93,7 @@ const gameData: GameData = {
   puzzles: puzzlesList,
   story: storyData,
   shipSystems: shipSystemsData,
+  stateTransitions: stateTransitions || undefined,
 };
 
 // === Inject data into modules ===
@@ -332,6 +335,12 @@ input.addEventListener('keydown', (e: KeyboardEvent) => {
       return;
     }
     processCommand(text);
+  } else if (e.key === 'PageUp') {
+    e.preventDefault();
+    window.scrollBy(0, -window.innerHeight * 0.85);
+  } else if (e.key === 'PageDown') {
+    e.preventDefault();
+    window.scrollBy(0, window.innerHeight * 0.85);
   } else if (e.key === 'ArrowUp') {
     e.preventDefault();
     if (commandHistory.length && historyIndex < commandHistory.length - 1) {

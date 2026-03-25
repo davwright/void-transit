@@ -2,6 +2,7 @@ node_modules/
 dist/
 saves/
 logs/
+data-plain/
 .env
 *.log
 .DS_Store

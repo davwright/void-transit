@@ -43,7 +43,7 @@ class NavigationManager {
 
     if (conditions) {
       for (const [key, value] of Object.entries(conditions)) {
-        if (!this._checkCondition(key, value, gameState)) {
+        if (!this.checkCondition(key, value, gameState)) {
           const blockMessage = typeof exit === 'object' && exit.blockedMessage
             ? exit.blockedMessage
             : `You can't go that way right now.`;
@@ -57,7 +57,7 @@ class NavigationManager {
 
     if (targetRoom.conditions && targetRoom.conditions.enter) {
       for (const [key, value] of Object.entries(targetRoom.conditions.enter)) {
-        if (!this._checkCondition(key, value, gameState)) {
+        if (!this.checkCondition(key, value, gameState)) {
           const msg = targetRoom.conditions.enterBlockedMessage || `Something prevents you from entering.`;
           return { allowed: false, reason: msg };
         }
@@ -118,7 +118,7 @@ class NavigationManager {
 
     if (room.conditionalDescriptions) {
       for (const cd of room.conditionalDescriptions) {
-        if (this._checkCondition(cd.condition.key, cd.condition.value, gameState)) {
+        if (this.checkCondition(cd.condition.key, cd.condition.value, gameState)) {
           desc += '\n\n' + cd.text;
         }
       }
@@ -127,7 +127,7 @@ class NavigationManager {
     return desc;
   }
 
-  _checkCondition(key: string, value: boolean | string, gameState: GameState): boolean {
+  checkCondition(key: string, value: boolean | string, gameState: GameState): boolean {
     if (key.startsWith('has_')) {
       const itemId = key.substring(4);
       return gameState.inventory.includes(itemId) === value;

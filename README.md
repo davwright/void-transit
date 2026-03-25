@@ -2,6 +2,8 @@
 
 ### A Hard Science Fiction Text Adventure
 
+**Play now:** https://davwright.github.io/void-transit/
+
 ```
 ═══════════════════════════════════════════════════════════════
                   V O I D   T R A N S I T

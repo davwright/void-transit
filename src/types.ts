@@ -320,10 +320,34 @@ export interface StoryContext {
   tension: number;
 }
 
+// === Entity State System ===
+
+export interface StateTransition {
+  id: string;
+  room?: string;
+  condition: Record<string, boolean | string>;
+  triggers: string[];
+  actionKeywords: string[];
+  newFlags: Record<string, boolean | string>;
+  message: string;
+  revealsItems?: string[];
+}
+
+export interface LookOverride {
+  condition: Record<string, boolean | string>;
+  description: string;
+}
+
+export interface StateTransitionData {
+  transitions: StateTransition[];
+  lookOverrides: Record<string, LookOverride[]>;
+}
+
 export interface GameData {
   rooms: Room[];
   items: ItemDef[];
   puzzles: PuzzleDef[];
   story: StoryData;
   shipSystems: ShipSystems;
+  stateTransitions?: StateTransitionData;
 }

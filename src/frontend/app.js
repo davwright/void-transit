@@ -76,6 +76,12 @@
       const text = input.value.trim();
       if (!text || busy) return;
       processInput(text);
+    } else if (e.key === 'PageUp') {
+      e.preventDefault();
+      window.scrollBy(0, -window.innerHeight * 0.85);
+    } else if (e.key === 'PageDown') {
+      e.preventDefault();
+      window.scrollBy(0, window.innerHeight * 0.85);
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       if (commandHistory.length === 0) return;

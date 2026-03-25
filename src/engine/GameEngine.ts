@@ -1,9 +1,10 @@
-import { Room, ItemDef, PuzzleDef, GameState, Intent, ActionResult, StoryData, ShipSystems, GameData } from '../types';
+import { Room, ItemDef, PuzzleDef, GameState, Intent, ActionResult, StoryData, ShipSystems, GameData, StateTransitionData } from '../types';
 import NavigationManager from './NavigationManager';
 import InventoryManager from './InventoryManager';
 import PuzzleEngine from './PuzzleEngine';
 import StoryManager from './StoryManager';
 import CommandProcessor from './CommandProcessor';
+import StateTransitionEngine from './StateTransitionEngine';
 import SaveManager from './SaveManager';
 
 import * as fs from 'fs';
@@ -80,7 +81,10 @@ class GameEngine {
     this.inv = new InventoryManager(this.data.items);
     this.puzzle = new PuzzleEngine(this.data.puzzles);
     this.story = new StoryManager(this.data.story);
-    this.cmd = new CommandProcessor(this.nav, this.inv, this.puzzle, this.story);
+    const stateEngine = this.data.stateTransitions
+      ? new StateTransitionEngine(this.data.stateTransitions, this.nav)
+      : undefined;
+    this.cmd = new CommandProcessor(this.nav, this.inv, this.puzzle, this.story, stateEngine);
     this.sessions = new Map<string, GameState>();
   }
 
@@ -252,7 +256,7 @@ class GameEngine {
       itemLocations,
       itemHidden,
       itemProperties,
-      flags: {},
+      flags: { posture: 'lying' },
       visitedRooms: new Set<string>(),
       puzzleStates: {},
       puzzleProgress: {},
@@ -411,7 +415,10 @@ class GameEngine {
     const rawSystems = decodeObject(load('ship-systems.json')) as ShipSystems | null;
     const shipSystems: ShipSystems = rawSystems || { systems: {}, tickRules: {} };
 
-    return { rooms, items, puzzles, story, shipSystems };
+    const rawTransitions = decodeObject(load('state-transitions.json')) as StateTransitionData | null;
+    const stateTransitions = rawTransitions || undefined;
+
+    return { rooms, items, puzzles, story, shipSystems, stateTransitions };
   }
 
   _loadMessages(): { systemEvents: Record<string, string>; intro: string } {

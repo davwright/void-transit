@@ -33,6 +33,11 @@ describe('Complete Walkthrough', () => {
     engine.newGame(SID);
   });
 
+  /** Stand the player up from the cryo pod */
+  function standUp() {
+    state().flags.posture = 'standing';
+  }
+
   describe('Act 1: Awakening in Cryo Bay', () => {
     it('starts in cryo_bay', () => {
       expect(room()).toBe('cryo_bay');
@@ -73,6 +78,7 @@ describe('Complete Walkthrough', () => {
 
   describe('Ship Navigation - Full Traverse', () => {
     it('can traverse from cryo_bay through the entire ship', () => {
+      standUp();
       // Start in cryo_bay (Deck D)
       expect(room()).toBe('cryo_bay');
 
@@ -311,6 +317,7 @@ describe('Complete Walkthrough', () => {
 
   describe('Full Exploration Run', () => {
     it('can explore every reachable room without crashing', () => {
+      standUp();
       const roomsToVisit = [
         'south',   // corridor_d
         'south',   // engine_room
