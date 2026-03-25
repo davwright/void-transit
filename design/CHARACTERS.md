@@ -2,7 +2,7 @@
 
 ## The Player
 
-- **Identity**: Unknown at start. Cryo Unit 37. Does not remember their own name.
+- **Identity**: Not immediately established. Cryo Unit 37. The pod label has no name.
 - **Role**: Crew member (role TBD). Not a colonist.
 - **Pod**: Unit 37, Cryogenic Suspension Bay, Deck D.
 - **Revival**: Emergency thaw — not scheduled, not self-initiated. Something woke them.
