@@ -169,7 +169,8 @@ class CommandProcessor {
       type: 'move_success',
       roomId: result.roomId,
       roomName: result.room!.name,
-      description: transitionText + roomDesc,
+      description: roomDesc,
+      text: transitionText || undefined,
       isFirstVisit: result.isFirstVisit,
       items: items.map(i => ({ id: i.id, name: i.name })),
       exits: exits.map(e => ({ direction: e.direction, accessible: e.accessible })),
@@ -434,9 +435,19 @@ class CommandProcessor {
     if (!itemId) return { type: 'equip_failed', message: `You're not carrying "${target}".` };
 
     const result = this.inv.equip(itemId, gameState);
-    return result.allowed
-      ? { type: 'equip_success', message: result.message }
-      : { type: 'equip_failed', message: result.reason };
+    if (!result.allowed) return { type: 'equip_failed', message: result.reason };
+
+    // Custom equip messages for jumpsuit based on wet/dry state
+    if (itemId === 'jumpsuit') {
+      const isDry = !!gameState.flags.dried_off;
+      if (isDry) {
+        return { type: 'equip_success', message: 'The jumpsuit slides on over dry skin. Thermal-lined, it seals against the cold immediately. For the first time since waking, you stop shivering.' };
+      } else {
+        return { type: 'equip_success', message: 'You pull the jumpsuit on over wet skin. The thermal lining clings to the cryoprotectant residue — cold and clammy, the fabric sticking where it shouldn\'t. But it\'s a layer between you and the freezing air, and that matters more than comfort right now.' };
+      }
+    }
+
+    return { type: 'equip_success', message: result.message };
   }
 
   _handleUnequip(target: string | null, gameState: GameState): ActionResult {

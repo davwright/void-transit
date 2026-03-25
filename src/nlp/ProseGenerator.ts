@@ -430,7 +430,11 @@ function layoutDeck(deckNodes: any[], allNodes: Map<string, any>): string {
 export function buildFallbackProse(actionResult: ActionResult): string {
   switch (actionResult.type) {
     case 'move_success': {
-      let text = `**${actionResult.roomName || 'Unknown'}**`;
+      let text = '';
+      if (actionResult.text) {
+        text += actionResult.text + '\n';
+      }
+      text += `**${actionResult.roomName || 'Unknown'}**`;
       if (actionResult.isFirstVisit) {
         text += `\n\n${actionResult.description || 'You look around.'}`;
       }

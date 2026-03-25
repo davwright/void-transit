@@ -397,9 +397,12 @@ class GameEngine {
     const isDry = !!state.flags.dried_off;
 
     const coldCfg = this.messages.cold;
-    if (isCold && !hasJumpsuit) {
+    const wetInSuit = hasJumpsuit && !isDry && isCold;
+    if (isCold && (!hasJumpsuit || wetInSuit)) {
       const exposure = (state.flags.cold_exposure as unknown as number) || 0;
-      const newExposure = exposure + (isFreezing ? (coldCfg?.freezingRate ?? 2) : (coldCfg?.coldRate ?? 1));
+      // Wet in suit: slow accumulation (cryoprotectant evaporating inside suit). Naked: full rate.
+      const rate = wetInSuit ? 0.5 : (isFreezing ? (coldCfg?.freezingRate ?? 1) : (coldCfg?.coldRate ?? 1));
+      const newExposure = exposure + rate;
       (state.flags as Record<string, unknown>).cold_exposure = newExposure;
 
       // Escalating cold warnings from messages.json
