@@ -360,27 +360,34 @@ class GameEngine {
       const newExposure = exposure + (isFreezing ? 2 : 1);
       (state.flags as Record<string, unknown>).cold_exposure = newExposure;
 
-      if (newExposure >= 3 && !state.flags.cold_warning_given) {
-        events.push({ type: 'warning', system: 'exposure',
-          message: isDry
-            ? 'You\'re shivering. The ship is cold and you\'re not dressed for it.'
-            : 'You\'re shivering violently. The cryoprotectant on your skin is evaporating, pulling heat from your body faster than you can generate it.'
-        });
-        state.flags.cold_warning_given = true;
-      }
-      if (newExposure >= 6 && !state.flags.cold_critical_given) {
-        events.push({ type: 'critical', system: 'exposure',
-          message: 'Your fingers are going numb. Your thinking is getting sluggish. You need to get dressed or get somewhere warm.'
-        });
-        state.flags.cold_critical_given = true;
-      }
-      if (newExposure >= 8) {
-        state.playerHealth -= (isFreezing ? 3 : 1);
-        if (newExposure % 3 === 0) {
-          events.push({ type: 'critical', system: 'exposure',
-            message: 'The cold is killing you. Slowly, but it is killing you.'
-          });
+      // Escalating cold warnings — every turn gets a message, severity increases
+      const coldMessages = isDry ? [
+        // Dry but naked
+        { at: 2, type: 'warning', msg: 'You\'re shivering. The ship is cold and you\'re not dressed for it.' },
+        { at: 4, type: 'warning', msg: 'The shivering is constant now. Your jaw aches from clenching.' },
+        { at: 6, type: 'critical', msg: 'Your fingers are clumsy and slow. You need to get dressed.' },
+        { at: 8, type: 'critical', msg: 'Your hands are shaking badly. Fine motor control is failing.' },
+        { at: 10, type: 'critical', msg: 'Numbness spreading from your extremities inward. Your body is shutting down non-essential systems.' },
+      ] : [
+        // Wet and naked — worse
+        { at: 2, type: 'warning', msg: 'You\'re shivering violently. The cryoprotectant on your skin is evaporating, pulling heat from your body.' },
+        { at: 4, type: 'critical', msg: 'Your teeth are chattering uncontrollably. The wet film on your skin is stealing heat faster than your body can make it.' },
+        { at: 6, type: 'critical', msg: 'Your fingers are white and numb. You need to dry off and get dressed. Now.' },
+        { at: 8, type: 'critical', msg: 'Your vision is narrowing. Thinking is slow. Hypothermia.' },
+        { at: 10, type: 'critical', msg: 'Your body is shutting down. You are dying of cold.' },
+      ];
+
+      // Show the highest applicable message
+      for (let i = coldMessages.length - 1; i >= 0; i--) {
+        if (newExposure >= coldMessages[i].at) {
+          events.push({ type: coldMessages[i].type, system: 'exposure', message: coldMessages[i].msg });
+          break;
         }
+      }
+
+      // Health damage starts at exposure 6
+      if (newExposure >= 6) {
+        state.playerHealth -= (isFreezing ? 3 : 1);
       }
     } else if (hasJumpsuit) {
       // Recovery when dressed

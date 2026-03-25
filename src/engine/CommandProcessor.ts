@@ -499,17 +499,39 @@ class CommandProcessor {
   }
 
   _handleStatus(gameState: GameState): ActionResult {
-    return {
+    // Only show systems the player has discovered (visited relevant rooms)
+    const visited = gameState.visitedRooms;
+    const hasVisitedLifeSupport = visited.has('life_support');
+    const hasVisitedPower = visited.has('electrical') || visited.has('reactor_room');
+    const hasVisitedHull = visited.has('airlock_inner') || visited.has('hull_exterior');
+
+    // Cold/exposure status — always visible if relevant
+    const coldExposure = (gameState.flags.cold_exposure as unknown as number) || 0;
+    const hasJumpsuit = (gameState.equipped || []).includes('jumpsuit');
+    const isDry = !!gameState.flags.dried_off;
+
+    const result: ActionResult = {
       type: 'status',
       health: gameState.playerHealth || 100,
-      radiation: gameState.radiationExposure || 0,
+      radiation: gameState.radiationExposure > 0 ? gameState.radiationExposure : undefined,
       location: gameState.currentRoom,
       act: gameState.currentAct,
       turnCount: gameState.turnCount,
-      co2Level: this._getShipValue(gameState, 'life_support.subsystems.co2_scrubbers.co2_ppm') as number | null,
-      powerLevel: this._getShipValue(gameState, 'power.subsystems.battery_backup.charge') as number | null,
-      hullIntegrity: this._getShipValue(gameState, 'hull.primary_hull.status') as string | null
+      co2Level: hasVisitedLifeSupport ? this._getShipValue(gameState, 'life_support.subsystems.co2_scrubbers.co2_ppm') as number | null : null,
+      powerLevel: hasVisitedPower ? this._getShipValue(gameState, 'power.subsystems.battery_backup.charge') as number | null : null,
+      hullIntegrity: hasVisitedHull ? this._getShipValue(gameState, 'hull.primary_hull.status') as string | null : null
     };
+
+    // Add body condition to the message
+    const conditions: string[] = [];
+    if (!hasJumpsuit) conditions.push('Unclothed');
+    if (!isDry && !hasJumpsuit) conditions.push('Wet with cryoprotectant');
+    if (coldExposure >= 2) conditions.push(coldExposure >= 8 ? 'Hypothermic' : coldExposure >= 6 ? 'Very cold' : 'Cold');
+    if (conditions.length > 0) {
+      result.message = 'Condition: ' + conditions.join('. ') + '.';
+    }
+
+    return result;
   }
 
   _handleSystems(gameState: GameState): ActionResult {
