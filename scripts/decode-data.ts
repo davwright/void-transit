@@ -14,7 +14,7 @@ const PLAIN_DIR = path.join(__dirname, '..', 'data-plain');
 const FILES = [
   'rooms.json', 'items.json', 'story.json', 'puzzles.json',
   'scenery.json', 'ship-systems.json', 'rejected-verbs.json',
-  'messages.json', 'prompts.json', 'state-transitions.json', 'rules.json',
+  'messages.json', 'prompts.json', 'rules.json',
 ];
 
 if (!fs.existsSync(PLAIN_DIR)) fs.mkdirSync(PLAIN_DIR, { recursive: true });

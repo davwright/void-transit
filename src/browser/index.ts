@@ -25,7 +25,6 @@ import shipSystemsRaw from '../data/ship-systems.json';
 import messagesRaw from '../data/messages.json';
 import promptsRaw from '../data/prompts.json';
 import rejectedVerbsRaw from '../data/rejected-verbs.json';
-import stateTransitionsRaw from '../data/state-transitions.json';
 import rulesRaw from '../data/rules.json';
 
 import type { Room, ItemDef, PuzzleDef, StoryData, ShipSystems, GameData, RulesData, Intent, ActionResult, StoryContext } from '../types';
@@ -41,7 +40,6 @@ const shipSystems = decodeObject(shipSystemsRaw) as any;
 const messages = decodeObject(messagesRaw) as { systemEvents: Record<string, string>; intro: string };
 const prompts = decodeObject(promptsRaw) as Record<string, string>;
 const rejectedVerbs = decodeObject(rejectedVerbsRaw) as { verbs: Record<string, string>; responses: Record<string, string[]> };
-const stateTransitions = decodeObject(stateTransitionsRaw) as any;
 const rulesData = decodeObject(rulesRaw) as RulesData | null;
 
 // === Normalize room data (same logic as GameEngine._loadData) ===
@@ -95,7 +93,6 @@ const gameData: GameData = {
   puzzles: puzzlesList,
   story: storyData,
   shipSystems: shipSystemsData,
-  stateTransitions: stateTransitions || undefined,
   rules: rulesData || undefined,
 };
 

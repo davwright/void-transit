@@ -1,10 +1,9 @@
-import { Room, ItemDef, PuzzleDef, GameState, Intent, ActionResult, StoryData, ShipSystems, GameData, GameBootstrap, StateTransitionData, RulesData } from '../types';
+import { Room, ItemDef, PuzzleDef, GameState, Intent, ActionResult, StoryData, ShipSystems, GameData, GameBootstrap, RulesData } from '../types';
 import NavigationManager from './NavigationManager';
 import InventoryManager from './InventoryManager';
 import PuzzleEngine from './PuzzleEngine';
 import StoryManager from './StoryManager';
 import CommandProcessor from './CommandProcessor';
-import StateTransitionEngine from './StateTransitionEngine';
 import RuleEngine from './RuleEngine';
 import SaveManager from './SaveManager';
 
@@ -87,13 +86,10 @@ class GameEngine {
     this.inv = new InventoryManager(this.data.items, this.data.rooms);
     this.puzzle = new PuzzleEngine(this.data.puzzles);
     this.story = new StoryManager(this.data.story);
-    const stateEngine = this.data.stateTransitions
-      ? new StateTransitionEngine(this.data.stateTransitions, this.nav)
-      : undefined;
     const ruleEngine = this.data.rules
       ? new RuleEngine(this.data.rules, this.nav)
       : undefined;
-    this.cmd = new CommandProcessor(this.nav, this.inv, this.puzzle, this.story, stateEngine, ruleEngine, { help: this.messages.help, posture: this.messages.posture });
+    this.cmd = new CommandProcessor(this.nav, this.inv, this.puzzle, this.story, ruleEngine, { help: this.messages.help, posture: this.messages.posture });
     this.sessions = new Map<string, GameState>();
   }
 
@@ -499,13 +495,10 @@ class GameEngine {
     const rawSystems = decodeObject(load('ship-systems.json')) as ShipSystems | null;
     const shipSystems: ShipSystems = rawSystems || { systems: {}, tickRules: {} };
 
-    const rawTransitions = decodeObject(load('state-transitions.json')) as StateTransitionData | null;
-    const stateTransitions = rawTransitions || undefined;
-
     const rawRules = decodeObject(load('rules.json')) as RulesData | null;
     const rules = rawRules || undefined;
 
-    return { rooms, items, puzzles, story, shipSystems, stateTransitions, rules, bootstrap };
+    return { rooms, items, puzzles, story, shipSystems, rules, bootstrap };
   }
 
   _loadMessages(): GameEngine['messages'] {

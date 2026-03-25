@@ -3,7 +3,6 @@ import NavigationManager from './NavigationManager';
 import InventoryManager, { getMaxCarryWeight } from './InventoryManager';
 import PuzzleEngine from './PuzzleEngine';
 import StoryManager from './StoryManager';
-import StateTransitionEngine from './StateTransitionEngine';
 import RuleEngine from './RuleEngine';
 import { levenshtein } from '../nlp/StatisticalTagger';
 
@@ -12,17 +11,15 @@ class CommandProcessor {
   inv: InventoryManager;
   puzzle: PuzzleEngine;
   story: StoryManager;
-  stateEngine: StateTransitionEngine | null;
   ruleEngine: RuleEngine | null;
 
   messages?: { help?: string; posture?: Record<string, string> };
 
-  constructor(navigationManager: NavigationManager, inventoryManager: InventoryManager, puzzleEngine: PuzzleEngine, storyManager: StoryManager, stateEngine?: StateTransitionEngine, ruleEngine?: RuleEngine, messages?: { help?: string; posture?: Record<string, string> }) {
+  constructor(navigationManager: NavigationManager, inventoryManager: InventoryManager, puzzleEngine: PuzzleEngine, storyManager: StoryManager, ruleEngine?: RuleEngine, messages?: { help?: string; posture?: Record<string, string> }) {
     this.nav = navigationManager;
     this.inv = inventoryManager;
     this.puzzle = puzzleEngine;
     this.story = storyManager;
-    this.stateEngine = stateEngine || null;
     this.ruleEngine = ruleEngine || null;
     this.messages = messages;
   }
@@ -127,10 +124,10 @@ class CommandProcessor {
     gameState.previousRoom = gameState.currentRoom;
     gameState.currentRoom = result.roomId!;
 
-    // Climbing out of a confined space (e.g. cryo pod) → standing
+    // Leaving a confined space → standing (unless entering another confined space)
     if (gameState.flags.posture && gameState.flags.posture !== 'standing') {
-      const override = this.stateEngine?.getLookOverride(result.roomId!, gameState);
-      if (!override) {
+      const targetRoom = this.nav.getRoom(result.roomId!);
+      if (!targetRoom?.confinesPosture) {
         gameState.flags.posture = 'standing';
       }
     }
@@ -171,19 +168,6 @@ class CommandProcessor {
             exits: []
           };
         }
-      }
-
-      // Check for state-based look override (e.g. lying/sitting in cryo pod)
-      const override = this.stateEngine?.getLookOverride(gameState.currentRoom, gameState);
-      if (override) {
-        return {
-          type: 'look',
-          roomId: gameState.currentRoom,
-          roomName: room ? room.name : 'Unknown',
-          description: override,
-          items: [],
-          exits: []
-        };
       }
 
       const roomDesc = this.nav.getRoomDescription(gameState.currentRoom, gameState);
@@ -929,34 +913,12 @@ class CommandProcessor {
   }
 
   _handlePosture(intent: Intent, gameState: GameState): ActionResult {
-    if (!this.stateEngine) {
-      return { type: 'posture_failed', message: this.messages?.posture?.cantDoThat || "You can't do that right now." };
+    // Rule engine handles posture transitions. If we get here, no rule matched.
+    const posture = gameState.flags.posture;
+    if (posture === 'standing' || !posture) {
+      return { type: 'posture_failed', message: this.messages?.posture?.alreadyStanding || 'You are already standing.' };
     }
-
-    const transition = this.stateEngine.checkTransition(intent, gameState);
-    if (!transition) {
-      const posture = gameState.flags.posture;
-      if (posture === 'standing' || !posture) {
-        return { type: 'posture_failed', message: this.messages?.posture?.alreadyStanding || 'You are already standing.' };
-      }
-      return { type: 'posture_failed', message: this.messages?.posture?.cantDoThat || "You can't do that right now." };
-    }
-
-    // Apply flag changes
-    for (const [key, value] of Object.entries(transition.newFlags)) {
-      gameState.flags[key] = value;
-    }
-
-    // Reveal items
-    if (transition.revealsItems) {
-      for (const itemId of transition.revealsItems) {
-        if (gameState.itemHidden[itemId] !== undefined) {
-          gameState.itemHidden[itemId] = false;
-        }
-      }
-    }
-
-    return { type: 'posture_success', message: transition.message };
+    return { type: 'posture_failed', message: this.messages?.posture?.cantDoThat || "You can't do that right now." };
   }
 
   _articleFor(word: string): string {
