@@ -282,72 +282,67 @@ class GameEngine {
 
   _tickSystems(state: GameState): SystemEvent[] {
     const events: SystemEvent[] = [];
-    const ticks = (this.data.shipSystems as ShipSystems).tickRules || {};
-    const systems = (state.shipSystems as unknown as Record<string, unknown>).systems || state.shipSystems;
 
-    // CO2 rise (if scrubbers not fixed)
-    if ((systems as Record<string, unknown>).life_support) {
-      const lifeSupport = (systems as Record<string, unknown>).life_support as Record<string, unknown>;
-      const subsystems = lifeSupport.subsystems as Record<string, Record<string, unknown>>;
-      const scrubbers = subsystems.co2_scrubbers as Record<string, unknown>;
-      if (scrubbers.status !== 'nominal') {
-        (scrubbers as Record<string, number>).co2_ppm += ((ticks as Record<string, number>).co2_rise_per_turn || 150) * (1 - (scrubbers.efficiency as number));
-        if ((scrubbers.co2_ppm as number) > 25000 && !state.flags.co2_warning_given) {
-          events.push({ type: 'warning', system: 'life_support', message: this.messages.systemEvents.co2_warning });
-          state.flags.co2_warning_given = true;
-        }
-        if ((scrubbers.co2_ppm as number) > 40000 && !state.flags.co2_critical_given) {
-          events.push({ type: 'critical', system: 'life_support', message: this.messages.systemEvents.co2_critical });
-          state.flags.co2_critical_given = true;
-          state.playerHealth -= 5;
-        }
-        if ((scrubbers.co2_ppm as number) > 50000) {
-          events.push({ type: 'fatal', system: 'life_support', message: this.messages.systemEvents.co2_fatal });
-          state.playerHealth = 0;
-        }
+    // Generic tick evaluator — processes all tick definitions from ship-systems.json
+    const tickDefs = (this.data.shipSystems as unknown as Record<string, unknown>).ticks as Array<Record<string, unknown>> || [];
+
+    for (const tick of tickDefs) {
+      // Check room condition
+      const cond = tick.condition as Record<string, unknown> | undefined;
+      if (cond?.room && cond.room !== state.currentRoom) continue;
+
+      // Check path condition (equals/notEquals/below)
+      if (cond?.path) {
+        const condVal = this._getSystemValue(state, cond.path as string);
+        if (cond.equals !== undefined && condVal !== cond.equals) continue;
+        if (cond.notEquals !== undefined && condVal === cond.notEquals) continue;
+        if (cond.below !== undefined && (condVal as number) >= (cond.below as number)) continue;
       }
-    }
 
-    // Battery drain
-    if ((systems as Record<string, unknown>).power) {
-      const power = (systems as Record<string, unknown>).power as Record<string, unknown>;
-      const subsystems = power.subsystems as Record<string, Record<string, unknown>>;
-      const battery = subsystems.battery_backup as Record<string, unknown>;
-      if (battery.status === 'draining') {
-        battery.charge = Math.max(0, (battery.charge as number) - ((ticks as Record<string, number>).battery_drain_per_turn || 0.005));
-        if ((battery.charge as number) < 0.15 && !state.flags.battery_warning_given) {
-          events.push({ type: 'warning', system: 'power', message: this.messages.systemEvents.battery_warning });
-          state.flags.battery_warning_given = true;
-        }
+      // Calculate delta with optional scale
+      let delta = tick.delta as number;
+      if (tick.scale) {
+        const s = tick.scale as Record<string, unknown>;
+        const scaleVal = this._getSystemValue(state, s.path as string) as number;
+        if (s.formula === '1 - value') delta *= (1 - scaleVal);
       }
-    }
 
-    // Radiation in reactor room
-    if (state.currentRoom === 'reactor_room') {
-      const power = (systems as Record<string, unknown>).power as Record<string, unknown>;
-      const subsystems = power.subsystems as Record<string, Record<string, unknown>>;
-      const reactor = subsystems.fusion_reactor as Record<string, unknown>;
-      if ((reactor.shieldingIntegrity as number) < 0.7) {
-        const dose = ((ticks as Record<string, number>).radiation_accumulation_per_turn_in_reactor || 2.8) * (1 - (reactor.shieldingIntegrity as number));
-        state.radiationExposure += dose;
-        if (state.radiationExposure > 20 && !state.flags.radiation_warning_given) {
-          events.push({ type: 'warning', system: 'reactor', message: `${this.messages.systemEvents.radiation_warning_prefix}${state.radiationExposure.toFixed(1)}${this.messages.systemEvents.radiation_warning_suffix}` });
-          state.flags.radiation_warning_given = true;
-        }
-        if (state.radiationExposure > 50) {
-          events.push({ type: 'critical', system: 'reactor', message: this.messages.systemEvents.radiation_critical });
-          state.playerHealth -= 3;
-        }
+      // Apply delta to target
+      const targetPath = tick.path as string | undefined;
+      const targetField = tick.target as string | undefined;
+
+      if (targetField === 'radiationExposure') {
+        state.radiationExposure += delta;
+      } else if (targetPath) {
+        const current = this._getSystemValue(state, targetPath) as number;
+        let newVal = current + delta;
+        if (tick.min !== undefined) newVal = Math.max(tick.min as number, newVal);
+        if (tick.max !== undefined) newVal = Math.min(tick.max as number, newVal);
+        this._setSystemValue(state, targetPath, newVal);
       }
-    }
 
-    // Atmosphere loss from hull breach
-    if ((systems as Record<string, unknown>).hull) {
-      const hull = (systems as Record<string, unknown>).hull as Record<string, unknown>;
-      const subsystems = hull.subsystems as Record<string, Record<string, unknown>>;
-      const primaryHull = subsystems.primary_hull as Record<string, unknown>;
-      if (primaryHull.status === 'breached') {
-        (primaryHull as Record<string, number>).atmosphereLossRate_pa_hr += ((ticks as Record<string, number>).atmosphere_loss_per_turn || 0);
+      // Check thresholds
+      const thresholds = tick.thresholds as Array<Record<string, unknown>> || [];
+      const currentVal = targetField === 'radiationExposure'
+        ? state.radiationExposure
+        : (targetPath ? this._getSystemValue(state, targetPath) as number : 0);
+
+      for (const t of thresholds) {
+        const triggered = t.above !== undefined
+          ? currentVal > (t.above as number)
+          : t.below !== undefined
+            ? currentVal < (t.below as number)
+            : false;
+
+        if (!triggered) continue;
+        if (t.flag && state.flags[t.flag as string]) continue; // Already fired
+
+        const msg = this.messages.systemEvents[t.messageKey as string] || '';
+        events.push({ type: t.event as string, system: tick.id as string, message: msg });
+
+        if (t.flag) state.flags[t.flag as string] = true;
+        if (t.damage) state.playerHealth -= t.damage as number;
+        if (t.kill) state.playerHealth = 0;
       }
     }
 
@@ -412,6 +407,34 @@ class GameEngine {
     }
 
     return events;
+  }
+
+  _getSystemValue(state: GameState, path: string): unknown {
+    const parts = path.split('.');
+    let current: unknown = (state.shipSystems as unknown as Record<string, unknown>).systems || state.shipSystems;
+    for (const part of parts) {
+      if (current && typeof current === 'object' && part in (current as Record<string, unknown>)) {
+        current = (current as Record<string, unknown>)[part];
+      } else {
+        return undefined;
+      }
+    }
+    return current;
+  }
+
+  _setSystemValue(state: GameState, path: string, value: unknown): void {
+    const parts = path.split('.');
+    let current: unknown = (state.shipSystems as unknown as Record<string, unknown>).systems || state.shipSystems;
+    for (let i = 0; i < parts.length - 1; i++) {
+      if (current && typeof current === 'object' && parts[i] in (current as Record<string, unknown>)) {
+        current = (current as Record<string, unknown>)[parts[i]];
+      } else {
+        return;
+      }
+    }
+    if (current && typeof current === 'object') {
+      (current as Record<string, unknown>)[parts[parts.length - 1]] = value;
+    }
   }
 
   _getIntroText(): string {
