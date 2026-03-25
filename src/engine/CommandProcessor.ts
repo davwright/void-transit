@@ -302,7 +302,14 @@ class CommandProcessor {
 
   _handleUse(target: string | null, instrument: string | null, gameState: GameState): ActionResult {
     const itemId = this._resolveInventoryItem(target, gameState);
-    if (!itemId) return { type: 'use_failed', message: `You're not carrying "${target}".` };
+    if (!itemId) {
+      // Fallback: check room openTargets for scenery interactions (e.g. "pull leads")
+      const room = this.nav.getRoom(gameState.currentRoom);
+      if (target && room?.openTargets?.[target]) {
+        return this._handleOpen(target, gameState);
+      }
+      return { type: 'use_failed', message: `You're not carrying "${target}".` };
+    }
 
     if (instrument) {
       const targetId = this._resolveItemId(instrument, gameState) || instrument;
@@ -343,7 +350,14 @@ class CommandProcessor {
 
   _handleUnequip(target: string | null, gameState: GameState): ActionResult {
     const itemId = this._resolveInventoryItem(target, gameState);
-    if (!itemId) return { type: 'unequip_failed', message: `You're not wearing "${target}".` };
+    if (!itemId) {
+      // Fallback: check room openTargets for scenery removal (e.g. "remove leads")
+      const room = this.nav.getRoom(gameState.currentRoom);
+      if (target && room?.openTargets?.[target]) {
+        return this._handleOpen(target, gameState);
+      }
+      return { type: 'unequip_failed', message: `You're not wearing "${target}".` };
+    }
 
     const result = this.inv.unequip(itemId, gameState);
     return result.allowed
