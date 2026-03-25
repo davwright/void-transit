@@ -149,7 +149,9 @@ This eliminates the need to carry acceleration fuel, which is the single biggest
 
 **Stage 2 — D-³He fusion drive for deceleration**
 
-Deuterium-helium-3 fusion with magnetic nozzle. D + ³He → ⁴He + p produces only charged particles — no neutron radiation. Exhaust velocity ~12,000 km/s (4% of c). The fusion products ARE the exhaust — not an ion drive (which accelerates inert propellant and needs neutralisation). Direct fusion: burn fuel, reaction products fly out the magnetic nozzle.
+Deuterium-helium-3 fusion with magnetic nozzle, using a **Field-Reversed Configuration (FRC)** reactor. Not a tokamak — the FRC is a linear solenoid geometry: a cigar-shaped plasma confined by external coils, with one sealed mirror end and one open end feeding the magnetic nozzle. The FRC has the highest plasma pressure (β) for a given magnet mass of any confinement scheme, making it the lightest fusion reactor design for spacecraft.
+
+D + ³He → ⁴He + p produces only charged particles — no neutron radiation from the primary reaction. The fusion products ARE the exhaust: protons and alpha particles at ~4% c, directed by the magnetic nozzle. Not an ion drive — no separate propellant, no ionisation grid, no neutralisation of propellant.
 
 ```
 Drive specs:
@@ -347,6 +349,18 @@ deceleration with less thrust.
 ```
 
 This is a critical story moment: Chen's actions have real consequences that the player must solve with physics.
+
+### Reactor operating modes
+
+The FRC reactor has two modes:
+
+**Coast mode (current)**: Low-power electrical generation only. The reactor runs at ~4.2 GW thermal, converted to ~1 GW electrical for ship systems: life support, cryo cooling, heating, navigation, communications, lighting. The magnetic nozzle is sealed — no exhaust, no thrust, no Langmuir Compensator operation. Fuel consumption is minimal (~0.5 tonnes/year for electrical generation alone).
+
+Chen ran the reactor at elevated output (~2 GW electrical) for months to power her hull antenna transmissions. This accounts for the Tank 6 discrepancy — she consumed ~2,346 tonnes over her 17 months awake, roughly 10× the normal coast consumption rate.
+
+**Deceleration mode**: Full power. The nozzle opens, Langmuir Compensators activate, and the drive fires at maximum thrust. Fuel consumption rate: ~5,000 tonnes/year at full thrust. The deceleration burn lasts ~22 years (the ship began decelerating at the midpoint and should arrive at near-zero velocity).
+
+**Aft shielding**: During coast, the nozzle is sealed and the reactor is shielded in all directions by the standard compartment shielding panels. During deceleration burns, the exhaust stream itself is directed aft through the nozzle — the crew areas are all fore of the reactor, shielded by the reactor's own mass and the remaining fuel tanks. No additional aft shield structure is needed because the exhaust is charged particles guided by magnetic fields — they never touch the nozzle housing.
 
 Sources:
 - [Tsiolkovsky rocket equation](https://en.wikipedia.org/wiki/Tsiolkovsky_rocket_equation)
