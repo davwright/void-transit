@@ -12,6 +12,10 @@ export interface Room {
   name: string;
   deck: string;
   description: string;
+  gravity?: number;
+  temperature?: 'freezing' | 'cold' | 'cool' | 'nominal' | 'warm' | 'vacuum';
+  lighting?: 'dark' | 'emergency' | 'industrial' | 'warm' | 'nightwatch';
+  confinesPosture?: boolean;
   exits: Record<string, string | RoomExit>;
   items: string[];
   conditions?: {

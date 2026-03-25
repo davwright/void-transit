@@ -1,19 +1,15 @@
-import { ItemDef, ItemUse, ItemCombination, GameState } from '../types';
+import { ItemDef, ItemUse, ItemCombination, GameState, Room } from '../types';
 
-/** Gravity multiplier by room — determines effective carry weight */
-const ZERO_G_ROOMS = new Set(['cryo_pod', 'cryo_bay', 'corridor_d', 'engine_room', 'fuel_storage', 'airlock_inner', 'airlock_outer', 'hull_exterior']);
-const LOW_G_ROOMS = new Set(['corridor_c', 'reactor_room', 'machine_shop', 'life_support', 'electrical', 'cargo_bay']);
+/** Room gravity lookup — populated by InventoryManager on construction */
+let roomGravityMap: Map<string, number> = new Map();
 
 export function getGravity(roomId: string): number {
-  if (ZERO_G_ROOMS.has(roomId)) return 0;
-  if (LOW_G_ROOMS.has(roomId)) return 0.55;
-  return 0.7; // Decks A-B
+  return roomGravityMap.get(roomId) ?? 0.7;
 }
 
 export function getMaxCarryWeight(roomId: string): number {
   const g = getGravity(roomId);
-  if (g === 0) return 999; // Zero-g: no weight limit (inertia still matters but doesn't prevent carrying)
-  // Base 25kg at 0.7g, scales inversely with gravity
+  if (g === 0) return 999; // Zero-g: no weight limit (inertia still matters)
   return Math.round(25 * (0.7 / g));
 }
 
@@ -66,10 +62,19 @@ interface EquipResult {
 class InventoryManager {
   itemDefs: Map<string, ItemDef>;
 
-  constructor(itemDefs: ItemDef[]) {
+  constructor(itemDefs: ItemDef[], rooms?: Room[]) {
     this.itemDefs = new Map<string, ItemDef>();
     for (const item of itemDefs) {
       this.itemDefs.set(item.id, item);
+    }
+    // Build gravity lookup from room data
+    if (rooms) {
+      roomGravityMap = new Map();
+      for (const room of rooms) {
+        if (room.gravity !== undefined) {
+          roomGravityMap.set(room.id, room.gravity);
+        }
+      }
     }
   }
 

@@ -79,7 +79,7 @@ class GameEngine {
       this.saveManager = new SaveManager();
     }
     this.nav = new NavigationManager(this.data.rooms);
-    this.inv = new InventoryManager(this.data.items);
+    this.inv = new InventoryManager(this.data.items, this.data.rooms);
     this.puzzle = new PuzzleEngine(this.data.puzzles);
     this.story = new StoryManager(this.data.story);
     const stateEngine = this.data.stateTransitions
@@ -348,14 +348,15 @@ class GameEngine {
       }
     }
 
-    // Cold exposure — unprotected in cold rooms
-    const coldRooms = new Set(['cryo_pod', 'cryo_bay', 'corridor_d', 'engine_room', 'fuel_storage', 'airlock_inner']);
-    const freezingRooms = new Set(['cryo_pod', 'cryo_bay']);
+    // Cold exposure — unprotected in cold/freezing rooms
+    const currentRoom = this.nav.getRoom(state.currentRoom);
+    const roomTemp = currentRoom?.temperature || 'nominal';
+    const isCold = roomTemp === 'cold' || roomTemp === 'freezing' || roomTemp === 'vacuum';
+    const isFreezing = roomTemp === 'freezing' || roomTemp === 'vacuum';
     const hasJumpsuit = (state.equipped || []).includes('jumpsuit');
     const isDry = !!state.flags.dried_off;
 
-    if (coldRooms.has(state.currentRoom) && !hasJumpsuit) {
-      const isFreezing = freezingRooms.has(state.currentRoom);
+    if (isCold && !hasJumpsuit) {
       const exposure = (state.flags.cold_exposure as unknown as number) || 0;
       const newExposure = exposure + (isFreezing ? 2 : 1);
       (state.flags as Record<string, unknown>).cold_exposure = newExposure;
