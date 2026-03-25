@@ -1,10 +1,11 @@
-import { Room, ItemDef, PuzzleDef, GameState, Intent, ActionResult, StoryData, ShipSystems, GameData, StateTransitionData } from '../types';
+import { Room, ItemDef, PuzzleDef, GameState, Intent, ActionResult, StoryData, ShipSystems, GameData, StateTransitionData, RulesData } from '../types';
 import NavigationManager from './NavigationManager';
 import InventoryManager from './InventoryManager';
 import PuzzleEngine from './PuzzleEngine';
 import StoryManager from './StoryManager';
 import CommandProcessor from './CommandProcessor';
 import StateTransitionEngine from './StateTransitionEngine';
+import RuleEngine from './RuleEngine';
 import SaveManager from './SaveManager';
 
 import * as fs from 'fs';
@@ -84,7 +85,10 @@ class GameEngine {
     const stateEngine = this.data.stateTransitions
       ? new StateTransitionEngine(this.data.stateTransitions, this.nav)
       : undefined;
-    this.cmd = new CommandProcessor(this.nav, this.inv, this.puzzle, this.story, stateEngine);
+    const ruleEngine = this.data.rules
+      ? new RuleEngine(this.data.rules, this.nav)
+      : undefined;
+    this.cmd = new CommandProcessor(this.nav, this.inv, this.puzzle, this.story, stateEngine, ruleEngine);
     this.sessions = new Map<string, GameState>();
   }
 
@@ -418,7 +422,10 @@ class GameEngine {
     const rawTransitions = decodeObject(load('state-transitions.json')) as StateTransitionData | null;
     const stateTransitions = rawTransitions || undefined;
 
-    return { rooms, items, puzzles, story, shipSystems, stateTransitions };
+    const rawRules = decodeObject(load('rules.json')) as RulesData | null;
+    const rules = rawRules || undefined;
+
+    return { rooms, items, puzzles, story, shipSystems, stateTransitions, rules };
   }
 
   _loadMessages(): { systemEvents: Record<string, string>; intro: string } {

@@ -4,6 +4,7 @@ import InventoryManager from './InventoryManager';
 import PuzzleEngine from './PuzzleEngine';
 import StoryManager from './StoryManager';
 import StateTransitionEngine from './StateTransitionEngine';
+import RuleEngine from './RuleEngine';
 import { levenshtein } from '../nlp/StatisticalTagger';
 
 class CommandProcessor {
@@ -12,13 +13,15 @@ class CommandProcessor {
   puzzle: PuzzleEngine;
   story: StoryManager;
   stateEngine: StateTransitionEngine | null;
+  ruleEngine: RuleEngine | null;
 
-  constructor(navigationManager: NavigationManager, inventoryManager: InventoryManager, puzzleEngine: PuzzleEngine, storyManager: StoryManager, stateEngine?: StateTransitionEngine) {
+  constructor(navigationManager: NavigationManager, inventoryManager: InventoryManager, puzzleEngine: PuzzleEngine, storyManager: StoryManager, stateEngine?: StateTransitionEngine, ruleEngine?: RuleEngine) {
     this.nav = navigationManager;
     this.inv = inventoryManager;
     this.puzzle = puzzleEngine;
     this.story = storyManager;
     this.stateEngine = stateEngine || null;
+    this.ruleEngine = ruleEngine || null;
   }
 
   process(intent: Intent, gameState: GameState): ActionResult {
@@ -43,6 +46,33 @@ class CommandProcessor {
             target = def.name.toLowerCase();
           }
         }
+      }
+    }
+
+    // Check rule engine first — if a rule matches, it takes priority
+    if (this.ruleEngine) {
+      const rule = this.ruleEngine.matchAction(intent, gameState);
+      if (rule) {
+        this.ruleEngine.applyEffects(rule.effects, gameState);
+        // Use appropriate result type based on what's being blocked/done
+        let resultType: string;
+        if (rule.priority && rule.priority >= 100) {
+          // Block rule — use the action-specific failure type
+          const failTypes: Record<string, string> = {
+            move: 'move_failed', take: 'take_failed', get: 'take_failed', pick_up: 'take_failed',
+            drop: 'drop_failed', use: 'use_failed', open: 'open_failed', equip: 'equip_failed',
+            posture: 'posture_failed',
+          };
+          resultType = failTypes[action] || 'rule_blocked';
+        } else {
+          // Success rule — use action-specific success type
+          const successTypes: Record<string, string> = {
+            open: 'open_success', posture: 'posture_success', use: 'use_success',
+            remove: 'open_success', unequip: 'open_success',
+          };
+          resultType = successTypes[action] || 'rule_success';
+        }
+        return { type: resultType, message: rule.message };
       }
     }
 
@@ -124,6 +154,21 @@ class CommandProcessor {
   _handleLook(target: string | null, gameState: GameState, rawInput?: string): ActionResult {
     if (!target || target === 'around' || target === 'room') {
       const room = this.nav.getRoom(gameState.currentRoom);
+
+      // Check rule engine for look overrides first
+      if (this.ruleEngine) {
+        const lookResult = this.ruleEngine.matchLook(gameState.currentRoom, gameState);
+        if (lookResult?.replace) {
+          return {
+            type: 'look',
+            roomId: gameState.currentRoom,
+            roomName: room ? room.name : 'Unknown',
+            description: lookResult.replace,
+            items: [],
+            exits: []
+          };
+        }
+      }
 
       // Check for state-based look override (e.g. lying/sitting in cryo pod)
       const override = this.stateEngine?.getLookOverride(gameState.currentRoom, gameState);

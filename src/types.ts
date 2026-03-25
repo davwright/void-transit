@@ -343,6 +343,52 @@ export interface StateTransitionData {
   lookOverrides: Record<string, LookOverride[]>;
 }
 
+// === Rule Engine ===
+
+export interface RuleTrigger {
+  /** What event fires this rule */
+  type: 'action' | 'look' | 'tick' | 'enter' | 'examine';
+  /** For action rules: which parsed actions match */
+  actions?: string[];
+  /** For action/examine rules: target keywords (any match) */
+  targets?: string[];
+  /** For action rules: raw input phrases (full phrase match, checked first) */
+  phrases?: string[];
+  /** Room constraint — rule only fires in this room (or list of rooms) */
+  room?: string | string[];
+}
+
+export interface RuleEffects {
+  setFlags?: Record<string, boolean | string>;
+  revealItems?: string[];
+  hideItems?: string[];
+  moveItems?: Record<string, string>;
+  grantItems?: string[];
+  consumeItems?: string[];
+  setItemProperty?: Record<string, Record<string, unknown>>;
+  systemChange?: Record<string, unknown>;
+  damage?: number;
+  heal?: number;
+}
+
+export interface Rule {
+  id: string;
+  trigger: RuleTrigger;
+  conditions: Record<string, boolean | string>;
+  effects: RuleEffects;
+  message: string;
+  /** Higher priority rules are evaluated first. Default: 50 */
+  priority?: number;
+  /** For look rules: 'replace' replaces room desc, 'append' adds to it. Default: replace */
+  lookMode?: 'replace' | 'append';
+  /** If true, rule can only fire once per game (flag set automatically) */
+  once?: boolean;
+}
+
+export interface RulesData {
+  rules: Rule[];
+}
+
 export interface GameData {
   rooms: Room[];
   items: ItemDef[];
@@ -350,4 +396,5 @@ export interface GameData {
   story: StoryData;
   shipSystems: ShipSystems;
   stateTransitions?: StateTransitionData;
+  rules?: RulesData;
 }
