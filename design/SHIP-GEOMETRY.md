@@ -449,9 +449,9 @@ Gravity varies continuously across the ship:
 
 | Location | Effective gravity | Why |
 |----------|------------------|-----|
-| Ring rim (Deck B) | 0.70g | r=157m, full centripetal acceleration |
-| Deck A (upper ring) | 0.65g | r≈146m, slightly closer to axis |
-| Deck C (lower ring) | 0.55g | r≈125m, approaching spoke junction |
+| Deck A (ground floor, outermost) | 0.70g | r=157m, full centripetal acceleration |
+| Deck B (middle floor) | 0.65g | r≈146m, one level inward |
+| Deck C (top floor, innermost) | 0.55g | r≈125m, closest to spoke junction |
 | Spoke shaft | 0.55g → ~0g | Gravity fades continuously as r decreases |
 | Spine (Deck D) | ~0.02g | r≈4m from axis — effectively weightless |
 | Bridge (Deck A) | 0.65g | In the ring, rotates with everything |
