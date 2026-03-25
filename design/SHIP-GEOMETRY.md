@@ -137,17 +137,27 @@ Sources:
 
 ## Propulsion: D-³He fusion drive
 
-### The drive
+### Propulsion: hybrid laser-sail + fusion deceleration
 
-Deuterium-helium-3 fusion with magnetic nozzle exhaust. The D + ³He → ⁴He + p reaction produces only charged particles (protons and alpha particles) — no neutron radiation from the primary reaction. These charged products are directed by a magnetic nozzle, converting fusion energy directly to thrust.
+The Kepler's Promise uses a two-stage propulsion architecture:
 
-This is NOT an ion drive. Ion drives use electric fields to accelerate inert propellant (Xe, etc.) and have excellent Isp but tiny thrust — useless for a 3-million-tonne ship. The Kepler's Promise uses **direct fusion drive**: the fusion products themselves ARE the exhaust. No propellant ionisation, no neutralisation grid, no separate propellant. You burn D-³He and the reaction products fly out the back at ~4% of c.
+**Stage 1 — Laser sail acceleration (Sol-based)**
+
+A ground/orbital laser array at Sol pushes the ship to 0.12c. The ship carries a deployable reflective sail (retracted after acceleration phase). The laser array is a shared infrastructure investment — it launches multiple colony ships over decades, amortising the enormous cost.
+
+This eliminates the need to carry acceleration fuel, which is the single biggest mass saving possible in interstellar flight.
+
+**Stage 2 — D-³He fusion drive for deceleration**
+
+Deuterium-helium-3 fusion with magnetic nozzle. D + ³He → ⁴He + p produces only charged particles — no neutron radiation. Exhaust velocity ~12,000 km/s (4% of c). The fusion products ARE the exhaust — not an ion drive (which accelerates inert propellant and needs neutralisation). Direct fusion: burn fuel, reaction products fly out the magnetic nozzle.
 
 ```
-Exhaust velocity (v_e):  12,000 km/s (4% of c)
-Specific impulse (Isp):  ~1,200,000 seconds
-Drive type:              Direct fusion, magnetic nozzle
-Fuel:                    Deuterium + Helium-3 (cryogenic)
+Drive specs:
+  Exhaust velocity (v_e):  12,000 km/s (4% of c)
+  Specific impulse (Isp):  ~1,200,000 seconds
+  Drive type:              Direct fusion, magnetic nozzle
+  Fuel:                    Deuterium + Helium-3 (cryogenic)
+  Purpose:                 DECELERATION ONLY
 ```
 
 ### Mission parameters
@@ -155,83 +165,118 @@ Fuel:                    Deuterium + Helium-3 (cryogenic)
 ```
 Distance to 82 Eridani:    19.7 light-years
 Coast velocity:             0.12c = 35,975 km/s
-Mission plan:               Accelerate → coast → decelerate
+Acceleration:               Laser sail (Sol-based array)
+Deceleration:               Onboard D-³He fusion drive
 Transit time:               ~42 years
 ```
 
 ### Mass budget
 
 ```
-Dry mass (structure, ring, spine):          2,000 tonnes
-Water jacket (radiation shielding):         4,477 tonnes
+Dry mass (structure, ring, spine, sail):    2,500 tonnes
+Water jacket (0.5m, neutron moderation):    1,335 tonnes
 Cryo pods + colonists (2,847 × ~100kg):      285 tonnes
 Cargo (colony supplies, equipment):         1,500 tonnes
 Crew systems, consumables:                    200 tonnes
                                            ─────────────
-Payload mass (m_f):                         8,462 tonnes
+Payload mass (m_f):                         5,820 tonnes
 ```
 
-### Tsiolkovsky rocket equation
+### Tsiolkovsky: deceleration only
 
 ```
 Δv = v_e × ln(m_0 / m_f)
 
-Total Δv needed:
-  Acceleration:   35,975 km/s (0 → 0.12c)
-  Deceleration:   35,975 km/s (0.12c → 0)
-  Total:          71,950 km/s
+Δv for deceleration: 35,975 km/s (0.12c → 0)
 
-Solving for mass ratio:
-  71,950 / 12,000 = ln(m_0 / m_f)
-  5.996 = ln(m_0 / m_f)
-  m_0 / m_f = e^5.996 = 401.4
+35,975 / 12,000 = ln(m_0 / m_f)
+2.998 = ln(m_0 / m_f)
+m_0 / m_f = e^2.998 = 20.04
 
-  m_0 = 401.4 × 8,462 = 3,396,000 tonnes
-  Fuel = 3,396,000 - 8,462 ≈ 3,388,000 tonnes
+m_0 = 20.04 × 5,820 = 116,633 tonnes
+Fuel = 116,633 - 5,820 = 110,813 tonnes
 ```
 
-Mass ratio 401:1. The tyranny of the rocket equation — even at 4% c exhaust velocity, fuel dominates.
+Mass ratio 20:1 instead of 401:1. **Thirty times less fuel** than carrying acceleration fuel. This is the difference between "implausible" and "hard but buildable."
 
-### Does the water jacket matter?
+### Comparison: with vs without laser sail
 
 ```
-Without water:  m_f = 3,985 t → fuel = 1,596,000 t
-With water:     m_f = 8,462 t → fuel = 3,388,000 t
-Cost of water:  +1,792,000 tonnes of fuel
+Both accel + decel (fusion only):
+  Fuel: 3,388,000 tonnes.  Mass ratio: 401:1
 
-The water doubles the fuel requirement. But without it,
-2,847 people die of radiation. Non-negotiable.
+Laser accel + fusion decel:
+  Fuel: 110,813 tonnes.    Mass ratio: 20:1
+
+Saving: 3,277,000 tonnes of fuel not carried.
+```
+
+### Radiation shielding from fuel
+
+The 110,813 tonnes of D-³He fuel stored around the aft spine section provides substantial radiation shielding from the aft direction. Combined with the 0.5m water jacket (1,335 tonnes) for neutron moderation, total shielding mass around the cryo bay is ~112,000 tonnes — far more than adequate for GCR protection.
+
+As fuel is consumed during deceleration, shielding thins — but by then the ship is approaching 82 Eridani, where the star's heliosphere provides increasing magnetic protection.
+
+```
+Thin water jacket (neutron moderation):
+  0.5m thick, V = π(4.5² - 4²) × 100 = 1,335 m³ = 1,335 tonnes
+  50 g/cm² — effective for secondary neutron capture
+  Combined with Gd-doped cryoprotectant circulation
+
+Fuel as primary GCR shield:
+  110,813 tonnes wrapped around aft spine
+  Cryogenic D-³He is hydrogen-rich — excellent radiation absorber
+  Consumed during deceleration (last ~5 years of transit)
 ```
 
 ### Fuel storage
 
 ```
 D-³He cryogenic density: ~160 kg/m³
-Volume: 3,388,000 / 160 ≈ 21,175,000 m³
+Volume: 110,813 / 160 ≈ 692,600 m³
 
-Stored in tanks wrapped symmetrically around aft spine.
-The fuel section is vastly larger than habitable volume —
-consistent with Project Daedalus/Icarus designs.
+Stored symmetrically around aft spine section:
+  Tank radius: 15m, spine clearance 5m inner
+  Tank cross-section: π(15² - 5²) = π × 200 = 628 m²
+  Length needed: 692,600 / 628 = 1,103m
+
+  Or: 6 tanks of radius 10m, length 200m each
+  (wrapped around spine, mass-balanced)
 ```
 
 ### In-game fuel status at Year 19.3
 
-```
-73% remaining = 2,473,000 tonnes
-Spent on acceleration: 915,000 tonnes
-Needed for deceleration: ~1,694,000 tonnes
-Reserve: 779,000 tonnes (23% margin)
+The ship is in coast phase — no fuel has been consumed since the laser sail pushed it to 0.12c. All fuel is reserved for deceleration. So why does Tank 6 show a discrepancy?
 
-Tank 6 anomaly: reads 87.3% vs expected 94.1%
-Discrepancy: ~39,000 tonnes unaccounted for.
-Chen used fuel. For what?
 ```
+100% fuel = 110,813 tonnes (all for deceleration)
+Tank 6 reads 87.3% vs expected 100% (no fuel should be used yet)
+Discrepancy: 12.7% of one tank ≈ 2,346 tonnes
+
+Chen used fuel. During coast phase. The reactor was running at
+elevated output for months (powering her hull antenna and
+unauthorized transmissions). The fuel consumption shows up in
+Tank 6 because she manually routed reactor feed from that tank.
+
+Remaining after Chen's use: ~108,467 tonnes
+Needed for full deceleration: 110,813 tonnes
+SHORTFALL: ~2,346 tonnes
+
+The player must account for this in the navigation puzzle.
+The deceleration burn will come up short unless the trajectory
+is adjusted to compensate — arrive at a higher velocity and use
+82 Eridani's gravity for the final braking, or accept a longer
+deceleration with less thrust.
+```
+
+This is a critical story moment: Chen's actions have real consequences that the player must solve with physics.
 
 Sources:
 - [Tsiolkovsky rocket equation](https://en.wikipedia.org/wiki/Tsiolkovsky_rocket_equation)
 - [Fusion rocket](https://en.wikipedia.org/wiki/Fusion_rocket)
 - [Atomic Rockets: Engine Theory](https://www.projectrho.com/public_html/rocket/engines.php)
-- [Reaching Stars with Fusion](https://i4is.org/reaching-the-stars-in-a-century-using-fusion-propulsion/)
+- [Breakthrough Starshot](https://en.wikipedia.org/wiki/Breakthrough_Starshot)
+- [Solar One: Crewed Interstellar Spacecraft](https://arxiv.org/pdf/2007.11474)
 - [82 G. Eridani](https://en.wikipedia.org/wiki/82_G._Eridani)
 - [NASA Artificial Gravity](https://ntrs.nasa.gov/api/citations/20070001008/downloads/20070001008.pdf)
 - [Artificial Gravity - Atomic Rockets](https://www.projectrho.com/public_html/rocket/artificialgrav.php)
