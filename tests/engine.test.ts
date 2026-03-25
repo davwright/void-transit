@@ -11,17 +11,19 @@ describe('GameEngine', () => {
     engine = new GameEngine();
   });
 
-  /** Stand the player up from the cryo pod (lying → sitting → standing) */
+  /** Move the player out of the cryo pod into cryo_bay, standing */
   function standUp() {
     const state = engine.getState(SID)!;
     state.flags.posture = 'standing';
+    state.currentRoom = 'cryo_bay';
+    state.visitedRooms.add('cryo_bay');
   }
 
   describe('newGame', () => {
     it('creates a new game session', () => {
       const result = engine.newGame(SID);
       expect(result.type).toBe('new_game');
-      expect(result.roomId).toBe('cryo_bay');
+      expect(result.roomId).toBe('cryo_pod');
       expect(result.intro).toBeTruthy();
       expect(result.roomName).toBeTruthy();
     });
@@ -74,8 +76,9 @@ describe('GameEngine', () => {
 
     it('blocks movement while lying in cryo pod', () => {
       const state = engine.getState(SID)!;
+      state.currentRoom = 'cryo_pod';
       state.flags.posture = 'lying';
-      const result = engine.processCommand(SID, parse('south'));
+      const result = engine.processCommand(SID, parse('get out'));
       expect(result.type).toBe('move_failed');
     });
   });
@@ -83,6 +86,7 @@ describe('GameEngine', () => {
   describe('inventory', () => {
     beforeEach(() => {
       engine.newGame(SID);
+      standUp();
     });
 
     it('starts with empty inventory', () => {
@@ -121,6 +125,7 @@ describe('GameEngine', () => {
   describe('examine', () => {
     beforeEach(() => {
       engine.newGame(SID);
+      standUp();
     });
 
     it('can examine items in room', () => {
@@ -131,9 +136,9 @@ describe('GameEngine', () => {
     });
 
     it('can examine items in inventory', () => {
-      engine.processCommand(SID, parse('examine pod')); // reveal hidden items
-      engine.processCommand(SID, parse('take datapad'));
-      const result = engine.processCommand(SID, parse('examine datapad'));
+      engine.processCommand(SID, parse('search'));
+      engine.processCommand(SID, parse('take multitool'));
+      const result = engine.processCommand(SID, parse('examine multitool'));
       expect(result.type).toBe('examine');
     });
 
@@ -143,21 +148,21 @@ describe('GameEngine', () => {
     });
 
     it('resolves follow-up questions about examined items', () => {
-      engine.processCommand(SID, parse('examine pod')); // reveal hidden items
-      const r1 = engine.processCommand(SID, parse('examine datapad'));
+      engine.processCommand(SID, parse('search'));
+      const r1 = engine.processCommand(SID, parse('examine multitool'));
       expect(r1.type).toBe('examine');
-      expect(r1.itemId).toBe('datapad');
+      expect(r1.itemId).toBe('multitool');
 
-      // Follow-up question about the datapad should resolve via lastExaminedItem
-      const r2 = engine.processCommand(SID, parse('what is on the datapad'));
+      // Follow-up question about the multitool should resolve via lastExaminedItem
+      const r2 = engine.processCommand(SID, parse('what is on the multitool'));
       expect(r2.type).not.toBe('examine_failed');
     });
 
     it('word-level matching does not produce false positives', () => {
-      engine.processCommand(SID, parse('examine pod')); // reveal hidden items
-      const result = engine.processCommand(SID, parse('examine personal datapad'));
+      engine.processCommand(SID, parse('search')); // reveal hidden multitool
+      const result = engine.processCommand(SID, parse('examine engineering multitool'));
       expect(result.type).toBe('examine');
-      expect(result.itemId).toBe('datapad');
+      expect(result.itemId).toBe('multitool');
     });
   });
 
@@ -189,6 +194,7 @@ describe('GameEngine', () => {
     });
 
     it('shows pod ceiling when lying in cryo pod', () => {
+      // Player starts in cryo_pod, lying
       const result = engine.processCommand(SID, parse('look'));
       expect(result.type).toBe('look');
       expect(result.description).toContain('on your back');
@@ -202,7 +208,6 @@ describe('GameEngine', () => {
       const result = engine.processCommand(SID, parse('look'));
       expect(result.type).toBe('look');
       expect(result.description).toContain('sitting');
-      expect(result.items).toHaveLength(0);
     });
   });
 
@@ -245,7 +250,7 @@ describe('GameEngine', () => {
       // Start fresh
       engine.newGame(SID);
       let state = engine.getState(SID)!;
-      expect(state.currentRoom).toBe('cryo_bay');
+      expect(state.currentRoom).toBe('cryo_pod');
 
       // Load
       const loadResult = engine.loadGame(SID, 'test_save');

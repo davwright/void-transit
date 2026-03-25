@@ -33,44 +33,49 @@ describe('Complete Walkthrough', () => {
     engine.newGame(SID);
   });
 
-  /** Stand the player up from the cryo pod */
+  /** Move player out of cryo pod into cryo_bay, standing */
   function standUp() {
-    state().flags.posture = 'standing';
+    const s = state();
+    s.flags.posture = 'standing';
+    s.currentRoom = 'cryo_bay';
+    s.visitedRooms.add('cryo_bay');
   }
 
   describe('Act 1: Awakening in Cryo Bay', () => {
-    it('starts in cryo_bay', () => {
-      expect(room()).toBe('cryo_bay');
+    it('starts in cryo_pod', () => {
+      expect(room()).toBe('cryo_pod');
     });
 
-    it('can look around cryo bay', () => {
+    it('can look around cryo pod', () => {
       const result = cmd('look');
       expect(result.type).toBe('look');
       expect(result.description).toBeTruthy();
     });
 
-    it('can pick up starting items', () => {
-      cmd('search');  // multitool is hidden until searched
-      cmd('take multitool');
-      cmd('examine pod');  // reveals datapad and photo via revealsOnExamine
+    it('can pick up starting items from pod compartment', () => {
+      state().flags.posture = 'sitting';
+      cmd('open compartment');  // reveals towel, jumpsuit, datapad, photo
       cmd('take datapad');
-      expect(hasItem('multitool')).toBe(true);
+      cmd('take towel');
       expect(hasItem('datapad')).toBe(true);
+      expect(hasItem('towel')).toBe(true);
     });
 
     it('can examine the personal photo', () => {
-      cmd('examine pod');  // reveals photo
+      state().flags.posture = 'sitting';
+      cmd('open compartment');  // reveals photo
       const result = cmd('examine personal photo');
       expect(result.type).toBe('examine');
       expect(result.text).toBeTruthy();
     });
 
     it('hidden items cannot be taken without revealing them first', () => {
-      // datapad is hidden until pod is examined
+      state().flags.posture = 'sitting';
+      // datapad is hidden until compartment is opened
       const r = cmd('take datapad');
       expect(r.type).toBe('take_failed');
       // now reveal it
-      cmd('examine pod');
+      cmd('open compartment');
       const r2 = cmd('take datapad');
       expect(r2.type).toBe('take_success');
     });
@@ -163,13 +168,11 @@ describe('Complete Walkthrough', () => {
 
   describe('Item Interactions', () => {
     it('can pick up and examine items from multiple rooms', () => {
+      standUp();
       // Get items from cryo_bay
       cmd('search');  // reveal hidden multitool
       cmd('take multitool');
-      cmd('examine pod');  // reveal datapad and photo
-      cmd('take datapad');
       expect(hasItem('multitool')).toBe(true);
-      expect(hasItem('datapad')).toBe(true);
 
       // Navigate to corridor_d -> corridor_c -> machine_shop
       cmd('south'); // corridor_d
@@ -182,6 +185,7 @@ describe('Complete Walkthrough', () => {
     });
 
     it('cannot pick up items that are too heavy', () => {
+      standUp();
       // Navigate to reactor room where radiation_shield_panel is (28kg, too heavy with other items)
       cmd('south'); // corridor_d
       cmd('up');    // corridor_c
@@ -207,9 +211,10 @@ describe('Complete Walkthrough', () => {
 
   describe('Game State Persistence', () => {
     it('save and load preserves full game state', () => {
+      standUp();
       // Make progress
+      cmd('search');
       cmd('take multitool');
-      cmd('take datapad');
       cmd('south'); // corridor_d
       cmd('up');    // corridor_c
       cmd('look');
@@ -227,7 +232,7 @@ describe('Complete Walkthrough', () => {
 
       // Reset
       engine.newGame(SID);
-      expect(room()).toBe('cryo_bay');
+      expect(room()).toBe('cryo_pod');
       expect(state().inventory).toHaveLength(0);
 
       // Load

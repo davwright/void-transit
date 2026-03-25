@@ -79,8 +79,8 @@ const phrasalVerbs: PhrasalVerb[] = [
   { verb: 'switch', particle: 'off', action: 'use' },
   { verb: 'pull', particle: 'up', action: 'read' },
   { verb: 'get', particle: 'up', action: 'posture' },
-  { verb: 'get', particle: 'out', action: 'posture' },
-  { verb: 'climb', particle: 'out', action: 'posture' },
+  { verb: 'get', particle: 'out', action: 'move' },
+  { verb: 'climb', particle: 'out', action: 'move' },
   { verb: 'sit', particle: 'up', action: 'posture' },
   { verb: 'stand', particle: 'up', action: 'posture' },
   { verb: 'lie', particle: 'down', action: 'posture' },
@@ -265,7 +265,9 @@ function matchPhrasalVerb(tokens: Token[], raw: string): Intent | null {
   const adjacentMatch = phrasalVerbs.find(pv => pv.verb === verbWord && pv.particle === secondWord);
   if (adjacentMatch) {
     const restTokens = tokens.slice(2);
-    const target = extractNouns(restTokens, false) || null;
+    let target = extractNouns(restTokens, false) || null;
+    // For movement phrasal verbs with no target, use the particle as direction
+    if (!target && adjacentMatch.action === 'move') target = adjacentMatch.particle;
     return { action: adjacentMatch.action, target, instrument: null, raw };
   }
 

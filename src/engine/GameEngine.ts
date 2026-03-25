@@ -249,7 +249,7 @@ class GameEngine {
     }
 
     return {
-      currentRoom: 'cryo_bay',
+      currentRoom: 'cryo_pod',
       previousRoom: null,
       inventory: [],
       equipped: [],

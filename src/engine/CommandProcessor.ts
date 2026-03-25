@@ -94,6 +94,14 @@ class CommandProcessor {
     gameState.previousRoom = gameState.currentRoom;
     gameState.currentRoom = result.roomId!;
 
+    // Climbing out of a confined space (e.g. cryo pod) → standing
+    if (gameState.flags.posture && gameState.flags.posture !== 'standing') {
+      const override = this.stateEngine?.getLookOverride(result.roomId!, gameState);
+      if (!override) {
+        gameState.flags.posture = 'standing';
+      }
+    }
+
     const roomDesc = this.nav.getRoomDescription(result.roomId!, gameState);
     const items = this.inv.getVisibleItemsInRoom(result.roomId!, gameState);
     const exits = this.nav.getVisibleExits(result.roomId!, gameState);
@@ -349,6 +357,13 @@ class CommandProcessor {
       const openResult = room.openTargets[target!];
       if (openResult.revealsItem) {
         gameState.itemHidden[openResult.revealsItem] = false;
+      }
+      if ((openResult as any).revealsItems) {
+        for (const id of (openResult as any).revealsItems as string[]) {
+          if (gameState.itemHidden[id] !== undefined) {
+            gameState.itemHidden[id] = false;
+          }
+        }
       }
       if (openResult.flags) {
         Object.assign(gameState.flags, openResult.flags);
