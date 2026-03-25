@@ -160,6 +160,83 @@ Drive specs:
   Purpose:                 DECELERATION ONLY
 ```
 
+**Charge neutralisation: the Langmuir Compensators**
+
+The D + ³He reaction ejects charged particles: protons (+1e) and alpha particles (+2e). Each reaction sends +3e out the nozzle. Without compensation, the ship accumulates negative charge.
+
+```
+Charge flux calculation:
+  Reactor output: 4.2 GW
+  Energy per reaction: 18.3 MeV = 2.93 × 10⁻¹² J
+  Reactions/sec: 4.2 × 10⁹ / 2.93 × 10⁻¹² = 1.43 × 10²¹ /s
+  Charge ejected: 1.43 × 10²¹ × 3e = 4.3 × 10²¹ e/s
+  Current: 4.3 × 10²¹ × 1.6 × 10⁻¹⁹ = 687 amperes
+```
+
+Two **Langmuir Compensators** mounted symmetrically on opposite sides of the magnetic nozzle housing emit a matched electron flux into the exhaust stream. Each carries ~344A. They must be precisely co-aligned with the ion beam axis — misalignment creates electromagnetic torque on the ship.
+
+```
+Torque from 1° misalignment at 687A in a 0.1T field:
+  F = BIL sin(θ) — significant enough to spin the ship
+  The compensators are calibrated to ±0.01° by the flight computer
+  Compensator health is a critical system status item
+```
+
+If a Langmuir Compensator fails or drifts out of alignment, the ship charges up and the exhaust beam curves. This is a potential puzzle/crisis: one compensator drifting, causing the ship to yaw during deceleration burn.
+
+### Laser sail
+
+A deployable reflective sail, stowed in the fore spine section during coast. Deployed during the acceleration phase (first ~15 years at Sol).
+
+```
+Ship mass at departure (with fuel): 116,633 tonnes
+Acceleration: 0.003g (very gentle, over ~13 years to reach 0.12c)
+
+  0.003g × 13 years:
+  a = 0.0294 m/s²
+  t = 13 × 3.15 × 10⁷ = 4.1 × 10⁸ s
+  v = at = 0.0294 × 4.1 × 10⁸ = 12,054 km/s ≈ not enough
+
+  Need 35,975 km/s. At 0.003g:
+  t = 35,975,000 / 0.0294 = 1.22 × 10⁹ s = 38.8 years — too long
+
+  At 0.01g (more aggressive):
+  t = 35,975,000 / 0.098 = 3.67 × 10⁸ s = 11.6 years ✓
+```
+
+At 0.01g for 11.6 years:
+```
+Force: F = ma = 1.17 × 10⁸ × 0.098 = 1.15 × 10⁷ N
+Laser power: P = Fc/2 = 1.72 × 10¹⁵ W = 1,720 TW
+
+Beam distance (acceleration range):
+  d = ½at² = 0.5 × 0.098 × (3.67 × 10⁸)² = 6.6 × 10¹⁵ m = 0.7 ly
+
+Sail diameter for beam capture at 0.7 ly (with 10km array, λ=1μm):
+  θ = 2.44λ/D = 2.44 × 10⁻⁶/10⁴ = 2.44 × 10⁻¹⁰ rad
+  Beam width at 0.7 ly: 2.44 × 10⁻¹⁰ × 6.6 × 10¹⁵ = 1.6 × 10⁶ m = 1,600 km
+
+  Sail must be ~1,600 km diameter to capture beam at max range.
+  That's impractical.
+```
+
+**Resolution**: the laser array tracks the ship and adjusts focus. The sail doesn't need to capture the entire beam — it intercepts a fraction, with the laser compensating by increasing power as range grows. The practical sail is much smaller:
+
+```
+Sail diameter: ~50 km (reasonable for 22nd-century materials)
+Sail area: π × 25² = 1,963 km² = 1.96 × 10⁹ m²
+Sail mass at 1 g/m² (aluminised carbon nanotube film): 1,963 tonnes
+(included in dry mass budget)
+
+The laser array compensates for beam spread by increasing power
+as the ship recedes. Peak power at max range: ~10,000 TW
+(a civilisation-scale energy project — this is why it's shared
+infrastructure that launches multiple colony ships).
+
+The sail is jettisoned after acceleration phase or folded and
+stowed for potential use as a solar collector at 82 Eridani.
+```
+
 ### Mission parameters
 
 ```
