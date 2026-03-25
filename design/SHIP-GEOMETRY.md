@@ -135,6 +135,109 @@ Sources:
 - [NASA TP-3682: GCR Shielding in Deep Space](https://ntrs.nasa.gov/api/citations/19980006777/downloads/19980006777.pdf)
 - [Health threat from cosmic rays - Wikipedia](https://en.wikipedia.org/wiki/Health_threat_from_cosmic_rays)
 
+## Propulsion: D-³He fusion drive
+
+### The drive
+
+Deuterium-helium-3 fusion with magnetic nozzle exhaust. The D + ³He → ⁴He + p reaction produces only charged particles (protons and alpha particles) — no neutron radiation from the primary reaction. These charged products are directed by a magnetic nozzle, converting fusion energy directly to thrust.
+
+This is NOT an ion drive. Ion drives use electric fields to accelerate inert propellant (Xe, etc.) and have excellent Isp but tiny thrust — useless for a 3-million-tonne ship. The Kepler's Promise uses **direct fusion drive**: the fusion products themselves ARE the exhaust. No propellant ionisation, no neutralisation grid, no separate propellant. You burn D-³He and the reaction products fly out the back at ~4% of c.
+
+```
+Exhaust velocity (v_e):  12,000 km/s (4% of c)
+Specific impulse (Isp):  ~1,200,000 seconds
+Drive type:              Direct fusion, magnetic nozzle
+Fuel:                    Deuterium + Helium-3 (cryogenic)
+```
+
+### Mission parameters
+
+```
+Distance to 82 Eridani:    19.7 light-years
+Coast velocity:             0.12c = 35,975 km/s
+Mission plan:               Accelerate → coast → decelerate
+Transit time:               ~42 years
+```
+
+### Mass budget
+
+```
+Dry mass (structure, ring, spine):          2,000 tonnes
+Water jacket (radiation shielding):         4,477 tonnes
+Cryo pods + colonists (2,847 × ~100kg):      285 tonnes
+Cargo (colony supplies, equipment):         1,500 tonnes
+Crew systems, consumables:                    200 tonnes
+                                           ─────────────
+Payload mass (m_f):                         8,462 tonnes
+```
+
+### Tsiolkovsky rocket equation
+
+```
+Δv = v_e × ln(m_0 / m_f)
+
+Total Δv needed:
+  Acceleration:   35,975 km/s (0 → 0.12c)
+  Deceleration:   35,975 km/s (0.12c → 0)
+  Total:          71,950 km/s
+
+Solving for mass ratio:
+  71,950 / 12,000 = ln(m_0 / m_f)
+  5.996 = ln(m_0 / m_f)
+  m_0 / m_f = e^5.996 = 401.4
+
+  m_0 = 401.4 × 8,462 = 3,396,000 tonnes
+  Fuel = 3,396,000 - 8,462 ≈ 3,388,000 tonnes
+```
+
+Mass ratio 401:1. The tyranny of the rocket equation — even at 4% c exhaust velocity, fuel dominates.
+
+### Does the water jacket matter?
+
+```
+Without water:  m_f = 3,985 t → fuel = 1,596,000 t
+With water:     m_f = 8,462 t → fuel = 3,388,000 t
+Cost of water:  +1,792,000 tonnes of fuel
+
+The water doubles the fuel requirement. But without it,
+2,847 people die of radiation. Non-negotiable.
+```
+
+### Fuel storage
+
+```
+D-³He cryogenic density: ~160 kg/m³
+Volume: 3,388,000 / 160 ≈ 21,175,000 m³
+
+Stored in tanks wrapped symmetrically around aft spine.
+The fuel section is vastly larger than habitable volume —
+consistent with Project Daedalus/Icarus designs.
+```
+
+### In-game fuel status at Year 19.3
+
+```
+73% remaining = 2,473,000 tonnes
+Spent on acceleration: 915,000 tonnes
+Needed for deceleration: ~1,694,000 tonnes
+Reserve: 779,000 tonnes (23% margin)
+
+Tank 6 anomaly: reads 87.3% vs expected 94.1%
+Discrepancy: ~39,000 tonnes unaccounted for.
+Chen used fuel. For what?
+```
+
+Sources:
+- [Tsiolkovsky rocket equation](https://en.wikipedia.org/wiki/Tsiolkovsky_rocket_equation)
+- [Fusion rocket](https://en.wikipedia.org/wiki/Fusion_rocket)
+- [Atomic Rockets: Engine Theory](https://www.projectrho.com/public_html/rocket/engines.php)
+- [Reaching Stars with Fusion](https://i4is.org/reaching-the-stars-in-a-century-using-fusion-propulsion/)
+- [82 G. Eridani](https://en.wikipedia.org/wiki/82_G._Eridani)
+- [NASA Artificial Gravity](https://ntrs.nasa.gov/api/citations/20070001008/downloads/20070001008.pdf)
+- [Artificial Gravity - Atomic Rockets](https://www.projectrho.com/public_html/rocket/artificialgrav.php)
+- [SpinCalc](https://www.artificial-gravity.com/sw/SpinCalc/)
+- [PMC: Artificial gravity](https://pmc.ncbi.nlm.nih.gov/articles/PMC4470275/)
+
 ### Bridge location
 
 The bridge is on **Deck A** (upper ring level), NOT on the spine. It rotates with the ship at 2 rpm. Through the forward viewport, the stars wheel slowly — one rotation every 30 seconds. This is beautiful and slightly eerie but not disorienting at this rate. The navigation computer compensates for rotation in all displays and sensor readings.
