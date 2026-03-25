@@ -28,7 +28,7 @@ const directions: Record<string, string> = {
 // Game action verbs → normalized action
 const gameActions: Record<string, string> = {
   look: 'look', l: 'look',
-  examine: 'examine', x: 'examine', inspect: 'examine', analyze: 'examine', scan: 'examine', study: 'examine', describe: 'examine',
+  examine: 'examine', x: 'examine', inspect: 'examine', analyze: 'examine', scan: 'examine', study: 'examine', describe: 'examine', check: 'examine',
   take: 'take', get: 'take', grab: 'take', pick: 'take', pickup: 'take',
   drop: 'drop', discard: 'drop', leave: 'drop',
   use: 'use', apply: 'use', push: 'use', pull: 'use', turn: 'use', press: 'use', flip: 'use',
@@ -39,7 +39,7 @@ const gameActions: Record<string, string> = {
   test: 'use', fix: 'use', repair: 'use', patch: 'use', weld: 'use', install: 'use', replace: 'use', swap: 'use',
   combine: 'combine', attach: 'combine', connect: 'combine', join: 'combine', merge: 'combine',
   open: 'open', unlock: 'open', close: 'open',
-  read: 'read', check: 'read', access: 'read', query: 'read',
+  read: 'read', access: 'read', query: 'read',
   equip: 'equip', wear: 'equip', don: 'equip', put: 'equip',
   unequip: 'unequip', remove: 'unequip', doff: 'unequip',
   inventory: 'inventory', i: 'inventory', inv: 'inventory', items: 'inventory',
