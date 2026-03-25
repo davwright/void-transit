@@ -363,18 +363,18 @@ class GameEngine {
       // Escalating cold warnings — every turn gets a message, severity increases
       const coldMessages = isDry ? [
         // Dry but naked
-        { at: 2, type: 'warning', msg: 'You\'re shivering. The ship is cold and you\'re not dressed for it.' },
+        { at: 2, type: 'warning', msg: 'A shiver runs through you. The air is cold against bare skin.' },
         { at: 4, type: 'warning', msg: 'The shivering is constant now. Your jaw aches from clenching.' },
-        { at: 6, type: 'critical', msg: 'Your fingers are clumsy and slow. You need to get dressed.' },
-        { at: 8, type: 'critical', msg: 'Your hands are shaking badly. Fine motor control is failing.' },
-        { at: 10, type: 'critical', msg: 'Numbness spreading from your extremities inward. Your body is shutting down non-essential systems.' },
+        { at: 6, type: 'critical', msg: 'Your fingers are clumsy and slow. Simple movements take concentration.' },
+        { at: 8, type: 'critical', msg: 'Your hands are shaking. Grip strength failing. Things keep slipping.' },
+        { at: 10, type: 'critical', msg: 'Numbness spreading inward from your fingers and toes. Your thoughts are thickening.' },
       ] : [
         // Wet and naked — worse
-        { at: 2, type: 'warning', msg: 'You\'re shivering violently. The cryoprotectant on your skin is evaporating, pulling heat from your body.' },
-        { at: 4, type: 'critical', msg: 'Your teeth are chattering uncontrollably. The wet film on your skin is stealing heat faster than your body can make it.' },
-        { at: 6, type: 'critical', msg: 'Your fingers are white and numb. You need to dry off and get dressed. Now.' },
-        { at: 8, type: 'critical', msg: 'Your vision is narrowing. Thinking is slow. Hypothermia.' },
-        { at: 10, type: 'critical', msg: 'Your body is shutting down. You are dying of cold.' },
+        { at: 2, type: 'warning', msg: 'A violent shiver. The cryoprotectant on your skin is evaporating, and each breath of cold air makes it worse.' },
+        { at: 4, type: 'critical', msg: 'Your teeth are chattering. The wet film on your skin pulls heat away faster than your body can replace it.' },
+        { at: 6, type: 'critical', msg: 'Your fingers are white. Fumbling. The fine motor control is going.' },
+        { at: 8, type: 'critical', msg: 'Your vision is narrowing. Thinking is slow, like wading through something thick.' },
+        { at: 10, type: 'critical', msg: 'Peripheral vision gone. The shivering has stopped, which is worse. Your body is giving up.' },
       ];
 
       // Show the highest applicable message
