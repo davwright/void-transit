@@ -192,7 +192,44 @@ DECK D (Spine, 0.0g):
 
 In the ring, "down" means away from the spin axis (toward higher radius = more gravity). But "down" from corridor_c goes to corridor_d, which is toward the spin axis (less gravity). This is physically correct — you're descending from the ring into the spoke, moving toward the axis. But it means "down" in the ring means "outward" while "down" through the spoke means "inward." This matches real rotating-habitat physics but could confuse players. The transitional description in corridor_c should make this clear.
 
-## 8. Consistency Rules
+## 8. Mass, Weight, and Inertia
+
+**Weight depends on gravity. Mass does not. Inertia does not.**
+
+An object that weighs 10kg on Deck B (0.7g) weighs 0kg on Deck D (0g). But its mass is always 10kg, and its inertia is always 10kg. You can push a 200kg cargo container in zero-g with one hand — but once it's moving, it takes 200kg of force to stop it. This is both useful and dangerous.
+
+### Carry weight by deck
+
+| Deck | Gravity | Effective carry limit | Notes |
+|------|---------|----------------------|-------|
+| A | 0.65g | ~28kg (things feel lighter) | Slightly easier than Deck B |
+| B | 0.70g | 25kg (baseline) | Standard human carry capacity at 0.7g |
+| C | 0.55g | ~32kg (things feel lighter) | Engineering tools easier to carry |
+| D | 0.00g | No weight limit — but inertia! | Can push anything, can't stop it easily |
+
+### Zero-g inertia as gameplay
+
+In zero-g (Deck D), weight limits don't apply — you can carry or push anything. But:
+- **Starting** a heavy object moving takes effort proportional to its mass
+- **Stopping** a heavy object takes equal effort — Newton's third law
+- **Turning** with heavy cargo is difficult — angular momentum
+- **Collisions** hurt proportional to momentum (mass × velocity)
+
+This creates puzzle opportunities:
+- Move a heavy object from Deck D (where you can push it) up the spoke to Deck C (where it suddenly has weight and you can't carry it) — you need a different solution
+- Use a heavy object's momentum to break through something
+- Stack cargo against a hull breach to seal it
+- The player themselves becomes a projectile if they push off a wall too hard
+
+### Coriolis in the spoke transition
+
+Moving between the ring (rotating) and spine (non-rotating) involves passing through a bearing/airlock where relative rotation is handled by the ship's architecture. But within the ring, the Coriolis effect is real:
+- Objects thrown "straight" across a room curve ~2-3cm per meter at 0.7g/2.3rpm
+- Dropped objects land slightly to one side of where you'd expect
+- This is subtle enough to be disorienting but not enough to prevent normal movement
+- Poured liquids spiral slightly
+
+## 9. Consistency Rules
 
 These rules should be checked whenever adding rooms, descriptions, or behaviors:
 

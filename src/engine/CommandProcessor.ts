@@ -1,6 +1,6 @@
 import { GameState, Intent, ActionResult, ItemDef } from '../types';
 import NavigationManager from './NavigationManager';
-import InventoryManager from './InventoryManager';
+import InventoryManager, { getMaxCarryWeight } from './InventoryManager';
 import PuzzleEngine from './PuzzleEngine';
 import StoryManager from './StoryManager';
 import StateTransitionEngine from './StateTransitionEngine';
@@ -373,7 +373,7 @@ class CommandProcessor {
       items: items.map(i => ({ id: i.id, name: i.name, weight: i.weight })),
       equipped: equipped.map(i => ({ id: i.id, name: i.name })),
       totalWeight: weight,
-      maxWeight: 25
+      maxWeight: getMaxCarryWeight(gameState.currentRoom)
     };
   }
 

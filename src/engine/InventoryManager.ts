@@ -1,5 +1,22 @@
 import { ItemDef, ItemUse, ItemCombination, GameState } from '../types';
 
+/** Gravity multiplier by room — determines effective carry weight */
+const ZERO_G_ROOMS = new Set(['cryo_pod', 'cryo_bay', 'corridor_d', 'engine_room', 'fuel_storage', 'airlock_inner', 'airlock_outer', 'hull_exterior']);
+const LOW_G_ROOMS = new Set(['corridor_c', 'reactor_room', 'machine_shop', 'life_support', 'electrical', 'cargo_bay']);
+
+export function getGravity(roomId: string): number {
+  if (ZERO_G_ROOMS.has(roomId)) return 0;
+  if (LOW_G_ROOMS.has(roomId)) return 0.55;
+  return 0.7; // Decks A-B
+}
+
+export function getMaxCarryWeight(roomId: string): number {
+  const g = getGravity(roomId);
+  if (g === 0) return 999; // Zero-g: no weight limit (inertia still matters but doesn't prevent carrying)
+  // Base 25kg at 0.7g, scales inversely with gravity
+  return Math.round(25 * (0.7 / g));
+}
+
 interface PickUpCheck {
   allowed: boolean;
   reason?: string;
@@ -105,9 +122,9 @@ class InventoryManager {
       return { allowed: false, reason: "You already have that." };
     }
 
-    const maxWeight = 25;
+    const maxWeight = getMaxCarryWeight(gameState.currentRoom);
     const currentWeight = this.getCarryWeight(gameState);
-    if (currentWeight + (def.weight || 0) > maxWeight) {
+    if (maxWeight < 999 && currentWeight + (def.weight || 0) > maxWeight) {
       return { allowed: false, reason: `That's too heavy. You're carrying ${currentWeight.toFixed(1)}kg of ${maxWeight}kg max.` };
     }
 
