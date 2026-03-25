@@ -587,6 +587,9 @@ class CommandProcessor {
     if (!hasJumpsuit) conditions.push('Unclothed');
     if (!isDry && !hasJumpsuit) conditions.push('Wet with cryoprotectant');
     if (coldExposure >= 2) conditions.push(coldExposure >= 8 ? 'Hypothermic' : coldExposure >= 6 ? 'Very cold' : 'Cold');
+    if (gameState.flags.thirst_warning_given && !gameState.flags.thirst_resolved) conditions.push(gameState.flags.thirst_critical_given ? 'Severely dehydrated' : 'Dehydrated');
+    if (gameState.flags.hunger_warning_given && !gameState.flags.hunger_resolved) conditions.push(gameState.flags.hunger_critical_given ? 'Starving' : 'Hungry');
+    if (gameState.flags.irritation_warning_given && !isDry) conditions.push('Skin irritation');
     if (conditions.length > 0) {
       result.message = 'Condition: ' + conditions.join('. ') + '.';
     }

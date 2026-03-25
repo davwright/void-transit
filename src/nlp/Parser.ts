@@ -32,7 +32,7 @@ const gameActions: Record<string, string> = {
   take: 'take', get: 'take', grab: 'take', pick: 'take', pickup: 'take',
   drop: 'drop', discard: 'drop', leave: 'drop',
   use: 'use', apply: 'use', push: 'use', pull: 'use', turn: 'use', press: 'use', flip: 'use',
-  tap: 'use', touch: 'use', poke: 'use', type: 'use', interact: 'use',
+  tap: 'use', touch: 'use', poke: 'use', type: 'use', interact: 'use', eat: 'use', drink: 'use', consume: 'use',
   activate: 'use', deactivate: 'use', enable: 'use', disable: 'use',
   power: 'use', boot: 'use', reboot: 'use',
   switch: 'use', shut: 'use',
