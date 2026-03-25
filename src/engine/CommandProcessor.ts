@@ -301,6 +301,22 @@ class CommandProcessor {
   }
 
   _handleTake(target: string | null, gameState: GameState): ActionResult {
+    // Bulk take: "get all" / "take all" / "take everything"
+    if (target && (target.toLowerCase() === 'all' || target.toLowerCase() === 'everything')) {
+      const visibleItems = this.inv.getVisibleItemsInRoom(gameState.currentRoom, gameState);
+      const portable = visibleItems.filter(i => i.portable);
+      if (portable.length === 0) {
+        return { type: 'take_failed', message: "There's nothing here to pick up." };
+      }
+      const taken: string[] = [];
+      for (const item of portable) {
+        const result = this.inv.pickUp(item.id, gameState);
+        if (result.allowed) taken.push(result.item!.name);
+      }
+      if (taken.length === 0) return { type: 'take_failed', message: "You couldn't pick up anything." };
+      return { type: 'take_success', message: `You pick up: ${taken.join(', ')}.` };
+    }
+
     // Check cantTake scenery first — things described in room that can't be picked up
     if (target) {
       const room = this.nav.getRoom(gameState.currentRoom);
@@ -322,6 +338,22 @@ class CommandProcessor {
   }
 
   _handleDrop(target: string | null, gameState: GameState): ActionResult {
+    // Bulk drop: "drop all" / "drop everything"
+    if (target && (target.toLowerCase() === 'all' || target.toLowerCase() === 'everything')) {
+      if (gameState.inventory.length === 0) {
+        return { type: 'drop_failed', message: "You're not carrying anything." };
+      }
+      const dropped: string[] = [];
+      // Copy inventory array since we're modifying it
+      const items = [...gameState.inventory];
+      for (const id of items) {
+        const result = this.inv.drop(id, gameState);
+        if (result.allowed && result.item) dropped.push(result.item.name);
+      }
+      if (dropped.length === 0) return { type: 'drop_failed', message: "You couldn't drop anything." };
+      return { type: 'drop_success', message: `You set down: ${dropped.join(', ')}.` };
+    }
+
     const itemId = this._resolveInventoryItem(target, gameState);
     if (!itemId) return { type: 'drop_failed', message: `You're not carrying "${target}".` };
 
@@ -720,6 +752,27 @@ Tips:
     for (const id of gameState.inventory) {
       const def = this.inv.getItemDef(id);
       if (def && this._nameMatches(normalized, def)) return id;
+    }
+
+    // Spelling correction fallback for inventory items
+    if (normalized.length >= 3) {
+      const maxDist = normalized.length <= 5 ? 1 : 2;
+      let bestId: string | null = null;
+      let bestDist = Infinity;
+      for (const id of gameState.inventory) {
+        const def = this.inv.getItemDef(id);
+        if (!def) continue;
+        const names = [def.id, def.name.toLowerCase(), ...(def.aliases || []).map(a => a.toLowerCase())];
+        for (const n of names) {
+          if (Math.abs(normalized.length - n.length) > maxDist) continue;
+          const dist = levenshtein(normalized, n);
+          if (dist > 0 && dist <= maxDist && dist < bestDist) {
+            bestDist = dist;
+            bestId = id;
+          }
+        }
+      }
+      if (bestId) return bestId;
     }
 
     return null;
