@@ -40,7 +40,7 @@ html, body {
 
 #main-content {
   padding: 10px 0;
-  padding-bottom: 50px; /* space for fixed status bar + breathing room */
+  padding-bottom: 80px; /* space for fixed status bar + input visibility */
 }
 
 /* CRT scanline effect */

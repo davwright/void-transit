@@ -130,7 +130,7 @@ function appendOutput(html: string, cssClass?: string) {
   // Scroll the page so input stays visible at bottom
   requestAnimationFrame(() => {
     const inputArea = document.getElementById('input-area');
-    if (inputArea) inputArea.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    if (inputArea) inputArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 }
 
