@@ -569,26 +569,29 @@ class CommandProcessor {
     // "where X" — check if it's in inventory, current room, or a visited room
     const itemId = this._resolveItemId(target, gameState);
     if (itemId) {
+      const item = this.inv.getItemDef(itemId);
+      const loc = gameState.itemLocations[itemId];
+      const isHidden = gameState.itemHidden[itemId];
+
       // In inventory?
       if (gameState.inventory.includes(itemId)) {
-        const item = this.inv.getItemDef(itemId);
         return { type: 'search_success', message: `You have the ${item?.name || target} in your inventory.` };
       }
-      // In current room?
-      const loc = gameState.itemLocations[itemId];
-      if (loc === gameState.currentRoom) {
-        const item = this.inv.getItemDef(itemId);
+      // In current room and visible?
+      if (loc === gameState.currentRoom && !isHidden) {
         return { type: 'search_success', message: `The ${item?.name || target} is here.` };
       }
-      // In a visited room?
-      if (loc && gameState.visitedRooms.has(loc)) {
-        const item = this.inv.getItemDef(itemId);
+      // In a visited room and visible? (player has seen it)
+      if (loc && gameState.visitedRooms.has(loc) && !isHidden) {
         const room = this.nav.getRoom(loc);
         return { type: 'search_success', message: `You left the ${item?.name || target} in the ${room?.name || loc}.` };
       }
+      // Item exists but player hasn't encountered it
+      return { type: 'search_nothing', message: `You haven't seen ${this._articleFor(target)} ${target} anywhere.` };
     }
 
-    return this._handleExamine(target, gameState, rawInput);
+    // Unknown item entirely
+    return { type: 'search_nothing', message: `You haven't seen ${this._articleFor(target)} ${target} anywhere.` };
   }
 
   _handleTalk(target: string | null, gameState: GameState): ActionResult {
@@ -937,6 +940,10 @@ Tips:
     }
 
     return { type: 'posture_success', message: transition.message };
+  }
+
+  _articleFor(word: string): string {
+    return /^[aeiou]/i.test(word) ? 'an' : 'a';
   }
 
   _getShipValue(gameState: GameState, path: string): unknown {

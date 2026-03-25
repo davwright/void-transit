@@ -348,6 +348,76 @@ class GameEngine {
       }
     }
 
+    // Cold exposure — unprotected in cold rooms
+    const coldRooms = new Set(['cryo_pod', 'cryo_bay', 'corridor_d', 'engine_room', 'fuel_storage', 'airlock_inner']);
+    const freezingRooms = new Set(['cryo_pod', 'cryo_bay']);
+    const hasJumpsuit = (state.equipped || []).includes('jumpsuit');
+    const isDry = !!state.flags.dried_off;
+
+    if (coldRooms.has(state.currentRoom) && !hasJumpsuit) {
+      const isFreezing = freezingRooms.has(state.currentRoom);
+      const exposure = (state.flags.cold_exposure as unknown as number) || 0;
+      const newExposure = exposure + (isFreezing ? 2 : 1);
+      (state.flags as Record<string, unknown>).cold_exposure = newExposure;
+
+      if (newExposure >= 3 && !state.flags.cold_warning_given) {
+        events.push({ type: 'warning', system: 'exposure',
+          message: isDry
+            ? 'You\'re shivering. The ship is cold and you\'re not dressed for it.'
+            : 'You\'re shivering violently. The cryoprotectant on your skin is evaporating, pulling heat from your body faster than you can generate it.'
+        });
+        state.flags.cold_warning_given = true;
+      }
+      if (newExposure >= 6 && !state.flags.cold_critical_given) {
+        events.push({ type: 'critical', system: 'exposure',
+          message: 'Your fingers are going numb. Your thinking is getting sluggish. You need to get dressed or get somewhere warm.'
+        });
+        state.flags.cold_critical_given = true;
+      }
+      if (newExposure >= 8) {
+        state.playerHealth -= (isFreezing ? 3 : 1);
+        if (newExposure % 3 === 0) {
+          events.push({ type: 'critical', system: 'exposure',
+            message: 'The cold is killing you. Slowly, but it is killing you.'
+          });
+        }
+      }
+    } else if (hasJumpsuit) {
+      // Recovery when dressed
+      if ((state.flags.cold_exposure as unknown as number) > 0) {
+        (state.flags as Record<string, unknown>).cold_exposure = Math.max(0, (state.flags.cold_exposure as unknown as number) - 2);
+      }
+    }
+
+    // Hunger/thirst — gradual onset after several turns
+    const hungerOnset = 25;
+    const thirstOnset = 15;
+
+    if (state.turnCount >= thirstOnset && !state.flags.thirst_warning_given) {
+      events.push({ type: 'warning', system: 'survival',
+        message: 'Your mouth is dry. The cryo revival process leaves you dehydrated — you should find water.'
+      });
+      state.flags.thirst_warning_given = true;
+    }
+    if (state.turnCount >= hungerOnset && !state.flags.hunger_warning_given) {
+      events.push({ type: 'warning', system: 'survival',
+        message: 'Your stomach clenches. Nineteen years without food — your body is remembering what it needs.'
+      });
+      state.flags.hunger_warning_given = true;
+    }
+    if (state.turnCount >= thirstOnset + 20 && !state.flags.thirst_critical_given) {
+      events.push({ type: 'critical', system: 'survival',
+        message: 'Your head is pounding. Dehydration is setting in. You need to find the mess hall or medical bay.'
+      });
+      state.flags.thirst_critical_given = true;
+    }
+    if (state.turnCount >= hungerOnset + 30 && !state.flags.hunger_critical_given) {
+      events.push({ type: 'critical', system: 'survival',
+        message: 'The hunger is a constant ache now. Your hands are unsteady. You need food.'
+      });
+      state.flags.hunger_critical_given = true;
+    }
+
     return events;
   }
 
