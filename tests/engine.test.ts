@@ -197,7 +197,7 @@ describe('GameEngine', () => {
       // Player starts in cryo_pod, lying
       const result = engine.processCommand(SID, parse('look'));
       expect(result.type).toBe('look');
-      expect(result.description).toContain('on your back');
+      expect(result.description).toContain('floating in a cryo pod');
       expect(result.items).toHaveLength(0);
       expect(result.exits).toHaveLength(0);
     });
@@ -207,7 +207,7 @@ describe('GameEngine', () => {
       state.flags.posture = 'sitting';
       const result = engine.processCommand(SID, parse('look'));
       expect(result.type).toBe('look');
-      expect(result.description).toContain('sitting');
+      expect(result.description).toContain('braced upright');
     });
   });
 
