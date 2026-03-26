@@ -14,6 +14,7 @@
     "build:browser": "vite build",
     "postbuild:browser": "node -e \"const v=require('./package.json').version;const{execSync}=require('child_process');try{execSync('git tag v'+v)}catch{}\"",
     "preview": "vite preview",
+    "deploy": "bash scripts/deploy.sh",
     "decode": "ts-node scripts/decode-data.ts",
     "encode": "ts-node scripts/encode-from-plain.ts"
   },
