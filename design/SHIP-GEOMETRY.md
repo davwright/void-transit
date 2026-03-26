@@ -362,6 +362,18 @@ Chen ran the reactor at elevated output (~2 GW electrical) for months to power h
 
 **Aft shielding**: During coast, the nozzle is sealed and the reactor is shielded in all directions by the standard compartment shielding panels. During deceleration burns, the exhaust stream itself is directed aft through the nozzle — the crew areas are all fore of the reactor, shielded by the reactor's own mass and the remaining fuel tanks. No additional aft shield structure is needed because the exhaust is charged particles guided by magnetic fields — they never touch the nozzle housing.
 
+### Colony deployment (future — Part 2/3)
+
+The Kepler's Promise must deliver colonists to 82 Eridani's surface. Options:
+
+1. **Onboard lander**: The ship carries a reusable descent vehicle in the cargo bay. After orbital insertion, the lander ferries colonists and supplies to the surface in batches. Requires fuel reserved for orbital manoeuvring + landing/ascent cycles. The lander's mass is part of the payload budget.
+
+2. **Precursor mission**: Automated cargo ships launched earlier by the same Sol laser array carry heavy infrastructure (habitats, power systems, resource extraction robots). The laser beam is wide enough to push multiple craft in formation — the cargo ships ride the beam shadow ahead of the Kepler's Promise. They arrive years earlier, deploy autonomously, and have a functioning base ready when the colonists arrive. This solves the bootstrap problem: you need infrastructure to build infrastructure.
+
+3. **Hybrid**: The Kepler's Promise carries a lander for personnel transfer. Heavy equipment went ahead on precursor ships. The colony's initial power comes from a compact fusion reactor (same D-³He tech as the ship's drive) landed by the precursor mission.
+
+The laser array at Sol is civilisation-scale infrastructure shared across the colony programme. Its beam can push multiple ships — the economics improve with each successive mission. The first ship is the most expensive. Every subsequent ship is cheaper.
+
 Sources:
 - [Tsiolkovsky rocket equation](https://en.wikipedia.org/wiki/Tsiolkovsky_rocket_equation)
 - [Fusion rocket](https://en.wikipedia.org/wiki/Fusion_rocket)
