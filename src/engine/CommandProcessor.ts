@@ -104,6 +104,19 @@ class CommandProcessor {
       default: result = this._handleUnknown(intent, gameState);
     }
 
+    // Puzzle fallback: if a normal action didn't clearly succeed and there's
+    // an active puzzle, try interpreting the command as a puzzle action
+    const puzzleFallbackTypes = new Set(['unknown', 'examine_scenery', 'search_success', 'search_nothing']);
+    if (result.type.includes('failed') || puzzleFallbackTypes.has(result.type)) {
+      const activePuzzles = this.puzzle.getActivePuzzles(gameState);
+      if (activePuzzles.length > 0) {
+        const puzzleAttempt = this._handlePuzzleAction(target, intent.raw, gameState);
+        if (puzzleAttempt.type === 'puzzle_success') {
+          return puzzleAttempt;
+        }
+      }
+    }
+
     // Track last referenced item for pronoun resolution (it, that, implicit)
     if (result.itemId) {
       gameState.lastReferencedItem = result.itemId;
@@ -626,10 +639,39 @@ class CommandProcessor {
   }
 
   _handlePuzzleAction(puzzleId: string | null, value: string | null, gameState: GameState): ActionResult {
-    const result = this.puzzle.attemptStep(puzzleId!, value || '', gameState);
+    // Auto-resolve puzzle: if target isn't a known puzzle ID, find the active puzzle
+    // in the current room and treat the target as the action/value instead
+    const activePuzzles = this.puzzle.getActivePuzzles(gameState);
+
+    let resolvedId = puzzleId;
+    let resolvedValue = value || '';
+
+    if (puzzleId && !this.puzzle.getPuzzle(puzzleId)) {
+      // Target isn't a puzzle ID — it's the action value (e.g. "5.2" from "calculate 5.2")
+      // Find the active puzzle for this room
+      const roomPuzzle = activePuzzles.find(p => p.location === gameState.currentRoom || p.triggerRoom === gameState.currentRoom);
+      if (roomPuzzle) {
+        resolvedId = roomPuzzle.id;
+        resolvedValue = puzzleId; // The "target" was actually the answer
+      } else if (activePuzzles.length === 1) {
+        // Only one active puzzle — use it
+        resolvedId = activePuzzles[0].id;
+        resolvedValue = puzzleId;
+      }
+    }
+
+    if (!resolvedId) {
+      if (activePuzzles.length > 0) {
+        resolvedId = activePuzzles[0].id;
+      } else {
+        return { type: 'puzzle_failed', message: "There's no active problem to work on here." };
+      }
+    }
+
+    const result = this.puzzle.attemptStep(resolvedId, resolvedValue, gameState);
     return {
       type: result.success ? 'puzzle_success' : 'puzzle_failed',
-      puzzleId: puzzleId || undefined,
+      puzzleId: resolvedId || undefined,
       ...result
     };
   }

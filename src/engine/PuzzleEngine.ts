@@ -202,8 +202,9 @@ class PuzzleEngine {
       return { valid: false, reason: v.failMessage };
     }
 
-    if (v.type === 'numeric') {
-      if (this.validateNumericAnswer(action, v.answer as number, v.tolerance || 10)) {
+    if (v.type === 'numeric' || v.type === 'calculation') {
+      const answer = v.correctAnswer ?? v.answer;
+      if (this.validateNumericAnswer(action, answer as number, v.tolerance || 10)) {
         return { valid: true };
       }
       return { valid: false, reason: v.failMessage || 'The numbers don\'t add up.' };

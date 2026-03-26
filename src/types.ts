@@ -91,8 +91,9 @@ export interface PuzzleStep {
   requiredItems?: string[];
   requiredLocation?: string;
   validation?: {
-    type: 'exact' | 'numeric' | 'item_present' | 'action_match' | 'any';
+    type: 'exact' | 'numeric' | 'calculation' | 'item_present' | 'action_match' | 'any' | string;
     answer?: string | number;
+    correctAnswer?: number;
     tolerance?: number;
     itemId?: string;
     keywords?: string[];

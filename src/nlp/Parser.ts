@@ -55,6 +55,14 @@ const gameActions: Record<string, string> = {
   map: 'map', m: 'map', systems: 'systems', sys: 'systems',
   calculate: 'puzzle_action', compute: 'puzzle_action', set: 'puzzle_action',
   calibrate: 'puzzle_action', adjust: 'puzzle_action',
+  administer: 'puzzle_action', inject: 'puzzle_action',
+  collect: 'puzzle_action', sample: 'puzzle_action',
+  diagnose: 'puzzle_action', reroute: 'puzzle_action', rewire: 'puzzle_action',
+  assess: 'puzzle_action', extract: 'puzzle_action',
+  program: 'puzzle_action', verify: 'puzzle_action', confirm: 'puzzle_action',
+  decode: 'puzzle_action', decrypt: 'puzzle_action', decipher: 'puzzle_action',
+  realign: 'puzzle_action', align: 'puzzle_action',
+  prepare: 'puzzle_action', tether: 'puzzle_action',
 };
 
 // ─── Phrasal Verbs ─────────────────────────────────────────────────────────
@@ -308,8 +316,8 @@ export function parse(input: string): Intent {
   // Special: "?" alone means help
   if (raw === '?') return { action: 'help', target: null, instrument: null, raw };
 
-  // Split compound sentences on punctuation, work with first clause
-  const firstClause = raw.split(/[?!.]/)[0].trim() || raw;
+  // Split compound sentences on punctuation, but preserve decimals (5.2)
+  const firstClause = raw.replace(/(\d)\.(\d)/g, '$1DECIMAL$2').split(/[?!.]/)[0].replace(/DECIMAL/g, '.').trim() || raw;
   const tokens = tokenize(firstClause);
 
   if (tokens.length === 0) return { action: 'look', target: null, instrument: null, raw };
