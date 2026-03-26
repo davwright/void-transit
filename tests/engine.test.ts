@@ -67,8 +67,8 @@ describe('GameEngine', () => {
 
     it('can navigate through multiple rooms', () => {
       engine.processCommand(SID, parse('aft')); // corridor_d
-      engine.processCommand(SID, parse('up')); // corridor_c
-      engine.processCommand(SID, parse('up')); // corridor_b
+      engine.processCommand(SID, parse('down')); // corridor_c
+      engine.processCommand(SID, parse('down')); // corridor_b
 
       const state = engine.getState(SID)!;
       expect(state.currentRoom).toBe('corridor_b');

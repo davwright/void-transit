@@ -454,19 +454,19 @@ class GameEngine {
     const hungerOnset = surv?.hungerOnsetTurn ?? 25;
     const thirstOnset = surv?.thirstOnsetTurn ?? 15;
 
-    if (state.turnCount >= thirstOnset && !state.flags.thirst_warning_given) {
+    if (state.turnCount >= thirstOnset && !state.flags.thirst_warning_given && !state.flags.thirst_resolved) {
       events.push({ type: 'warning', system: 'survival', message: surv?.thirstWarning || 'You are thirsty.' });
       state.flags.thirst_warning_given = true;
     }
-    if (state.turnCount >= hungerOnset && !state.flags.hunger_warning_given) {
+    if (state.turnCount >= hungerOnset && !state.flags.hunger_warning_given && !state.flags.hunger_resolved) {
       events.push({ type: 'warning', system: 'survival', message: surv?.hungerWarning || 'You are hungry.' });
       state.flags.hunger_warning_given = true;
     }
-    if (state.turnCount >= thirstOnset + (surv?.thirstCriticalDelay ?? 20) && !state.flags.thirst_critical_given) {
+    if (state.turnCount >= thirstOnset + (surv?.thirstCriticalDelay ?? 20) && !state.flags.thirst_critical_given && !state.flags.thirst_resolved) {
       events.push({ type: 'critical', system: 'survival', message: surv?.thirstCritical || 'Severe dehydration.' });
       state.flags.thirst_critical_given = true;
     }
-    if (state.turnCount >= hungerOnset + (surv?.hungerCriticalDelay ?? 30) && !state.flags.hunger_critical_given) {
+    if (state.turnCount >= hungerOnset + (surv?.hungerCriticalDelay ?? 30) && !state.flags.hunger_critical_given && !state.flags.hunger_resolved) {
       events.push({ type: 'critical', system: 'survival', message: surv?.hungerCritical || 'Severe hunger.' });
       state.flags.hunger_critical_given = true;
     }

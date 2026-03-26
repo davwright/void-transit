@@ -96,9 +96,9 @@ describe('God Run — Complete Playthrough', () => {
     // Navigate to med_bay to get medical supplies
     cmd('aft');
     expect(s().currentRoom).toBe('corridor_d');
-    cmd('up');
+    cmd('down');
     expect(s().currentRoom).toBe('corridor_c');
-    cmd('up');
+    cmd('down');
     expect(s().currentRoom).toBe('corridor_b');
     cmd('fore');
     expect(s().currentRoom).toBe('med_bay');
@@ -111,8 +111,8 @@ describe('God Run — Complete Playthrough', () => {
 
     // Go back to cryo bay
     cmd('aft');
-    cmd('down');
-    cmd('down');
+    cmd('up');
+    cmd('up');
     cmd('fore');
     expect(s().currentRoom).toBe('cryo_bay');
 
@@ -132,15 +132,15 @@ describe('God Run — Complete Playthrough', () => {
 
     // Navigate to lab to get spectrometer
     cmd('aft');   // corridor_d
-    cmd('up');    // corridor_c
-    cmd('up');    // corridor_b
+    cmd('down');  // corridor_c
+    cmd('down');  // corridor_b
     cmd('starboard');  // lab
     expect(s().currentRoom).toBe('lab');
     cmd('get spectrometer');
 
     // Navigate to life support
     cmd('port');      // corridor_b
-    cmd('down');      // corridor_c
+    cmd('up');      // corridor_c
     cmd('starboard'); // life_support
     expect(s().currentRoom).toBe('life_support');
 
@@ -231,7 +231,7 @@ describe('God Run — Complete Playthrough', () => {
     // Back to corridor_d for EVA prep
     cmd('fore');  // machine_shop
     cmd('fore');  // corridor_c
-    cmd('down');  // corridor_d
+    cmd('up');  // corridor_d
 
     // Get EVA gear
     cmd('port');  // airlock_inner
@@ -287,10 +287,10 @@ describe('God Run — Complete Playthrough', () => {
     // Get to corridor_d
     if (s().currentRoom === 'airlock_inner') cmd('starboard');
     if (s().currentRoom === 'airlock_outer') { cmd('in'); cmd('starboard'); }
-    // Go up to bridge
-    cmd('up');    // corridor_c
-    cmd('up');    // corridor_b
-    cmd('up');    // corridor_a
+    // Go down to bridge (down = outward toward heavier gravity)
+    cmd('down');  // corridor_c
+    cmd('down');  // corridor_b
+    cmd('down');  // corridor_a
     cmd('fore');  // bridge
     expect(s().currentRoom).toBe('bridge');
 

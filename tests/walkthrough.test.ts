@@ -109,7 +109,7 @@ describe('Complete Walkthrough', () => {
       cmd('starboard'); // back to corridor_d
 
       // Go up to corridor_c (Deck C)
-      result = cmd('up');
+      result = cmd('down');
       expect(result.type).toBe('move_success');
       expect(room()).toBe('corridor_c');
 
@@ -127,7 +127,7 @@ describe('Complete Walkthrough', () => {
       cmd('starboard'); // back
 
       // Go up to corridor_b (Deck B)
-      cmd('up');
+      cmd('down');
       expect(room()).toBe('corridor_b');
 
       // Explore Deck B
@@ -148,7 +148,7 @@ describe('Complete Walkthrough', () => {
       cmd('starboard'); // back
 
       // Go up to corridor_a (Deck A)
-      cmd('up');
+      cmd('down');
       expect(room()).toBe('corridor_a');
 
       // Explore Deck A
@@ -176,7 +176,7 @@ describe('Complete Walkthrough', () => {
 
       // Navigate to corridor_d -> corridor_c -> machine_shop
       cmd('aft'); // corridor_d
-      cmd('up');    // corridor_c
+      cmd('down');  // corridor_c
       cmd('aft'); // machine_shop
 
       // Try to pick up items there
@@ -188,7 +188,7 @@ describe('Complete Walkthrough', () => {
       standUp();
       // Navigate to reactor room where radiation_shield_panel is (28kg, too heavy with other items)
       cmd('aft'); // corridor_d
-      cmd('up');    // corridor_c
+      cmd('down');  // corridor_c
 
       // Pick up several items first
       cmd('aft'); // machine_shop
@@ -216,7 +216,7 @@ describe('Complete Walkthrough', () => {
       cmd('search');
       cmd('take multitool');
       cmd('aft'); // corridor_d
-      cmd('up');    // corridor_c
+      cmd('down');  // corridor_c
       cmd('look');
 
       const stateBefore = {
@@ -284,8 +284,8 @@ describe('Complete Walkthrough', () => {
       cmd('take multitool');
       cmd('take datapad');
       cmd('aft'); // corridor_d
-      cmd('up');    // corridor_c
-      cmd('up');    // corridor_b
+      cmd('down');  // corridor_c
+      cmd('down');  // corridor_b
       cmd('fore'); // med_bay
       cmd('aft'); // corridor_b
       cmd('aft'); // mess_hall
@@ -333,7 +333,7 @@ describe('Complete Walkthrough', () => {
         'starboard',    // corridor_d
         'fore',   // cryo_bay
         'aft',   // corridor_d
-        'up',      // corridor_c
+        'down',    // corridor_c
         'fore',   // reactor_room
         'aft',   // corridor_c
         'aft',   // machine_shop
@@ -344,7 +344,7 @@ describe('Complete Walkthrough', () => {
         'port',    // corridor_c
         'port',    // electrical
         'starboard',    // corridor_c
-        'up',      // corridor_b
+        'down',    // corridor_b
         'fore',   // med_bay
         'aft',   // corridor_b
         'aft',   // mess_hall
@@ -357,7 +357,7 @@ describe('Complete Walkthrough', () => {
         'aft',   // rec_room (if exists)
         'fore',   // crew_quarters
         'starboard',    // corridor_b
-        'up',      // corridor_a
+        'down',    // corridor_a
         'fore',   // bridge
         'aft',   // corridor_a
         'port',    // comms_room
