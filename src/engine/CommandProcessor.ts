@@ -31,7 +31,7 @@ class CommandProcessor {
 
     // Pronoun resolution: "it", "that", or null target → last referenced item
     const pronouns = new Set(['it', 'that', 'this', 'them']);
-    const needsTarget = new Set(['examine', 'take', 'get', 'pick_up', 'drop', 'read', 'use', 'open', 'equip', 'wear', 'unequip', 'remove']);
+    const needsTarget = new Set(['examine', 'take', 'get', 'pick_up', 'drop', 'read', 'use', 'activate', 'deactivate', 'open', 'equip', 'wear', 'unequip', 'remove', 'combine']);
 
     if (needsTarget.has(action) && (!target || pronouns.has(target.toLowerCase()))) {
       const stale = gameState.lastReferencedTurn !== undefined
@@ -45,6 +45,21 @@ class CommandProcessor {
           if (inInv || inRoom) {
             target = def.name.toLowerCase();
           }
+        }
+      }
+      // If target is still null after pronoun resolution, prompt the player
+      // (unless there's an active puzzle that might handle the bare verb)
+      if (!target) {
+        const activePuzzles = this.puzzle.getActivePuzzles(gameState);
+        if (activePuzzles.length === 0) {
+          const verbNames: Record<string, string> = {
+            examine: 'Examine', take: 'Take', get: 'Take', pick_up: 'Pick up',
+            drop: 'Drop', read: 'Read', use: 'Use', open: 'Open',
+            equip: 'Wear', wear: 'Wear', unequip: 'Remove', remove: 'Remove',
+            combine: 'Combine', activate: 'Activate', deactivate: 'Deactivate',
+          };
+          const verb = verbNames[action] || action.charAt(0).toUpperCase() + action.slice(1);
+          return { type: `${action}_failed`, message: `${verb} what?` };
         }
       }
     }
@@ -514,7 +529,6 @@ class CommandProcessor {
   }
 
   _handleOpen(target: string | null, gameState: GameState): ActionResult {
-    if (!target) return { type: 'open_failed', message: 'Open what?' };
     const room = this.nav.getRoom(gameState.currentRoom);
     if (room && room.openTargets && room.openTargets[target!]) {
       const openResult = room.openTargets[target!];

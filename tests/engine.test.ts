@@ -375,10 +375,20 @@ describe('GameEngine', () => {
       expect(result.text).toBeDefined();
     });
 
-    it('open with no target says "Open what?"', () => {
-      const result = engine.processCommand(SID, parse('ope'));
-      expect(result.type).toBe('open_failed');
-      expect(result.message).toContain('Open what');
+    it('transitive verbs with no target prompt the player', () => {
+      // All transitive verbs should prompt "X what?" when target is missing
+      const tests: Array<[string, string]> = [
+        ['ope', 'Open what'],
+        ['take', 'Take what'],
+        ['drop', 'Drop what'],
+        ['use', 'Use what'],
+        ['read', 'Read what'],
+        ['wear', 'Wear what'],
+      ];
+      for (const [input, expected] of tests) {
+        const result = engine.processCommand(SID, parse(input));
+        expect(result.message).toContain(expected);
+      }
     });
 
     it('drink water in mess hall resolves thirst', () => {
