@@ -229,13 +229,21 @@ class CommandProcessor {
   }
 
   _handleExamine(target: string | null, gameState: GameState, rawInput?: string): ActionResult {
-    // Check scenery FIRST (exact match) before fuzzy item resolution
+    // Check scenery FIRST (exact match, then prefix match) before fuzzy item resolution
     if (target) {
       const room = this.nav.getRoom(gameState.currentRoom);
       const normalizedTarget = target.toLowerCase();
-      if (room?.examineTargets?.[normalizedTarget]) {
+      // Exact match
+      let sceneryKey = room?.examineTargets?.[normalizedTarget] ? normalizedTarget : null;
+      // Prefix/substring match if exact fails (e.g. "comp" → "compartment")
+      if (!sceneryKey && room?.examineTargets && normalizedTarget.length >= 3) {
+        const keys = Object.keys(room.examineTargets);
+        sceneryKey = keys.find(k => k.startsWith(normalizedTarget)) ||
+                     keys.find(k => k.includes(normalizedTarget)) || null;
+      }
+      if (sceneryKey && room?.examineTargets?.[sceneryKey]) {
         // Check if examining this scenery reveals hidden items
-        const reveals = (room as any).revealsOnExamine?.[normalizedTarget] as string[] | undefined;
+        const reveals = (room as any).revealsOnExamine?.[sceneryKey] as string[] | undefined;
         if (reveals) {
           for (const itemId of reveals) {
             if (gameState.itemHidden[itemId]) {
@@ -246,7 +254,7 @@ class CommandProcessor {
         return {
           type: 'examine',
           target,
-          text: room.examineTargets[normalizedTarget]
+          text: room.examineTargets[sceneryKey]
         };
       }
     }
@@ -506,6 +514,7 @@ class CommandProcessor {
   }
 
   _handleOpen(target: string | null, gameState: GameState): ActionResult {
+    if (!target) return { type: 'open_failed', message: 'Open what?' };
     const room = this.nav.getRoom(gameState.currentRoom);
     if (room && room.openTargets && room.openTargets[target!]) {
       const openResult = room.openTargets[target!];

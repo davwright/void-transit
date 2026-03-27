@@ -354,4 +354,110 @@ describe('GameEngine', () => {
       expect(result.type).toBe('look');
     });
   });
+
+  describe('regressions', () => {
+    beforeEach(() => {
+      engine.newGame(SID);
+    });
+
+    function standUp() {
+      const state = engine.getState(SID)!;
+      state.flags.posture = 'standing';
+      state.flags.leads_removed = true;
+      state.currentRoom = 'cryo_bay';
+      state.visitedRooms.add('cryo_bay');
+    }
+
+    it('abbreviations match examine targets (comp → compartment)', () => {
+      // In cryo_pod, "comp" should match "compartment" examineTarget
+      const result = engine.processCommand(SID, parse('look comp'));
+      expect(result.type).toBe('examine');
+      expect(result.text).toBeDefined();
+    });
+
+    it('open with no target says "Open what?"', () => {
+      const result = engine.processCommand(SID, parse('ope'));
+      expect(result.type).toBe('open_failed');
+      expect(result.message).toContain('Open what');
+    });
+
+    it('drink water in mess hall resolves thirst', () => {
+      standUp();
+      const state = engine.getState(SID)!;
+      state.currentRoom = 'mess_hall';
+      state.visitedRooms.add('mess_hall');
+
+      const result = engine.processCommand(SID, parse('drink water'));
+      expect(result.type).toMatch(/success/);
+      expect(state.flags.thirst_resolved).toBe(true);
+    });
+
+    it('eat ration in mess hall resolves hunger', () => {
+      standUp();
+      const state = engine.getState(SID)!;
+      state.currentRoom = 'mess_hall';
+      state.visitedRooms.add('mess_hall');
+
+      const result = engine.processCommand(SID, parse('eat ration'));
+      expect(result.type).toMatch(/success/);
+      expect(state.flags.hunger_resolved).toBe(true);
+    });
+
+    it('spectrometer use in life_support reveals CO2', () => {
+      standUp();
+      const state = engine.getState(SID)!;
+      state.currentRoom = 'life_support';
+      state.visitedRooms.add('life_support');
+      state.inventory.push('spectrometer');
+      state.itemLocations['spectrometer'] = 'inventory';
+
+      const result = engine.processCommand(SID, parse('use spectrometer'));
+      expect(result.type).toMatch(/success/);
+      expect(state.flags.co2_measured).toBe(true);
+    });
+
+    it('up from corridor_a goes to corridor_b (inward, lighter gravity)', () => {
+      standUp();
+      const state = engine.getState(SID)!;
+      state.currentRoom = 'corridor_a';
+      state.visitedRooms.add('corridor_a');
+
+      engine.processCommand(SID, parse('up'));
+      expect(state.currentRoom).toBe('corridor_b');
+    });
+
+    it('down from corridor_d goes to corridor_c (outward, heavier gravity)', () => {
+      standUp();
+      const state = engine.getState(SID)!;
+      state.currentRoom = 'corridor_d';
+      state.visitedRooms.add('corridor_d');
+
+      engine.processCommand(SID, parse('down'));
+      expect(state.currentRoom).toBe('corridor_c');
+    });
+
+    it('cardinal directions are rejected', () => {
+      const result = engine.processCommand(SID, parse('north'));
+      expect(result.type).toBe('rejected');
+    });
+
+    it('puzzle commands parse with decimal numbers', () => {
+      const intent = parse('calculate 5.2');
+      expect(intent.action).toBe('puzzle_action');
+      expect(intent.target).toBe('5.2');
+    });
+
+    it('wear suit prefers unequipped item when one is already worn', () => {
+      standUp();
+      const state = engine.getState(SID)!;
+      state.inventory.push('jumpsuit', 'eva_suit');
+      state.itemLocations['jumpsuit'] = 'inventory';
+      state.itemLocations['eva_suit'] = 'inventory';
+      state.equipped = ['jumpsuit'];
+
+      const result = engine.processCommand(SID, parse('wear suit'));
+      expect(result.type).toBe('equip_success');
+      expect(state.equipped).toContain('eva_suit');
+    });
+  });
 });
