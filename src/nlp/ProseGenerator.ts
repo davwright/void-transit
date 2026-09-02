@@ -444,6 +444,14 @@ export function buildFallbackProse(actionResult: ActionResult): string {
       if (actionResult.exits?.length) {
         text += '\n\nExits: ' + actionResult.exits.map(e => e.direction).join(', ') + '.';
       }
+      // Planted foreshadowing and payoffs are part of the room, not optional flavour
+      for (const fs of actionResult.foreshadowing || []) {
+        text += '\n\n' + (fs.type === 'plant' ? fs.plantText : fs.payoffText);
+      }
+      // A newly discovered problem is announced so the player knows there is work here
+      for (const p of actionResult.puzzleTriggers || []) {
+        text += `\n\n── ${p.name.toUpperCase()} ──\n${p.description}`;
+      }
       return text;
     }
     case 'look': {

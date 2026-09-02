@@ -86,8 +86,16 @@ npm run build:browser   # outputs to docs/
 ### Tests
 
 ```bash
-npm test             # 152 tests including a complete playthrough
+npm test             # 154 tests including a complete, command-only playthrough (tests/story.test.ts)
 ```
+
+### LLM playtest
+
+```
+ANTHROPIC_API_KEY=... npx ts-node scripts/llm-play.ts --model claude-haiku-4-5-20251001 --turns 150
+```
+
+A model plays the game blind through the real engine and prints a summary (acts reached, puzzles solved, ending). If a capable model gets stuck, a human probably will too.
 
 ### Data editing workflow
 
@@ -117,6 +125,7 @@ design/
   SHIP-GEOMETRY.md Engineering spec — rotation, gravity, propulsion, shielding
   CHARACTERS.md    Character reference
   STORY-PLAN.md    Story arc and puzzle design (SPOILERS)
+  STORY-REVIEW.md  Craft review + improvement log (SPOILERS)
 ```
 
 ---

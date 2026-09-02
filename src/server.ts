@@ -111,6 +111,9 @@ export function createApp() {
     if (result.storyBeats?.length) {
       for (const beat of result.storyBeats) prose += `\n\n${beat.text}`;
     }
+    if (result.globalEvents?.length) {
+      for (const evt of result.globalEvents) prose += `\n\n${evt.text}`;
+    }
 
     const roomId = result.currentRoom || state.currentRoom;
     return res.send(`${prose}\n\n[Room: ${roomId} | Turn: ${result.turnCount || state.turnCount} | HP: ${state.playerHealth}%]`);

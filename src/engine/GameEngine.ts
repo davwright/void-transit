@@ -150,8 +150,12 @@ class GameEngine {
 
     // Scenery questions are free — no turn cost, no side effects
     if (result.type === 'examine_scenery') {
+      // Still let story beats react to what was examined (no turn cost, no system ticks)
+      state.lastIntent = intent;
+      const sceneryBeats = this.story.checkStoryBeats(state);
       return {
         ...result,
+        storyBeats: sceneryBeats.map(b => ({ id: b.id, text: b.text, type: b.type })),
         storyContext: this.story.getStoryContext(state),
         turnCount: state.turnCount,
         currentRoom: state.currentRoom
@@ -159,15 +163,22 @@ class GameEngine {
     }
 
     state.turnCount++;
+    state.lastIntent = intent;
 
     // Tick ship systems
     const systemEvents = this._tickSystems(state);
 
+    // Tick in-fiction timers started by puzzle steps (e.g. scrubber, correction burn)
+    this._tickTimers(state);
+
     // Check story beats
     const storyBeats = this.story.checkStoryBeats(state);
 
-    // Check act transitions
+    // Check act transitions — then re-check beats so `act_start` beats fire on the same turn
     const actTransition = this.story.checkActTransition(state);
+    if (actTransition) {
+      storyBeats.push(...this.story.checkStoryBeats(state));
+    }
 
     // Check global events
     const globalEvents = this.story.checkGlobalEvents(state);
@@ -234,7 +245,7 @@ class GameEngine {
       systemEvents,
       storyBeats: storyBeats.map(b => ({ id: b.id, text: b.text, type: b.type })),
       actTransition: actTransition ? { name: actTransition.toAct.name, message: actTransition.message || undefined } : null,
-      globalEvents: globalEvents.map(e => ({ id: e.id, text: e.text })),
+      globalEvents: globalEvents.map(e => ({ id: e.id, text: Array.isArray(e.text) ? e.text.join(' ') : e.text })),
       ending: ending ? { id: ending.id, text: ending.text, type: ending.type } : null,
       storyContext: this.story.getStoryContext(state),
       turnCount: state.turnCount,
@@ -312,6 +323,8 @@ class GameEngine {
       puzzleAttempts: {},
       shipSystems,
       currentAct: boot?.initialAct || 'act1_awakening',
+      actStartTurn: 0,
+      timers: [],
       storyBeatsTriggered: [],
       turnCount: 0,
       playerHealth: boot?.initialHealth ?? 65,
@@ -491,6 +504,21 @@ class GameEngine {
     }
 
     return events;
+  }
+
+  /** Advance puzzle timers by one turn of ship time; apply on_complete when they expire. */
+  _tickTimers(state: GameState): void {
+    if (!state.timers?.length) return;
+    const remaining: typeof state.timers = [];
+    for (const timer of state.timers) {
+      timer.remainingMinutes -= 5; // StoryManager.MINUTES_PER_TURN
+      if (timer.remainingMinutes <= 0) {
+        this.puzzle.completeTimer(timer, state);
+      } else {
+        remaining.push(timer);
+      }
+    }
+    state.timers = remaining;
   }
 
   _getSystemValue(state: GameState, path: string): unknown {

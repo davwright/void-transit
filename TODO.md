@@ -4,35 +4,35 @@
 Remove all Node.js dependencies from shared code, bundle for browser.
 
 - [x] **1a** Make encoding.ts work in browser (btoa/atob instead of Buffer)
-- [ ] **1b** Refactor engine to accept injected data (no fs.readFileSync)
+- [x] **1b** Refactor engine to accept injected data (no fs.readFileSync)
   - GameEngine constructor takes data object instead of loading from disk
   - ProseGenerator/HaikuParser/Parser accept prompts/verbs as args
-- [ ] **1c** Create BrowserSaveManager (localStorage instead of fs)
+- [x] **1c** Create BrowserSaveManager (localStorage instead of fs)
   - Same interface as SaveManager
   - Slots stored as localStorage keys
   - Encoded at rest (same as file saves)
-- [ ] **1d** Create BrowserLogger (in-memory buffer instead of fs)
+- [x] **1d** Create BrowserLogger (in-memory buffer instead of fs)
   - Stores interaction log entries in array
   - Available for telemetry upload
-- [ ] **1e** Make Parser/ProseGenerator/StatisticalTagger work without fs
+- [x] **1e** Make Parser/ProseGenerator/StatisticalTagger work without fs
   - Import JSON data directly instead of fs.readFileSync
   - rejected-verbs.json, prompts.json loaded as modules
-- [ ] **1f** Add Vite bundler config + browser entry point
+- [x] **1f** Add Vite bundler config + browser entry point
   - vite.config.ts targeting browser
   - src/browser/index.ts — new entry point
   - JSON data files imported as ES modules (bundled into JS)
-- [ ] **1g** Wire frontend app.js directly to engine (no fetch)
+- [x] **1g** Wire frontend app.js directly to engine (no fetch)
   - Replace fetch('/api/command') with direct engine.processCommand()
   - Remove server dependency entirely
   - Keep existing terminal UI
-- [ ] **1h** Build static site and verify game plays offline
+- [x] **1h** Build static site and verify game plays offline
   - npm run build:browser → docs/
   - Open docs/index.html — full game works with no server
 
 ## Phase 2: LLM Adapters
 Support multiple LLM backends — player chooses on first visit.
 
-- [ ] **2a** Create LLM adapter interface
+- [x] **2a** Create LLM adapter interface
   - `{ name, available(), complete(prompt) }`
   - Replaces HaikuParser's execSync Claude CLI call
 - [ ] **2b** Implement Groq adapter (free tier, OpenAI-compatible)
@@ -50,7 +50,7 @@ Support multiple LLM backends — player chooses on first visit.
   - `settings` command opens config panel
   - Store choice + keys in localStorage
   - Test connection before confirming
-- [ ] **2f** Feedback mechanism — thumbs up/down after LLM responses
+- [x] **2f** Feedback mechanism — thumbs up/down after LLM responses
   - `+` / `-` keys or click after each LLM-generated response
   - Rating stored in interaction log
   - Creates labeled training data: prompt + response + quality
@@ -58,15 +58,15 @@ Support multiple LLM backends — player chooses on first visit.
 ## Phase 3: Telemetry (Opt-In)
 Encrypted upload of gameplay data for story improvement.
 
-- [ ] **3a** GDPR/privacy disclaimer on first visit
+- [x] **3a** GDPR/privacy disclaimer on first visit
   - No PII collected, no API keys transmitted
   - Consent stored in localStorage
   - Opt out anytime via `settings`
-- [ ] **3b** Generate NaCl keypair, embed public key
+- [x] **3b** Generate NaCl keypair, embed public key
   - scripts/generate-keypair.ts — one-time
   - Public key in src/browser/telemetry/publicKey.ts
   - Private key in GitHub repo secret TELEMETRY_PRIVATE_KEY
-- [ ] **3c** Implement TelemetryManager — collect, encrypt, zip
+- [x] **3c** Implement TelemetryManager — collect, encrypt, zip
   - tweetnacl sealed box encryption (pure JS)
   - Collect: interaction logs, save state, LLM response ratings
   - NOT collected: API keys, browser info, PII
@@ -74,7 +74,7 @@ Encrypted upload of gameplay data for story improvement.
   - Register OAuth App, embed client_id
   - User visits github.com/login/device, enters code
   - Token stored in localStorage
-- [ ] **3e** Upload encrypted telemetry as GitHub Gist
+- [x] **3e** Upload encrypted telemetry as GitHub Gist
   - Secret gist with encrypted payload
   - Triggered on save, on game completion, periodic (30 min)
   - Silent after initial consent
@@ -86,15 +86,15 @@ Encrypted upload of gameplay data for story improvement.
 ## Phase 4: Deploy
 Ship it.
 
-- [ ] **4a** Configure GitHub Pages deployment (docs/ output)
+- [x] **4a** Configure GitHub Pages deployment (docs/ output)
   - npm run build:browser → docs/
   - GitHub Pages source: /docs on main branch
-- [ ] **4b** Verify server mode still works (npm run dev)
+- [x] **4b** Verify server mode still works (npm run dev)
   - Shared code in src/engine/, src/nlp/, src/data/
   - Browser code in src/browser/
   - Server code in src/server.ts
   - Both entry points use same engine
-- [ ] **4c** Run full test suite, deploy to GitHub Pages
+- [x] **4c** Run full test suite, deploy to GitHub Pages
   - npm test — all existing tests pass
   - Push docs/ to main
   - Verify at https://username.github.io/void-transit/
@@ -107,3 +107,18 @@ Ship it.
 All Groq-generated content is retained in interaction logs for story improvement.
 LLM responses reveal: gaps in pre-written scenery, quality of generated prose,
 story inconsistencies. Feedback ratings create labeled training data.
+
+## Phase 5: Story wiring (2026-09-02) — see design/STORY-REVIEW.md (SPOILERS)
+- [x] StoryManager evaluates the authored trigger schema (beats, acts, events, endings)
+- [x] Puzzles activate on room entry with prerequisites; step effects and timers apply
+- [x] Puzzle validation has real semantics (verb + items + room + numbers)
+- [x] Final choice commands and all endings reachable
+- [x] tests/story.test.ts — command-only happy path replaces the hand-driven god run
+- [x] scripts/llm-play.ts — blind LLM playtest driver
+- [ ] Run the Haiku playtest and record results in docs/PLAYTESTS.md
+- [ ] CO2 cognitive-decline mechanic (event_co2_warning has the data; nothing reads it)
+- [ ] Confirmation prompt before the correction burn
+- [ ] Vary the JANUS paragraph across endings
+- [ ] Reconcile 0.12c vs 19.7 ly vs 42 years in story text
+- [ ] Make the no_tether EVA failure reachable (bad ending exists, nothing sets death_cause)
+- [ ] SECURITY: move telemetry upload to the Cloudflare worker; revoke the token in src/browser/feedback.ts

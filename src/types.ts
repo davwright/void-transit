@@ -98,6 +98,17 @@ export interface PuzzleStep {
     itemId?: string;
     keywords?: string[];
     failMessage?: string;
+    /** Authored validation fields (see design/STORY-REVIEW.md §7) */
+    requiredItems?: string[];
+    item?: string;
+    requiredLocation?: string;
+    location?: string;
+    requiredState?: Record<string, unknown> | string;
+    requiredValues?: Record<string, { value: number; tolerance?: number }>;
+    torqueValue?: { target: number; tolerance?: number };
+    correctSequence?: string[];
+    allMustBeEquipped?: boolean;
+    [key: string]: unknown;
   };
   result: string;
   stateChange?: Record<string, unknown>;
@@ -116,6 +127,7 @@ export interface PuzzleDef {
   location: string;
   triggerRoom?: string;
   triggerConditions?: Record<string, unknown>;
+  prerequisitePuzzles?: string[];
   requiredItems: string[];
   steps: PuzzleStep[];
   reward?: {
@@ -133,6 +145,8 @@ export interface StoryBeat {
   text: string;
   trigger: Record<string, unknown>;
   type?: string;
+  /** Optional room constraint (authored). 'any_terminal' means any room. */
+  location?: string;
   effects?: {
     flags?: Record<string, boolean>;
     revealItem?: string;
@@ -172,7 +186,7 @@ export interface StoryEnding {
 export interface GlobalEvent {
   id: string;
   trigger: Record<string, unknown>;
-  text: string;
+  text: string | string[];
   effect?: {
     flags?: Record<string, boolean>;
     revealItem?: string;
@@ -229,6 +243,20 @@ export interface GameState {
   lastReferencedItem?: string;
   /** Turn number when lastReferencedItem was set — stale after too many turns */
   lastReferencedTurn?: number;
+  /** The intent processed this turn — used by story triggers of type player_action */
+  lastIntent?: Intent;
+  /** Turn on which the current act began — used by timer-type story triggers */
+  actStartTurn?: number;
+  /** Last turn each recurring/random story event fired */
+  eventLastFired?: Record<string, number>;
+  /** Active in-fiction timers started by puzzle steps (minutes of ship time) */
+  timers?: GameTimer[];
+}
+
+export interface GameTimer {
+  id: string;
+  remainingMinutes: number;
+  onComplete?: { set?: Record<string, unknown> };
 }
 
 export interface Intent {

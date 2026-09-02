@@ -129,6 +129,11 @@ class CommandProcessor {
         if (puzzleAttempt.type === 'puzzle_success') {
           return puzzleAttempt;
         }
+        // The input was aimed at the puzzle (verb matched) but failed on numbers/items/state —
+        // the puzzle's explanation is more useful than a generic "you can't use that".
+        if (puzzleAttempt.type === 'puzzle_failed' && !(puzzleAttempt as { soft?: boolean }).soft && puzzleAttempt.reason) {
+          return { ...puzzleAttempt, message: puzzleAttempt.reason };
+        }
       }
     }
 
@@ -673,13 +678,20 @@ class CommandProcessor {
       // Target isn't a puzzle ID — it's the action value (e.g. "5.2" from "calculate 5.2")
       // Find the active puzzle for this room
       const roomPuzzle = activePuzzles.find(p => p.location === gameState.currentRoom || p.triggerRoom === gameState.currentRoom);
+      // Prefer the full raw input (so "install cartridge" carries its verb); fall back to the target
+      const answer = value && value.length >= puzzleId.length ? value : puzzleId;
       if (roomPuzzle) {
         resolvedId = roomPuzzle.id;
-        resolvedValue = puzzleId; // The "target" was actually the answer
+        resolvedValue = answer;
       } else if (activePuzzles.length === 1) {
         // Only one active puzzle — use it
         resolvedId = activePuzzles[0].id;
-        resolvedValue = puzzleId;
+        resolvedValue = answer;
+      } else if (activePuzzles.length > 1) {
+        // Several active: the one whose next step can be attempted here
+        const here = activePuzzles.find(p => this.puzzle.stepLocation(p.id, gameState) === gameState.currentRoom);
+        resolvedId = (here || activePuzzles[0]).id;
+        resolvedValue = answer;
       }
     }
 
@@ -884,10 +896,17 @@ class CommandProcessor {
     if (!name) return null;
     const normalized = name.toLowerCase().replace(/[^a-z0-9 ]/g, '').trim();
 
+    // Best-scoring match wins, so "eva suit" resolves to the EVA suit and not to the
+    // jumpsuit (alias "suit") that happens to come first in the inventory list.
+    let best: string | null = null;
+    let bestScore = 0;
     for (const id of gameState.inventory) {
       const def = this.inv.getItemDef(id);
-      if (def && this._nameMatches(normalized, def)) return id;
+      if (!def) continue;
+      const score = this._nameMatchScore(normalized, def);
+      if (score > bestScore) { bestScore = score; best = id; }
     }
+    if (best) return best;
 
     // Spelling correction fallback for inventory items
     if (normalized.length >= 3) {

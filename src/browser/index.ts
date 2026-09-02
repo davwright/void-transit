@@ -252,6 +252,9 @@ function processCommand(text: string) {
   if (result.storyBeats?.length) {
     for (const beat of result.storyBeats) prose += `\n\n${beat.text}`;
   }
+  if (result.globalEvents?.length) {
+    for (const evt of result.globalEvents) prose += `\n\n${evt.text}`;
+  }
   if (result.actTransition) {
     prose += `\n\n═══ ${result.actTransition.name} ═══`;
     if (result.actTransition.message) prose += `\n${result.actTransition.message}`;
