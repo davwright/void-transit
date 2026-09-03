@@ -1,5 +1,6 @@
 /**
- * Browser telemetry — encrypts interaction logs and uploads as GitHub Gists.
+ * Browser telemetry — encrypts interaction logs and forwards them to the
+ * collector worker, which holds the storage credential server-side.
  * Zero user effort: auto-sends on save, periodic, and page unload.
  * All data encrypted with NaCl sealed box — only the project maintainer can read it.
  */
@@ -11,15 +12,13 @@ import { browserLogger } from '../engine/BrowserLogger';
 // Public key for encryption (only private key holder can decrypt)
 const PUBLIC_KEY = 'OAkulejIG6PceDRCyF8he3G6c+Rc54oi4W01bH0oAlA=';
 
-// Gist-only scoped credential (split + reversed to pass secret scanning)
-const _p = ["xwf0AGBPGEA11_tap_buhtig","6NKyE3ml0e7ZEA_UBKuhmX7d","lFnUTBRCLULy2rP3tiQGVVeC","d3cy2K1HCI4QRJHNuUSId"];
+// Collector endpoint (worker/index.ts). Empty until the worker is deployed and
+// VT_TELEMETRY_ENDPOINT is set at build time; uploads no-op while it is unset.
+declare const __VT_TELEMETRY_ENDPOINT__: string;
+const ENDPOINT = __VT_TELEMETRY_ENDPOINT__;
 
 let consent = false;
 let lastUploadCount = 0;
-
-function _token(): string {
-  return _p.map(s => s.split('').reverse().join('')).join('');
-}
 
 export function hasConsent(): boolean {
   if (typeof localStorage === 'undefined') return false;
@@ -51,9 +50,9 @@ function encrypt(data: string): string {
   return encodeBase64(packed);
 }
 
-/** Upload pending telemetry as encrypted GitHub Gist */
+/** Upload pending telemetry to the collector worker */
 export async function upload(): Promise<boolean> {
-  if (!consent) return false;
+  if (!consent || !ENDPOINT) return false;
 
   const entries = browserLogger.getRawEntries();
   if (entries.length <= lastUploadCount) return false;
@@ -69,23 +68,12 @@ export async function upload(): Promise<boolean> {
   });
 
   const encrypted = encrypt(payload);
-  const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
 
   try {
-    const response = await fetch('https://api.github.com/gists', {
+    const response = await fetch(ENDPOINT, {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${_token()}`,
-        'Content-Type': 'application/json',
-        'User-Agent': 'void-transit',
-      },
-      body: JSON.stringify({
-        description: `void-transit-telemetry-${ts}`,
-        public: false,
-        files: {
-          [`telemetry-${ts}.enc`]: { content: encrypted },
-        },
-      }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ data: encrypted }),
     });
 
     if (response.ok) {

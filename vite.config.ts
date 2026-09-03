@@ -21,6 +21,7 @@ export default defineConfig({
     'process.env': '{}',
     '__dirname': '""',
     '__APP_VERSION__': JSON.stringify(pkg.version),
+    '__VT_TELEMETRY_ENDPOINT__': JSON.stringify(process.env.VT_TELEMETRY_ENDPOINT ?? ''),
   },
   resolve: {
     alias: {
