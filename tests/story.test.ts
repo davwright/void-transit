@@ -255,6 +255,10 @@ describe('Story — full happy path', () => {
 
     // Summary
     expect(actsSeen).toEqual(['Discovery', 'Crisis', 'Resolution', 'Revelation']);
+    // The happy path must be survivable. It once finished at 0 health: the EVA
+    // suit granted no cold protection, so the hull repair bled the player out
+    // and only the ending check (which runs before the death check) hid it.
+    expect(s().playerHealth).toBeGreaterThan(0);
     console.log(`\n═══ STORY HAPPY PATH ═══\nTurns: ${s().turnCount}  Health: ${s().playerHealth}\nBeats: ${beatsSeen.size}  Events: ${[...eventsSeen].join(', ') || 'none'}\nEnding: ${ending?.id}\n`);
   });
 

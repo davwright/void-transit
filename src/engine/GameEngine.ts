@@ -407,10 +407,14 @@ class GameEngine {
     const isCold = roomTemp === 'cold' || roomTemp === 'freezing' || roomTemp === 'vacuum';
     const isFreezing = roomTemp === 'freezing' || roomTemp === 'vacuum';
     const hasJumpsuit = (state.equipped || []).includes('jumpsuit');
+    // The EVA suit is a pressure suit — it keeps the cold out too. Without it
+    // here, the hull-repair EVA would strip the player's only protection and
+    // bleed them out on the way back.
+    const isWarm = hasJumpsuit || (state.equipped || []).includes('eva_suit');
     const isDry = !!state.flags.dried_off;
 
     const coldCfg = this.messages.cold;
-    if (isCold && !hasJumpsuit) {
+    if (isCold && !isWarm) {
       const exposure = (state.flags.cold_exposure as unknown as number) || 0;
       const rate = isFreezing ? (coldCfg?.freezingRate ?? 1) : (coldCfg?.coldRate ?? 1);
       const newExposure = exposure + rate;
@@ -437,7 +441,7 @@ class GameEngine {
         const escalation = Math.floor((newExposure - dmgThreshold) / 3) + 1;
         state.playerHealth = Math.max(0, state.playerHealth - baseDmg * escalation);
       }
-    } else if (hasJumpsuit) {
+    } else if (isWarm) {
       // Recovery when dressed
       if ((state.flags.cold_exposure as unknown as number) > 0) {
         (state.flags as Record<string, unknown>).cold_exposure = Math.max(0, (state.flags.cold_exposure as unknown as number) - (coldCfg?.recoveryRate ?? 2));
@@ -487,10 +491,10 @@ class GameEngine {
     // Death check — contextual message based on cause
     if (state.playerHealth <= 0) {
       const coldExp = (state.flags.cold_exposure as unknown as number) || 0;
-      const hasJumpsuit = (state.equipped || []).includes('jumpsuit');
+      const isWarm = (state.equipped || []).some(e => e === 'jumpsuit' || e === 'eva_suit');
       let deathMsg: string;
 
-      if (coldExp >= 10 && !hasJumpsuit) {
+      if (coldExp >= 10 && !isWarm) {
         deathMsg = 'The shivering stopped a while ago. That was the last warning your body could give. The cold takes you quietly — a narrowing, a dimming, and then nothing at all.';
       } else if (state.radiationExposure > 50) {
         deathMsg = 'The nausea hasn\'t stopped for hours. Your vision swims. Your body has absorbed more than it can repair. The reactor\'s invisible fire has done its work.';
