@@ -180,27 +180,24 @@ export function injectRejectedVerbs(data: { verbs: Record<string, string>; respo
   _rejectedLoaded = true;
 }
 
-/** Check if a word or phrase is a recognized-but-rejected verb. Returns a flavor Intent or null. */
-function checkRejectedVerb(word: string, fullInput?: string): Intent | null {
-  if (!word) return null;
+/**
+ * Check whether any candidate is a recognized-but-rejected verb, in the order
+ * given, and return a flavor Intent for the first that matches. Callers pass
+ * the whole clause before the bare verb, so multi-word rejections like
+ * "go north" win over the "go" that starts them.
+ */
+function checkRejectedVerb(...candidates: (string | undefined)[]): Intent | null {
   _ensureRejectedLoaded();
-  // Check full input first (for multi-word rejections like "go north")
-  if (fullInput) {
-    const category = rejectedVerbs[fullInput.toLowerCase()];
-    if (category) {
-      const responses = rejectedResponses[category];
-      if (responses?.length) {
-        const message = responses[Math.floor(Math.random() * responses.length)];
-        return { action: 'rejected', target: null, instrument: null, raw: fullInput, value: message };
-      }
+  for (const candidate of candidates) {
+    if (!candidate) continue;
+    const category = rejectedVerbs[candidate.toLowerCase()];
+    const responses = category ? rejectedResponses[category] : undefined;
+    if (responses?.length) {
+      const message = responses[Math.floor(Math.random() * responses.length)];
+      return { action: 'rejected', target: null, instrument: null, raw: candidate, value: message };
     }
   }
-  const category = rejectedVerbs[word.toLowerCase()];
-  if (!category) return null;
-  const responses = rejectedResponses[category];
-  if (!responses || responses.length === 0) return null;
-  const message = responses[Math.floor(Math.random() * responses.length)];
-  return { action: 'rejected', target: null, instrument: null, raw: word, value: message };
+  return null;
 }
 
 // ─── Tokenizer & Classifier ───────────────────────────────────────────────
@@ -322,19 +319,9 @@ export function parse(input: string): Intent {
 
   if (tokens.length === 0) return { action: 'look', target: null, instrument: null, raw };
 
-  // Check full input against multi-word rejected phrases (e.g. "go north")
-  {
-    _ensureRejectedLoaded();
-    const fullLower = firstClause.toLowerCase();
-    const category = rejectedVerbs[fullLower];
-    if (category) {
-      const responses = rejectedResponses[category];
-      if (responses?.length) {
-        const message = responses[Math.floor(Math.random() * responses.length)];
-        return { action: 'rejected', target: null, instrument: null, raw, value: message };
-      }
-    }
-  }
+  // Multi-word rejected phrases (e.g. "go north") match on the whole clause.
+  const rejectedPhrase = checkRejectedVerb(firstClause);
+  if (rejectedPhrase) return { ...rejectedPhrase, raw };
 
   const first = tokens[0];
 
@@ -426,6 +413,15 @@ export function parse(input: string): Intent {
   if (first.category === 'direction') {
     return { action: 'move', target: first.normalized!, instrument: null, raw };
   }
+
+  // ── Rejected verbs ───────────────────────────────────────────────────
+  // No game action matched, so the leading verb is one the game knowingly
+  // refuses. Answer with its rejection before the guessing paths below, which
+  // would otherwise talk themselves into a confident wrong answer: spelling
+  // correction reads "blow hatch" as "move north", the tagger invents its own.
+  // A listed verb is a deliberate word, never a typo for something else.
+  const rejected = checkRejectedVerb(first.word);
+  if (rejected) return { ...rejected, raw };
 
   // ── Spelling correction for first word (multi-word) ─────────────────
   // If the first word is classified as noun but looks like a misspelled verb,
@@ -541,8 +537,7 @@ function statisticalFallback(tokens: Token[], raw: string): Intent {
   const nBestResults = viterbiNBest(words, 4);
 
   if (nBestResults.length === 0) {
-    const rejected = checkRejectedVerb(tokens[0]?.word, raw);
-    return rejected || { action: 'unknown', target: null, instrument: null, raw };
+    return { action: 'unknown', target: null, instrument: null, raw };
   }
 
   // Convert each Viterbi path to an Intent
@@ -559,8 +554,7 @@ function statisticalFallback(tokens: Token[], raw: string): Intent {
   }
 
   if (candidates.length === 0) {
-    const rejected = checkRejectedVerb(tokens[0]?.word, raw);
-    return rejected || { action: 'unknown', target: null, instrument: null, raw };
+    return { action: 'unknown', target: null, instrument: null, raw };
   }
 
   // Primary = highest confidence, rest = alternatives

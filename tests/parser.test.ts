@@ -153,6 +153,16 @@ describe('Parser', () => {
     it('returns unknown for truly empty-ish input after stop word removal', () => {
       expect(parse('the')).toMatchObject({ action: 'unknown' });
     });
+
+    it('rejects non-game verbs that carry an object', () => {
+      // The statistical tagger will confidently mis-read these ("blow hatch"
+      // used to parse as "move north"), so the rejection has to win first.
+      for (const input of ['blow hatch', 'bite cable', 'smash panel', 'break panel']) {
+        const result = parse(input);
+        expect(result.action, input).toBe('rejected');
+        expect(result.value, input).toBeTruthy();
+      }
+    });
   });
 
   describe('natural language questions', () => {

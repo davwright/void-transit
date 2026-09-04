@@ -299,9 +299,14 @@ describe('Complete Walkthrough', () => {
 
   describe('Error Handling', () => {
     it('handles unknown commands gracefully', () => {
-      const result = cmd('xyzzy plugh');
-      // Unknown words are now treated as examine attempts
+      // Genuinely unknown words are treated as examine attempts. (Not "xyzzy
+      // plugh" — those are listed rejected verbs and answer with flavor text.)
+      const result = cmd('thingamajig doohickey');
       expect(result.type).toBe('examine_failed');
+    });
+
+    it('answers the classic magic words with flavor text', () => {
+      expect(cmd('xyzzy plugh').type).toBe('rejected');
     });
 
     it('handles examining nonexistent items gracefully', () => {
