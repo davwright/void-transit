@@ -19,8 +19,8 @@ echo "═══ Encoding data..."
 npx ts-node scripts/encode-from-plain.ts
 
 echo "═══ Running tests..."
-npm test
-if [ $? -ne 0 ]; then
+# set -e already aborts on failure; keep the explicit message for the log.
+if ! npm test; then
   echo "Tests failed. Aborting deploy."
   exit 1
 fi
@@ -37,7 +37,7 @@ echo "═══ Committing and pushing..."
 git add docs/ package.json package-lock.json
 git commit -m "Build v${VERSION} for GitHub Pages — ${MSG}
 
-Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>"
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>"
 
 git push
 git push --tags
